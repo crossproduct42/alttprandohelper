@@ -1,10 +1,17 @@
+var mode = getQueryVariable("mode");
+if (mode == "open"){
+    var sword = 0;
+} else if (mode == "standard"){
+    var sword = 1;
+}
+
 var items = {
-	tunic: 1,
-	sword: 1,
-	shield: 0,
-	moonpearl: false,
-	
-	bow: 0,
+    tunic: 1,
+    sword: sword,
+    shield: 0,
+    moonpearl: false,
+    
+    bow: 0,
     boomerang: 0,
     hookshot: false,
     mushroom: false,
@@ -16,7 +23,7 @@ var items = {
     ether: false,
     quake: false,
 
-	boss0: 1,
+    boss0: 1,
     chest0: 3,
     lantern: false,
     hammer: false,
@@ -24,7 +31,7 @@ var items = {
     net: false,
     book: false,
 
-	boss1: 1,
+    boss1: 1,
     chest1: 2,
     bottle:0,
     somaria: false,
@@ -32,7 +39,7 @@ var items = {
     cape: false,
     mirror: false,
 
-	boss2: 1,
+    boss2: 1,
     chest2: 2,
     boots: false,
     glove: 0,
@@ -40,15 +47,15 @@ var items = {
     flute: false,
     agahnim: 0,
 
-	boss3: 1,
-	boss4: 1,
-	boss5: 1,
-	boss6: 1,
-	boss7: 1,
-	boss8: 1,
-	boss9: 1,
-	
-	chest3: 5,
+    boss3: 1,
+    boss4: 1,
+    boss5: 1,
+    boss6: 1,
+    boss7: 1,
+    boss8: 1,
+    boss9: 1,
+    
+    chest3: 5,
     chest4: 6,
     chest5: 2,
     chest6: 4,
@@ -67,19 +74,19 @@ var itemsMin = {
     boomerang:0,
     glove:0,
 
-	boss0: 1,
-	boss1: 1,
-	boss2: 1,
+    boss0: 1,
+    boss1: 1,
+    boss2: 1,
 
     agahnim:0,
 
-	boss3: 1,
-	boss4: 1,
-	boss5: 1,
-	boss6: 1,
-	boss7: 1,
-	boss8: 1,
-	boss9: 1
+    boss3: 1,
+    boss4: 1,
+    boss5: 1,
+    boss6: 1,
+    boss7: 1,
+    boss8: 1,
+    boss9: 1
 };
 
 var itemsMax = {
@@ -92,24 +99,24 @@ var itemsMax = {
     boomerang:3,
     glove:2,
 
-	boss0: 2,
-	boss1: 2,
-	boss2: 2,
+    boss0: 2,
+    boss1: 2,
+    boss2: 2,
 
     agahnim:1,
 
-	boss3: 2,
-	boss4: 2,
-	boss5: 2,
-	boss6: 2,
-	boss7: 2,
-	boss8: 2,
-	boss9: 2,
-	
-	chest0: 3,
+    boss3: 2,
+    boss4: 2,
+    boss5: 2,
+    boss6: 2,
+    boss7: 2,
+    boss8: 2,
+    boss9: 2,
+    
+    chest0: 3,
     chest1: 2,
     chest2: 2,
-	chest3: 5,
+    chest3: 5,
     chest4: 6,
     chest5: 2,
     chest6: 4,
