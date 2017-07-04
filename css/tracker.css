@@ -1,0 +1,120 @@
+body{
+    background-color: rgb(16,16,16);
+    margin: 0px;
+}
+
+.tracker{
+    background-color: rgb(0,0,0);
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+td{
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+}
+
+.stoops{
+    width: 128;
+    height: 128;
+    background-size: 200% 200%;
+}
+
+.lonk{
+   width: 64px;
+   height: 64px;
+}
+
+.corner{
+    width: 32px;
+    height: 32px;
+}
+
+.true{
+    opacity: 1;
+}
+
+.false{
+    opacity: 0.25;
+}
+
+.mini{
+    width: 16;
+    height: 16;
+    vertical-align: text-bottom;
+}
+
+.boss{
+    width: 24;
+    height: 24;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75% 75%;
+
+    position: absolute;
+    margin-left: -12px;
+    margin-top: -12px;
+
+    z-index: 2;
+}
+
+.dungeon{
+    width: 48;
+    height: 48;
+    background-size: 100% 100%;
+
+    position: absolute;
+    margin-left: -24px;
+    margin-top: -24px;
+}
+
+div{
+    background-image: url("../images/map.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    width: 884;
+    height: 448;
+    left: 456px;
+}
+
+span{
+    color: white;
+    background-color: rgb(0,0,0);
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-family: "Times New Roman", Times, serif;
+    bottom: 0px;
+}
+
+.chest{
+    width: 24;
+    height: 24;
+    background-size: 100% 100%;
+
+    position: absolute;
+    margin-left: -12px;
+    margin-top: -12px;
+}
+
+.unavailable{
+    background-color: rgb(255,0,0);
+}
+
+.available{
+    background-color: rgb(0,255,0);
+}
+
+.possible{
+    background-color: rgb(255,255,0);
+}
+
+.opened{
+    background-color: rgb(127,127,127);
+}
