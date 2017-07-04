@@ -1,0 +1,401 @@
+<html>
+<head>
+<title>Stoops Cross Cheats v4.0</title>
+<style>
+
+body{
+    background-color: rgb(16,16,16);
+    margin: 0px;
+}
+
+.tracker{
+    background-color: rgb(0,0,0);
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+td{
+    width: 64px;
+    height: 64px;
+	background-repeat: no-repeat;
+}
+
+.stoops{
+    width: 128;
+    height: 128;
+	background-size: 200% 200%;
+}
+
+.lonk{
+   width: 64px;
+   height: 64px;
+}
+
+.corner{
+	width: 32px;
+	height: 32px;
+}
+
+.true{
+    opacity: 1;
+}
+
+.false{
+    opacity: 0.25;
+}
+
+.mini{
+    width: 16;
+    height: 16;
+    vertical-align: text-bottom;
+}
+
+.boss{
+    width: 24;
+    height: 24;
+
+    background-repeat: no-repeat;
+	background-position: center;
+	background-size: 75% 75%;
+
+    position: absolute;
+    margin-left: -12px;
+    margin-top: -12px;
+
+    z-index: 2;
+}
+
+.dungeon{
+    width: 48;
+    height: 48;
+	background-size: 100% 100%;
+
+    position: absolute;
+    margin-left: -24px;
+    margin-top: -24px;
+}
+
+div{
+    background-image: url("images/map.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    width: 884;
+    height: 448;
+    left: 456px;
+}
+
+span{
+    color: white;
+    background-color: rgb(0,0,0);
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-family: "Times New Roman", Times, serif;
+    bottom: 0px;
+}
+
+.chest{
+    width: 24;
+    height: 24;
+	background-size: 100% 100%;
+
+    position: absolute;
+    margin-left: -12px;
+    margin-top: -12px;
+}
+
+.unavailable{
+    background-color: rgb(255,0,0);
+}
+
+.available{
+    background-color: rgb(0,255,0);
+}
+
+.possible{
+    background-color: rgb(255,255,0);
+}
+
+.opened{
+    background-color: rgb(127,127,127);
+}
+
+</style>
+
+<script src="script/items.js"></script>
+<script src="script/chests.js"></script>
+
+<script>
+var rowLength = 7;
+var prizes = [];
+var medallions = [0, 0];
+
+// Event of clicking on the item tracker
+function toggle(label){
+	if(label.substring(0,5) == "chest"){
+	if(--items[label] < 0)
+	    items[label] = itemsMax[label];
+		document.getElementById(label).style.backgroundImage = ("url(images/chest" + items[label] + ".png)");
+	x = label.substring(5);
+	if(items[label] == 0)
+	    document.getElementById("dungeon"+x).className = "dungeon opened";
+	else
+	    document.getElementById("dungeon"+x).className = "dungeon " + dungeons[x].canGetChest();
+	return;
+    }
+    if((typeof items[label]) == "boolean"){
+		document.getElementById(label).className = (items[label]=!items[label]);
+	}
+	else{
+	if(++items[label] > itemsMax[label]){
+	    items[label] = itemsMin[label];
+			document.getElementById(label).style.backgroundImage = ("url(images/" + label + ".png)");
+	    if(!items[label])
+		document.getElementById(label).className = ("false");
+	}
+	else{
+			document.getElementById(label).style.backgroundImage = ("url(images/" + label + items[label] + ".png)");
+	    document.getElementById(label).className = ("true");
+	}
+    }
+    for(k=0; k<chests.length; k++){
+	if(!chests[k].isOpened)
+		document.getElementById(k).className = "chest " + chests[k].isAvailable();
+    }
+    for(k=0; k<dungeons.length; k++){
+	if(!dungeons[k].isBeaten)
+	    document.getElementById("bossMap"+k).className = "boss " + dungeons[k].isBeatable();
+	if(items["chest"+k])
+	    document.getElementById("dungeon"+k).className = "dungeon " + dungeons[k].canGetChest();
+    }
+
+	// Initiate bunny graphics!
+		if(label=="moonpearl" || label=="tunic")
+			togglePearl();
+	
+	// Clicking a boss on the tracker will check it off on the map!
+	if(label.substring(0,4) == "boss"){
+		toggleBoss(label.substring(4));
+	}
+}
+
+// BUNNY TIME!!!
+function togglePearl(){
+	var link="url(images/tunic";
+	if(items.tunic>1)
+		link += items.tunic;
+	if(!items.moonpearl)
+		link += "b";
+	link += ".png)";
+	
+	document.getElementById("tunic").style.backgroundImage = link;
+}
+
+// Event of clicking a chest on the map
+function toggleChest(x){
+    chests[x].isOpened = !chests[x].isOpened;
+    if(chests[x].isOpened)
+		document.getElementById(x).className = "chest opened";
+    else
+		document.getElementById(x).className = "chest " + chests[x].isAvailable();
+}
+
+// Event of clicking a dungeon location (not really)
+function toggleBoss(x){
+    dungeons[x].isBeaten = !dungeons[x].isBeaten;
+    if(dungeons[x].isBeaten)
+	document.getElementById("bossMap"+x).className = "boss opened";
+    else
+	document.getElementById("bossMap"+x).className = "boss " + dungeons[x].isBeatable();
+}
+
+// Highlights a chest location and shows the name as caption
+function highlight(x){
+    document.getElementById(x).style.backgroundImage = "url(images/highlighted.png)";
+    document.getElementById("caption").innerHTML = chests[x].name;
+}
+
+function unhighlight(x){
+    document.getElementById(x).style.backgroundImage = "url(images/poi.png)";
+    document.getElementById("caption").innerHTML = "&nbsp;";
+}
+
+// Highlights a chest location and shows the name as caption (but for dungeons)
+function highlightDungeon(x){
+    document.getElementById("dungeon"+x).style.backgroundImage = "url(images/highlighted.png)";
+    document.getElementById("caption").innerHTML = dungeons[x].name;
+}
+
+function unhighlightDungeon(x){
+    document.getElementById("dungeon"+x).style.backgroundImage = "url(images/poi.png)";
+    document.getElementById("caption").innerHTML = "&nbsp;";
+}
+
+// event of clicking on a boss's pendant/crystal subsquare
+function toggleDungeon(n){
+	prizes[n]++;
+	if(prizes[n] == 5)
+		prizes[n] = 0;
+	document.getElementById("dungeonPrize"+n).style.backgroundImage = "url(images/dungeon"+prizes[n]+".png)";
+	// Update Sahasralah, Fat Fairy, and Master Sword Pedestal
+	var pendantChests = [25, 61, 62];
+    for(k=0; k<pendantChests.length; k++){
+		if(!chests[pendantChests[k]].isOpened)
+			document.getElementById(pendantChests[k]).className = "chest " + chests[pendantChests[k]].isAvailable();
+	}
+}
+
+// event of clicking on Mire/TRock's medallion subsquare
+function toggleMedallion(n){
+	medallions[n]++;
+	if(medallions[n] == 4)
+		medallions[n] = 0;
+	document.getElementById("medallion"+n).style.backgroundImage = "url(images/medallion"+medallions[n]+".png)";
+	// Update availability of dungeon boss AND chests
+    dungeons[8+n].isBeaten = !dungeons[8+n].isBeaten;
+	toggleBoss(8+n);
+    if(items["chest"+(8+n)] > 0)
+	    document.getElementById("dungeon"+(8+n)).className = "dungeon " + dungeons[8+n].canGetChest();
+	// TRock medallion affects Mimic Cave
+	if(n==1){
+		chests[4].isOpened = !chests[4].isOpened;
+		toggleChest(4);
+	}
+	// Change the mouseover text on the map
+	var dungeonName;
+	if(n==0)
+		dungeonName = "Misery Mire";
+	else
+		dungeonName = "Turtle Rock";
+	dungeons[8+n].name = dungeonName + " <img src='images/medallion"+medallions[n]+".png' class='mini'><img src='images/lantern.png' class='mini'>";
+	
+}
+
+</script>
+
+
+</head>
+
+<body>
+<table class="tracker" cellpadding="0" cellspacing="0" border="0" align="center">
+
+<!-- Top left cell is Link. Don't move it. I can't make the CSS work any other way :( -->
+<!-- EDIT: I guess I could do it similar to the boss squares, but that's annoying -->
+<tr>
+	<td colspan='2' rowspan='2'id='tunic' style='background-image: url(images/tunic.png);'>
+		<table cellpadding='0' cellspacing='0' class='stoops' border='0'>
+			<tr>
+				<th onClick="toggle('tunic')"></th>
+				<td id='sword' onClick="toggle('sword')"></td>
+			</tr>
+			<tr>
+				<td id='shield' onClick="toggle('shield')"></td>
+				<th>
+					<table cellpadding='0' cellspacing='0' border='0' class="lonk">
+						<tr>
+							<th class='mini-corner' onClick="toggle('tunic')"></th>
+							<th onClick="toggle('tunic')"></th>
+						</tr>
+						<tr>
+							<th onClick="toggle('tunic')"></th>
+							<th id="moonpearl" class='false' style='background-image:url(images/moonpearl.png); width:48px; height:48px;' onClick='toggle("moonpearl")'></th>
+						</tr>
+					</table>
+				</th>
+			</tr>
+		</table>
+	</td>
+
+<script>
+
+var itemList = Object.keys(items);
+var k = 4;
+while(k < itemList.length){
+    if(k!=4)
+		document.write("<tr>");
+	for(j=0; j<rowLength; j++){
+		if(k == 4 || k == 9)
+			j = 2;
+	    var x = itemList[k];
+	
+			// boss tables (pendant/crystal, medallion)
+			if(x.substring(0,4) == "boss"){
+				var d = prizes.length;
+				prizes[d] = 0;
+				
+				document.write("<td id='"+x+"' style='background-image:url(images/"+x+".png);'>");
+				document.write("<table cellpadding='0' cellspacing='0' class='lonk'>");
+					document.write("<tr>");
+						document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+						document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+					document.write("</tr>");
+					document.write("<tr>");
+						// Does dungeon have a medallion?
+						if(d>=8)
+							document.write("<th id='medallion"+(d-8)+"' onClick='toggleMedallion("+(d-8)+")' class='corner' style='background-image:url(images/medallion0.png)'></th>");
+						else						
+							document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+						document.write("<th id='dungeonPrize"+d+"' onClick='toggleDungeon("+d+")' class='corner' style='background-image:url(images/dungeon0.png)'></th>");
+					document.write("</tr>");
+					document.write("</table>");
+				document.write("</td>");
+			}
+			else {
+				if(x.substring(0,5) == "chest"){
+					document.write("<td style='background-image:url(images/chest"+items[x]+".png);' ");
+				}
+				else 
+					document.write("<td style='background-image:url(images/"+x+".png);' ");
+				document.write("id='"+x+"' ");
+				document.write("class='"+!!items[x]+"' ");
+				document.write("onClick='toggle("+'"'+x+'"'+")'>");
+				document.write("</td>");
+			}
+		
+		
+	    if(++k == itemList.length)
+		break;
+	}
+    document.write("</tr>");
+}
+
+document.write('</table>');
+document.getElementById("sword").style.backgroundImage = "url(images/sword1.png)";
+document.getElementById("shield").style.backgroundImage = "url(images/shield.png)";
+
+// Initialize all chests on the map
+document.write('<div>');
+for(k=0; k<chests.length; k++){
+    document.write("<span style='background-image:url(images/poi.png);' id='"+k+"' onClick='toggleChest("+k+")' onMouseover='highlight("+k+")' onMouseout='unhighlight("+k+")'></span>");
+    document.getElementById(k).style.left = chests[k].x;
+    document.getElementById(k).style.top = chests[k].y;
+    if(chests[k].isOpened)
+	document.getElementById(k).className = "chest opened";
+    else
+	    document.getElementById(k).className = "chest " + chests[k].isAvailable();
+}
+
+// Dungeon bosses & chests
+for(k=0; k<dungeons.length; k++){
+    document.write("<span style='background-image:url(images/"+dungeons[k].image+");' id='bossMap"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
+    document.getElementById("bossMap"+k).style.left = dungeons[k].x;
+    document.getElementById("bossMap"+k).style.top = dungeons[k].y;
+    document.getElementById("bossMap"+k).className = "boss " + dungeons[k].isBeatable();
+
+    document.write("<span style='background-image:url(images/poi.png)' id='dungeon"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
+    document.getElementById("dungeon"+k).style.left = dungeons[k].x;
+    document.getElementById("dungeon"+k).style.top = dungeons[k].y;
+    document.getElementById("dungeon"+k).className = "dungeon " + dungeons[k].canGetChest();
+}
+
+</script>
+
+<span id="caption">&nbsp</span>
+</div>
+
+</body>
+</html>

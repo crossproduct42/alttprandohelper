@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>launching ALttP tracker</title>
+
+
+<script>
+function launch(){
+    if(document.getElementById("opt1").checked){
+	launch1();
+	return;
+    }
+    if(document.getElementById("opt3").checked){
+	launch3();
+	return;
+    }
+    alert("Make your selection!");
+}
+
+function launch1(){
+    myWindow = window.open("tracker.html", "", "width=448, height=448, menubar=0 scrollbars=0, titlebar=0, resizable=0, toolbar=0");
+    setTimeout("window.close()", 5000);
+}
+
+function launch3(){
+    myWindow = window.open("tracker_map.html", "", "width=1344, height=448, menubar=0 scrollbars=0, titlebar=0, resizable=0, toolbar=0");
+    setTimeout("window.close()", 5000);
+}
+
+</script>
+
+</head>
+
+
+
+<body>
+
+<input type="radio" name="option" id="opt1" value="1">Item Tracker Only (7 x 7)
+<br>
+<input type="radio" name="option" id="opt3" value="3">Item Tracker + Location Tracker
+<br>
+<input type="button" value="LAUNCH!" onClick="launch()">
+
+</body>
+</html>

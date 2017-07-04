@@ -1,0 +1,216 @@
+<html>
+<head>
+<title>ALttP Rando Tracker by crossproduct v4.0</title>
+<style>
+
+body{
+    background-color: rgb(16,16,16);
+    margin: 0px;
+}
+
+.tracker{
+    background-color: rgb(0,0,0);
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+td{
+    width: 64px;
+    height: 64px;
+	background-repeat: no-repeat;
+}
+
+.stoops{
+    width: 128;
+    height: 128;
+	background-size: 200% 200%;
+}
+
+.lonk{
+   width: 64px;
+   height: 64px;
+}
+
+.corner{
+	width: 32px;
+	height: 32px;
+}
+
+.true{
+    opacity: 1;
+}
+
+.false{
+    opacity: 0.25;
+}
+
+</style>
+
+<script src="script/items.js"></script>
+<script src="script/chests.js"></script>
+
+<script>
+var rowLength = 7;
+var prizes = [];
+var medallions = [0, 0];
+
+// Event of clicking on the item tracker
+function toggle(label){
+	if(label.substring(0,5) == "chest"){
+	if(--items[label] < 0)
+	    items[label] = itemsMax[label];
+		document.getElementById(label).style.backgroundImage = ("url(images/chest" + items[label] + ".png)");
+	x = label.substring(5);
+	if(items[label] == 0)
+	    document.getElementById("dungeon"+x).className = "dungeon opened";
+	else
+	    document.getElementById("dungeon"+x).className = "dungeon " + dungeons[x].canGetChest();
+	return;
+    }
+    if((typeof items[label]) == "boolean"){
+		document.getElementById(label).className = (items[label]=!items[label]);
+	}
+	else{
+	if(++items[label] > itemsMax[label]){
+	    items[label] = itemsMin[label];
+			document.getElementById(label).style.backgroundImage = ("url(images/" + label + ".png)");
+	    if(!items[label])
+		document.getElementById(label).className = ("false");
+	}
+	else{
+			document.getElementById(label).style.backgroundImage = ("url(images/" + label + items[label] + ".png)");
+	    document.getElementById(label).className = ("true");
+	}
+    }
+
+	// Initiate bunny graphics!
+		if(label=="moonpearl" || label=="tunic")
+			togglePearl();
+	
+}
+
+// BUNNY TIME!!!
+function togglePearl(){
+	var link="url(images/tunic";
+	if(items.tunic>1)
+		link += items.tunic;
+	if(!items.moonpearl)
+		link += "b";
+	link += ".png)";
+	
+	document.getElementById("tunic").style.backgroundImage = link;
+}
+
+// event of clicking on a boss's pendant/crystal subsquare
+function toggleDungeon(n){
+	prizes[n]++;
+	if(prizes[n] == 5)
+		prizes[n] = 0;
+	document.getElementById("dungeonPrize"+n).style.backgroundImage = "url(images/dungeon"+prizes[n]+".png)";
+}
+
+// event of clicking on Mire/TRock's medallion subsquare
+function toggleMedallion(n){
+	medallions[n]++;
+	if(medallions[n] == 4)
+		medallions[n] = 0;
+	document.getElementById("medallion"+n).style.backgroundImage = "url(images/medallion"+medallions[n]+".png)";
+}
+
+</script>
+
+
+</head>
+
+<body>
+<table class="tracker" cellpadding="0" cellspacing="0" border="0" align="center">
+
+<!-- Top left cell is Link. Don't move it. I can't make the CSS work any other way :( -->
+<!-- EDIT: I guess I could do it similar to the boss squares, but that's annoying -->
+<tr>
+	<td colspan='2' rowspan='2'id='tunic' style='background-image: url(images/tunic.png);'>
+		<table cellpadding='0' cellspacing='0' class='stoops' border='0'>
+			<tr>
+				<th onClick="toggle('tunic')"></th>
+				<td id='sword' onClick="toggle('sword')"></td>
+			</tr>
+			<tr>
+				<td id='shield' onClick="toggle('shield')"></td>
+				<th>
+					<table cellpadding='0' cellspacing='0' border='0' class="lonk">
+						<tr>
+							<th class='mini-corner' onClick="toggle('tunic')"></th>
+							<th onClick="toggle('tunic')"></th>
+						</tr>
+						<tr>
+							<th onClick="toggle('tunic')"></th>
+							<th id="moonpearl" class='false' style='background-image:url(images/moonpearl.png); width:48px; height:48px;' onClick='toggle("moonpearl")'></th>
+						</tr>
+					</table>
+				</th>
+			</tr>
+		</table>
+	</td>
+
+<script>
+
+var itemList = Object.keys(items);
+var k = 4;
+while(k < itemList.length){
+    if(k!=4)
+		document.write("<tr>");
+	for(j=0; j<rowLength; j++){
+		if(k == 4 || k == 9)
+			j = 2;
+	    var x = itemList[k];
+
+			// boss tables (pendant/crystal, medallion)
+			if(x.substring(0,4) == "boss"){
+				var d = prizes.length;
+				prizes[d] = 0;
+				
+				document.write("<td id='"+x+"' style='background-image:url(images/"+x+".png);'>");
+				document.write("<table cellpadding='0' cellspacing='0' class='lonk'>");
+					document.write("<tr>");
+						document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+						document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+					document.write("</tr>");
+					document.write("<tr>");
+						// Does dungeon have a medallion?
+						if(d>=8)
+							document.write("<th id='medallion"+(d-8)+"' onClick='toggleMedallion("+(d-8)+")' class='corner' style='background-image:url(images/medallion0.png)'></th>");
+						else						
+							document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+						document.write("<th id='dungeonPrize"+d+"' onClick='toggleDungeon("+d+")' class='corner' style='background-image:url(images/dungeon0.png)'></th>");
+					document.write("</tr>");
+					document.write("</table>");
+				document.write("</td>");
+			}
+			else {
+				if(x.substring(0,5) == "chest"){
+					document.write("<td style='background-image:url(images/chest"+items[x]+".png);' ");
+				}
+				else 
+					document.write("<td style='background-image:url(images/"+x+".png);' ");
+				document.write("id='"+x+"' ");
+				document.write("class='"+!!items[x]+"' ");
+				document.write("onClick='toggle("+'"'+x+'"'+")'>");
+				document.write("</td>");
+			}
+		
+	    if(++k == itemList.length)
+		break;
+	}
+    document.write("</tr>");
+}
+
+document.write('</table>');
+document.getElementById("sword").style.backgroundImage = "url(images/sword1.png)";
+document.getElementById("shield").style.backgroundImage = "url(images/shield.png)";
+
+
+</script>
+
+</body>
+</html>
