@@ -1,6 +1,13 @@
+var mode = getQueryVariable("mode");
+if (mode == "open"){
+    var sword = 0;
+} else if (mode == "standard"){
+    var sword = 1;
+}
+
 var items = {
     tunic: 1,
-    sword: 1,
+    sword: sword,
     shield: 0,
     moonpearl: false,
 

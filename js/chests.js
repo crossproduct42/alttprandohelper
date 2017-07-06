@@ -1,3 +1,8 @@
+// define dungeon chests
+var dungeons = new Array;
+var mode = getQueryVariable("mode");
+var isStandard = (mode == "standard");
+
 function steve(){
     if(!items.moonpearl)
     return false;
@@ -6,8 +11,6 @@ function steve(){
     return items.agahnim && items.hookshot && (items.hammer || items.glove || items.flippers);
 }
 
-// define dungeon chests
-var dungeons = new Array;
 
 dungeons[0] = {
     name: "Eastern Palace",
@@ -330,7 +333,7 @@ chests[2] = {
     name: "Stoops Lonk's Hoose",
     x: "27.4%",
     y: "67.9%",
-    isOpened: true,
+    isOpened: isStandard,
     isAvailable: function(){
     return "available";
     }
@@ -980,7 +983,7 @@ chests[56] = {
     name: "Castle Secret Entrance",
     x: "29.8%",
     y: "41.8%",
-    isOpened: true,
+    isOpened: isStandard,
     isAvailable: function(){
         return "available";
     }
@@ -990,7 +993,7 @@ chests[57] = {
     name: "Hyrule Castle (4 including Key)",
     x: "24.9%",
     y: "44.1%",
-    isOpened: true,
+    isOpened: isStandard,
     isAvailable: function(){
         return "available";
     }
@@ -1000,7 +1003,7 @@ chests[58] = {
     name: "Sanctuary",
     x: "23.0%",
     y: "28.0%",
-    isOpened: true,
+    isOpened: isStandard,
     isAvailable: function(){
         return "available";
     }
