@@ -1,127 +1,131 @@
-var mode = getQueryVariable("mode");
-if (mode == "open"){
-    var sword = 0;
-} else if (mode == "standard"){
-    var sword = 1;
-}
+(function(window) {
+    'use strict';
 
-var items = {
-    tunic: 1,
-    sword: sword,
-    shield: 0,
-    moonpearl: false,
+    var mode = getQueryVariable("mode");
+    if (mode == "open"){
+        var sword = 0;
+    } else if (mode == "standard"){
+        var sword = 1;
+    }
 
-    bow: 0,
-    boomerang: 0,
-    hookshot: false,
-    mushroom: false,
-    powder: false,
+    window.items = {
+        tunic: 1,
+        sword: sword,
+        shield: 0,
+        moonpearl: false,
 
-    firerod: false,
-    icerod: false,
-    bombos: false,
-    ether: false,
-    quake: false,
+        bow: 0,
+        boomerang: 0,
+        hookshot: false,
+        mushroom: false,
+        powder: false,
 
-    boss0: 1,
-    chest0: 3,
-    lantern: false,
-    hammer: false,
-    shovel: false,
-    net: false,
-    book: false,
+        firerod: false,
+        icerod: false,
+        bombos: false,
+        ether: false,
+        quake: false,
 
-    boss1: 1,
-    chest1: 2,
-    bottle:0,
-    somaria: false,
-    byrna: false,
-    cape: false,
-    mirror: false,
+        boss0: 1,
+        chest0: 3,
+        lantern: false,
+        hammer: false,
+        shovel: false,
+        net: false,
+        book: false,
 
-    boss2: 1,
-    chest2: 2,
-    boots: false,
-    glove: 0,
-    flippers: false,
-    flute: false,
-    agahnim: 0,
+        boss1: 1,
+        chest1: 2,
+        bottle:0,
+        somaria: false,
+        byrna: false,
+        cape: false,
+        mirror: false,
 
-    boss3: 1,
-    boss4: 1,
-    boss5: 1,
-    boss6: 1,
-    boss7: 1,
-    boss8: 1,
-    boss9: 1,
+        boss2: 1,
+        chest2: 2,
+        boots: false,
+        glove: 0,
+        flippers: false,
+        flute: false,
+        agahnim: 0,
 
-    chest3: 5,
-    chest4: 6,
-    chest5: 2,
-    chest6: 4,
-    chest7: 3,
-    chest8: 2,
-    chest9: 5
-};
+        boss3: 1,
+        boss4: 1,
+        boss5: 1,
+        boss6: 1,
+        boss7: 1,
+        boss8: 1,
+        boss9: 1,
 
-var itemsMin = {
-    sword:0,
-    shield:0,
-    tunic:1,
+        chest3: 5,
+        chest4: 6,
+        chest5: 2,
+        chest6: 4,
+        chest7: 3,
+        chest8: 2,
+        chest9: 5
+    };
 
-    bottle:0,
-    bow:0,
-    boomerang:0,
-    glove:0,
+    window.itemsMin = {
+        sword:0,
+        shield:0,
+        tunic:1,
 
-    boss0: 1,
-    boss1: 1,
-    boss2: 1,
+        bottle:0,
+        bow:0,
+        boomerang:0,
+        glove:0,
 
-    agahnim:0,
+        boss0: 1,
+        boss1: 1,
+        boss2: 1,
 
-    boss3: 1,
-    boss4: 1,
-    boss5: 1,
-    boss6: 1,
-    boss7: 1,
-    boss8: 1,
-    boss9: 1
-};
+        agahnim:0,
 
-var itemsMax = {
-    sword:4,
-    shield:3,
-    tunic:3,
+        boss3: 1,
+        boss4: 1,
+        boss5: 1,
+        boss6: 1,
+        boss7: 1,
+        boss8: 1,
+        boss9: 1
+    };
 
-    bottle:4,
-    bow:3,
-    boomerang:3,
-    glove:2,
+    window.itemsMax = {
+        sword:4,
+        shield:3,
+        tunic:3,
 
-    boss0: 2,
-    boss1: 2,
-    boss2: 2,
+        bottle:4,
+        bow:3,
+        boomerang:3,
+        glove:2,
 
-    agahnim:1,
+        boss0: 2,
+        boss1: 2,
+        boss2: 2,
 
-    boss3: 2,
-    boss4: 2,
-    boss5: 2,
-    boss6: 2,
-    boss7: 2,
-    boss8: 2,
-    boss9: 2,
+        agahnim:1,
 
-    chest0: 3,
-    chest1: 2,
-    chest2: 2,
-    chest3: 5,
-    chest4: 6,
-    chest5: 2,
-    chest6: 4,
-    chest7: 3,
-    chest8: 2,
-    chest9: 5
+        boss3: 2,
+        boss4: 2,
+        boss5: 2,
+        boss6: 2,
+        boss7: 2,
+        boss8: 2,
+        boss9: 2,
 
-};
+        chest0: 3,
+        chest1: 2,
+        chest2: 2,
+        chest3: 5,
+        chest4: 6,
+        chest5: 2,
+        chest6: 4,
+        chest7: 3,
+        chest8: 2,
+        chest9: 5
+
+    };
+}(window));
