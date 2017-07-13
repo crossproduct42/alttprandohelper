@@ -91,11 +91,7 @@ while(k < itemList.length){
     document.write("</tr>");
 }
 
-if (mode == "open") {
-    swordImage = "sword0.png";
-} else if (mode == "standard") {
-    swordImage = "sword1.png";
-}
+  swordImage = mode === "open" ? "sword.png" : "sword1.png";
 
 document.write('</table>');
 document.getElementById("sword").style.backgroundImage = "url(images/"+swordImage+")";
