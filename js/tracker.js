@@ -47,7 +47,7 @@
         if (mapEnabled) {
             for (var k = 0; k < chests.length; k++) {
                 if (!chests[k].isOpened)
-                    document.getElementById(k).className = "chest " + chests[k].isAvailable();
+                    document.getElementById("chestMap"+k).className = "chest " + chests[k].isAvailable();
             }
             for (var k = 0; k < dungeons.length; k++) {
                 if (!dungeons[k].isBeaten)
@@ -89,7 +89,7 @@
             var pendantChests = [25, 61, 62];
             for (var k = 0; k < pendantChests.length; k++) {
                 if (!chests[pendantChests[k]].isOpened)
-                    document.getElementById(pendantChests[k]).className = "chest " + chests[pendantChests[k]].isAvailable();
+                    document.getElementById("chestMap"+pendantChests[k]).className = "chest " + chests[pendantChests[k]].isAvailable();
             }
         }
     };
@@ -122,7 +122,7 @@
         // Event of clicking a chest on the map
         window.toggleChest = function(x) {
             chests[x].isOpened = !chests[x].isOpened;
-            document.getElementById(x).className = chests[x].isOpened ?
+            document.getElementById("chestMap"+x).className = chests[x].isOpened ?
                 "chest opened" :
                 "chest " + chests[x].isAvailable();
         };
@@ -139,11 +139,11 @@
         };
         // Highlights a chest location and shows the name as caption
         window.highlight = function(x) {
-            document.getElementById(x).style.backgroundImage = "url(images/highlighted.png)";
+            document.getElementById("chestMap"+x).style.backgroundImage = "url(images/highlighted.png)";
             document.getElementById("caption").innerHTML = chests[x].name;
         };
         window.unhighlight = function(x) {
-            document.getElementById(x).style.backgroundImage = "url(images/poi.png)";
+            document.getElementById("chestMap"+x).style.backgroundImage = "url(images/poi.png)";
             document.getElementById("caption").innerHTML = "&nbsp;";
         };
         // Highlights a chest location and shows the name as caption (but for dungeons)
