@@ -46,7 +46,7 @@ var k = 4;
 while(k < itemList.length){
     if(k!=4)
         document.write("<tr>");
-    for(j=0; j<rowLength; j++){
+    for(var j=0; j<rowLength; j++){
         if(k == 4 || k == 9)
             j = 2;
         var x = itemList[k];
@@ -100,7 +100,7 @@ document.getElementById("shield").style.backgroundImage = "url(images/shield.png
 if (mapEnabled) {
     // Initialize all chests on the map
     document.write('<div>');
-        for(k=0; k<chests.length; k++){
+        for(var k=0; k<chests.length; k++){
             document.write("<span style='background-image:url(images/poi.png);' id='"+k+"' onClick='toggleChest("+k+")' onMouseover='highlight("+k+")' onMouseout='unhighlight("+k+")'></span>");
             document.getElementById(k).style.left = chests[k].x;
             document.getElementById(k).style.top = chests[k].y;
@@ -121,7 +121,7 @@ if (mapEnabled) {
         document.getElementById("castle").className = "castle " + agahnim.isAvailable();
 
         // Dungeon bosses & chests
-        for(k=0; k<dungeons.length; k++){
+        for(var k=0; k<dungeons.length; k++){
             document.write("<span style='background-image:url(images/"+dungeons[k].image+");' id='bossMap"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
             document.getElementById("bossMap"+k).style.left = dungeons[k].x;
             document.getElementById("bossMap"+k).style.top = dungeons[k].y;
