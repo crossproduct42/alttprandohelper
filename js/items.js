@@ -2,11 +2,7 @@
     'use strict';
 
     var mode = getQueryVariable("mode");
-    if (mode == "open"){
-        var sword = 0;
-    } else if (mode == "standard"){
-        var sword = 1;
-    }
+    var sword = mode === "open" ? 0 : 1;
 
     window.items = {
         tunic: 1,

@@ -1,138 +1,88 @@
-body{
-    background-color: rgb(16,16,16);
-    margin: 0px;
+body { margin: 0px; background-color: #101010; }
+
+.tracker {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #000;
 }
 
-.tracker{
-    background-color: rgb(0,0,0);
-    position: absolute;
-    left: 0px;
-    top: 0px;
+td { width: 64px; height: 64px; background-repeat: no-repeat; }
+
+.stoops { width: 128px; height: 128px; background-size: 200% 200%; }
+
+.lonk { width: 64px; height: 64px; }
+
+.corner { width: 32px; height: 32px; }
+
+.true { opacity: 1; }
+.false { opacity: 0.25; }
+
+.mini { width: 16px; height: 16px; vertical-align: text-bottom; }
+
+.boss {
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  margin-top: -12px;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75% 75%;
+  z-index: 2;
 }
 
-td{
-    width: 64px;
-    height: 64px;
-    background-repeat: no-repeat;
-}
-
-.stoops{
-    width: 128;
-    height: 128;
-    background-size: 200% 200%;
-}
-
-.lonk{
-   width: 64px;
-   height: 64px;
-}
-
-.corner{
-    width: 32px;
-    height: 32px;
-}
-
-.true{
-    opacity: 1;
-}
-
-.false{
-    opacity: 0.25;
-}
-
-.mini{
-    width: 16;
-    height: 16;
-    vertical-align: text-bottom;
-}
-
-.boss{
-    width: 24;
-    height: 24;
-
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 75% 75%;
-
-    position: absolute;
-    margin-left: -12px;
-    margin-top: -12px;
-
-    z-index: 2;
-}
-
-#bossMapAgahnim {
-    background-color: transparent;
-}
-
+#bossMapAgahnim { background-color: transparent; }
 .castle {
-    width: 36px;
-    height: 36px;
-    background-size: 100% 100%;
-
-    position: absolute;
-    margin-left: -18px;
-    margin-top: -18px;
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  margin-top: -18px;
+  position: absolute;
+  background-size: 100% 100%;
 }
 
-.dungeon{
-    width: 48;
-    height: 48;
-    background-size: 100% 100%;
-
-    position: absolute;
-    margin-left: -24px;
-    margin-top: -24px;
+.dungeon {
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  margin-top: -24px;
+  position: absolute;
+  background-size: 100% 100%;
 }
 
-div{
-    background-image: url("images/map.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-
-    position: absolute;
-    width: 884;
-    height: 448;
-    left: 456px;
+div {
+  width: 884px;
+  height: 448px;
+  position: absolute;
+  left: 456px;
+  background-image: url(images/map.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
-span{
-    color: white;
-    background-color: rgb(0,0,0);
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    font-size: 16px;
-    font-family: "Times New Roman", Times, serif;
-    bottom: 0px;
+span {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  color: white;
+  background-color: #000;
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  font-size: 16px;
 }
 
-.chest{
-    width: 24;
-    height: 24;
-    background-size: 100% 100%;
-
-    position: absolute;
-    margin-left: -12px;
-    margin-top: -12px;
+.chest {
+  width: 24;
+  height: 24;
+  margin-left: -12px;
+  margin-top: -12px;
+  position: absolute;
+  background-size: 100% 100%;
 }
 
-.unavailable{
-    background-color: rgb(255,0,0);
-}
-
-.available{
-    background-color: rgb(0,255,0);
-}
-
-.possible{
-    background-color: rgb(255,255,0);
-}
-
-.dark {
-    background-color: blue;
-}
-
-.opened{
-    background-color: rgb(127,127,127);
-}
+.unavailable { background-color: red; }
+.available { background-color: lime; }
+.possible { background-color: yellow; }
+.dark { background-color: blue; }
+.opened { background-color: #7f7f7f; }

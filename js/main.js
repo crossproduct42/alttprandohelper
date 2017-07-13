@@ -1,31 +1,28 @@
 (function(window) {
     'use strict';
 
-    //launches tracker.html in a popup window. MUST ME CALLED FROM "index.html" (or similarly structured page)!!
+    // launches tracker.html in a popup window. MUST ME CALLED FROM "index.html" (or similarly structured page)!!
     window.launchTracker = function() {
-        var mapEnabled = document.getElementById("option_mapEnabled").value;
         var mode = document.getElementById("option_mode").value;
-        var windowSize;
-        mapEnabled = mapEnabled == "true";
+        var mapEnabled = document.getElementById("option_mapEnabled").value === "true";
+        var windowSize = mapEnabled ?
+            "width=1344, height=448" :
+            "width=448, height=448";
 
-        if (mapEnabled){
-            windowSize = "width=1344, height=448"
-        } else {
-            windowSize = "width=448, height=448"
-        }
-
-        window.open("tracker.html?map="+mapEnabled+"&mode="+mode, "", windowSize+", menubar=0 scrollbars=0, titlebar=0, resizable=0, toolbar=0");
+        open("tracker.html?map="+mapEnabled+"&mode="+mode, "", windowSize+", menubar=0 scrollbars=0, titlebar=0, resizable=0, toolbar=0");
         setTimeout("window.close()", 5000);
     };
 
-    //a helper function that lets you access string variables from the URL.
+    // a helper function that lets you access string variables from the URL.
     window.getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
+        for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if(pair[0] == variable){return pair[1];}
+            if (pair[0] === variable)
+                return pair[1];
         }
-        return(null);
+
+        return null;
     };
 }(window));

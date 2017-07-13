@@ -1,141 +1,137 @@
 <html>
 <head>
-    <title>ALttP Rando Tracker by crossproduct v4.0</title>
+  <title>ALttP Rando Tracker by crossproduct v4.0</title>
 
-    <link rel="stylesheet" type="text/css" href="tracker.css">
+  <link rel="stylesheet" type="text/css" href="tracker.css">
 
-    <script src="js/main.js"></script>
-    <script src="js/items.js"></script>
-    <script src="js/chests.js"></script>
-    <script src="js/tracker.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/items.js"></script>
+  <script src="js/chests.js"></script>
+  <script src="js/tracker.js"></script>
 </head>
 
 <body>
-<table class="tracker" cellpadding="0" cellspacing="0" border="0" align="center">
 
-<!-- Top left cell is Link. Don't move it. I can't make the CSS work any other way :( -->
-<!-- EDIT: I guess I could do it similar to the boss squares, but that's annoying -->
-<tr>
-    <td colspan='2' rowspan='2'id='tunic' style='background-image: url(images/tunicb.png);'>
+  <table class="tracker" cellpadding="0" cellspacing="0" border="0" align="center">
+
+    <!-- Top left cell is Link. Don't move it. I can't make the CSS work any other way :( -->
+    <!-- EDIT: I guess I could do it similar to the boss squares, but that's annoying -->
+    <tr>
+      <td colspan='2' rowspan='2'id='tunic' style='background-image: url(images/tunicb.png);'>
         <table cellpadding='0' cellspacing='0' class='stoops' border='0'>
-            <tr>
-                <th onClick="toggle('tunic')"></th>
-                <td id='sword' onClick="toggle('sword')"></td>
-            </tr>
-            <tr>
-                <td id='shield' onClick="toggle('shield')"></td>
-                <th>
-                    <table cellpadding='0' cellspacing='0' border='0' class="lonk">
-                        <tr>
-                            <th class='mini-corner' onClick="toggle('tunic')"></th>
-                            <th onClick="toggle('tunic')"></th>
-                        </tr>
-                        <tr>
-                            <th onClick="toggle('tunic')"></th>
-                            <th id="moonpearl" class='false' style='background-image:url(images/moonpearl.png); width:48px; height:48px;' onClick='toggle("moonpearl")'></th>
-                        </tr>
-                    </table>
-                </th>
-            </tr>
+          <tr>
+            <th onClick="toggle('tunic')"></th>
+            <td id='sword' onClick="toggle('sword')"></td>
+          </tr>
+          <tr>
+            <td id='shield' onClick="toggle('shield')"></td>
+            <th>
+              <table cellpadding='0' cellspacing='0' border='0' class="lonk">
+                <tr>
+                  <th class='mini-corner' onClick="toggle('tunic')"></th>
+                  <th onClick="toggle('tunic')"></th>
+                </tr>
+                <tr>
+                  <th onClick="toggle('tunic')"></th>
+                  <th id="moonpearl" class='false' style='background-image:url(images/moonpearl.png); width:48px; height:48px;' onClick='toggle("moonpearl")'></th>
+                </tr>
+              </table>
+            </th>
+          </tr>
         </table>
-    </td>
+      </td>
 
-<script>
-var itemList = Object.keys(items);
-var k = 4;
-while(k < itemList.length){
-    if(k!=4)
-        document.write("<tr>");
-    for(var j=0; j<rowLength; j++){
-        if(k == 4 || k == 9)
-            j = 2;
-        var x = itemList[k];
+  <script>
+  var itemList = Object.keys(items);
+  var k = 4;
+  while (k < itemList.length) {
+    if (k !== 4)
+      document.write("<tr>");
+    for (var j = 0; j < rowLength; j++) {
+      if (k === 4 || k == 9) j = 2;
+      var x = itemList[k];
 
-            // boss tables (pendant/crystal, medallion)
-            if(x.substring(0,4) == "boss"){
-                var d = prizes.length;
-                prizes[d] = 0;
+      // boss tables (pendant/crystal, medallion)
+      if (x.substring(0,4) === "boss") {
+        var d = prizes.length;
+        prizes[d] = 0;
 
-                document.write("<td id='"+x+"' style='background-image:url(images/"+x+".png);'>");
-                document.write("<table cellpadding='0' cellspacing='0' class='lonk'>");
-                    document.write("<tr>");
-                        document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
-                        document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
-                    document.write("</tr>");
-                    document.write("<tr>");
-                        // Does dungeon have a medallion?
-                        if(d>=8)
-                            document.write("<th id='medallion"+(d-8)+"' onClick='toggleMedallion("+(d-8)+")' class='corner' style='background-image:url(images/medallion0.png)'></th>");
-                        else
-                            document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
-                        document.write("<th id='dungeonPrize"+d+"' onClick='toggleDungeon("+d+")' class='corner' style='background-image:url(images/dungeon0.png)'></th>");
-                    document.write("</tr>");
-                    document.write("</table>");
-                document.write("</td>");
-            }
-            else {
-                if(x.substring(0,5) == "chest"){
-                    document.write("<td style='background-image:url(images/chest"+items[x]+".png);' ");
-                }
-                else
-                    document.write("<td style='background-image:url(images/"+x+".png);' ");
-                document.write("id='"+x+"' ");
-                document.write("class='"+!!items[x]+"' ");
-                document.write("onClick='toggle("+'"'+x+'"'+")'>");
-                document.write("</td>");
-            }
+        document.write("<td id='"+x+"' style='background-image:url(images/"+x+".png);'>");
+          document.write("<table cellpadding='0' cellspacing='0' class='lonk'>");
+            document.write("<tr>");
+              document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+              document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+            document.write("</tr>");
+            document.write("<tr>");
+        // Does dungeon have a medallion?
+        if (d >= 8)
+              document.write("<th id='medallion"+(d-8)+"' onClick='toggleMedallion("+(d-8)+")' class='corner' style='background-image:url(images/medallion0.png)'></th>");
+        else
+              document.write("<th onClick='toggle("+'"'+x+'"'+")'></th>");
+              document.write("<th id='dungeonPrize"+d+"' onClick='toggleDungeon("+d+")' class='corner' style='background-image:url(images/dungeon0.png)'></th>");
+            document.write("</tr>");
+          document.write("</table>");
+        document.write("</td>");
+      } else {
+        if (x.substring(0,5) === "chest")
+        document.write("<td style='background-image:url(images/chest"+items[x]+".png);' ");
+        else
+        document.write("<td style='background-image:url(images/"+x+".png);' ");
+          document.write("id='"+x+"' ");
+          document.write("class='"+!!items[x]+"' ");
+          document.write("onClick='toggle("+'"'+x+'"'+")'>");
+        document.write("</td>");
+      }
 
-        if(++k == itemList.length)
-        break;
+      if (++k === itemList.length) break;
     }
-    document.write("</tr>");
-}
+      document.write("</tr>");
+  }
 
   swordImage = mode === "open" ? "sword.png" : "sword1.png";
 
-document.write('</table>');
-document.getElementById("sword").style.backgroundImage = "url(images/"+swordImage+")";
-document.getElementById("shield").style.backgroundImage = "url(images/shield.png)";
+    document.write('</table>');
+  document.getElementById("sword").style.backgroundImage = "url(images/"+swordImage+")";
+  document.getElementById("shield").style.backgroundImage = "url(images/shield.png)";
 
-if (mapEnabled) {
+  if (mapEnabled) {
     // Initialize all chests on the map
     document.write('<div>');
-        for(var k=0; k<chests.length; k++){
-            document.write("<span style='background-image:url(images/poi.png);' id='"+k+"' onClick='toggleChest("+k+")' onMouseover='highlight("+k+")' onMouseout='unhighlight("+k+")'></span>");
-            document.getElementById(k).style.left = chests[k].x;
-            document.getElementById(k).style.top = chests[k].y;
-            if(chests[k].isOpened)
-            document.getElementById(k).className = "chest opened";
-            else
-                document.getElementById(k).className = "chest " + chests[k].isAvailable();
-        }
+    for (var k = 0; k < chests.length; k++) {
+      document.write("<span style='background-image:url(images/poi.png);' id='"+k+"' onClick='toggleChest("+k+")' onMouseover='highlight("+k+")' onMouseout='unhighlight("+k+")'></span>");
+      document.getElementById(k).style.left = chests[k].x;
+      document.getElementById(k).style.top = chests[k].y;
+      document.getElementById(k).className = chests[k].isOpened ?
+        "chest opened" :
+        "chest " + chests[k].isAvailable();
+    }
 
-        document.write("<span style='background-image:url(images/agahnim.png);' id='bossMapAgahnim' onMouseover='highlightAgahnim()' onMouseout='unhighlightAgahnim()'></span>");
-        document.getElementById("bossMapAgahnim").style.left = agahnim.x;
-        document.getElementById("bossMapAgahnim").style.top = agahnim.y;
-        document.getElementById("bossMapAgahnim").className = "boss";
+    document.write("<span style='background-image:url(images/agahnim.png);' id='bossMapAgahnim' onMouseover='highlightAgahnim()' onMouseout='unhighlightAgahnim()'></span>");
+    document.getElementById("bossMapAgahnim").style.left = agahnim.x;
+    document.getElementById("bossMapAgahnim").style.top = agahnim.y;
+    document.getElementById("bossMapAgahnim").className = "boss";
 
-        document.write("<span style='background-image:url(images/poi.png);' id='castle' onMouseover='highlightAgahnim()' onMouseout='unhighlightAgahnim()'></span>");
-        document.getElementById("castle").style.left = agahnim.x;
-        document.getElementById("castle").style.top = agahnim.y;
-        document.getElementById("castle").className = "castle " + agahnim.isAvailable();
+    document.write("<span style='background-image:url(images/poi.png);' id='castle' onMouseover='highlightAgahnim()' onMouseout='unhighlightAgahnim()'></span>");
+    document.getElementById("castle").style.left = agahnim.x;
+    document.getElementById("castle").style.top = agahnim.y;
+    document.getElementById("castle").className = "castle " + agahnim.isAvailable();
 
-        // Dungeon bosses & chests
-        for(var k=0; k<dungeons.length; k++){
-            document.write("<span style='background-image:url(images/"+dungeons[k].image+");' id='bossMap"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
-            document.getElementById("bossMap"+k).style.left = dungeons[k].x;
-            document.getElementById("bossMap"+k).style.top = dungeons[k].y;
-            document.getElementById("bossMap"+k).className = "boss " + dungeons[k].isBeatable();
+    // Dungeon bosses & chests
+    for (var k = 0; k < dungeons.length; k++) {
+      document.write("<span style='background-image:url(images/"+dungeons[k].image+");' id='bossMap"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
+      document.getElementById("bossMap"+k).style.left = dungeons[k].x;
+      document.getElementById("bossMap"+k).style.top = dungeons[k].y;
+      document.getElementById("bossMap"+k).className = "boss " + dungeons[k].isBeatable();
 
-            document.write("<span style='background-image:url(images/poi.png)' id='dungeon"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
-            document.getElementById("dungeon"+k).style.left = dungeons[k].x;
-            document.getElementById("dungeon"+k).style.top = dungeons[k].y;
-            document.getElementById("dungeon"+k).className = "dungeon " + dungeons[k].canGetChest();
-        }
-        document.write('<span id="caption">&nbsp</span>');
+      document.write("<span style='background-image:url(images/poi.png)' id='dungeon"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");
+      document.getElementById("dungeon"+k).style.left = dungeons[k].x;
+      document.getElementById("dungeon"+k).style.top = dungeons[k].y;
+      document.getElementById("dungeon"+k).className = "dungeon " + dungeons[k].canGetChest();
+    }
+    document.write('<span id="caption">&nbsp</span>');
     document.write('</div>');
-}
-</script>
+  }
+  </script>
 
 </body>
 </html>
