@@ -2,9 +2,7 @@ var rowLength = 7;
 var prizes = [];
 var medallions = [0, 0];
 var mode = getQueryVariable("mode");
-var mapEnabled = getQueryVariable("map");
-//convert mapenabled into a bool.
-mapEnabled = (mapEnabled == "true");
+var mapEnabled = getQueryVariable("map") === "true";
 
 // Event of clicking on the item tracker
 function toggle(label){
