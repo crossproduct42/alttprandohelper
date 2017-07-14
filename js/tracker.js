@@ -164,4 +164,27 @@
             document.getElementById("caption").innerHTML = "&nbsp;";
         };
     }
+
+    window.start = function() {
+        for (var k = 0; k < dungeons.length; k++) {
+            prizes[k] = 0;
+        }
+
+        var swordImage = mode === "open" ? "sword.png" : "sword1.png";
+        document.getElementById("sword").style.backgroundImage = "url(images/"+swordImage+")";
+
+        if (mapEnabled) {
+            for (k = 0; k < chests.length; k++) {
+                document.getElementById("chestMap"+k).className = chests[k].isOpened ? "chest opened" : "chest " + chests[k].isAvailable();
+            }
+            document.getElementById("bossMapAgahnim").className = "boss";
+            document.getElementById("castle").className = "castle " + agahnim.isAvailable();
+            for (k = 0; k < dungeons.length; k++) {
+                document.getElementById("bossMap"+k).className = "boss " + dungeons[k].isBeatable();
+                document.getElementById("dungeon"+k).className = "dungeon " + dungeons[k].canGetChest();
+            }
+        } else {
+            document.getElementById("map").style.display = "none";
+        }
+    };
 }(window));
