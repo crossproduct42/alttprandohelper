@@ -1,7 +1,7 @@
 (function(window) {
     'use strict';
 
-    var mode = getQueryVariable('mode');
+    var mode = get_query_variable('mode');
     var sword = mode === 'open' ? 0 : 1;
 
     window.items = {
@@ -63,7 +63,7 @@
         chest9: 5
     };
 
-    window.itemsMin = {
+    window.items_min = {
         sword:0,
         shield:0,
         tunic:1,
@@ -88,7 +88,7 @@
         boss9: 1
     };
 
-    window.itemsMax = {
+    window.items_max = {
         sword:4,
         shield:3,
         tunic:3,
