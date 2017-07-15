@@ -97,7 +97,7 @@
             }
             // Change the mouseover text on the map
             var dungeon_name = n === 0 ? 'Misery Mire' : 'Turtle Rock';
-            dungeons[8+n].name = dungeon_name + ' <img src="images/medallion'+medallions[n]+'.png" class="mini"><img src="images/lantern.png" class="mini">';
+            dungeons[8+n].name = dungeon_name + ' <img src="images/dungeons/medallion'+medallions[n]+'.png" class="mini"><img src="images/items/lantern.png" class="mini">';
         }
     };
 
