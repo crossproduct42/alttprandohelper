@@ -17,14 +17,14 @@
     <!-- Top left cell is Link. Don't move it. I can't make the CSS work any other way :( -->
     <!-- EDIT: I guess I could do it similar to the boss squares, but that's annoying -->
     <tr>
-      <td colspan="2" rowspan="2"id="tunic" style="background-image: url(images/tunicb.png);">
+      <td colspan="2" rowspan="2" id="tunic" class="step-1b">
         <table cellpadding="0" cellspacing="0" class="stoops" border="0">
           <tr>
             <th onClick="toggle('tunic')"></th>
             <td id="sword" onClick="toggle('sword')"></td>
           </tr>
           <tr>
-            <td id="shield" onClick="toggle('shield')" style="background-image: url(images/shield.png)"></td>
+            <td id="shield" onClick="toggle('shield')"></td>
             <th>
               <table cellpadding="0" cellspacing="0" border="0" class="lonk">
                 <tr>
@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                   <th onClick="toggle('tunic')"></th>
-                  <th id="moonpearl" class="false" onClick="toggle('moonpearl')" style="background-image:url(images/moonpearl.png); width:48px; height:48px;"></th>
+                  <th id="moonpearl" class="false" onClick="toggle('moonpearl')"></th>
                 </tr>
               </table>
             </th>
@@ -41,21 +41,21 @@
         </table>
       </td>
 
-      <td id="bow" class="false" onClick="toggle('bow')" style="background-image:url(images/bow.png);"></td>
-      <td id="boomerang" class="false" onClick="toggle('boomerang')" style="background-image:url(images/boomerang.png);"></td>
-      <td id="hookshot" class="false" onClick="toggle('hookshot')" style="background-image:url(images/hookshot.png);"></td>
-      <td id="mushroom" class="false" onClick="toggle('mushroom')" style="background-image:url(images/mushroom.png);"></td>
-      <td id="powder" class="false" onClick="toggle('powder')" style="background-image:url(images/powder.png);"></td>
+      <td id="bow" class="false" onClick="toggle('bow')"></td>
+      <td id="boomerang" class="false" onClick="toggle('boomerang')"></td>
+      <td id="hookshot" class="false" onClick="toggle('hookshot')"></td>
+      <td id="mushroom" class="false" onClick="toggle('mushroom')"></td>
+      <td id="powder" class="false" onClick="toggle('powder')"></td>
     </tr>
     <tr>
-      <td id="firerod" class="false" onClick="toggle('firerod')" style="background-image:url(images/firerod.png);"></td>
-      <td id="icerod" class="false" onClick="toggle('icerod')" style="background-image:url(images/icerod.png);"></td>
-      <td id="bombos" class="false" onClick="toggle('bombos')" style="background-image:url(images/bombos.png);"></td>
-      <td id="ether" class="false" onClick="toggle('ether')" style="background-image:url(images/ether.png);"></td>
-      <td id="quake" class="false" onClick="toggle('quake')" style="background-image:url(images/quake.png);"></td>
+      <td id="firerod" class="false" onClick="toggle('firerod')"></td>
+      <td id="icerod" class="false" onClick="toggle('icerod')"></td>
+      <td id="bombos" class="false" onClick="toggle('bombos')"></td>
+      <td id="ether" class="false" onClick="toggle('ether')"></td>
+      <td id="quake" class="false" onClick="toggle('quake')"></td>
     </tr>
     <tr>
-      <td id="boss0" style="background-image:url(images/boss0.png);">
+      <td id="boss0" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss0')"></th>
@@ -63,19 +63,19 @@
           </tr>
           <tr>
             <th onClick="toggle('boss0')"></th>
-            <th id="dungeonPrize0" class="corner" onClick="toggle_dungeon(0)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize0" class="corner prize-0" onClick="toggle_dungeon(0)"></th>
           </tr>
         </table>
       </td>
-      <td id="chest0" class="true" onClick="toggle('chest0')" style="background-image:url(images/chest3.png);"></td>
-      <td id="lantern" class="false" onClick="toggle('lantern')" style="background-image:url(images/lantern.png);"></td>
-      <td id="hammer" class="false" onClick="toggle('hammer')" style="background-image:url(images/hammer.png);"></td>
-      <td id="shovel" class="false" onClick="toggle('shovel')" style="background-image:url(images/shovel.png);"></td>
-      <td id="net" class="false" onClick="toggle('net')" style="background-image:url(images/net.png);"></td>
-      <td id="book" class="false" onClick="toggle('book')" style="background-image:url(images/book.png);"></td>
+      <td id="chest0" class="chest-3" onClick="toggle('chest0')"></td>
+      <td id="lantern" class="false" onClick="toggle('lantern')"></td>
+      <td id="hammer" class="false" onClick="toggle('hammer')"></td>
+      <td id="shovel" class="false" onClick="toggle('shovel')"></td>
+      <td id="net" class="false" onClick="toggle('net')"></td>
+      <td id="book" class="false" onClick="toggle('book')"></td>
     </tr>
     <tr>
-      <td id="boss1" style="background-image:url(images/boss1.png);">
+      <td id="boss1" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss1')"></th>
@@ -83,19 +83,19 @@
           </tr>
           <tr>
             <th onClick="toggle('boss1')"></th>
-            <th id="dungeonPrize1" class="corner" onClick="toggle_dungeon(1)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize1" class="corner prize-0" onClick="toggle_dungeon(1)"></th>
           </tr>
         </table>
       </td>
-      <td id="chest1" class="true" onClick="toggle('chest1')" style="background-image:url(images/chest2.png);"></td>
-      <td id="bottle" class="false" onClick="toggle('bottle')" style="background-image:url(images/bottle.png);"></td>
-      <td id="somaria" class="false" onClick="toggle('somaria')" style="background-image:url(images/somaria.png);"></td>
-      <td id="byrna" class="false" onClick="toggle('byrna')" style="background-image:url(images/byrna.png);"></td>
-      <td id="cape" class="false" onClick="toggle('cape')" style="background-image:url(images/cape.png);"></td>
-      <td id="mirror" class="false" onClick="toggle('mirror')" style="background-image:url(images/mirror.png);"></td>
+      <td id="chest1" class="chest-2" onClick="toggle('chest1')"></td>
+      <td id="bottle" class="false" onClick="toggle('bottle')"></td>
+      <td id="somaria" class="false" onClick="toggle('somaria')"></td>
+      <td id="byrna" class="false" onClick="toggle('byrna')"></td>
+      <td id="cape" class="false" onClick="toggle('cape')"></td>
+      <td id="mirror" class="false" onClick="toggle('mirror')"></td>
     </tr>
     <tr>
-      <td id="boss2" style="background-image:url(images/boss2.png);">
+      <td id="boss2" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss2')"></th>
@@ -103,19 +103,19 @@
           </tr>
           <tr>
             <th onClick="toggle('boss2')"></th>
-            <th id="dungeonPrize2" class="corner" onClick="toggle_dungeon(2)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize2" class="corner prize-0" onClick="toggle_dungeon(2)"></th>
           </tr>
         </table>
       </td>
-      <td id="chest2" class="true" onClick="toggle('chest2')" style="background-image:url(images/chest2.png);"></td>
-      <td id="boots" class="false" onClick="toggle('boots')" style="background-image:url(images/boots.png);"></td>
-      <td id="glove" class="false" onClick="toggle('glove')" style="background-image:url(images/glove.png);"></td>
-      <td id="flippers" class="false" onClick="toggle('flippers')" style="background-image:url(images/flippers.png);"></td>
-      <td id="flute" class="false" onClick="toggle('flute')" style="background-image:url(images/flute.png);"></td>
-      <td id="agahnim" class="false" onClick="toggle('agahnim')" style="background-image:url(images/agahnim.png);"></td>
+      <td id="chest2" class="chest-2" onClick="toggle('chest2')"></td>
+      <td id="boots" class="false" onClick="toggle('boots')"></td>
+      <td id="glove" class="false" onClick="toggle('glove')"></td>
+      <td id="flippers" class="false" onClick="toggle('flippers')"></td>
+      <td id="flute" class="false" onClick="toggle('flute')"></td>
+      <td id="agahnim" class="false" onClick="toggle('agahnim')"></td>
     </tr>
     <tr>
-      <td id="boss3" style="background-image:url(images/boss3.png);">
+      <td id="boss3" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss3')"></th>
@@ -123,11 +123,11 @@
           </tr>
           <tr>
             <th onClick="toggle('boss3')"></th>
-            <th id="dungeonPrize3" class="corner" onClick="toggle_dungeon(3)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize3" class="corner prize-0" onClick="toggle_dungeon(3)"></th>
           </tr>
         </table>
       </td>
-      <td id="boss4" style="background-image:url(images/boss4.png);">
+      <td id="boss4" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss4')"></th>
@@ -135,11 +135,11 @@
           </tr>
           <tr>
             <th onClick="toggle('boss4')"></th>
-            <th id="dungeonPrize4" class="corner" onClick="toggle_dungeon(4)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize4" class="corner prize-0" onClick="toggle_dungeon(4)"></th>
           </tr>
         </table>
       </td>
-      <td id="boss5" style="background-image:url(images/boss5.png);">
+      <td id="boss5" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss5')"></th>
@@ -147,11 +147,11 @@
           </tr>
           <tr>
             <th onClick="toggle('boss5')"></th>
-            <th id="dungeonPrize5" class="corner" onClick="toggle_dungeon(5)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize5" class="corner prize-0" onClick="toggle_dungeon(5)"></th>
           </tr>
         </table>
       </td>
-      <td id="boss6" style="background-image:url(images/boss6.png);">
+      <td id="boss6" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss6')"></th>
@@ -159,11 +159,11 @@
           </tr>
           <tr>
             <th onClick="toggle('boss6')"></th>
-            <th id="dungeonPrize6" class="corner" onClick="toggle_dungeon(6)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize6" class="corner prize-0" onClick="toggle_dungeon(6)"></th>
           </tr>
         </table>
       </td>
-      <td id="boss7" style="background-image:url(images/boss7.png);">
+      <td id="boss7" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss7')"></th>
@@ -171,133 +171,133 @@
           </tr>
           <tr>
             <th onClick="toggle('boss7')"></th>
-            <th id="dungeonPrize7" class="corner" onClick="toggle_dungeon(7)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="dungeonPrize7" class="corner prize-0" onClick="toggle_dungeon(7)"></th>
           </tr>
         </table>
       </td>
-      <td id="boss8" style="background-image:url(images/boss8.png);">
+      <td id="boss8" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss8')"></th>
             <th onClick="toggle('boss8')"></th>
           </tr>
           <tr>
-            <th id="medallion0" class="corner" onClick="toggle_medallion(0)" style="background-image:url(images/medallion0.png)"></th>
-            <th id="dungeonPrize8" class="corner" onClick="toggle_dungeon(8)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="medallion0" class="corner medallion-0" onClick="toggle_medallion(0)"></th>
+            <th id="dungeonPrize8" class="corner prize-0" onClick="toggle_dungeon(8)"></th>
           </tr>
         </table>
       </td>
-      <td id="boss9" style="background-image:url(images/boss9.png);">
+      <td id="boss9" class="step-1">
         <table cellpadding="0" cellspacing="0" class="lonk">
           <tr>
             <th onClick="toggle('boss9')"></th>
             <th onClick="toggle('boss9')"></th>
           </tr>
           <tr>
-            <th id="medallion1" class="corner" onClick="toggle_medallion(1)" style="background-image:url(images/medallion0.png)"></th>
-            <th id="dungeonPrize9" class="corner" onClick="toggle_dungeon(9)" style="background-image:url(images/dungeon0.png)"></th>
+            <th id="medallion1" class="corner medallion-0" onClick="toggle_medallion(1)"></th>
+            <th id="dungeonPrize9" class="corner prize-0" onClick="toggle_dungeon(9)"></th>
           </tr>
         </table>
       </td>
     </tr>
     <tr>
-      <td id="chest3" class="true" onClick="toggle('chest3')" style="background-image:url(images/chest5.png);"></td>
-      <td id="chest4" class="true" onClick="toggle('chest4')" style="background-image:url(images/chest6.png);"></td>
-      <td id="chest5" class="true" onClick="toggle('chest5')" style="background-image:url(images/chest2.png);"></td>
-      <td id="chest6" class="true" onClick="toggle('chest6')" style="background-image:url(images/chest4.png);"></td>
-      <td id="chest7" class="true" onClick="toggle('chest7')" style="background-image:url(images/chest3.png);"></td>
-      <td id="chest8" class="true" onClick="toggle('chest8')" style="background-image:url(images/chest2.png);"></td>
-      <td id="chest9" class="true" onClick="toggle('chest9')" style="background-image:url(images/chest5.png);"></td>
+      <td id="chest3" class="chest-5" onClick="toggle('chest3')"></td>
+      <td id="chest4" class="chest-6" onClick="toggle('chest4')"></td>
+      <td id="chest5" class="chest-2" onClick="toggle('chest5')"></td>
+      <td id="chest6" class="chest-4" onClick="toggle('chest6')"></td>
+      <td id="chest7" class="chest-3" onClick="toggle('chest7')"></td>
+      <td id="chest8" class="chest-2" onClick="toggle('chest8')"></td>
+      <td id="chest9" class="chest-5" onClick="toggle('chest9')"></td>
     </tr>
   </table>
 
   <div id="map">
-    <span id="chestMap0" onClick="toggle_chest(0)" onMouseover="highlight(0)" onMouseout="unhighlight(0)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap1" onClick="toggle_chest(1)" onMouseover="highlight(1)" onMouseout="unhighlight(1)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap2" onClick="toggle_chest(2)" onMouseover="highlight(2)" onMouseout="unhighlight(2)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap3" onClick="toggle_chest(3)" onMouseover="highlight(3)" onMouseout="unhighlight(3)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap4" onClick="toggle_chest(4)" onMouseover="highlight(4)" onMouseout="unhighlight(4)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap5" onClick="toggle_chest(5)" onMouseover="highlight(5)" onMouseout="unhighlight(5)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap6" onClick="toggle_chest(6)" onMouseover="highlight(6)" onMouseout="unhighlight(6)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap7" onClick="toggle_chest(7)" onMouseover="highlight(7)" onMouseout="unhighlight(7)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap8" onClick="toggle_chest(8)" onMouseover="highlight(8)" onMouseout="unhighlight(8)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap9" onClick="toggle_chest(9)" onMouseover="highlight(9)" onMouseout="unhighlight(9)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap10" onClick="toggle_chest(10)" onMouseover="highlight(10)" onMouseout="unhighlight(10)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap11" onClick="toggle_chest(11)" onMouseover="highlight(11)" onMouseout="unhighlight(11)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap12" onClick="toggle_chest(12)" onMouseover="highlight(12)" onMouseout="unhighlight(12)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap13" onClick="toggle_chest(13)" onMouseover="highlight(13)" onMouseout="unhighlight(13)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap14" onClick="toggle_chest(14)" onMouseover="highlight(14)" onMouseout="unhighlight(14)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap15" onClick="toggle_chest(15)" onMouseover="highlight(15)" onMouseout="unhighlight(15)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap16" onClick="toggle_chest(16)" onMouseover="highlight(16)" onMouseout="unhighlight(16)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap17" onClick="toggle_chest(17)" onMouseover="highlight(17)" onMouseout="unhighlight(17)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap18" onClick="toggle_chest(18)" onMouseover="highlight(18)" onMouseout="unhighlight(18)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap19" onClick="toggle_chest(19)" onMouseover="highlight(19)" onMouseout="unhighlight(19)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap20" onClick="toggle_chest(20)" onMouseover="highlight(20)" onMouseout="unhighlight(20)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap21" onClick="toggle_chest(21)" onMouseover="highlight(21)" onMouseout="unhighlight(21)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap22" onClick="toggle_chest(22)" onMouseover="highlight(22)" onMouseout="unhighlight(22)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap23" onClick="toggle_chest(23)" onMouseover="highlight(23)" onMouseout="unhighlight(23)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap24" onClick="toggle_chest(24)" onMouseover="highlight(24)" onMouseout="unhighlight(24)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap25" onClick="toggle_chest(25)" onMouseover="highlight(25)" onMouseout="unhighlight(25)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap26" onClick="toggle_chest(26)" onMouseover="highlight(26)" onMouseout="unhighlight(26)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap27" onClick="toggle_chest(27)" onMouseover="highlight(27)" onMouseout="unhighlight(27)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap28" onClick="toggle_chest(28)" onMouseover="highlight(28)" onMouseout="unhighlight(28)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap29" onClick="toggle_chest(29)" onMouseover="highlight(29)" onMouseout="unhighlight(29)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap30" onClick="toggle_chest(30)" onMouseover="highlight(30)" onMouseout="unhighlight(30)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap31" onClick="toggle_chest(31)" onMouseover="highlight(31)" onMouseout="unhighlight(31)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap32" onClick="toggle_chest(32)" onMouseover="highlight(32)" onMouseout="unhighlight(32)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap33" onClick="toggle_chest(33)" onMouseover="highlight(33)" onMouseout="unhighlight(33)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap34" onClick="toggle_chest(34)" onMouseover="highlight(34)" onMouseout="unhighlight(34)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap35" onClick="toggle_chest(35)" onMouseover="highlight(35)" onMouseout="unhighlight(35)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap36" onClick="toggle_chest(36)" onMouseover="highlight(36)" onMouseout="unhighlight(36)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap37" onClick="toggle_chest(37)" onMouseover="highlight(37)" onMouseout="unhighlight(37)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap38" onClick="toggle_chest(38)" onMouseover="highlight(38)" onMouseout="unhighlight(38)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap39" onClick="toggle_chest(39)" onMouseover="highlight(39)" onMouseout="unhighlight(39)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap40" onClick="toggle_chest(40)" onMouseover="highlight(40)" onMouseout="unhighlight(40)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap41" onClick="toggle_chest(41)" onMouseover="highlight(41)" onMouseout="unhighlight(41)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap42" onClick="toggle_chest(42)" onMouseover="highlight(42)" onMouseout="unhighlight(42)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap43" onClick="toggle_chest(43)" onMouseover="highlight(43)" onMouseout="unhighlight(43)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap44" onClick="toggle_chest(44)" onMouseover="highlight(44)" onMouseout="unhighlight(44)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap45" onClick="toggle_chest(45)" onMouseover="highlight(45)" onMouseout="unhighlight(45)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap46" onClick="toggle_chest(46)" onMouseover="highlight(46)" onMouseout="unhighlight(46)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap47" onClick="toggle_chest(47)" onMouseover="highlight(47)" onMouseout="unhighlight(47)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap48" onClick="toggle_chest(48)" onMouseover="highlight(48)" onMouseout="unhighlight(48)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap49" onClick="toggle_chest(49)" onMouseover="highlight(49)" onMouseout="unhighlight(49)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap50" onClick="toggle_chest(50)" onMouseover="highlight(50)" onMouseout="unhighlight(50)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap51" onClick="toggle_chest(51)" onMouseover="highlight(51)" onMouseout="unhighlight(51)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap52" onClick="toggle_chest(52)" onMouseover="highlight(52)" onMouseout="unhighlight(52)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap53" onClick="toggle_chest(53)" onMouseover="highlight(53)" onMouseout="unhighlight(53)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap54" onClick="toggle_chest(54)" onMouseover="highlight(54)" onMouseout="unhighlight(54)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap55" onClick="toggle_chest(55)" onMouseover="highlight(55)" onMouseout="unhighlight(55)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap56" onClick="toggle_chest(56)" onMouseover="highlight(56)" onMouseout="unhighlight(56)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap57" onClick="toggle_chest(57)" onMouseover="highlight(57)" onMouseout="unhighlight(57)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap58" onClick="toggle_chest(58)" onMouseover="highlight(58)" onMouseout="unhighlight(58)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap59" onClick="toggle_chest(59)" onMouseover="highlight(59)" onMouseout="unhighlight(59)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap60" onClick="toggle_chest(60)" onMouseover="highlight(60)" onMouseout="unhighlight(60)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap61" onClick="toggle_chest(61)" onMouseover="highlight(61)" onMouseout="unhighlight(61)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap62" onClick="toggle_chest(62)" onMouseover="highlight(62)" onMouseout="unhighlight(62)" style="background-image:url(images/poi.png);"></span>
-    <span id="chestMap63" onClick="toggle_chest(63)" onMouseover="highlight(63)" onMouseout="unhighlight(63)" style="background-image:url(images/poi.png);"></span>
-    <span id="bossMapAgahnim" onMouseover="highlight_agahnim()" onMouseout="unhighlight_agahnim()" style="background-image:url(images/agahnim.png)"></span>
-    <span id="castle" onMouseover="highlight_agahnim()" onMouseout="unhighlight_agahnim()" style="background-image:url(images/poi.png);"></span>
-    <span id="bossMap0" onMouseover="highlight_dungeon(0)" onMouseout="unhighlight_dungeon(0)" style="background-image:url(images/boss02.png);"></span>
-    <span id="dungeon0" onMouseover="highlight_dungeon(0)" onMouseout="unhighlight_dungeon(0)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap1" onMouseover="highlight_dungeon(1)" onMouseout="unhighlight_dungeon(1)" style="background-image:url(images/boss12.png);"></span>
-    <span id="dungeon1" onMouseover="highlight_dungeon(1)" onMouseout="unhighlight_dungeon(1)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap2" onMouseover="highlight_dungeon(2)" onMouseout="unhighlight_dungeon(2)" style="background-image:url(images/boss22.png);"></span>
-    <span id="dungeon2" onMouseover="highlight_dungeon(2)" onMouseout="unhighlight_dungeon(2)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap3" onMouseover="highlight_dungeon(3)" onMouseout="unhighlight_dungeon(3)" style="background-image:url(images/boss32.png);"></span>
-    <span id="dungeon3" onMouseover="highlight_dungeon(3)" onMouseout="unhighlight_dungeon(3)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap4" onMouseover="highlight_dungeon(4)" onMouseout="unhighlight_dungeon(4)" style="background-image:url(images/boss42.png);"></span>
-    <span id="dungeon4" onMouseover="highlight_dungeon(4)" onMouseout="unhighlight_dungeon(4)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap5" onMouseover="highlight_dungeon(5)" onMouseout="unhighlight_dungeon(5)" style="background-image:url(images/boss52.png);"></span>
-    <span id="dungeon5" onMouseover="highlight_dungeon(5)" onMouseout="unhighlight_dungeon(5)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap6" onMouseover="highlight_dungeon(6)" onMouseout="unhighlight_dungeon(6)" style="background-image:url(images/boss62.png);"></span>
-    <span id="dungeon6" onMouseover="highlight_dungeon(6)" onMouseout="unhighlight_dungeon(6)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap7" onMouseover="highlight_dungeon(7)" onMouseout="unhighlight_dungeon(7)" style="background-image:url(images/boss72.png);"></span>
-    <span id="dungeon7" onMouseover="highlight_dungeon(7)" onMouseout="unhighlight_dungeon(7)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap8" onMouseover="highlight_dungeon(8)" onMouseout="unhighlight_dungeon(8)" style="background-image:url(images/boss82.png);"></span>
-    <span id="dungeon8" onMouseover="highlight_dungeon(8)" onMouseout="unhighlight_dungeon(8)" style="background-image:url(images/poi.png)"></span>
-    <span id="bossMap9" onMouseover="highlight_dungeon(9)" onMouseout="unhighlight_dungeon(9)" style="background-image:url(images/boss92.png);"></span>
-    <span id="dungeon9" onMouseover="highlight_dungeon(9)" onMouseout="unhighlight_dungeon(9)" style="background-image:url(images/poi.png)"></span>
+    <span id="chestMap0" onClick="toggle_chest(0)" onMouseover="highlight(0)" onMouseout="unhighlight(0)"></span>
+    <span id="chestMap1" onClick="toggle_chest(1)" onMouseover="highlight(1)" onMouseout="unhighlight(1)"></span>
+    <span id="chestMap2" onClick="toggle_chest(2)" onMouseover="highlight(2)" onMouseout="unhighlight(2)"></span>
+    <span id="chestMap3" onClick="toggle_chest(3)" onMouseover="highlight(3)" onMouseout="unhighlight(3)"></span>
+    <span id="chestMap4" onClick="toggle_chest(4)" onMouseover="highlight(4)" onMouseout="unhighlight(4)"></span>
+    <span id="chestMap5" onClick="toggle_chest(5)" onMouseover="highlight(5)" onMouseout="unhighlight(5)"></span>
+    <span id="chestMap6" onClick="toggle_chest(6)" onMouseover="highlight(6)" onMouseout="unhighlight(6)"></span>
+    <span id="chestMap7" onClick="toggle_chest(7)" onMouseover="highlight(7)" onMouseout="unhighlight(7)"></span>
+    <span id="chestMap8" onClick="toggle_chest(8)" onMouseover="highlight(8)" onMouseout="unhighlight(8)"></span>
+    <span id="chestMap9" onClick="toggle_chest(9)" onMouseover="highlight(9)" onMouseout="unhighlight(9)"></span>
+    <span id="chestMap10" onClick="toggle_chest(10)" onMouseover="highlight(10)" onMouseout="unhighlight(10)"></span>
+    <span id="chestMap11" onClick="toggle_chest(11)" onMouseover="highlight(11)" onMouseout="unhighlight(11)"></span>
+    <span id="chestMap12" onClick="toggle_chest(12)" onMouseover="highlight(12)" onMouseout="unhighlight(12)"></span>
+    <span id="chestMap13" onClick="toggle_chest(13)" onMouseover="highlight(13)" onMouseout="unhighlight(13)"></span>
+    <span id="chestMap14" onClick="toggle_chest(14)" onMouseover="highlight(14)" onMouseout="unhighlight(14)"></span>
+    <span id="chestMap15" onClick="toggle_chest(15)" onMouseover="highlight(15)" onMouseout="unhighlight(15)"></span>
+    <span id="chestMap16" onClick="toggle_chest(16)" onMouseover="highlight(16)" onMouseout="unhighlight(16)"></span>
+    <span id="chestMap17" onClick="toggle_chest(17)" onMouseover="highlight(17)" onMouseout="unhighlight(17)"></span>
+    <span id="chestMap18" onClick="toggle_chest(18)" onMouseover="highlight(18)" onMouseout="unhighlight(18)"></span>
+    <span id="chestMap19" onClick="toggle_chest(19)" onMouseover="highlight(19)" onMouseout="unhighlight(19)"></span>
+    <span id="chestMap20" onClick="toggle_chest(20)" onMouseover="highlight(20)" onMouseout="unhighlight(20)"></span>
+    <span id="chestMap21" onClick="toggle_chest(21)" onMouseover="highlight(21)" onMouseout="unhighlight(21)"></span>
+    <span id="chestMap22" onClick="toggle_chest(22)" onMouseover="highlight(22)" onMouseout="unhighlight(22)"></span>
+    <span id="chestMap23" onClick="toggle_chest(23)" onMouseover="highlight(23)" onMouseout="unhighlight(23)"></span>
+    <span id="chestMap24" onClick="toggle_chest(24)" onMouseover="highlight(24)" onMouseout="unhighlight(24)"></span>
+    <span id="chestMap25" onClick="toggle_chest(25)" onMouseover="highlight(25)" onMouseout="unhighlight(25)"></span>
+    <span id="chestMap26" onClick="toggle_chest(26)" onMouseover="highlight(26)" onMouseout="unhighlight(26)"></span>
+    <span id="chestMap27" onClick="toggle_chest(27)" onMouseover="highlight(27)" onMouseout="unhighlight(27)"></span>
+    <span id="chestMap28" onClick="toggle_chest(28)" onMouseover="highlight(28)" onMouseout="unhighlight(28)"></span>
+    <span id="chestMap29" onClick="toggle_chest(29)" onMouseover="highlight(29)" onMouseout="unhighlight(29)"></span>
+    <span id="chestMap30" onClick="toggle_chest(30)" onMouseover="highlight(30)" onMouseout="unhighlight(30)"></span>
+    <span id="chestMap31" onClick="toggle_chest(31)" onMouseover="highlight(31)" onMouseout="unhighlight(31)"></span>
+    <span id="chestMap32" onClick="toggle_chest(32)" onMouseover="highlight(32)" onMouseout="unhighlight(32)"></span>
+    <span id="chestMap33" onClick="toggle_chest(33)" onMouseover="highlight(33)" onMouseout="unhighlight(33)"></span>
+    <span id="chestMap34" onClick="toggle_chest(34)" onMouseover="highlight(34)" onMouseout="unhighlight(34)"></span>
+    <span id="chestMap35" onClick="toggle_chest(35)" onMouseover="highlight(35)" onMouseout="unhighlight(35)"></span>
+    <span id="chestMap36" onClick="toggle_chest(36)" onMouseover="highlight(36)" onMouseout="unhighlight(36)"></span>
+    <span id="chestMap37" onClick="toggle_chest(37)" onMouseover="highlight(37)" onMouseout="unhighlight(37)"></span>
+    <span id="chestMap38" onClick="toggle_chest(38)" onMouseover="highlight(38)" onMouseout="unhighlight(38)"></span>
+    <span id="chestMap39" onClick="toggle_chest(39)" onMouseover="highlight(39)" onMouseout="unhighlight(39)"></span>
+    <span id="chestMap40" onClick="toggle_chest(40)" onMouseover="highlight(40)" onMouseout="unhighlight(40)"></span>
+    <span id="chestMap41" onClick="toggle_chest(41)" onMouseover="highlight(41)" onMouseout="unhighlight(41)"></span>
+    <span id="chestMap42" onClick="toggle_chest(42)" onMouseover="highlight(42)" onMouseout="unhighlight(42)"></span>
+    <span id="chestMap43" onClick="toggle_chest(43)" onMouseover="highlight(43)" onMouseout="unhighlight(43)"></span>
+    <span id="chestMap44" onClick="toggle_chest(44)" onMouseover="highlight(44)" onMouseout="unhighlight(44)"></span>
+    <span id="chestMap45" onClick="toggle_chest(45)" onMouseover="highlight(45)" onMouseout="unhighlight(45)"></span>
+    <span id="chestMap46" onClick="toggle_chest(46)" onMouseover="highlight(46)" onMouseout="unhighlight(46)"></span>
+    <span id="chestMap47" onClick="toggle_chest(47)" onMouseover="highlight(47)" onMouseout="unhighlight(47)"></span>
+    <span id="chestMap48" onClick="toggle_chest(48)" onMouseover="highlight(48)" onMouseout="unhighlight(48)"></span>
+    <span id="chestMap49" onClick="toggle_chest(49)" onMouseover="highlight(49)" onMouseout="unhighlight(49)"></span>
+    <span id="chestMap50" onClick="toggle_chest(50)" onMouseover="highlight(50)" onMouseout="unhighlight(50)"></span>
+    <span id="chestMap51" onClick="toggle_chest(51)" onMouseover="highlight(51)" onMouseout="unhighlight(51)"></span>
+    <span id="chestMap52" onClick="toggle_chest(52)" onMouseover="highlight(52)" onMouseout="unhighlight(52)"></span>
+    <span id="chestMap53" onClick="toggle_chest(53)" onMouseover="highlight(53)" onMouseout="unhighlight(53)"></span>
+    <span id="chestMap54" onClick="toggle_chest(54)" onMouseover="highlight(54)" onMouseout="unhighlight(54)"></span>
+    <span id="chestMap55" onClick="toggle_chest(55)" onMouseover="highlight(55)" onMouseout="unhighlight(55)"></span>
+    <span id="chestMap56" onClick="toggle_chest(56)" onMouseover="highlight(56)" onMouseout="unhighlight(56)"></span>
+    <span id="chestMap57" onClick="toggle_chest(57)" onMouseover="highlight(57)" onMouseout="unhighlight(57)"></span>
+    <span id="chestMap58" onClick="toggle_chest(58)" onMouseover="highlight(58)" onMouseout="unhighlight(58)"></span>
+    <span id="chestMap59" onClick="toggle_chest(59)" onMouseover="highlight(59)" onMouseout="unhighlight(59)"></span>
+    <span id="chestMap60" onClick="toggle_chest(60)" onMouseover="highlight(60)" onMouseout="unhighlight(60)"></span>
+    <span id="chestMap61" onClick="toggle_chest(61)" onMouseover="highlight(61)" onMouseout="unhighlight(61)"></span>
+    <span id="chestMap62" onClick="toggle_chest(62)" onMouseover="highlight(62)" onMouseout="unhighlight(62)"></span>
+    <span id="chestMap63" onClick="toggle_chest(63)" onMouseover="highlight(63)" onMouseout="unhighlight(63)"></span>
+    <span id="bossMapAgahnim" onMouseover="highlight_agahnim()" onMouseout="unhighlight_agahnim()"></span>
+    <span id="castle" onMouseover="highlight_agahnim()" onMouseout="unhighlight_agahnim()"></span>
+    <span id="bossMap0" onMouseover="highlight_dungeon(0)" onMouseout="unhighlight_dungeon(0)"></span>
+    <span id="dungeon0" onMouseover="highlight_dungeon(0)" onMouseout="unhighlight_dungeon(0)"></span>
+    <span id="bossMap1" onMouseover="highlight_dungeon(1)" onMouseout="unhighlight_dungeon(1)"></span>
+    <span id="dungeon1" onMouseover="highlight_dungeon(1)" onMouseout="unhighlight_dungeon(1)"></span>
+    <span id="bossMap2" onMouseover="highlight_dungeon(2)" onMouseout="unhighlight_dungeon(2)"></span>
+    <span id="dungeon2" onMouseover="highlight_dungeon(2)" onMouseout="unhighlight_dungeon(2)"></span>
+    <span id="bossMap3" onMouseover="highlight_dungeon(3)" onMouseout="unhighlight_dungeon(3)"></span>
+    <span id="dungeon3" onMouseover="highlight_dungeon(3)" onMouseout="unhighlight_dungeon(3)"></span>
+    <span id="bossMap4" onMouseover="highlight_dungeon(4)" onMouseout="unhighlight_dungeon(4)"></span>
+    <span id="dungeon4" onMouseover="highlight_dungeon(4)" onMouseout="unhighlight_dungeon(4)"></span>
+    <span id="bossMap5" onMouseover="highlight_dungeon(5)" onMouseout="unhighlight_dungeon(5)"></span>
+    <span id="dungeon5" onMouseover="highlight_dungeon(5)" onMouseout="unhighlight_dungeon(5)"></span>
+    <span id="bossMap6" onMouseover="highlight_dungeon(6)" onMouseout="unhighlight_dungeon(6)"></span>
+    <span id="dungeon6" onMouseover="highlight_dungeon(6)" onMouseout="unhighlight_dungeon(6)"></span>
+    <span id="bossMap7" onMouseover="highlight_dungeon(7)" onMouseout="unhighlight_dungeon(7)"></span>
+    <span id="dungeon7" onMouseover="highlight_dungeon(7)" onMouseout="unhighlight_dungeon(7)"></span>
+    <span id="bossMap8" onMouseover="highlight_dungeon(8)" onMouseout="unhighlight_dungeon(8)"></span>
+    <span id="dungeon8" onMouseover="highlight_dungeon(8)" onMouseout="unhighlight_dungeon(8)"></span>
+    <span id="bossMap9" onMouseover="highlight_dungeon(9)" onMouseout="unhighlight_dungeon(9)"></span>
+    <span id="dungeon9" onMouseover="highlight_dungeon(9)" onMouseout="unhighlight_dungeon(9)"></span>
     <span id="caption">&nbsp;</span>
   </div>
 
