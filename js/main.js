@@ -6,7 +6,7 @@
         var mode = document.getElementById('option_mode').value;
         var map_enabled = document.getElementById('option_mapEnabled').value === 'true';
         var window_size = map_enabled ?
-            'width=1344, height=448' :
+            'width=1340, height=448' :
             'width=448, height=448';
 
         open('tracker.html?map='+map_enabled+'&mode='+mode, '', window_size+', menubar=0 scrollbars=0, titlebar=0, resizable=0, toolbar=0');
