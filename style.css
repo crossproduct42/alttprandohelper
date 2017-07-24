@@ -1,26 +1,49 @@
-body { margin: 0px; background-color: #101010; }
+body { margin: 0px; background-color: black; }
 
-.tracker {
+* { box-sizing: border-box; }
+
+.row:before,
+.row:after { content: " "; display: table; }
+.row:after { clear: both; }
+.cell { position: relative; float: left; }
+
+#app { width: 1340px; height: 448px; }
+
+#tracker .item,
+#tracker .boss,
+#tracker [id^="chest"] { width: 64px; height: 64px; }
+
+[class*="prize-"] {
+  width: 32px;
+  height: 32px;
   position: absolute;
-  left: 0px;
-  top: 0px;
-  background-color: #000;
+  bottom: 0;
+  right: 0;
+}
+[class*="medallion-"] {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  bottom: 0;
 }
 
-td { width: 64px; height: 64px; background-repeat: no-repeat; }
-
-.stoops { width: 128px; height: 128px; background-size: 200% 200%; }
-
-.lonk { width: 64px; height: 64px; }
-
-.corner { width: 32px; height: 32px; }
+#tracker #tunic { width: 128px; height: 128px; }
+#sword { position: absolute; top: 0; right: 0; }
+#shield { position: absolute; bottom: 0; left: 0; }
+#tracker #moonpearl {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 
 .true { opacity: 1; }
 .false { opacity: 0.25; }
 
 .mini { width: 16px; height: 16px; vertical-align: text-bottom; }
 
-.boss {
+#map .boss {
   width: 24px;
   height: 24px;
   margin-left: -12px;
@@ -51,22 +74,20 @@ td { width: 64px; height: 64px; background-repeat: no-repeat; }
   background-size: 100% 100%;
 }
 
-div {
+#map {
   width: 884px;
   height: 448px;
-  position: absolute;
-  left: 456px;
+  margin-left: 8px;
   background-image: url(images/overlay/map.png);
-  background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
-span {
+#caption {
   width: 100%;
   position: absolute;
   bottom: 0px;
   color: white;
-  background-color: #000;
+  background-color: black;
   font-family: "Times New Roman", Times, serif;
   text-align: center;
   font-size: 16px;
@@ -105,7 +126,7 @@ span {
 #shield.step-1 { background-image: url(images/items/shield1.png); }
 #shield.step-2 { background-image: url(images/items/shield2.png); }
 #shield.step-3 { background-image: url(images/items/shield3.png); }
-#moonpearl { width: 48px; height: 48px; background-image: url(images/items/moonpearl.png); }
+#moonpearl { background-image: url(images/items/moonpearl.png); }
 #bow { background-image: url(images/items/bow.png); }
 #bow.step-1 { background-image: url(images/items/bow1.png); }
 #bow.step-2 { background-image: url(images/items/bow2.png); }

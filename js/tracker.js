@@ -24,18 +24,20 @@
             return;
         }
         if ((typeof items[label]) === 'boolean') {
+            var type = document.getElementById(label).classList.item(0);
             items[label] = !items[label];
-            document.getElementById(label).className = items[label];
+            document.getElementById(label).className = type + ' ' + items[label];
         } else {
+            var type = document.getElementById(label).classList.item(0);
             items[label] += 1;
             if (items[label] > items_max[label])
                 items[label] = items_min[label];
-            document.getElementById(label).className = items[label] === 0 ?
-                'false' : 'true step-' + items[label];
+            document.getElementById(label).className = type + ' ' + (items[label] === 0 ?
+                'false' : 'true step-' + items[label]);
         }
         // Initiate bunny graphics!
         if (label === 'moonpearl' || label === 'tunic') {
-            document.getElementById('tunic').className = 'step-' +
+            document.getElementById('tunic').className = 'item step-' +
                 items.tunic + (!items.moonpearl ? 'b' : '');
         }
 
@@ -65,7 +67,7 @@
         prizes[n] += 1;
         if (prizes[n] === 5) prizes[n] = 0;
 
-        document.getElementById('dungeonPrize'+n).className = 'corner prize-' + prizes[n];
+        document.getElementById('dungeonPrize'+n).className = 'prize-' + prizes[n];
 
         if (map_enabled) {
             // Update Sahasralah, Fat Fairy, and Master Sword Pedestal
@@ -82,7 +84,7 @@
         medallions[n] += 1;
         if (medallions[n] === 4) medallions[n] = 0;
 
-        document.getElementById('medallion'+n).className = 'corner medallion-' + medallions[n];
+        document.getElementById('medallion'+n).className = 'medallion-' + medallions[n];
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
@@ -153,7 +155,7 @@
             prizes[k] = 0;
         }
 
-        document.getElementById('sword').className = mode === 'open' ? 'false' : 'true step-1';
+        document.getElementById('sword').className = mode === 'open' ? 'item false' : 'item true step-1';
 
         if (map_enabled) {
             for (k = 0; k < chests.length; k++) {
