@@ -22,7 +22,7 @@
         ether: false,
         quake: false,
 
-        boss0: 1,
+        boss0: false,
         chest0: 3,
         lantern: false,
         hammer: false,
@@ -30,7 +30,7 @@
         net: false,
         book: false,
 
-        boss1: 1,
+        boss1: false,
         chest1: 2,
         bottle:0,
         somaria: false,
@@ -38,21 +38,21 @@
         cape: false,
         mirror: false,
 
-        boss2: 1,
+        boss2: false,
         chest2: 2,
         boots: false,
         glove: 0,
         flippers: false,
         flute: false,
-        agahnim: 0,
+        agahnim: false,
 
-        boss3: 1,
-        boss4: 1,
-        boss5: 1,
-        boss6: 1,
-        boss7: 1,
-        boss8: 1,
-        boss9: 1,
+        boss3: false,
+        boss4: false,
+        boss5: false,
+        boss6: false,
+        boss7: false,
+        boss8: false,
+        boss9: false,
 
         chest3: 5,
         chest4: 6,
@@ -71,21 +71,7 @@
         bottle:0,
         bow:0,
         boomerang:0,
-        glove:0,
-
-        boss0: 1,
-        boss1: 1,
-        boss2: 1,
-
-        agahnim:0,
-
-        boss3: 1,
-        boss4: 1,
-        boss5: 1,
-        boss6: 1,
-        boss7: 1,
-        boss8: 1,
-        boss9: 1
+        glove:0
     };
 
     window.items_max = {
@@ -97,20 +83,6 @@
         bow:3,
         boomerang:3,
         glove:2,
-
-        boss0: 2,
-        boss1: 2,
-        boss2: 2,
-
-        agahnim:1,
-
-        boss3: 2,
-        boss4: 2,
-        boss5: 2,
-        boss6: 2,
-        boss7: 2,
-        boss8: 2,
-        boss9: 2,
 
         chest0: 3,
         chest1: 2,

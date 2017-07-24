@@ -165,26 +165,16 @@ body { margin: 0px; background-color: black; }
 #flute { background-image: url(images/items/flute.png); }
 #agahnim, #bossMapAgahnim { background-image:url(images/dungeons/agahnim.png); }
 #agahnim.true { background-image:url(images/dungeons/agahnim1.png); }
-#boss0.step-1 { background-image: url(images/dungeons/boss0.png); }
-#boss0.step-2, #bossMap0 { background-image: url(images/dungeons/boss02.png); }
-#boss1.step-1 { background-image: url(images/dungeons/boss1.png); }
-#boss1.step-2, #bossMap1 { background-image: url(images/dungeons/boss12.png); }
-#boss2.step-1 { background-image: url(images/dungeons/boss2.png); }
-#boss2.step-2, #bossMap2 { background-image: url(images/dungeons/boss22.png); }
-#boss3.step-1 { background-image: url(images/dungeons/boss3.png); }
-#boss3.step-2, #bossMap3 { background-image: url(images/dungeons/boss32.png); }
-#boss4.step-1 { background-image: url(images/dungeons/boss4.png); }
-#boss4.step-2, #bossMap4 { background-image: url(images/dungeons/boss42.png); }
-#boss5.step-1 { background-image: url(images/dungeons/boss5.png); }
-#boss5.step-2, #bossMap5 { background-image: url(images/dungeons/boss52.png); }
-#boss6.step-1 { background-image: url(images/dungeons/boss6.png); }
-#boss6.step-2, #bossMap6 { background-image: url(images/dungeons/boss62.png); }
-#boss7.step-1 { background-image: url(images/dungeons/boss7.png); }
-#boss7.step-2, #bossMap7 { background-image: url(images/dungeons/boss72.png); }
-#boss8.step-1 { background-image: url(images/dungeons/boss8.png); }
-#boss8.step-2, #bossMap8 { background-image: url(images/dungeons/boss82.png); }
-#boss9.step-1 { background-image: url(images/dungeons/boss9.png); }
-#boss9.step-2, #bossMap9 { background-image: url(images/dungeons/boss92.png); }
+#boss0, #bossMap0 { background-image: url(images/dungeons/boss0.png); }
+#boss1, #bossMap1 { background-image: url(images/dungeons/boss1.png); }
+#boss2, #bossMap2 { background-image: url(images/dungeons/boss2.png); }
+#boss3, #bossMap3 { background-image: url(images/dungeons/boss3.png); }
+#boss4, #bossMap4 { background-image: url(images/dungeons/boss4.png); }
+#boss5, #bossMap5 { background-image: url(images/dungeons/boss5.png); }
+#boss6, #bossMap6 { background-image: url(images/dungeons/boss6.png); }
+#boss7, #bossMap7 { background-image: url(images/dungeons/boss7.png); }
+#boss8, #bossMap8 { background-image: url(images/dungeons/boss8.png); }
+#boss9, #bossMap9 { background-image: url(images/dungeons/boss9.png); }
 .prize-0 { background-image: url(images/dungeons/prize0.png); }
 .prize-1 { background-image: url(images/dungeons/prize1.png); }
 .prize-2 { background-image: url(images/dungeons/prize2.png); }
