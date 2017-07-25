@@ -8,11 +8,13 @@
 
     // Event of clicking on the item tracker
     window.toggle = function(label) {
+        var node = document.getElementById(label),
+            is_boss = node.classList.contains('boss');
         if (label.substring(0,5) === 'chest') {
             items[label] -= 1;
             if (items[label] < 0)
                 items[label] = items_max[label];
-            document.getElementById(label).className = 'chest-' + items[label];
+            node.className = 'chest-' + items[label];
             if (map_enabled) {
                 var x = label.substring(5);
                 if (items[label] === 0) {
@@ -24,21 +26,19 @@
             return;
         }
         if ((typeof items[label]) === 'boolean') {
-            var type = document.getElementById(label).classList.item(0);
             items[label] = !items[label];
-            document.getElementById(label).className = type + ' ' + items[label];
+            node.classList[items[label] ? 'add' : 'remove'](is_boss ? 'defeated' : 'active');
         } else {
-            var type = document.getElementById(label).classList.item(0);
             items[label] += 1;
             if (items[label] > items_max[label])
                 items[label] = items_min[label];
-            document.getElementById(label).className = type + ' ' + (items[label] === 0 ?
-                'false' : 'true step-' + items[label]);
+            node.className = node.className.replace(/ ?active-\w+/, '');
+            if (items[label])
+                node.classList.add('active-' + items[label]);
         }
         // Initiate bunny graphics!
         if (label === 'moonpearl' || label === 'tunic') {
-            document.getElementById('tunic').className = 'item step-' +
-                items.tunic + (!items.moonpearl ? 'b' : '');
+            document.getElementById('tunic').classList[!items.moonpearl ? 'add' : 'remove']('bunny');
         }
 
         if (map_enabled) {
@@ -53,7 +53,7 @@
                     document.getElementById('dungeon'+k).className = 'dungeon poi ' + dungeons[k].can_get_chest();
             }
             // Clicking a boss on the tracker will check it off on the map!
-            if (label.substring(0,4) === 'boss') {
+            if (is_boss) {
                 toggle_boss(label.substring(4));
             }
             if (label === 'agahnim' || label === 'cape' || label === 'sword' || label === 'lantern') {
@@ -155,7 +155,9 @@
             prizes[k] = 0;
         }
 
-        document.getElementById('sword').className = mode === 'open' ? 'item false' : 'item true step-1';
+        if (mode !== 'open') {
+            document.getElementById('sword').classList.add('active-1');
+        }
 
         if (map_enabled) {
             for (k = 0; k < chests.length; k++) {
