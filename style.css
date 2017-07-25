@@ -38,8 +38,10 @@ body { margin: 0px; background-color: black; }
   right: 0;
 }
 
-.true { opacity: 1; }
-.false { opacity: 0.25; }
+#tracker .item,
+#tracker .boss { opacity: .25; }
+#tracker .item[class*="active"],
+#tracker .boss.defeated { opacity: 1; }
 
 .mini { width: 16px; height: 16px; vertical-align: text-bottom; }
 
@@ -111,30 +113,30 @@ body { margin: 0px; background-color: black; }
 .poi { background-image: url(images/overlay/poi.png); }
 .poi.highlight { background-image: url(images/overlay/highlighted.png); }
 
-#tunic.step-1 { background-image: url(images/items/tunic1.png); }
-#tunic.step-2 { background-image: url(images/items/tunic2.png); }
-#tunic.step-3 { background-image: url(images/items/tunic3.png); }
-#tunic.step-1b { background-image: url(images/items/tunicbunny1.png); }
-#tunic.step-2b { background-image: url(images/items/tunicbunny2.png); }
-#tunic.step-3b { background-image: url(images/items/tunicbunny3.png); }
+#tunic.active-1 { background-image: url(images/items/tunic1.png); }
+#tunic.active-2 { background-image: url(images/items/tunic2.png); }
+#tunic.active-3 { background-image: url(images/items/tunic3.png); }
+#tunic.active-1.bunny { background-image: url(images/items/tunicbunny1.png); }
+#tunic.active-2.bunny { background-image: url(images/items/tunicbunny2.png); }
+#tunic.active-3.bunny { background-image: url(images/items/tunicbunny3.png); }
 #sword { background-image: url(images/items/sword.png); }
-#sword.step-1 { background-image: url(images/items/sword1.png); }
-#sword.step-2 { background-image: url(images/items/sword2.png); }
-#sword.step-3 { background-image: url(images/items/sword3.png); }
-#sword.step-4 { background-image: url(images/items/sword4.png); }
+#sword.active-1 { background-image: url(images/items/sword1.png); }
+#sword.active-2 { background-image: url(images/items/sword2.png); }
+#sword.active-3 { background-image: url(images/items/sword3.png); }
+#sword.active-4 { background-image: url(images/items/sword4.png); }
 #shield { background-image: url(images/items/shield.png); }
-#shield.step-1 { background-image: url(images/items/shield1.png); }
-#shield.step-2 { background-image: url(images/items/shield2.png); }
-#shield.step-3 { background-image: url(images/items/shield3.png); }
+#shield.active-1 { background-image: url(images/items/shield1.png); }
+#shield.active-2 { background-image: url(images/items/shield2.png); }
+#shield.active-3 { background-image: url(images/items/shield3.png); }
 #moonpearl { background-image: url(images/items/moonpearl.png); }
 #bow { background-image: url(images/items/bow.png); }
-#bow.step-1 { background-image: url(images/items/bow1.png); }
-#bow.step-2 { background-image: url(images/items/bow2.png); }
-#bow.step-3 { background-image: url(images/items/bow3.png); }
+#bow.active-1 { background-image: url(images/items/bow1.png); }
+#bow.active-2 { background-image: url(images/items/bow2.png); }
+#bow.active-3 { background-image: url(images/items/bow3.png); }
 #boomerang { background-image: url(images/items/boomerang.png); }
-#boomerang.step-1 { background-image: url(images/items/boomerang1.png); }
-#boomerang.step-2 { background-image: url(images/items/boomerang2.png); }
-#boomerang.step-3 { background-image: url(images/items/boomerang3.png); }
+#boomerang.active-1 { background-image: url(images/items/boomerang1.png); }
+#boomerang.active-2 { background-image: url(images/items/boomerang2.png); }
+#boomerang.active-3 { background-image: url(images/items/boomerang3.png); }
 #hookshot { background-image: url(images/items/hookshot.png); }
 #mushroom { background-image: url(images/items/mushroom.png); }
 #powder { background-image: url(images/items/powder.png); }
@@ -149,22 +151,22 @@ body { margin: 0px; background-color: black; }
 #net { background-image: url(images/items/net.png); }
 #book { background-image: url(images/items/book.png); }
 #bottle { background-image: url(images/items/bottle.png); }
-#bottle.step-1 { background-image: url(images/items/bottle1.png); }
-#bottle.step-2 { background-image: url(images/items/bottle2.png); }
-#bottle.step-3 { background-image: url(images/items/bottle3.png); }
-#bottle.step-4 { background-image: url(images/items/bottle4.png); }
+#bottle.active-1 { background-image: url(images/items/bottle1.png); }
+#bottle.active-2 { background-image: url(images/items/bottle2.png); }
+#bottle.active-3 { background-image: url(images/items/bottle3.png); }
+#bottle.active-4 { background-image: url(images/items/bottle4.png); }
 #somaria { background-image: url(images/items/somaria.png); }
 #byrna { background-image: url(images/items/byrna.png); }
 #cape { background-image: url(images/items/cape.png); }
 #mirror { background-image: url(images/items/mirror.png); }
 #boots { background-image: url(images/items/boots.png); }
 #glove { background-image: url(images/items/glove.png); }
-#glove.step-1 { background-image: url(images/items/glove1.png); }
-#glove.step-2 { background-image: url(images/items/glove2.png); }
+#glove.active-1 { background-image: url(images/items/glove1.png); }
+#glove.active-2 { background-image: url(images/items/glove2.png); }
 #flippers { background-image: url(images/items/flippers.png); }
 #flute { background-image: url(images/items/flute.png); }
 #agahnim, #bossMapAgahnim { background-image:url(images/dungeons/agahnim.png); }
-#agahnim.true { background-image:url(images/dungeons/agahnim1.png); }
+#agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
 #boss0, #bossMap0 { background-image: url(images/dungeons/boss0.png); }
 #boss1, #bossMap1 { background-image: url(images/dungeons/boss1.png); }
 #boss2, #bossMap2 { background-image: url(images/dungeons/boss2.png); }
