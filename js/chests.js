@@ -91,7 +91,7 @@
             if (items.chest4 <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
             if (items.chest4 <= 5) return !items.hammer ? 'unavailable' : 'available';
             return !items.hammer ? 'possible' : 'available';
-        }
+            }
     }, { // [5]
         name: 'Skull Woods',
         is_beaten: false,
@@ -371,7 +371,7 @@
             return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
         }
     }, { // [27]
-        name: 'Dying Boy: Distract him with <img src="images/items/bottle.png" class="mini"> so that you can rob his family!',
+        name: 'Dying Boy: Distract him with <img src="images/items/bottle0.png" class="mini"> so that you can rob his family!',
         is_opened: false,
         is_available: function() {
             return items.bottle ? 'available' : 'unavailable';
@@ -435,7 +435,7 @@
         is_opened: false,
         is_available: always
     }, { // [37]
-        name: 'Lumberjack Tree <img src="images/dungeons/agahnim.png" class="mini"><img src="images/items/boots.png" class="mini">',
+        name: 'Lumberjack Tree <img src="images/dungeons/agahnim0.png" class="mini"><img src="images/items/boots.png" class="mini">',
         is_opened: false,
         is_available: function() {
             return items.agahnim && items.boots ? 'available' : 'possible';
@@ -557,7 +557,7 @@
             return items.shovel ? 'available' : 'unavailable';
         }
     }, { // [55]
-        name: 'Escape Sewer Side Room (3) <img src="images/items/glove.png" class="mini"> + <img src="images/overlay/bomb.png" class="mini">/<img src="images/items/boots.png" class="mini">',
+        name: 'Escape Sewer Side Room (3) <img src="images/items/glove1.png" class="mini"> + <img src="images/overlay/bomb.png" class="mini">/<img src="images/items/boots.png" class="mini">',
         is_opened: false,
         is_available: function() {
             return is_standard || items.glove ? 'available' :
