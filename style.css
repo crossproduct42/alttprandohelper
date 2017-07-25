@@ -13,20 +13,6 @@ body { margin: 0px; background-color: black; }
 #tracker .boss,
 #tracker [id^="chest"] { width: 64px; height: 64px; }
 
-[class*="prize-"] {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-[class*="medallion-"] {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  bottom: 0;
-}
-
 #tracker #tunic { width: 128px; height: 128px; }
 #sword { position: absolute; top: 0; right: 0; }
 #shield { position: absolute; bottom: 0; left: 0; }
@@ -43,7 +29,36 @@ body { margin: 0px; background-color: black; }
 #tracker .item[class*="active"],
 #tracker .boss.defeated { opacity: 1; }
 
-.mini { width: 16px; height: 16px; vertical-align: text-bottom; }
+[class*="prize-"] {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+[class*="medallion-"] {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  bottom: 0;
+}
+
+#map {
+  width: 884px;
+  height: 448px;
+  margin-left: 8px;
+  background-image: url(images/overlay/map.png);
+  background-size: 100% 100%;
+}
+
+.chest {
+  width: 24;
+  height: 24;
+  margin-left: -12px;
+  margin-top: -12px;
+  position: absolute;
+  background-size: 100% 100%;
+}
 
 #map .boss {
   width: 24px;
@@ -76,13 +91,14 @@ body { margin: 0px; background-color: black; }
   background-size: 100% 100%;
 }
 
-#map {
-  width: 884px;
-  height: 448px;
-  margin-left: 8px;
-  background-image: url(images/overlay/map.png);
-  background-size: 100% 100%;
-}
+.unavailable { background-color: red; }
+.available { background-color: lime; }
+.possible { background-color: yellow; }
+.dark { background-color: blue; }
+.opened { background-color: #7f7f7f; }
+
+.poi { background-image: url(images/overlay/poi.png); }
+.poi.highlight { background-image: url(images/overlay/highlighted.png); }
 
 #caption {
   width: 100%;
@@ -95,23 +111,7 @@ body { margin: 0px; background-color: black; }
   font-size: 16px;
 }
 
-.chest {
-  width: 24;
-  height: 24;
-  margin-left: -12px;
-  margin-top: -12px;
-  position: absolute;
-  background-size: 100% 100%;
-}
-
-.unavailable { background-color: red; }
-.available { background-color: lime; }
-.possible { background-color: yellow; }
-.dark { background-color: blue; }
-.opened { background-color: #7f7f7f; }
-
-.poi { background-image: url(images/overlay/poi.png); }
-.poi.highlight { background-image: url(images/overlay/highlighted.png); }
+.mini { width: 16px; height: 16px; vertical-align: text-bottom; }
 
 #tunic.active-1 { background-image: url(images/items/tunic1.png); }
 #tunic.active-2 { background-image: url(images/items/tunic2.png); }
