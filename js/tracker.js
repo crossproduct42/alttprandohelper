@@ -8,11 +8,9 @@
 
     // Event of clicking on the item tracker
     window.toggle = function(label) {
-        var node = document.getElementById(label),
-            is_boss = node.classList.contains('boss');
         if (label.substring(0,5) === 'chest') {
             var value = items.dec(label);
-            node.className = 'chest-' + value;
+            document.getElementById(label).className = 'chest-' + value;
             if (map_enabled) {
                 var x = label.substring(5);
                 document.getElementById('dungeon'+x).className = 'dungeon ' +
@@ -20,6 +18,8 @@
             }
             return;
         }
+        var node = document.getElementsByClassName(label)[0],
+            is_boss = node.classList.contains('boss');
         if ((typeof items[label]) === 'boolean') {
             items[label] = !items[label];
             node.classList[items[label] ? 'add' : 'remove'](is_boss ? 'defeated' : 'active');
@@ -30,7 +30,7 @@
         }
         // Initiate bunny graphics!
         if (label === 'moonpearl' || label === 'tunic') {
-            document.getElementById('tunic').classList[!items.moonpearl ? 'add' : 'remove']('bunny');
+            document.getElementsByClassName('tunic')[0].classList[!items.moonpearl ? 'add' : 'remove']('bunny');
         }
 
         if (map_enabled) {
@@ -148,7 +148,7 @@
         }
 
         if (mode !== 'open') {
-            document.getElementById('sword').classList.add('active-1');
+            document.getElementsByClassName('sword')[0].classList.add('active-1');
         }
 
         if (map_enabled) {
