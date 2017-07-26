@@ -22,30 +22,27 @@
         ether: false,
         quake: false,
 
-        boss0: false,
-        chest0: 3,
         lantern: false,
         hammer: false,
         shovel: false,
         net: false,
         book: false,
 
-        boss1: false,
-        chest1: 2,
-        bottle:0,
+        bottle: 0,
         somaria: false,
         byrna: false,
         cape: false,
         mirror: false,
 
-        boss2: false,
-        chest2: 2,
         boots: false,
         glove: 0,
         flippers: false,
         flute: false,
         agahnim: false,
 
+        boss0: false,
+        boss1: false,
+        boss2: false,
         boss3: false,
         boss4: false,
         boss5: false,
@@ -54,36 +51,6 @@
         boss8: false,
         boss9: false,
 
-        chest3: 5,
-        chest4: 6,
-        chest5: 2,
-        chest6: 4,
-        chest7: 3,
-        chest8: 2,
-        chest9: 5
-    };
-
-    window.items_min = {
-        sword:0,
-        shield:0,
-        tunic:1,
-
-        bottle:0,
-        bow:0,
-        boomerang:0,
-        glove:0
-    };
-
-    window.items_max = {
-        sword:4,
-        shield:3,
-        tunic:3,
-
-        bottle:4,
-        bow:3,
-        boomerang:3,
-        glove:2,
-
         chest0: 3,
         chest1: 2,
         chest2: 2,
@@ -93,7 +60,40 @@
         chest6: 4,
         chest7: 3,
         chest8: 2,
-        chest9: 5
+        chest9: 5,
 
+        inc: limit(1, {
+            tunic: { min: 1, max: 3 },
+            sword: { max: 4 },
+            shield: { max: 3 },
+            bottle: { max: 4 },
+            bow: { max: 3 },
+            boomerang: { max: 3 },
+            glove: { max: 2 }
+        }),
+        dec: limit(-1, {
+            chest0: { max: 3 },
+            chest1: { max: 2 },
+            chest2: { max: 2 },
+            chest3: { max: 5 },
+            chest4: { max: 6 },
+            chest5: { max: 2 },
+            chest6: { max: 4 },
+            chest7: { max: 3 },
+            chest8: { max: 2 },
+            chest9: { max: 5 }
+        })
     };
+
+    function limit(delta, limits) {
+        return function(item) {
+            var value = items[item],
+                max = limits[item].max,
+                min = limits[item].min || 0;
+            value += delta;
+            if (value > max) value = min;
+            if (value < min) value = max;
+            return items[item] = value;
+        };
+    }
 }(window));
