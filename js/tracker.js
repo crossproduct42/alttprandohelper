@@ -18,9 +18,9 @@
             if (map_enabled) {
                 var x = label.substring(5);
                 if (items[label] === 0) {
-                    document.getElementById('dungeon'+x).className = 'dungeon poi opened';
+                    document.getElementById('dungeon'+x).className = 'dungeon opened';
                 } else {
-                    document.getElementById('dungeon'+x).className = 'dungeon poi ' + dungeons[x].can_get_chest();
+                    document.getElementById('dungeon'+x).className = 'dungeon ' + dungeons[x].can_get_chest();
                 }
             }
             return;
@@ -44,13 +44,13 @@
         if (map_enabled) {
             for (var k = 0; k < chests.length; k++) {
                 if (!chests[k].is_opened)
-                    document.getElementById('chestMap'+k).className = 'chest poi ' + chests[k].is_available();
+                    document.getElementById('chestMap'+k).className = 'chest ' + chests[k].is_available();
             }
             for (var k = 0; k < dungeons.length; k++) {
                 if (!dungeons[k].is_beaten)
                     document.getElementById('bossMap'+k).className = 'boss ' + dungeons[k].is_beatable();
                 if (items['chest'+k])
-                    document.getElementById('dungeon'+k).className = 'dungeon poi ' + dungeons[k].can_get_chest();
+                    document.getElementById('dungeon'+k).className = 'dungeon ' + dungeons[k].can_get_chest();
             }
             // Clicking a boss on the tracker will check it off on the map!
             if (is_boss) {
@@ -74,7 +74,7 @@
             var pendant_chests = [25, 61, 62];
             for (var k = 0; k < pendant_chests.length; k++) {
                 if (!chests[pendant_chests[k]].is_opened)
-                    document.getElementById('chestMap'+pendant_chests[k]).className = 'chest poi ' + chests[pendant_chests[k]].is_available();
+                    document.getElementById('chestMap'+pendant_chests[k]).className = 'chest ' + chests[pendant_chests[k]].is_available();
             }
         }
     };
@@ -91,7 +91,7 @@
             dungeons[8+n].is_beaten = !dungeons[8+n].is_beaten;
             toggle_boss(8+n);
             if (items['chest'+(8+n)] > 0)
-                document.getElementById('dungeon'+(8+n)).className = 'dungeon poi ' + dungeons[8+n].can_get_chest();
+                document.getElementById('dungeon'+(8+n)).className = 'dungeon ' + dungeons[8+n].can_get_chest();
             // TRock medallion affects Mimic Cave
             if (n === 1) {
                 chests[4].is_opened = !chests[4].is_opened;
@@ -108,18 +108,18 @@
         window.toggle_chest = function(x) {
             chests[x].is_opened = !chests[x].is_opened;
             var highlight = document.getElementById('chestMap'+x).classList.contains('highlight');
-            document.getElementById('chestMap'+x).className = 'chest poi ' +
+            document.getElementById('chestMap'+x).className = 'chest ' +
                 (chests[x].is_opened ? 'opened' : chests[x].is_available()) +
                 (highlight ? ' highlight' : '');
         };
         // Event of clicking a dungeon location (not really)
         window.toggle_boss = function(x) {
             dungeons[x].is_beaten = !dungeons[x].is_beaten;
-            document.getElementById('bossMap'+x).className = 'boss poi ' +
+            document.getElementById('bossMap'+x).className = 'boss ' +
                 (dungeons[x].is_beaten ? 'opened' : dungeons[x].is_beatable());
         };
         window.toggle_agahnim = function() {
-            document.getElementById('castle').className = 'castle poi ' +
+            document.getElementById('castle').className = 'castle ' +
                 (items.agahnim ? 'opened' : agahnim.is_available());
         };
         // Highlights a chest location and shows the name as caption
@@ -161,13 +161,13 @@
 
         if (map_enabled) {
             for (k = 0; k < chests.length; k++) {
-                document.getElementById('chestMap'+k).className = 'chest poi ' + (chests[k].is_opened ? 'opened' : chests[k].is_available());
+                document.getElementById('chestMap'+k).className = 'chest ' + (chests[k].is_opened ? 'opened' : chests[k].is_available());
             }
             document.getElementById('bossMapAgahnim').className = 'boss';
-            document.getElementById('castle').className = 'castle poi ' + agahnim.is_available();
+            document.getElementById('castle').className = 'castle ' + agahnim.is_available();
             for (k = 0; k < dungeons.length; k++) {
                 document.getElementById('bossMap'+k).className = 'boss ' + dungeons[k].is_beatable();
-                document.getElementById('dungeon'+k).className = 'dungeon poi ' + dungeons[k].can_get_chest();
+                document.getElementById('dungeon'+k).className = 'dungeon ' + dungeons[k].can_get_chest();
             }
         } else {
             document.getElementById('map').style.display = 'none';
