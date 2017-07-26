@@ -19,7 +19,7 @@
 
     // define dungeon chests
     window.dungeons = [{ // [0]
-        name: 'Eastern Palace',
+        caption: 'Eastern Palace',
         is_beaten: false,
         is_beatable: function() {
             return items.bow > 1 ?
@@ -32,7 +32,7 @@
                 'possible' : 'available';
         }
     }, { // [1]
-        name: 'Desert Palace',
+        caption: 'Desert Palace',
         is_beaten: false,
         is_beatable: function() {
             if (!(melee_bow() || cane() || rod())) return 'unavailable';
@@ -46,7 +46,7 @@
             return items.chest1 > 1 && items.boots ? 'available' : 'possible';
         }
     }, { // [2]
-        name: 'Tower of Hera',
+        caption: 'Tower of Hera',
         is_beaten: false,
         is_beatable: function() {
             if (!melee()) return 'unavailable';
@@ -60,7 +60,7 @@
                 'possible';
         }
     }, { // [3]
-        name: 'Palace of Darkness <img src="images/items/lantern.png" class="mini">',
+        caption: 'Palace of Darkness {lantern}',
         is_beaten: false,
         is_beatable: function() {
             if (!items.moonpearl || !(items.bow > 1) || !items.hammer) return 'unavailable';
@@ -75,7 +75,7 @@
                 'possible' : 'available';
         }
     }, { // [4]
-        name: 'Swamp Palace <img src="images/items/mirror.png" class="mini">',
+        caption: 'Swamp Palace {mirror}',
         is_beaten: false,
         is_beatable: function() {
             if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
@@ -93,7 +93,7 @@
             return !items.hammer ? 'possible' : 'available';
             }
     }, { // [5]
-        name: 'Skull Woods',
+        caption: 'Skull Woods',
         is_beaten: false,
         is_beatable: function() {
             return !can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
@@ -103,7 +103,7 @@
             return items.firerod ? 'available' : 'possible';
         }
     }, { // [6]
-        name: 'Thieves\' Town',
+        caption: 'Thieves\' Town',
         is_beaten: false,
         is_beatable: function() {
             if (!(melee() || cane())) return 'unavailable';
@@ -115,7 +115,7 @@
             return items.chest6 === 1 && !items.hammer ? 'possible' : 'available';
         }
     }, { // [7]
-        name: 'Ice Palace (yellow=must bomb jump)',
+        caption: 'Ice Palace (yellow=must bomb jump)',
         is_beaten: false,
         is_beatable: function() {
             if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
@@ -128,7 +128,7 @@
             return items.hammer ? 'available' : 'possible';
         }
     }, { // [8]
-        name: 'Misery Mire <img src="images/dungeons/medallion0.png" class="mini"><img src="images/items/lantern.png" class="mini">',
+        caption: 'Misery Mire {medallion0}{lantern}',
         is_beaten: false,
         is_beatable: function() {
             if (!melee_bow()) return 'unavailable';
@@ -161,7 +161,7 @@
                 'available' : 'possible';
         }
     }, { // [9]
-        name: 'Turtle Rock <img src="images/dungeons/medallion0.png" class="mini"><img src="images/items/lantern.png" class="mini">',
+        caption: 'Turtle Rock {medallion0}{lantern}',
         is_beaten: false,
         is_beatable: function() {
             if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
@@ -193,7 +193,7 @@
     }];
 
     window.agahnim = {
-        name: 'Agahnim <img src="images/sword2.png" class="mini">/ (<img src="images/cape.png" class="mini"><img src="images/sword1.png" class="mini">)',
+        caption: 'Agahnim {sword2}/ ({cape}{sword1})',
         is_available: function() {
             return items.sword >= 2 || items.cape && items.sword ?
                 items.lantern ? 'available' : 'dark' :
@@ -203,7 +203,7 @@
 
     //define overworld chests
     window.chests = [{ // [0]
-        name: 'King\'s Tomb <img src="images/items/boots.png" class="mini"> + <img src="images/items/glove2.png" class="mini">/<img src="images/items/mirror.png" class="mini">',
+        caption: 'King\'s Tomb {boots} + {glove2}/{mirror}',
         is_opened: false,
         is_available: function() {
             if (!items.boots) return 'unavailable';
@@ -211,15 +211,15 @@
             return 'unavailable';
         }
     }, { // [1]
-        name: 'Light World Swamp (2)',
+        caption: 'Light World Swamp (2)',
         is_opened: false,
         is_available: always
     }, { // [2]
-        name: 'Stoops Lonk\'s Hoose',
+        caption: 'Stoops Lonk\'s Hoose',
         is_opened: is_standard,
         is_available: always
     }, { // [3]
-        name: 'Spiral Cave',
+        caption: 'Spiral Cave',
         is_opened: false,
         is_available: function() {
             return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
@@ -227,7 +227,7 @@
                 'unavailable';
         }
     }, { // [4]
-        name: 'Mimic Cave (<img src="images/items/mirror.png" class="mini"> outside of Turtle Rock)(Yellow = <img src="images/dungeons/medallion0.png" class="mini"> unkown OR possible w/out <img src="images/items/firerod.png" class="mini">)',
+        caption: 'Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion0} unkown OR possible w/out {firerod})',
         is_opened: false,
         is_available: function() {
             if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
@@ -243,37 +243,37 @@
                 'possible';
         }
     }, { // [5]
-        name: 'Tavern',
+        caption: 'Tavern',
         is_opened: false,
         is_available: always
     }, { // [6]
-        name: 'Chicken House <img src="images/overlay/bomb.png" class="mini">',
+        caption: 'Chicken House {bomb}',
         is_opened: false,
         is_available: always
     }, { // [7]
-        name: 'Bombable Hut <img src="images/overlay/bomb.png" class="mini">',
+        caption: 'Bombable Hut {bomb}',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() ? 'available' : 'unavailable';
         }
     }, { // [8]
-        name: 'C House',
+        caption: 'C House',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() ? 'available' : 'unavailable';
         }
     }, { // [9]
-        name: 'Aginah\'s Cave <img src="images/overlay/bomb.png" class="mini">',
+        caption: 'Aginah\'s Cave {bomb}',
         is_opened: false,
         is_available: always
     }, { // [10]
-        name: 'West of Mire (2)',
+        caption: 'West of Mire (2)',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.flute && items.glove === 2 ? 'available' : 'unavailable';
         }
     }, { // [11]
-        name: 'DW Death Mountain (2) : Don\'t need <img src="images/items/moonpearl.png" class="mini">',
+        caption: 'DW Death Mountain (2) : Don\'t need {moonpearl}',
         is_opened: false,
         is_available: function() {
             return items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
@@ -281,11 +281,11 @@
                 'unavailable';
         }
     }, { // [12]
-        name: 'Sahasrahla\'s Hut (3) <img src="images/overlay/bomb.png" class="mini">/<img src="images/items/boots.png" class="mini">',
+        caption: 'Sahasrahla\'s Hut (3) {bomb}/{boots}',
         is_opened: false,
         is_available: always
     }, { // [13]
-        name: 'Byrna Spike Cave',
+        caption: 'Byrna Spike Cave',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove && items.hammer ?
@@ -293,21 +293,21 @@
                 'unavailable';
         }
     }, { // [14]
-        name: 'Kakariko Well (4 + <img src="images/overlay/bomb.png" class="mini">)',
+        caption: 'Kakariko Well (4 + {bomb})',
         is_opened: false,
         is_available: always
     }, { // [15]
-        name: 'Thieve\'s Hut (4 + <img src="images/overlay/bomb.png" class="mini">)',
+        caption: 'Thieve\'s Hut (4 + {bomb})',
         is_opened: false,
         is_available: always
     }, { // [16]
-        name: 'Hype Cave! <img src="images/overlay/bomb.png" class="mini"> (NPC + 4 <img src="images/overlay/bomb.png" class="mini">)',
+        caption: 'Hype Cave! {bomb} (NPC + 4 {bomb})',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() || (items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
         }
     }, { // [17]
-        name: 'Death Mountain East (5 + 2 <img src="images/overlay/bomb.png" class="mini">)',
+        caption: 'Death Mountain East (5 + 2 {bomb})',
         is_opened: false,
         is_available: function() {
             return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
@@ -315,21 +315,21 @@
                 'unavailable';
         }
     }, { // [18]
-        name: 'West of Sanctuary <img src="images/items/boots.png" class="mini">',
+        caption: 'West of Sanctuary {boots}',
         is_opened: false,
         is_available: function() {
             return items.boots ? 'available' : 'unavailable';
         }
     }, { // [19]
-        name: 'Minimoldorm Cave (NPC + 4) <img src="images/overlay/bomb.png" class="mini">',
+        caption: 'Minimoldorm Cave (NPC + 4) {bomb}',
         is_opened: false,
         is_available: always
     }, { // [20]
-        name: 'Ice Rod Cave <img src="images/overlay/bomb.png" class="mini">',
+        caption: 'Ice Rod Cave {bomb}',
         is_opened: false,
         is_available: always
     }, { // [21]
-        name: 'Cave Under Rock (bottom chest) <img src="images/items/hookshot.png" class="mini">/<img src="images/items/boots.png" class="mini">',
+        caption: 'Cave Under Rock (bottom chest) {hookshot}/{boots}',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove === 2 && (items.hookshot || (items.mirror && items.hammer && items.boots)) ?
@@ -337,7 +337,7 @@
                 'unavailable';
         }
     }, { // [22]
-        name: 'Cave Under Rock (3 top chests) <img src="images/items/hookshot.png" class="mini">',
+        caption: 'Cave Under Rock (3 top chests) {hookshot}',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove === 2 && items.hookshot ?
@@ -345,17 +345,17 @@
                 'unavailable';
         }
     }, { // [23]
-        name: 'Treasure Chest Minigame: Pay 30 rupees',
+        caption: 'Treasure Chest Minigame: Pay 30 rupees',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() ? 'available' : 'unavailable';
         }
     }, { // [24]
-        name: 'Bottle Vendor: Pay 100 rupees',
+        caption: 'Bottle Vendor: Pay 100 rupees',
         is_opened: false,
         is_available: always
     }, { // [25]
-        name: 'Sahasrahla <img src="images/overlay/pendant0.png" class="mini">',
+        caption: 'Sahasrahla {pendant0}',
         is_opened: false,
         is_available: function() {
             for (var k = 0; k < 10; k++) {
@@ -365,31 +365,31 @@
             return 'unavailable';
         }
     }, { // [26]
-        name: 'Ol\' Stumpy',
+        caption: 'Ol\' Stumpy',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
         }
     }, { // [27]
-        name: 'Dying Boy: Distract him with <img src="images/items/bottle0.png" class="mini"> so that you can rob his family!',
+        caption: 'Dying Boy: Distract him with {bottle} so that you can rob his family!',
         is_opened: false,
         is_available: function() {
             return items.bottle ? 'available' : 'unavailable';
         }
     }, { // [28]
-        name: 'Reunite the Hammer Brothers and show the Purple Chest to Gary',
+        caption: 'Reunite the Hammer Brothers and show the Purple Chest to Gary',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
         }
     }, { // [29]
-        name: 'Fugitive under the bridge <img src="images/items/flippers.png" class="mini">',
+        caption: 'Fugitive under the bridge {flippers}',
         is_opened: false,
         is_available: function() {
             return items.flippers ? 'available' : 'unavailable';
         }
     }, { // [30]
-        name: 'Ether Tablet <img src="images/items/sword2.png" class="mini"><img src="images/items/book.png" class="mini">',
+        caption: 'Ether Tablet {sword2}{book}',
         is_opened: false,
         is_available: function() {
             return items.sword >= 2 && items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
@@ -397,27 +397,27 @@
                 'unavailable';
         }
     }, { // [31]
-        name: 'Bombos Tablet <img src="images/items/mirror.png" class="mini"><img src="images/items/sword2.png" class="mini"><img src="images/items/book.png" class="mini">',
+        caption: 'Bombos Tablet {mirror}{sword2}{book}',
         is_opened: false,
         is_available: function() {
             return (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) &&
                 items.mirror && items.sword >= 2 && items.book ? 'available' : 'unavailable';
         }
     }, { // [32]
-        name: 'Catfish',
+        caption: 'Catfish',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove && (items.agahnim || items.hammer || items.glove === 2 && items.flippers) ?
                 'available' : 'unavailable';
         }
     }, { // [33]
-        name: 'King Zora: Pay 500 rupees',
+        caption: 'King Zora: Pay 500 rupees',
         is_opened: false,
         is_available: function() {
             return items.flippers || items.glove ? 'available' : 'unavailable';
         }
     }, { // [34]
-        name: 'Lost Old Man',
+        caption: 'Lost Old Man',
         is_opened: false,
         is_available: function() {
             return items.glove || items.flute ?
@@ -425,23 +425,23 @@
                 'unavailable';
         }
     }, { // [35]
-        name: 'Witch: Give her <img src="images/items/mushroom.png" class="mini">',
+        caption: 'Witch: Give her {mushroom}',
         is_opened: false,
         is_available: function() {
             return items.mushroom ? 'available' : 'unavailable';
         }
     }, { // [36]
-        name: 'Forest Hideout',
+        caption: 'Forest Hideout',
         is_opened: false,
         is_available: always
     }, { // [37]
-        name: 'Lumberjack Tree <img src="images/dungeons/agahnim0.png" class="mini"><img src="images/items/boots.png" class="mini">',
+        caption: 'Lumberjack Tree {agahnim}{boots}',
         is_opened: false,
         is_available: function() {
             return items.agahnim && items.boots ? 'available' : 'possible';
         }
     }, { // [38]
-        name: 'Spectacle Rock Cave',
+        caption: 'Spectacle Rock Cave',
         is_opened: false,
         is_available: function() {
             return items.glove || items.flute ?
@@ -449,41 +449,41 @@
                 'unavailable';
         }
     }, { // [39]
-        name: 'South of Grove <img src="images/items/mirror.png" class="mini">',
+        caption: 'South of Grove {mirror}',
         is_opened: false,
         is_available: function() {
             return items.mirror && (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
         }
     }, { // [40]
-        name: 'Graveyard Cliff Cave <img src="images/items/mirror.png" class="mini">',
+        caption: 'Graveyard Cliff Cave {mirror}',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() && items.mirror ? 'available' : 'unavailable';
         }
     }, { // [41]
-        name: 'Checkerboard Cave <img src="images/items/mirror.png" class="mini">',
+        caption: 'Checkerboard Cave {mirror}',
         is_opened: false,
         is_available: function() {
             return items.flute && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
         }
     }, { // [42]
-        name: '<img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini"><img src="images/items/hammer.png" class="mini">!!!!!!!!',
+        caption: '{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}!!!!!!!!',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove === 2 && items.hammer ? 'available' : 'unavailable';
         }
     }, { // [43]
-        name: 'Library <img src="images/items/boots.png" class="mini">',
+        caption: 'Library {boots}',
         is_opened: false,
         is_available: function() {
             return items.boots ? 'available' : 'possible';
         }
     }, { // [44]
-        name: 'Mushroom',
+        caption: 'Mushroom',
         is_opened: false,
         is_available: always
     }, { // [45]
-        name: 'Spectacle Rock <img src="images/items/mirror.png" class="mini">',
+        caption: 'Spectacle Rock {mirror}',
         is_opened: false,
         is_available: function() {
             return items.glove || items.flute ?
@@ -493,7 +493,7 @@
                 'unavailable';
         }
     }, { // [46]
-        name: 'Floating Island <img src="images/items/mirror.png" class="mini">',
+        caption: 'Floating Island {mirror}',
         is_opened: false,
         is_available: function() {
             return (items.glove || items.flute) && (items.hookshot || items.hammer && items.mirror) ?
@@ -503,17 +503,17 @@
                 'unavailable';
         }
     }, { // [47]
-        name: 'Race Minigame <img src="images/overlay/bomb.png" class="mini">/<img src="images/items/boots.png" class="mini">',
+        caption: 'Race Minigame {bomb}/{boots}',
         is_opened: false,
         is_available: always
     }, { // [48]
-        name: 'Desert West Ledge <img src="images/items/book.png" class="mini">/<img src="images/items/mirror.png" class="mini">',
+        caption: 'Desert West Ledge {book}/{mirror}',
         is_opened: false,
         is_available: function() {
             return items.book || items.flute && items.glove === 2 && items.mirror ? 'available' : 'possible';
         }
     }, { // [49]
-        name: 'Lake Hylia Island <img src="images/items/mirror.png" class="mini">',
+        caption: 'Lake Hylia Island {mirror}',
         is_opened: false,
         is_available: function() {
             return items.flippers ?
@@ -522,7 +522,7 @@
                 'unavailable';
         }
     }, { // [50]
-        name: 'Bumper Cave <img src="images/items/cape.png" class="mini">',
+        caption: 'Bumper Cave {cape}',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() ?
@@ -530,20 +530,20 @@
                 'unavailable';
         }
     }, { // [51]
-        name: 'Pyramid',
+        caption: 'Pyramid',
         is_opened: false,
         is_available: function() {
             return items.agahnim || items.glove && items.hammer && items.moonpearl ||
                 items.glove === 2 && items.moonpearl && items.flippers ? 'available' : 'unavailable';
         }
     }, { // [52]
-        name: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
+        caption: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
         }
     }, { // [53]
-        name: 'Zora River Ledge <img src="images/items/flippers.png" class="mini">',
+        caption: 'Zora River Ledge {flippers}',
         is_opened: false,
         is_available: function() {
             if (items.flippers) return 'available';
@@ -551,44 +551,44 @@
             return 'unavailable';
         }
     }, { // [54]
-        name: 'Buried Itam <img src="images/items/shovel.png" class="mini">',
+        caption: 'Buried Itam {shovel}',
         is_opened: false,
         is_available: function() {
             return items.shovel ? 'available' : 'unavailable';
         }
     }, { // [55]
-        name: 'Escape Sewer Side Room (3) <img src="images/items/glove1.png" class="mini"> + <img src="images/overlay/bomb.png" class="mini">/<img src="images/items/boots.png" class="mini">',
+        caption: 'Escape Sewer Side Room (3) {glove} + {bomb}/{boots}',
         is_opened: false,
         is_available: function() {
             return is_standard || items.glove ? 'available' :
                 items.lantern ? 'possible' : 'dark';
         }
     }, { // [56]
-        name: "Castle Secret Entrance (Uncle + 1)",
+        caption: "Castle Secret Entrance (Uncle + 1)",
         is_opened: is_standard,
         is_available: always
     }, { // [57]
-        name: 'Hyrule Castle Dungeon (3)',
+        caption: 'Hyrule Castle Dungeon (3)',
         is_opened: is_standard,
         is_available: always
     }, { // [58]
-        name: 'Sanctuary',
+        caption: 'Sanctuary',
         is_opened: is_standard,
         is_available: always
     }, { // [59]
-        name: 'Mad Batter <img src="images/items/hammer.png" class="mini">/<img src="images/items/mirror.png" class="mini"> + <img src="images/items/powder.png" class="mini">',
+        caption: 'Mad Batter {hammer}/{mirror} + {powder}',
         is_opened: false,
         is_available: function() {
             return items.powder && (items.hammer || items.glove === 2 && items.mirror && items.moonpearl) ? 'available' : 'unavailable';
         }
     }, { // [60]
-        name: 'Take the frog home <img src="images/items/mirror.png" class="mini">',
+        caption: 'Take the frog home {mirror}',
         is_opened: false,
         is_available: function() {
             return items.moonpearl && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
         }
     }, { // [61]
-        name: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after <img src="images/overlay/crystal0.png" class="mini">5 <img src="images/overlay/crystal0.png" class="mini">6 (2 items)',
+        caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
         is_opened: false,
         is_available: function() {
             //crystal check
@@ -603,7 +603,7 @@
                 items.agahnim && items.mirror && can_reach_outcast() ? 'available' : 'unavailable';
         }
     }, { // [62]
-        name: 'Master Sword Pedestal <img src="images/overlay/pendant0.png" class="mini"><img src="images/overlay/pendant1.png" class="mini"><img src="images/overlay/pendant2.png" class="mini"> (can check with <img src="images/items/book.png" class="mini">)',
+        caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
         is_opened: false,
         is_available: function() {
             var pendant_count = 0;
@@ -615,7 +615,7 @@
             return 'unavailable';
         }
     }, { // [63]
-        name: 'Escape Sewer Dark Room',
+        caption: 'Escape Sewer Dark Room',
         is_opened: is_standard,
         is_available: function() {
             return items.lantern ? 'available' : 'dark';
