@@ -11,17 +11,12 @@
         var node = document.getElementById(label),
             is_boss = node.classList.contains('boss');
         if (label.substring(0,5) === 'chest') {
-            items[label] -= 1;
-            if (items[label] < 0)
-                items[label] = items_max[label];
-            node.className = 'chest-' + items[label];
+            var value = items.dec(label);
+            node.className = 'chest-' + value;
             if (map_enabled) {
                 var x = label.substring(5);
-                if (items[label] === 0) {
-                    document.getElementById('dungeon'+x).className = 'dungeon opened';
-                } else {
-                    document.getElementById('dungeon'+x).className = 'dungeon ' + dungeons[x].can_get_chest();
-                }
+                document.getElementById('dungeon'+x).className = 'dungeon ' +
+                    (value ? dungeons[x].can_get_chest() : 'opened');
             }
             return;
         }
@@ -29,12 +24,9 @@
             items[label] = !items[label];
             node.classList[items[label] ? 'add' : 'remove'](is_boss ? 'defeated' : 'active');
         } else {
-            items[label] += 1;
-            if (items[label] > items_max[label])
-                items[label] = items_min[label];
+            var value = items.inc(label);
             node.className = node.className.replace(/ ?active-\w+/, '');
-            if (items[label])
-                node.classList.add('active-' + items[label]);
+            if (value) node.classList.add('active-' + value);
         }
         // Initiate bunny graphics!
         if (label === 'moonpearl' || label === 'tunic') {
