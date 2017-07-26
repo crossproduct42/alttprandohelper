@@ -91,14 +91,18 @@ body { margin: 0px; background-color: black; }
   background-size: 100% 100%;
 }
 
+.chest,
+.castle,
+.dungeon { background-image: url(images/overlay/poi.png); }
+.chest.highlight,
+.castle.highlight,
+.dungeon.highlight { background-image: url(images/overlay/highlighted.png); }
+
 .unavailable { background-color: red; }
 .available { background-color: lime; }
 .possible { background-color: yellow; }
 .dark { background-color: blue; }
 .opened { background-color: #7f7f7f; }
-
-.poi { background-image: url(images/overlay/poi.png); }
-.poi.highlight { background-image: url(images/overlay/highlighted.png); }
 
 #caption {
   width: 100%;
