@@ -90,8 +90,7 @@
                 toggle_chest(4);
             }
             // Change the mouseover text on the map
-            var dungeon_name = n === 0 ? 'Misery Mire' : 'Turtle Rock';
-            dungeons[8+n].name = dungeon_name + ' <img src="images/dungeons/medallion'+medallions[n]+'.png" class="mini"><img src="images/items/lantern.png" class="mini">';
+            dungeons[8+n].caption = dungeons[8+n].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[n]+'}');
         }
     };
 
@@ -114,19 +113,19 @@
             document.getElementById('castle').className = 'castle ' +
                 (items.agahnim ? 'opened' : agahnim.is_available());
         };
-        // Highlights a chest location and shows the name as caption
+        // Highlights a chest location and shows the caption
         window.highlight = function(x) {
             document.getElementById('chestMap'+x).classList.add('highlight');
-            document.getElementById('caption').innerHTML = chests[x].name;
+            document.getElementById('caption').innerHTML = caption_to_html(chests[x].caption);
         };
         window.unhighlight = function(x) {
             document.getElementById('chestMap'+x).classList.remove('highlight');
             document.getElementById('caption').innerHTML = '&nbsp;';
         };
-        // Highlights a chest location and shows the name as caption (but for dungeons)
+        // Highlights a chest location and shows the caption (but for dungeons)
         window.highlight_dungeon = function(x) {
             document.getElementById('dungeon'+x).classList.add('highlight');
-            document.getElementById('caption').innerHTML = dungeons[x].name;
+            document.getElementById('caption').innerHTML = caption_to_html(dungeons[x].caption);
         };
         window.unhighlight_dungeon = function(x) {
             document.getElementById('dungeon'+x).classList.remove('highlight');
@@ -134,12 +133,22 @@
         };
         window.highlight_agahnim = function() {
             document.getElementById('castle').classList.add('highlight');
-            document.getElementById('caption').innerHTML = agahnim.name;
+            document.getElementById('caption').innerHTML = caption_to_html(agahnim.caption);
         };
         window.unhighlight_agahnim = function() {
             document.getElementById('castle').classList.remove('highlight');
             document.getElementById('caption').innerHTML = '&nbsp;';
         };
+    }
+
+    function caption_to_html(caption) {
+        return caption.replace(/\{(\w+?)(\d+)?\}/g, function(__, name, n) {
+            var dash = /medallion|pendant/.test(name)
+            return '<div class="icon ' +
+                (dash ? name + '-' + n :
+                n ? name + ' active-' + n :
+                name) + '"></div>';
+        });
     }
 
     window.start = function() {
