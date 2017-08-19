@@ -302,6 +302,16 @@ dungeons[9] = {
     }
 };
 
+window.agahnim = {
+    name: "Agahnim <img src='images/sword2.png' class='mini'>/ (<img src='images/cape.png' class='mini'><img src='images/sword1.png' class='mini'>)",
+    x: "25.0%",
+    y: "52.6%",
+    image: "agahnim",
+    isAvailable: function() {
+        return items.sword >= 2 || (items.cape && items.sword) ? "available" : "unavailable";
+    }
+};
+
 //define overworld chests
 var chests = new Array;
 
@@ -991,7 +1001,7 @@ chests[56] = {
 
 chests[57] = {
     name: "Hyrule Castle (4 including Key)",
-    x: "24.9%",
+    x: "25.0%",
     y: "44.1%",
     isOpened: isStandard,
     isAvailable: function(){

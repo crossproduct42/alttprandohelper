@@ -110,6 +110,16 @@ if (mapEnabled) {
                 document.getElementById(k).className = "chest " + chests[k].isAvailable();
         }
 
+        document.write("<span style='background-image:url(images/agahnim.png);' id='bossMapAgahnim' onMouseover='highlightAgahnim()' onMouseout='unhighlightAgahnim()'></span>");
+        document.getElementById("bossMapAgahnim").style.left = agahnim.x;
+        document.getElementById("bossMapAgahnim").style.top = agahnim.y;
+        document.getElementById("bossMapAgahnim").className = "boss";
+
+        document.write("<span style='background-image:url(images/poi.png);' id='castle' onMouseover='highlightAgahnim()' onMouseout='unhighlightAgahnim()'></span>");
+        document.getElementById("castle").style.left = agahnim.x;
+        document.getElementById("castle").style.top = agahnim.y;
+        document.getElementById("castle").className = "castle " + agahnim.isAvailable();
+
         // Dungeon bosses & chests
         for(k=0; k<dungeons.length; k++){
             document.write("<span style='background-image:url(images/"+dungeons[k].image+");' id='bossMap"+k+"' onMouseover='highlightDungeon("+k+")' onMouseout='unhighlightDungeon("+k+")'></span>");

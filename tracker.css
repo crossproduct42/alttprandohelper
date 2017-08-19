@@ -61,6 +61,20 @@ td{
     z-index: 2;
 }
 
+#bossMapAgahnim {
+    background-color: transparent;
+}
+
+.castle {
+    width: 36px;
+    height: 36px;
+    background-size: 100% 100%;
+
+    position: absolute;
+    margin-left: -18px;
+    margin-top: -18px;
+}
+
 .dungeon{
     width: 48;
     height: 48;
