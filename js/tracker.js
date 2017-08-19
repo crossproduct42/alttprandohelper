@@ -56,6 +56,9 @@ function toggle(label){
         if(label.substring(0,4) == "boss"){
             toggleBoss(label.substring(4));
         }
+        if (label === "agahnim" || label === "cape" || label === "sword") {
+            toggleAgahnim();
+        }
     }
 }
 
@@ -134,6 +137,10 @@ if (mapEnabled) {
         else
         document.getElementById("bossMap"+x).className = "boss " + dungeons[x].isBeatable();
     }
+    function toggleAgahnim() {
+        document.getElementById("castle").className = "castle " +
+            (items.agahnim ? "opened" : agahnim.isAvailable());
+    }
     // Highlights a chest location and shows the name as caption
     function highlight(x){
         document.getElementById(x).style.backgroundImage = "url(images/highlighted.png)";
@@ -150,6 +157,14 @@ if (mapEnabled) {
     }
     function unhighlightDungeon(x){
         document.getElementById("dungeon"+x).style.backgroundImage = "url(images/poi.png)";
+        document.getElementById("caption").innerHTML = "&nbsp;";
+    }
+    function highlightAgahnim(){
+        document.getElementById("castle").style.backgroundImage = "url(images/highlighted.png)";
+        document.getElementById("caption").innerHTML = agahnim.name;
+    }
+    function unhighlightAgahnim(){
+        document.getElementById("castle").style.backgroundImage = "url(images/poi.png)";
         document.getElementById("caption").innerHTML = "&nbsp;";
     }
 };
