@@ -155,7 +155,7 @@ dungeons[5] = {
     image: "boss52.png",
     isBeaten: false,
     isBeatable: function(){
-        if(!steve() || !items.firerod)
+        if(!steve() || !items.firerod || !items.sword)
             return "unavailable";
         return "available";
     },
