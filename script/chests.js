@@ -1067,3 +1067,17 @@ chests[62] = {
         return "unavailable";
     }
 };
+
+chests[63] = {
+    name: "Waterfall of the Wishing (2 items)  <img src='/images/flippers.png' class='mini'>",
+    x: "44.9%",
+    y: "14.7%",
+    isOpened: false,
+    isAvailable: function() {
+      if(items.flippers) {
+        return "available";
+      } else {
+        return "unavailable";
+      }
+    }
+};
