@@ -616,5 +616,11 @@
         is_available: function() {
             return items.lantern ? 'available' : 'dark';
         }
+    }, { // [64]
+        caption: 'Waterfall of Wishing (2) {flippers}',
+        is_opened: false,
+        is_available: function() {
+            return items.flippers ? 'available' : 'unavailable';
+        }
     }];
 }(window));
