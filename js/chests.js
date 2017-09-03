@@ -180,7 +180,7 @@ dungeons[7] = {
     isBeatable: function(){
         if(!items.moonpearl || !items.flippers || items.glove!=2 || !items.hammer)
             return "unavailable";
-        if(!items.firerod && !items.bombos)
+        if(!items.firerod && !(items.bombos && items.sword))
             return "unavailable";
         if(items.hookshot || items.somaria)
             return "available";
@@ -189,7 +189,7 @@ dungeons[7] = {
     canGetChest: function(){
         if(!items.moonpearl || !items.flippers || items.glove!=2)
             return "unavailable";
-        if(!items.firerod && !items.bombos)
+        if(!items.firerod && !(items.bombos && items.sword))
             return "unavailable";
         if(items.hammer)
             return "available";
@@ -207,7 +207,7 @@ dungeons[8] = {
         if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return "unavailable";
         if (!items.boots && !items.hookshot) return "unavailable";
         // Medallion Check
-        if (!items.bombos && !items.ether && !items.quake) return "unavailable";
+        if (!items.sword || !items.bombos && !items.ether && !items.quake) return "unavailable";
         if (medallions[0] === 1 && !items.bombos ||
             medallions[0] === 2 && !items.ether ||
             medallions[0] === 3 && !items.quake) return "unavailable";
@@ -221,7 +221,7 @@ dungeons[8] = {
         if (!items.moonpearl || !items.flute || items.glove !== 2) return "unavailable";
         if (!items.boots && !items.hookshot) return "unavailable";
         // Medallion Check
-        if (!items.bombos && !items.ether && !items.quake) return "unavailable";
+        if (!items.sword || !items.bombos && !items.ether && !items.quake) return "unavailable";
         if (medallions[0] === 1 && !items.bombos ||
             medallions[0] === 2 && !items.ether ||
             medallions[0] === 3 && !items.quake) return "unavailable";
@@ -245,7 +245,7 @@ dungeons[9] = {
         if (!items.hookshot && !items.mirror) return "unavailable";
         if (!items.icerod || !items.firerod) return "unavailable";
         // Medallion Check
-        if (!items.bombos && !items.ether && !items.quake) return "unavailable";
+        if (!items.sword || !items.bombos && !items.ether && !items.quake) return "unavailable";
         if (medallions[1] === 1 && !items.bombos ||
             medallions[1] === 2 && !items.ether ||
             medallions[1] === 3 && !items.quake) return "unavailable";
@@ -257,7 +257,7 @@ dungeons[9] = {
         if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return "unavailable";
         if (!items.hookshot && !items.mirror) return "unavailable";
         // Medallion Check
-        if (!items.bombos && !items.ether && !items.quake) return "unavailable";
+        if (!items.sword || !items.bombos && !items.ether && !items.quake) return "unavailable";
         if (medallions[1] === 1 && !items.bombos ||
             medallions[1] === 2 && !items.ether ||
             medallions[1] === 3 && !items.quake) return "unavailable";
@@ -338,7 +338,7 @@ chests[4] = {
     isAvailable: function(){
         if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return "unavailable";
         // Medallion Check
-        if (!items.bombos && !items.ether && !items.quake) return "unavailable";
+        if (!items.sword || !items.bombos && !items.ether && !items.quake) return "unavailable";
         if (medallions[1] === 1 && !items.bombos ||
             medallions[1] === 2 && !items.ether ||
             medallions[1] === 3 && !items.quake) return "unavailable";
