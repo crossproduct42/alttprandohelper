@@ -56,7 +56,7 @@ function toggle(label){
         if(label.substring(0,4) == "boss"){
             toggleBoss(label.substring(4));
         }
-        if (label === "agahnim" || label === "cape" || label === "sword") {
+        if (label === "agahnim" || label === "cape" || label === "sword" || label === "lantern") {
             toggleAgahnim();
         }
     }
