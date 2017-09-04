@@ -11,6 +11,10 @@ function steve(){
     return items.agahnim && items.hookshot && (items.hammer || items.glove || items.flippers);
 }
 
+function melee() { return items.sword || items.hammer; }
+function meleeBow() { return melee() || items.bow > 1; }
+function cane() { return items.somaria || items.byrna; }
+function rod() { return items.firerod || items.icerod; }
 
 dungeons[0] = {
     name: "Eastern Palace",
@@ -37,6 +41,7 @@ dungeons[1] = {
     image: "boss12.png",
     isBeaten: false,
     isBeatable: function() {
+        if (!(meleeBow() || cane() || rod())) return "unavailable";
         if (!(items.book && items.glove) && !(items.flute && items.glove === 2 && items.mirror)) return "unavailable";
         if (!items.lantern && !items.firerod) return "unavailable";
         return items.boots ? "available" : "possible";
@@ -55,14 +60,15 @@ dungeons[2] = {
     image: "boss22.png",
     isBeaten: false,
     isBeatable: function() {
+        if (!melee()) return "unavailable";
+        return this.canGetChest();
+    },
+    canGetChest: function() {
         if (!items.flute && !items.glove) return "unavailable";
         if (!items.mirror && !(items.hookshot && items.hammer)) return "unavailable";
         return items.firerod || items.lantern ? 
             items.flute || items.lantern ? "available" : "dark" :
             "possible";
-    },
-    canGetChest: function() {
-        return this.isBeatable();
     }
 };
 
@@ -158,6 +164,7 @@ dungeons[6] = {
     image: "boss62.png",
     isBeaten: false,
     isBeatable: function(){
+        if (!(melee() || cane())) return "unavailable";
         if(steve())
             return "available";
         return "unavailable";
@@ -204,6 +211,7 @@ dungeons[8] = {
     image: "boss82.png",
     isBeaten: false,
     isBeatable: function(){
+        if (!meleeBow()) return "unavailable";
         if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return "unavailable";
         if (!items.boots && !items.hookshot) return "unavailable";
         // Medallion Check
