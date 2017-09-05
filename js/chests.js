@@ -4,7 +4,7 @@
     var mode = getQueryVariable("mode");
     var isStandard = mode === "standard";
 
-    function steve() {
+    function canReachOutcast() {
         return items.moonpearl && (
             items.glove === 2 || items.glove && items.hammer ||
             items.agahnim && items.hookshot && (items.hammer || items.glove || items.flippers));
@@ -14,6 +14,8 @@
     function meleeBow() { return melee() || items.bow > 1; }
     function cane() { return items.somaria || items.byrna; }
     function rod() { return items.firerod || items.icerod; }
+
+    function always() { return "available"; }
 
     // define dungeon chests
     window.dungeons = [{ // [0]
@@ -98,7 +100,7 @@
         },
         canGetChest: function() {
             if (!items.moonpearl || !items.mirror || !items.flippers) return "unavailable";
-            if (!steve() && !(items.agahnim && items.hammer)) return "unavailable";
+            if (!canReachOutcast() && !(items.agahnim && items.hammer)) return "unavailable";
 
             if (items.chest4 <= 2) return !items.hammer || !items.hookshot ? "unavailable" : "available";
             if (items.chest4 <= 4) return !items.hammer ? "unavailable" : !items.hookshot ? "possible" : "available";
@@ -112,10 +114,10 @@
         image: "boss52.png",
         isBeaten: false,
         isBeatable: function() {
-            return !steve() || !items.firerod || !items.sword ? "unavailable" : "available";
+            return !canReachOutcast() || !items.firerod || !items.sword ? "unavailable" : "available";
         },
         canGetChest: function() {
-            if (!steve()) return "unavailable";
+            if (!canReachOutcast()) return "unavailable";
             return items.firerod ? "available" : "possible";
         }
     }, { // [6]
@@ -126,11 +128,11 @@
         isBeaten: false,
         isBeatable: function() {
             if (!(melee() || cane())) return "unavailable";
-            if (!steve()) return "unavailable";
+            if (!canReachOutcast()) return "unavailable";
             return "available";
         },
         canGetChest: function() {
-            if (!steve()) return "unavailable";
+            if (!canReachOutcast()) return "unavailable";
             return items.chest6 === 1 && !items.hammer ? "possible" : "available";
         }
     }, { // [7]
@@ -240,7 +242,7 @@
         isOpened: false,
         isAvailable: function() {
             if (!items.boots) return "unavailable";
-            if (steve() && items.mirror || items.glove === 2) return "available";
+            if (canReachOutcast() && items.mirror || items.glove === 2) return "available";
             return "unavailable";
         }
     }, { // [1]
@@ -248,13 +250,13 @@
         x: "23.4%",
         y: "93.4%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [2]
         name: "Stoops Lonk's Hoose",
         x: "27.4%",
         y: "67.9%",
         isOpened: isStandard,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [3]
         name: "Spiral Cave",
         x: "39.9%",
@@ -288,20 +290,20 @@
         x: "8.1%",
         y: "57.8%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [6]
         name: "Chicken House <img src='images/bomb.png' class='mini'>",
         x: "4.4%",
         y: "54.2%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [7]
         name: "Bombable Hut <img src='images/bomb.png' class='mini'>",
         x: "55.4%",
         y: "57.8%",
         isOpened: false,
         isAvailable: function() {
-            return steve() ? "available" : "unavailable";
+            return canReachOutcast() ? "available" : "unavailable";
         }
     }, { // [8]
         name: "C House",
@@ -309,14 +311,14 @@
         y: "47.9%",
         isOpened: false,
         isAvailable: function() {
-            return steve() ? "available" : "unavailable";
+            return canReachOutcast() ? "available" : "unavailable";
         }
     }, { // [9]
         name: "Aginah's Cave <img src='images/bomb.png' class='mini'>",
         x: "10.0%",
         y: "82.6%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [10]
         name: "West of Mire (2)",
         x: "51.7%",
@@ -340,7 +342,7 @@
         x: "40.7%",
         y: "41.4%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [13]
         name: "Byrna Spike Cave",
         x: "78.6%",
@@ -356,20 +358,20 @@
         x: "1.7%",
         y: "41.0%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [15]
         name: "Thieve's Hut (4 + <img src='images/bomb.png' class='mini'>)",
         x: "6.4%",
         y: "41.0%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [16]
         name: "Hype Cave! <img src='images/bomb.png' class='mini'> (NPC + 4 <img src='images/bomb.png' class='mini'>)",
         x: "80.0%",
         y: "77.1%",
         isOpened: false,
         isAvailable: function() {
-            return steve() || (items.agahnim && items.moonpearl && items.hammer) ? "available" : "unavailable";
+            return canReachOutcast() || (items.agahnim && items.moonpearl && items.hammer) ? "available" : "unavailable";
         }
     }, { // [17]
         name: "Death Mountain East (5 + 2 <img src='images/bomb.png' class='mini'>)",
@@ -394,13 +396,13 @@
         x: "32.6%",
         y: "93.4%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [20]
         name: "Ice Rod Cave <img src='images/bomb.png' class='mini'>",
         x: "44.7%",
         y: "76.9%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [21]
         name: "Cave Under Rock (bottom chest) <img src='images/hookshot.png' class='mini'>/<img src='images/boots.png' class='mini'>",
         x: "91.6%",
@@ -427,14 +429,14 @@
         y: "46.4%",
         isOpened: false,
         isAvailable: function() {
-            return steve() ? "available" : "unavailable";
+            return canReachOutcast() ? "available" : "unavailable";
         }
     }, { // [24]
         name: "Bottle Vendor: Pay 100 rupees",
         x: "4.5%",
         y: "46.8%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [25]
         name: "Sahasrahla <img src='images/pendant0.png' class='mini'>",
         x: "40.7%",
@@ -453,7 +455,7 @@
         y: "68.6%",
         isOpened: false,
         isAvailable: function() {
-            return steve() || items.agahnim && items.moonpearl && items.hammer ? "available" : "unavailable";
+            return canReachOutcast() || items.agahnim && items.moonpearl && items.hammer ? "available" : "unavailable";
         }
     }, { // [27]
         name: "Dying Boy: Distract him with <img src='images/bottle.png' class='mini'> so that you can rob his family!",
@@ -495,7 +497,7 @@
         y: "92.2%",
         isOpened: false,
         isAvailable: function() {
-            return (steve() || items.agahnim && items.moonpearl && items.hammer) &&
+            return (canReachOutcast() || items.agahnim && items.moonpearl && items.hammer) &&
                 items.mirror && items.sword >= 2 && items.book ? "available" : "unavailable";
         }
     }, { // [32]
@@ -538,7 +540,7 @@
         x: "9.4%",
         y: "13.0%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [37]
         name: "Lumberjack Tree <img src='images/agahnim.png' class='mini'><img src='images/boots.png' class='mini'>",
         x: "15.1%",
@@ -563,7 +565,7 @@
         y: "84.1%",
         isOpened: false,
         isAvailable: function() {
-            return items.mirror && (steve() || items.agahnim && items.moonpearl && items.hammer) ? "available" : "unavailable";
+            return items.mirror && (canReachOutcast() || items.agahnim && items.moonpearl && items.hammer) ? "available" : "unavailable";
         }
     }, { // [40]
         name: "Graveyard Cliff Cave <img src='images/mirror.png' class='mini'>",
@@ -571,7 +573,7 @@
         y: "27.0%",
         isOpened: false,
         isAvailable: function() {
-            return steve() && items.mirror ? "available" : "unavailable";
+            return canReachOutcast() && items.mirror ? "available" : "unavailable";
         }
     }, { // [41]
         name: "Checkerboard Cave <img src='images/mirror.png' class='mini'>",
@@ -602,7 +604,7 @@
         x: "6.2%",
         y: "8.6%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [45]
         name: "Spectacle Rock <img src='images/mirror.png' class='mini'>",
         x: "25.4%",
@@ -632,7 +634,7 @@
         x: "1.8%",
         y: "69.8%",
         isOpened: false,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [48]
         name: "Desert West Ledge <img src='images/book.png' class='mini'>/<img src='images/mirror.png' class='mini'>",
         x: "1.5%",
@@ -658,7 +660,7 @@
         y: "15.2%",
         isOpened: false,
         isAvailable: function() {
-            return steve() ?
+            return canReachOutcast() ?
                 items.cape ? "available" : "possible" :
                 "unavailable";
         }
@@ -677,7 +679,7 @@
         y: "69.2%",
         isOpened: false,
         isAvailable: function() {
-            return steve() || items.agahnim && items.moonpearl && items.hammer ? "available" : "unavailable";
+            return canReachOutcast() || items.agahnim && items.moonpearl && items.hammer ? "available" : "unavailable";
         }
     }, { // [53]
         name: "Zora River Ledge <img src='images/flippers.png' class='mini'>",
@@ -711,19 +713,19 @@
         x: "29.8%",
         y: "41.8%",
         isOpened: isStandard,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [57]
         name: "Hyrule Castle Dungeon (3)",
         x: "25.0%",
         y: "44.1%",
         isOpened: isStandard,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [58]
         name: "Sanctuary",
         x: "23.0%",
         y: "28.0%",
         isOpened: isStandard,
-        isAvailable: function() { return "available"; }
+        isAvailable: always
     }, { // [59]
         name: "Mad Batter <img src='images/hammer.png' class='mini'>/<img src='images/mirror.png' class='mini'> + <img src='images/powder.png' class='mini'>",
         x: "16.0%",
@@ -755,7 +757,7 @@
 
             if (!items.moonpearl || crystalCount < 2) return "unavailable";
             return items.hammer && (items.agahnim || items.glove) ||
-                items.agahnim && items.mirror && steve() ? "available" : "unavailable";
+                items.agahnim && items.mirror && canReachOutcast() ? "available" : "unavailable";
         }
     }, { // [62]
         name: "Master Sword Pedestal <img src='images/pendant0.png' class='mini'><img src='images/pendant1.png' class='mini'><img src='images/pendant2.png' class='mini'> (can check with <img src='images/book.png' class='mini'>)",
