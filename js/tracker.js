@@ -1,10 +1,11 @@
 (function(window) {
     'use strict';
 
+    var query = uri_query();
     window.prizes = [];
     window.medallions = [0, 0];
-    window.mode = get_query_variable('mode');
-    window.map_enabled = get_query_variable('map') === 'true';
+    window.mode = query.mode;
+    window.map_enabled = query.map === 'true';
 
     // Event of clicking on the item tracker
     window.toggle = function(label) {

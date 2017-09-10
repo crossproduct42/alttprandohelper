@@ -1,8 +1,8 @@
 (function(window) {
     'use strict';
 
-    var mode = get_query_variable('mode');
-    var is_standard = mode === 'standard';
+    var query = uri_query(),
+        is_standard = query.mode === 'standard';
 
     function can_reach_outcast() {
         return items.moonpearl && (
