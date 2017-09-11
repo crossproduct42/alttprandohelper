@@ -8,6 +8,7 @@ body { margin: 0px; background-color: black; }
 .cell { position: relative; float: left; }
 
 #app { width: 1340px; height: 448px; }
+#app.mapless { width: 448px; }
 
 #tracker .item,
 #tracker .boss,

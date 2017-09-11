@@ -172,6 +172,7 @@
                 document.getElementById('dungeon'+k).className = 'dungeon ' + dungeons[k].can_get_chest();
             }
         } else {
+            document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
         }
     };
