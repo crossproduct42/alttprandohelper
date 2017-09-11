@@ -1,25 +1,27 @@
 <html>
 <head>
   <title>launching ALttP tracker</title>
-  <script src="js/main.js"></script>
+  <script src="js/index.js"></script>
+  <style>
+  label { width: 4em; display: inline-block; }
+  div { margin: 5px 0; }
+  </style>
 </head>
 <body>
 
-  <span>Mode:</span>
-  <select id="option_mode">
-    <option value="standard">Standard</option>
-    <option value="open">Open</option>
-  </select>
-  <br>
+  <div>
+    <label>Standard</label>
+    <button type="button" class="launch" data-mode="standard" data-map="no">Without map</button>
+    <button type="button" class="launch" data-mode="standard" data-map="yes">With map</button>
+  </div>
 
-  <span>Map:</span>
-  <select id="option_mapEnabled">
-    <option value="false">Mapless Tracker</option>
-    <option value="true">Mapfull Tracker</option>
-  </select>
-  <br>
+  <div>
+    <label>Open</label>
+    <button type="button" class="launch" data-mode="open" data-map="no">Without map</button>
+    <button type="button" class="launch" data-mode="open" data-map="yes">With map</button>
+  </div>
 
-  <input type="button" value="LAUNCH!" onClick="launch_tracker()">
+  <script>start()</script>
 
 </body>
 </html>

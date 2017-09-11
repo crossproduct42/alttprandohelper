@@ -5,7 +5,7 @@
     window.prizes = [];
     window.medallions = [0, 0];
     window.mode = query.mode;
-    window.map_enabled = query.map === 'true';
+    window.map_enabled = query.map;
 
     // Event of clicking on the item tracker
     window.toggle = function(label) {
