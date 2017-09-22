@@ -27,7 +27,7 @@
 
     // define dungeon chests
     window.dungeons = [{ // [0]
-        caption: 'Eastern Palace',
+        caption: 'Eastern Palace {lantern}',
         is_beaten: false,
         is_beatable: function() {
             return items.bow > 1 ?
@@ -145,7 +145,7 @@
             var state = medallion_check(0);
             if (state) return state;
 
-            return items.firerod ?
+            return items.lantern || items.firerod ?
                 items.lantern ? 'available' : 'dark' :
                 'possible';
         },
@@ -170,7 +170,9 @@
             var state = medallion_check(1);
             if (state) return state;
 
-            return items.lantern ? 'available' : 'dark';
+            return items.byrna || items.cape || items.shield === 3 ?
+                items.lantern ? 'available' : 'dark' :
+                'possible';
         },
         can_get_chest: function() {
             if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
@@ -178,14 +180,17 @@
             var state = medallion_check(1);
             if (state) return state;
 
-            if (!items.lantern && !items.flute) return 'dark';
-
-            return items.lantern && items.firerod && items.icerod ? 'available' : 'possible';
+            var laser_safety = items.byrna || items.cape || items.shield === 3,
+                dark_room = items.lantern ? 'available' : 'dark';
+            if (items.chest9 <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
+            if (items.chest9 <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
+            if (items.chest9 <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
+            return items.firerod && items.lantern ? 'available' : 'possible';
         }
     }];
 
     window.agahnim = {
-        caption: 'Agahnim {sword2}/ ({cape}{sword1})',
+        caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
         is_available: function() {
             return items.sword >= 2 || items.cape && items.sword ?
                 items.lantern ? 'available' : 'dark' :
@@ -261,10 +266,10 @@
             return items.moonpearl && items.flute && items.glove === 2 ? 'available' : 'unavailable';
         }
     }, { // [11]
-        caption: 'DW Death Mountain (2) : Don\'t need {moonpearl}',
+        caption: 'Super Bunny Chests (2)',
         is_opened: false,
         is_available: function() {
-            return items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
+            return items.moonpearl && items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
                 items.lantern || items.flute ? 'available' : 'dark' :
                 'unavailable';
         }
@@ -276,7 +281,7 @@
         caption: 'Byrna Spike Cave',
         is_opened: false,
         is_available: function() {
-            return items.moonpearl && items.glove && items.hammer ?
+            return items.moonpearl && items.glove && items.hammer && (items.byrna || items.cape) ?
                 items.lantern || items.flute ? 'available' : 'dark' :
                 'unavailable';
         }
@@ -365,10 +370,10 @@
             return items.bottle ? 'available' : 'unavailable';
         }
     }, { // [28]
-        caption: 'Reunite the Hammer Brothers and show the Purple Chest to Gary',
+        caption: 'Gary\'s Lunchbox (save the frog first)',
         is_opened: false,
         is_available: function() {
-            return items.moonpearl && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
+            return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
         }
     }, { // [29]
         caption: 'Fugitive under the bridge {flippers}',
@@ -380,16 +385,19 @@
         caption: 'Ether Tablet {sword2}{book}',
         is_opened: false,
         is_available: function() {
-            return items.sword >= 2 && items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
-                items.lantern || items.flute ? 'available' : 'dark' :
+            return items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
+                items.sword >= 2 ?
+                    items.lantern || items.flute ? 'available' : 'dark' :
+                    'possible' :
                 'unavailable';
         }
     }, { // [31]
         caption: 'Bombos Tablet {mirror}{sword2}{book}',
         is_opened: false,
         is_available: function() {
-            return (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) &&
-                items.mirror && items.sword >= 2 && items.book ? 'available' : 'unavailable';
+            return items.book && items.mirror && (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ?
+                items.sword >= 2 ? 'available' : 'possible' :
+                'unavailable';
         }
     }, { // [32]
         caption: 'Catfish',
@@ -405,7 +413,7 @@
             return items.flippers || items.glove ? 'available' : 'unavailable';
         }
     }, { // [34]
-        caption: 'Lost Old Man',
+        caption: 'Lost Old Man {lantern}',
         is_opened: false,
         is_available: function() {
             return items.glove || items.flute ?
@@ -514,7 +522,7 @@
         is_opened: false,
         is_available: function() {
             return can_reach_outcast() ?
-                items.cape ? 'available' : 'possible' :
+                items.glove && items.cape ? 'available' : 'possible' :
                 'unavailable';
         }
     }, { // [51]
@@ -545,7 +553,7 @@
             return items.shovel ? 'available' : 'unavailable';
         }
     }, { // [55]
-        caption: 'Escape Sewer Side Room (3) {glove} + {bomb}/{boots}',
+        caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
         is_opened: false,
         is_available: function() {
             return is_standard || items.glove ? 'available' :
@@ -570,10 +578,10 @@
             return items.powder && (items.hammer || items.glove === 2 && items.mirror && items.moonpearl) ? 'available' : 'unavailable';
         }
     }, { // [60]
-        caption: 'Take the frog home {mirror}',
+        caption: 'Take the frog home {mirror} / Save+Quit',
         is_opened: false,
         is_available: function() {
-            return items.moonpearl && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
+            return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
         }
     }, { // [61]
         caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
@@ -600,10 +608,10 @@
                     if (++pendant_count === 3) return 'available';
                 }
             }
-            return 'unavailable';
+            return items.book ? 'possible' : 'unavailable';
         }
     }, { // [63]
-        caption: 'Escape Sewer Dark Room',
+        caption: 'Escape Sewer Dark Room {lantern}',
         is_opened: is_standard,
         is_available: function() {
             return items.lantern ? 'available' : 'dark';
