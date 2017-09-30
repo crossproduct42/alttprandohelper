@@ -553,7 +553,7 @@
             return items.shovel ? 'available' : 'unavailable';
         }
     }, { // [55]
-        caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
+        caption: 'Escape Sewer Side Room (3) {bomb}/{boots}' + (is_standard ? '' : ' (yellow = need small key)'),
         is_opened: false,
         is_available: function() {
             return is_standard || items.glove ? 'available' :
