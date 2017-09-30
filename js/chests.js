@@ -614,7 +614,7 @@
         caption: 'Escape Sewer Dark Room {lantern}',
         is_opened: is_standard,
         is_available: function() {
-            return items.lantern ? 'available' : 'dark';
+            return is_standard || items.lantern ? 'available' : 'dark';
         }
     }, { // [64]
         caption: 'Waterfall of Wishing (2) {flippers}',
