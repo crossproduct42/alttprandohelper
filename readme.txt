@@ -1,7 +1,8 @@
 Browser-based Item Tracker for A Link to the Past
-v 4.0
+v 5.0.0
 by crossproduct (twitch.tv/crossproduct)
-2017/04/07
+and Ohga / halfarebel (twitch.tv/halfarebel)
+2017/04/07 - 2017/09/30
                                             ^
                                             |
                    /\    ¯¯¯||¯¯¯ |   |¯- |¯|¯|    /\
@@ -30,11 +31,6 @@ Start playing ALttP Randomizer today!
 
 Web Version should always have the latest features:
 	http://vt.alttp.run/
-
-Desktop Client Version:
-	https://dessyreqt.github.io/alttprandomizer/
-
-Check out the BONUS folder for a full detailed map of all item locations!
 
 --------------------------------------------
 (:::[========> SPECIAL THANKS <========]:::)
@@ -80,23 +76,16 @@ ALTTP DISCORD SERVER:
 Feel free to share this tracker by posting a link to my Twitch channel:
 	twitch.tv/crossproduct
 
-Sharing the DropBox link doesn't really help me, and it won't always be the latest version.
+(Sharing the GitHub link doesn't help me as much.)
 DO NOT DISTRIBUTE THIS TRACKER ON YOUR WEBSITE! DIRECT PEOPLE TO MY TWITCH CHANNEL FOR DOWNLOAD!
 
 If you would like to make modifications to the tracker and share it on your site, follow these guidelines:
     -	Ask permission. Let me know how and why you are altering and redistributing.
-	- Direct Message me via Twitch or Discord (see contact info above)
+	-	Direct Message me via Twitch or Discord (see contact info above)
     -	The changes must be significant!
-	- GOOD CHANGES: layout customizability, non-browser platform, new features, etc
-	- BAD CHANGES: minor logic fixes, icon customization
+	-	GOOD CHANGES: layout customizability, non-browser platform, new features, etc
+	-	BAD CHANGES: minor logic fixes, icon customization
     -	You must credit me and provide a link to my Twitch channel.
-
-***********************************************************************
-***                                                                 ***
-***    I have had multiple requests to share the code on GitHub.    ***
-***    I am open to the idea, but I have no idea how to use GitHub. ***
-***                                                                 ***
-***********************************************************************
 
 
 
@@ -104,24 +93,65 @@ If you would like to make modifications to the tracker and share it on your site
 (:::[========> VERSION HISTORY <========]:::)
 ---------------------------------------------
 
+v5.0.0
+	- Simplified Launcher
+	- Backend improvements (code cleaner, folders organized better)
+	- Dark Rooms are now indicated by a blue square if you do not have Lantern
+		- If a dark room is POSSIBLE, but not necessarily known, it will be yellow
+	- Aesthetic improvements
+		- Screen transition lines removed from MAP
+		- Map quality improved!
+		- Captions changed to sans-serif font for readability
+	- Agahnim tile added on the map
+	- Crystals 5 & 6 are now red to match current Randomizer version
+	- Some locations renamed changes
+	- Logic fixes
+		- Pedestal item visible with Book
+		- Glove required for Bumper Cave
+		- Fire source required to complete Desert Palace
+		- Moon Pearl "required" for Super Bunny chests
+			- (Not required, but this is a sequence break. The tracker should reflect the game's item placement logic.)
+
+	- Logic updated to match VT8.26
+		- Waterfall Fairy chest added
+		- Mirror no longer required to save Dwarf or return Gary's lunchbox
+		- Ether and Bombos Tablets items visible with Book
+		- Glove no longer required to access escape side room
+		- Dark rooms now exist in Light World
+			- Lost Old Man
+			- Escape Sewer Dark Room (new tile added!)
+			- Eastern Palace
+			- (Tower of Hera affected if no Flute)
+		- Cape/Byrna "required" for Byrna Spike Cave
+		- Cape/Byrna/MirrorShield "required" for Turtle Rock laser bridge room
+		
+	- Open Mode compatibility option
+		- Link starts with no Sword
+		- All chests from Link's house to Sanctuary start as unopened
+		- Glove is a possible requirement for Escape Side Room, depending on key placement
+		- Sword requirements considered for medallions / curtains / bosses
+
+	- DLC icons and help maps no longer included in the package. They will be updated and released in the future.
+
+
 v4.0
     -	Tracker layout updated!
-	- Silver Arrow (no Bow) is now trackable
-	- Sword, Shield, Tunic, and Moon Pearl are combined to one mega square!
-	- Pendant and Crystal squares replaced by boss icons
-	- Each boss square has a sub-square to remember prizes
-	- Vitreous and Trinexx also have a medallion sub-square
+	-	Silver Arrow (no Bow) is now trackable
+	-	Sword, Shield, Tunic, and Moon Pearl are combined to one mega square!
+	-	Pendant and Crystal squares replaced by boss icons
+	-	Each boss square has a sub-square to remember prizes
+	-	Vitreous and Trinexx also have a medallion sub-square
 
     -	Three new locations added to Tracker Map!
-	- Master Sword Pedestal
-	- Dwarven Swordsmiths
-	- Fat Fairy Fountain
+	-	Master Sword Pedestal
+	-	Dwarven Swordsmiths
+	-	Fat Fairy Fountain
 
     -	New Tracker Map features and updated dungeon logic!
-	- Yellow squares for visible (but unobtainable) items (and unknown Mimic Cave availability)
-	- Boss Icons on the map correspond to their pictures on the Item Tracker
-	- Tracker Map now properly calculates obtainable dungeon chests
-	- Misery Mire and Turtle Rock calculations now consider medallions
+	-	Yellow squares for visible (but unobtainable) items (and unknown Mimic Cave availability)
+	-	Boss Icons on the map correspond to their pictures on the Item Tracker
+	-	Tracker Map now properly calculates obtainable dungeon chests
+	-	Misery Mire and Turtle Rock calculations now consider medallions
 
     -	Removed Horizontal layout. Later versions may contain better customization :-/
 
@@ -155,15 +185,27 @@ v2.1
 
 
 
+--------------------------------------------
+(:::[========> FUTURE CHANGES <========]:::)
+--------------------------------------------
+
+	- Go Mode indicator
+	- Swordless Mode
+	- Sequence Breaks (orange?)
+	- Colorblind support
+	- Right Click to toggle items/dungeon prizes backwards
+
+
+
 --------------------------------------------------
 (:::[========> TRACKER INSTRUCTIONS <========]:::)
 --------------------------------------------------
 
-Open launcher.html
-Select which layout you'd like to use, and click the LAUNCH! button.
-The launcher will close itself in 5 seconds, which should give you enough time to override popup blocker.
+Open index.html
+Click the button corresponding to the desired Mode and Mapfulness
+	(Popup blocker no longer an issue)
 Launcher works best with Internet Explorer, which can disable window resize and title bar (enable scripts)
-If launcher doesn't work, you can open tracker.html or tracker_map.html
+If you open tracker.html directly, it will default to Standard and Mapless, and the window will not be the right size
 
 -[--- Item Tracker ---]-
 
@@ -190,17 +232,17 @@ Small squares are chests and Heart Piece locations strewn about the land of Hyru
     - Green areas are attainable with your current items (the logic assumes you have access to bombs)
     - Red areas are unreachable.
     - Yellow areas are unreachable, but you can see what item is there!
-	- The "Mimic Cave" location is the exception. Yellow means the item is POSSIBLE,
-		given the correct medallion requirement and key layout of Turtle Rock.
+		- exceptions for Mimic Cave and Escape Sewer Side Room are noted in the captions
+	- Blue areas are attainable, but will require dark room navigation.
     - Gray areas have already been searched. (The chests between Link's house and Sanctuary
-	    start off as Gray by default.)
-    - Click a Red/Green/Yellow square to check it off and turn it Gray.
-	- You may want to click a Red/Yellow square if you get it via Fake Flippers, or
+	    start off as Gray by default in Standard Mode.)
+    - Click a Red/Green/Yellow/Blue square to check it off and turn it Gray.
+	- You may want to click a Red/Yellow square if you get it via minor glitches, or
 		see the item and decide you do not want it.
-    - Click a Gray square to revert it to Red/Green/Yellow (the tracker will recalculate whether it's reachable)
+    - Click a Gray square to revert it to Red/Green/Yellow/Blue (the tracker will recalculate whether it's reachable)
 
 	*PRO TIP!!! The "Agahnim" icon is very important in the tracker's logic! Remember that you can
-			kill Agahnim as long as you have Cape or L2 (or better) sword! Will killing him
+			kill Agahnim as long as you have Cape+Sword or L2 Sword (watch out for dark room)! Will killing him
 			open up new item locations? Click on him to see!
 
 Large squares are dungeons!
@@ -217,6 +259,4 @@ Large squares are dungeons!
     - Clicking the dungeon squares on the map HAS NO EFFECT!
     - Clicking the corresponding chests on the Item Tracker will toggle the outer square.
     - Clicking the corresponding boss picture on the Item Tracker will toggle the inner square.
-
-
 
