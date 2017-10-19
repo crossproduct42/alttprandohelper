@@ -58,8 +58,8 @@ body {
 }
 
 .chest {
-  width: 24;
-  height: 24;
+  width: 24px;
+  height: 24px;
   margin-left: -12px;
   margin-top: -12px;
   position: absolute;
