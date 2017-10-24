@@ -8,11 +8,12 @@
             hi = href.indexOf('#');
 
         q = hi >= 0 ? href.substring(0, hi) : href;
-        q = qi >= 0 ? href.substring(qi) : '';
-        
+        q = qi >= 0 ? q.substring(qi) : '';
+
         // clean out leading question, trim amps, and consecutive amps
         return q.replace(/&+/g, '&').replace(/^\?*&*|&+$/g, '')
             .split('&').reduce(function(items, param) {
+                if (!param) return items;
                 var name, value,
                     v = param.split('=', 2);
                 name = decodeURIComponent(v.shift());
