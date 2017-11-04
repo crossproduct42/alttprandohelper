@@ -78,8 +78,8 @@ body {
   z-index: 2;
 }
 
-#bossMapAgahnim { background-color: transparent; }
-.castle {
+#map .boss.agahnim { background-color: transparent; }
+.encounter {
   width: 36px;
   height: 36px;
   margin-left: -18px;
@@ -98,10 +98,10 @@ body {
 }
 
 .chest,
-.castle,
+.encounter,
 .dungeon { background-image: url(images/overlay/poi.png); }
 .chest.highlight,
-.castle.highlight,
+.encounter.highlight,
 .dungeon.highlight { background-image: url(images/overlay/highlighted.png); }
 
 .unavailable { background-color: red; }
@@ -128,56 +128,57 @@ body {
   vertical-align: text-bottom;
 }
 
-.tunic.active-1 { background-image: url(images/items/tunic1.png); }
-.tunic.active-2 { background-image: url(images/items/tunic2.png); }
-.tunic.active-3 { background-image: url(images/items/tunic3.png); }
-.tunic.active-1.bunny { background-image: url(images/items/tunicbunny1.png); }
-.tunic.active-2.bunny { background-image: url(images/items/tunicbunny2.png); }
-.tunic.active-3.bunny { background-image: url(images/items/tunicbunny3.png); }
-.sword.active-1 { background-image: url(images/items/sword1.png); }
-.sword.active-2 { background-image: url(images/items/sword2.png); }
-.sword.active-3 { background-image: url(images/items/sword3.png); }
-.sword.active-4 { background-image: url(images/items/sword4.png); }
-.shield.active-1 { background-image: url(images/items/shield1.png); }
-.shield.active-2 { background-image: url(images/items/shield2.png); }
-.shield.active-3 { background-image: url(images/items/shield3.png); }
-.moonpearl { background-image: url(images/items/moonpearl.png); }
-.bow { background-image: url(images/items/bow0.png); }
-.bow.active-1 { background-image: url(images/items/bow1.png); }
-.bow.active-2 { background-image: url(images/items/bow2.png); }
-.bow.active-3 { background-image: url(images/items/bow3.png); }
-.boomerang { background-image: url(images/items/boomerang1.png); }
-.boomerang.active-2 { background-image: url(images/items/boomerang2.png); }
-.boomerang.active-3 { background-image: url(images/items/boomerang3.png); }
-.hookshot { background-image: url(images/items/hookshot.png); }
-.mushroom { background-image: url(images/items/mushroom.png); }
-.powder { background-image: url(images/items/powder.png); }
-.firerod { background-image: url(images/items/firerod.png); }
-.icerod { background-image: url(images/items/icerod.png); }
-.bombos { background-image: url(images/items/bombos.png); }
-.ether { background-image: url(images/items/ether.png); }
-.quake { background-image: url(images/items/quake.png); }
-.lantern { background-image: url(images/items/lantern.png); }
-.hammer { background-image: url(images/items/hammer.png); }
-.shovel { background-image: url(images/items/shovel.png); }
-.net { background-image: url(images/items/net.png); }
-.book { background-image: url(images/items/book.png); }
-.bottle { background-image: url(images/items/bottle0.png); }
-.bottle.active-1 { background-image: url(images/items/bottle1.png); }
-.bottle.active-2 { background-image: url(images/items/bottle2.png); }
-.bottle.active-3 { background-image: url(images/items/bottle3.png); }
-.bottle.active-4 { background-image: url(images/items/bottle4.png); }
-.somaria { background-image: url(images/items/somaria.png); }
-.byrna { background-image: url(images/items/byrna.png); }
-.cape { background-image: url(images/items/cape.png); }
-.mirror { background-image: url(images/items/mirror.png); }
-.boots { background-image: url(images/items/boots.png); }
-.glove { background-image: url(images/items/glove1.png); }
-.glove.active-2 { background-image: url(images/items/glove2.png); }
-.flippers { background-image: url(images/items/flippers.png); }
-.flute { background-image: url(images/items/flute.png); }
-.agahnim, #bossMapAgahnim { background-image:url(images/dungeons/agahnim0.png); }
-.agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
+#tracker .tunic.active-1, #caption .tunic.active-1 { background-image: url(images/items/tunic1.png); }
+#tracker .tunic.active-2, #caption .tunic.active-2 { background-image: url(images/items/tunic2.png); }
+#tracker .tunic.active-3, #caption .tunic.active-3 { background-image: url(images/items/tunic3.png); }
+#tracker .tunic.active-1.bunny, #caption .tunic.active-1.bunny { background-image: url(images/items/tunicbunny1.png); }
+#tracker .tunic.active-2.bunny, #caption .tunic.active-2.bunny { background-image: url(images/items/tunicbunny2.png); }
+#tracker .tunic.active-3.bunny, #caption .tunic.active-3.bunny { background-image: url(images/items/tunicbunny3.png); }
+#tracker .sword.active-1, #caption .sword.active-1 { background-image: url(images/items/sword1.png); }
+#tracker .sword.active-2, #caption .sword.active-2 { background-image: url(images/items/sword2.png); }
+#tracker .sword.active-3, #caption .sword.active-3 { background-image: url(images/items/sword3.png); }
+#tracker .sword.active-4, #caption .sword.active-4 { background-image: url(images/items/sword4.png); }
+#tracker .shield.active-1, #caption .shield.active-1 { background-image: url(images/items/shield1.png); }
+#tracker .shield.active-2, #caption .shield.active-2 { background-image: url(images/items/shield2.png); }
+#tracker .shield.active-3, #caption .shield.active-3 { background-image: url(images/items/shield3.png); }
+#tracker .moonpearl, #caption .moonpearl { background-image: url(images/items/moonpearl.png); }
+#tracker .bow, #caption .bow { background-image: url(images/items/bow0.png); }
+#tracker .bow.active-1, #caption .bow.active-1 { background-image: url(images/items/bow1.png); }
+#tracker .bow.active-2, #caption .bow.active-2 { background-image: url(images/items/bow2.png); }
+#tracker .bow.active-3, #caption .bow.active-3 { background-image: url(images/items/bow3.png); }
+#tracker .boomerang, #caption .boomerang { background-image: url(images/items/boomerang1.png); }
+#tracker .boomerang.active-2, #caption .boomerang.active-2 { background-image: url(images/items/boomerang2.png); }
+#tracker .boomerang.active-3, #caption .boomerang.active-3 { background-image: url(images/items/boomerang3.png); }
+#tracker .hookshot, #caption .hookshot { background-image: url(images/items/hookshot.png); }
+#tracker .mushroom, #caption .mushroom { background-image: url(images/items/mushroom.png); }
+#tracker .powder, #caption .powder { background-image: url(images/items/powder.png); }
+#tracker .firerod, #caption .firerod { background-image: url(images/items/firerod.png); }
+#tracker .icerod, #caption .icerod { background-image: url(images/items/icerod.png); }
+#tracker .bombos, #caption .bombos { background-image: url(images/items/bombos.png); }
+#tracker .ether, #caption .ether { background-image: url(images/items/ether.png); }
+#tracker .quake, #caption .quake { background-image: url(images/items/quake.png); }
+#tracker .lantern, #caption .lantern { background-image: url(images/items/lantern.png); }
+#tracker .hammer, #caption .hammer { background-image: url(images/items/hammer.png); }
+#tracker .shovel, #caption .shovel { background-image: url(images/items/shovel.png); }
+#tracker .net, #caption .net { background-image: url(images/items/net.png); }
+#tracker .book, #caption .book { background-image: url(images/items/book.png); }
+#tracker .bottle, #caption .bottle { background-image: url(images/items/bottle0.png); }
+#tracker .bottle.active-1, #caption .bottle.active-1 { background-image: url(images/items/bottle1.png); }
+#tracker .bottle.active-2, #caption .bottle.active-2 { background-image: url(images/items/bottle2.png); }
+#tracker .bottle.active-3, #caption .bottle.active-3 { background-image: url(images/items/bottle3.png); }
+#tracker .bottle.active-4, #caption .bottle.active-4 { background-image: url(images/items/bottle4.png); }
+#tracker .somaria, #caption .somaria { background-image: url(images/items/somaria.png); }
+#tracker .byrna, #caption .byrna { background-image: url(images/items/byrna.png); }
+#tracker .cape, #caption .cape { background-image: url(images/items/cape.png); }
+#tracker .mirror, #caption .mirror { background-image: url(images/items/mirror.png); }
+#tracker .boots, #caption .boots { background-image: url(images/items/boots.png); }
+#tracker .glove, #caption .glove { background-image: url(images/items/glove1.png); }
+#tracker .glove.active-2, #caption .glove.active-2 { background-image: url(images/items/glove2.png); }
+#tracker .flippers, #caption .flippers { background-image: url(images/items/flippers.png); }
+#tracker .flute, #caption .flute { background-image: url(images/items/flute.png); }
+#tracker .agahnim, #caption .agahnim,
+#map .boss.agahnim { background-image:url(images/dungeons/agahnim0.png); }
+#tracker .agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
 .boss0, #bossMap0 { background-image: url(images/dungeons/boss0.png); }
 .boss1, #bossMap1 { background-image: url(images/dungeons/boss1.png); }
 .boss2, #bossMap2 { background-image: url(images/dungeons/boss2.png); }
@@ -205,11 +206,11 @@ body {
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
 
-.bomb { background-image: url(images/overlay/bomb.png); }
-.crystal { background-image: url(images/overlay/crystal.png); }
-.pendant-0 { background-image: url(images/overlay/pendant0.png); }
-.pendant-1 { background-image: url(images/overlay/pendant1.png); }
-.pendant-2 { background-image: url(images/overlay/pendant2.png); }
+#caption .bomb { background-image: url(images/overlay/bomb.png); }
+#caption .crystal { background-image: url(images/overlay/crystal.png); }
+#caption .pendant-0 { background-image: url(images/overlay/pendant0.png); }
+#caption .pendant-1 { background-image: url(images/overlay/pendant1.png); }
+#caption .pendant-2 { background-image: url(images/overlay/pendant2.png); }
 
 #bossMap0, #dungeon0 { left: 46.8%; top: 38.8%; }
 #bossMap1, #dungeon1 { left: 3.8%;  top: 78.4%; }
@@ -222,70 +223,70 @@ body {
 #bossMap8, #dungeon8 { left: 55.8%; top: 82.9%; }
 #bossMap9, #dungeon9 { left: 96.9%; top: 7.0%; }
 
-#bossMapAgahnim, #castle { left: 25.0%; top: 52.6%; }
+#map .agahnim { left: 25.0%; top: 52.6%; }
 
-#chestMap0 { left: 30.8%; top: 29.6%; }
-#chestMap1 { left: 23.4%; top: 93.4%; }
-#chestMap2 { left: 27.4%; top: 67.9%; }
-#chestMap3 { left: 39.9%; top: 9.3%; }
-#chestMap4 { left: 42.6%; top: 9.3%; }
-#chestMap5 { left: 8.1%;  top: 57.8%; }
-#chestMap6 { left: 4.4%;  top: 54.2%; }
-#chestMap7 { left: 55.4%; top: 57.8%; }
-#chestMap8 { left: 60.8%; top: 47.9%; }
-#chestMap9 { left: 10.0%; top: 82.6%; }
-#chestMap10 { left: 51.7%; top: 79.5%; }
-#chestMap11 { left: 92.8%; top: 14.7%; }
-#chestMap12 { left: 40.7%; top: 41.4%; }
-#chestMap13 { left: 78.6%; top: 14.9%; }
-#chestMap14 { left: 1.7%;  top: 41.0%; }
-#chestMap15 { left: 6.4%;  top: 41.0%; }
-#chestMap16 { left: 80.0%; top: 77.1%; }
-#chestMap17 { left: 41.4%; top: 17.1%; }
-#chestMap18 { left: 19.5%; top: 29.3%; }
-#chestMap19 { left: 32.6%; top: 93.4%; }
-#chestMap20 { left: 44.7%; top: 76.9%; }
-#chestMap21 { left: 91.6%; top: 8.6%; }
-#chestMap22 { left: 91.6%; top: 3.4%; }
-#chestMap23 { left: 52.1%; top: 46.4%; }
-#chestMap24 { left: 4.5%;  top: 46.8%; }
-#chestMap25 { left: 40.7%; top: 46.7%; }
-#chestMap26 { left: 65.5%; top: 68.6%; }
-#chestMap27 { left: 7.8%;  top: 52.1%; }
-#chestMap28 { left: 65.2%; top: 52.2%; }
-#chestMap29 { left: 35.4%; top: 69.7%; }
-#chestMap30 { left: 21.0%; top: 3.0%; }
-#chestMap31 { left: 11.0%; top: 92.2%; }
-#chestMap32 { left: 96.0%; top: 17.2%; }
-#chestMap33 { left: 48.0%; top: 12.1%; }
-#chestMap34 { left: 20.8%; top: 20.4%; }
-#chestMap35 { left: 40.8%; top: 32.5%; }
-#chestMap36 { left: 9.4%;  top: 13.0%; }
-#chestMap37 { left: 15.1%; top: 7.6%; }
-#chestMap38 { left: 24.3%; top: 14.8%; }
-#chestMap39 { left: 14.1%; top: 84.1%; }
-#chestMap40 { left: 28.1%; top: 27.0%; }
-#chestMap41 { left: 8.8%;  top: 77.3%; }
-#chestMap42 { left: 65.8%; top: 60.1%; }
-#chestMap43 { left: 7.7%;  top: 65.9%; }
-#chestMap44 { left: 6.2%;  top: 8.6%; }
-#chestMap45 { left: 25.4%; top: 8.5%; }
-#chestMap46 { left: 40.2%; top: 3.0%; }
-#chestMap47 { left: 1.8%;  top: 69.8%; }
-#chestMap48 { left: 1.5%;  top: 91.0%; }
-#chestMap49 { left: 36.1%; top: 82.9%; }
-#chestMap50 { left: 67.1%; top: 15.2%; }
-#chestMap51 { left: 79.0%; top: 43.5%; }
-#chestMap52 { left: 52.9%; top: 69.2%; }
-#chestMap53 { left: 47.7%; top: 17.3%; }
-#chestMap54 { left: 14.4%; top: 66.2%; }
-#chestMap55 { left: 26.8%; top: 32.4%; }
-#chestMap56 { left: 29.8%; top: 41.8%; }
-#chestMap57 { left: 25.0%; top: 44.1%; }
-#chestMap58 { left: 23.0%; top: 28.0%; }
-#chestMap59 { left: 16.0%; top: 58.0%; }
-#chestMap60 { left: 15.2%; top: 51.8%; }
-#chestMap61 { left: 73.5%; top: 48.5%; }
-#chestMap62 { left: 2.5%;  top: 3.2%; }
-#chestMap63 { left: 25.6%; top: 38.2%; }
-#chestMap64 { left: 44.9%; top: 14.7%; }
+#map .graveyard-e    { left: 30.8%; top: 29.6%; }
+#map .dam            { left: 23.4%; top: 93.4%; }
+#map .link-house     { left: 27.4%; top: 67.9%; }
+#map .spiral         { left: 39.9%; top: 9.3%; }
+#map .mimic          { left: 42.6%; top: 9.3%; }
+#map .tavern         { left: 8.1%;  top: 57.8%; }
+#map .chicken        { left: 4.4%;  top: 54.2%; }
+#map .bomb-hut       { left: 55.4%; top: 57.8%; }
+#map .c-house        { left: 60.8%; top: 47.9%; }
+#map .aginah         { left: 10.0%; top: 82.6%; }
+#map .mire-w         { left: 51.7%; top: 79.5%; }
+#map .bunny          { left: 92.8%; top: 14.7%; }
+#map .sahasrahla-hut { left: 40.7%; top: 41.4%; }
+#map .spike          { left: 78.6%; top: 14.9%; }
+#map .well           { left: 1.7%;  top: 41.0%; }
+#map .thief-hut      { left: 6.4%;  top: 41.0%; }
+#map .swamp-ne       { left: 80.0%; top: 77.1%; }
+#map .paradox        { left: 41.4%; top: 17.1%; }
+#map .graveyard-w    { left: 19.5%; top: 29.3%; }
+#map .lake-sw        { left: 32.6%; top: 93.4%; }
+#map .ice-cave       { left: 44.7%; top: 76.9%; }
+#map .rock-boots     { left: 91.6%; top: 8.6%; }
+#map .rock-hook      { left: 91.6%; top: 3.4%; }
+#map .chest-game     { left: 52.1%; top: 46.4%; }
+#map .bottle         { left: 4.5%;  top: 46.8%; }
+#map .sahasrahla     { left: 40.7%; top: 46.7%; }
+#map .stumpy         { left: 65.5%; top: 68.6%; }
+#map .kid            { left: 7.8%;  top: 52.1%; }
+#map .purple         { left: 65.2%; top: 52.2%; }
+#map .hobo           { left: 35.4%; top: 69.7%; }
+#map .ether          { left: 21.0%; top: 3.0%; }
+#map .bombos         { left: 11.0%; top: 92.2%; }
+#map .catfish        { left: 96.0%; top: 17.2%; }
+#map .zora           { left: 48.0%; top: 12.1%; }
+#map .lost-man       { left: 20.8%; top: 20.4%; }
+#map .witch          { left: 40.8%; top: 32.5%; }
+#map .hideout        { left: 9.4%;  top: 13.0%; }
+#map .tree           { left: 15.1%; top: 7.6%; }
+#map .spectacle-cave { left: 24.3%; top: 14.8%; }
+#map .grove-s        { left: 14.1%; top: 84.1%; }
+#map .graveyard-n    { left: 28.1%; top: 27.0%; }
+#map .desert-ne      { left: 8.8%;  top: 77.3%; }
+#map .pegs           { left: 65.8%; top: 60.1%; }
+#map .library        { left: 7.7%;  top: 65.9%; }
+#map .mushroom       { left: 6.2%;  top: 8.6%; }
+#map .spectacle-rock { left: 25.4%; top: 8.5%; }
+#map .island-dm      { left: 40.2%; top: 3.0%; }
+#map .maze           { left: 1.8%;  top: 69.8%; }
+#map .desert-w       { left: 1.5%;  top: 91.0%; }
+#map .island-lake    { left: 36.1%; top: 82.9%; }
+#map .bumper         { left: 67.1%; top: 15.2%; }
+#map .pyramid        { left: 79.0%; top: 43.5%; }
+#map .dig-game       { left: 52.9%; top: 69.2%; }
+#map .river          { left: 47.7%; top: 17.3%; }
+#map .dig-grove      { left: 14.4%; top: 66.2%; }
+#map .escape-side    { left: 26.8%; top: 32.4%; }
+#map .secret         { left: 29.8%; top: 41.8%; }
+#map .castle         { left: 25.0%; top: 44.1%; }
+#map .sanctuary      { left: 23.0%; top: 28.0%; }
+#map .bat            { left: 16.0%; top: 58.0%; }
+#map .frog           { left: 15.2%; top: 51.8%; }
+#map .fairy-dw       { left: 73.5%; top: 48.5%; }
+#map .altar          { left: 2.5%;  top: 3.2%; }
+#map .escape-dark    { left: 25.6%; top: 38.2%; }
+#map .fairy-lw       { left: 44.9%; top: 14.7%; }
