@@ -189,12 +189,14 @@
         }
     }];
 
-    window.agahnim = {
-        caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
-        is_available: function() {
-            return items.sword >= 2 || items.cape && items.sword ?
-                items.lantern ? 'available' : 'dark' :
-                'unavailable';
+    window.encounters = {
+        agahnim: {
+            caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
+            is_available: function() {
+                return items.sword >= 2 || items.cape && items.sword ?
+                    items.lantern ? 'available' : 'dark' :
+                    'unavailable';
+            }
         }
     };
 
