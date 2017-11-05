@@ -13,9 +13,11 @@
             var value = items.dec(label);
             document.getElementById(label).className = 'chest-' + value;
             if (map_enabled) {
-                var x = label.substring(5);
-                document.getElementById('dungeon'+x).className = classNames('dungeon',
-                    value ? dungeons[x].can_get_chest() : 'opened');
+                var index = label.replace(/^chest/, ''),
+                    name = dungeon_names[index],
+                    location = as_location(name);
+                document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
+                    value ? dungeons[name].can_get_chest() : 'opened');
             }
             return;
         }
@@ -40,21 +42,29 @@
                 if (!chests[name].is_opened)
                     document.querySelector('#map .' + location).className = classNames('chest', location, chests[name].is_available());
             });
-            for (var k = 0; k < dungeons.length; k++) {
-                if (!dungeons[k].is_beaten)
-                    document.getElementById('bossMap'+k).className = classNames('boss', dungeons[k].is_beatable());
-                if (items['chest'+k])
-                    document.getElementById('dungeon'+k).className = classNames('dungeon', dungeons[k].can_get_chest());
-            }
+            Object.keys(dungeons).forEach(function(name, index) {
+                var location = as_location(name);
+                if (!dungeons[name].is_beaten)
+                    document.querySelector('#map .boss.' + location).className = classNames('boss', location, dungeons[name].is_beatable());
+                if (items['chest'+index])
+                    document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
+            });
             // Clicking a boss on the tracker will check it off on the map!
             if (is_boss) {
-                toggle_boss(label.substring(4));
+                toggle_boss(label);
             }
             if (label === 'agahnim' || label === 'cape' || label === 'sword' || label === 'lantern') {
                 toggle_agahnim();
             }
         }
     };
+
+    function toggle_boss(label) {
+        var index = label.replace(/^boss/, ''),
+            name = dungeon_names[index];
+        dungeons[name].is_beaten = !dungeons[name].is_beaten;
+        update_boss(name);
+    }
 
     // event of clicking on a boss's pendant/crystal subsquare
     window.toggle_dungeon = function(n) {
@@ -82,39 +92,32 @@
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
-            dungeons[8+n].is_beaten = !dungeons[8+n].is_beaten;
-            toggle_boss(8+n);
-            if (items['chest'+(8+n)] > 0)
-                document.getElementById('dungeon'+(8+n)).className = classNames('dungeon', dungeons[8+n].can_get_chest());
+            var index = 8 + n,
+                name = dungeon_names[index],
+                location = as_location(name);
+            update_boss(name);
+            if (items['chest'+index])
+                document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
             // TRock medallion affects Mimic Cave
-            if (n === 1) {
+            if (name === 'turtle') {
                 document.querySelector('#map .mimic').className = classNames('chest', 'mimic',
                     chests.mimic.is_opened ? 'opened' : chests.mimic.is_available());
             }
             // Change the mouseover text on the map
-            dungeons[8+n].caption = dungeons[8+n].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[n]+'}');
+            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[n]+'}');
         }
     };
 
+    function update_boss(name) {
+        var location = as_location(name);
+        document.querySelector('#map .boss.' + location).className = classNames('boss', location,
+            dungeons[name].is_beaten ? 'opened' : dungeons[name].is_beatable());
+    }
+
     if (map_enabled) {
-        // Event of clicking a dungeon location (not really)
-        window.toggle_boss = function(x) {
-            dungeons[x].is_beaten = !dungeons[x].is_beaten;
-            document.getElementById('bossMap'+x).className = classNames('boss',
-                dungeons[x].is_beaten ? 'opened' : dungeons[x].is_beatable());
-        };
         window.toggle_agahnim = function() {
             document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
                 items.agahnim ? 'opened' : encounters.agahnim.is_available());
-        };
-        // Highlights a chest location and shows the caption (but for dungeons)
-        window.highlight_dungeon = function(x) {
-            document.getElementById('dungeon'+x).classList.add('highlight');
-            document.getElementById('caption').innerHTML = caption_to_html(dungeons[x].caption);
-        };
-        window.unhighlight_dungeon = function(x) {
-            document.getElementById('dungeon'+x).classList.remove('highlight');
-            document.getElementById('caption').innerHTML = '&nbsp;';
         };
     }
 
@@ -141,13 +144,14 @@
     }
 
     function location_name(class_list) {
-        var terms = ['boss', 'encounter', 'chest', 'highlight', 'opened', 'unavailable', 'available', 'possible', 'dark'];
+        var terms = ['boss', 'dungeon', 'encounter', 'chest', 'highlight',
+            'opened', 'unavailable', 'available', 'possible', 'dark'];
         return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
     }
 
     function location_target(target, location) {
         return target.classList.contains('boss') ?
-            document.querySelector('#map .encounter.' + location) :
+            document.querySelector('#map ' + (location === 'agahnim' ? '.encounter.' : '.dungeon.') + location) :
             target;
     }
 
@@ -162,9 +166,7 @@
     }
 
     window.start = function() {
-        for (var k = 0; k < dungeons.length; k++) {
-            prizes[k] = 0;
-        }
+        dungeon_names.forEach(function() { prizes.push(0); });
 
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
@@ -173,12 +175,18 @@
         if (map_enabled) {
             var map = document.getElementById('map');
             map.addEventListener('mouseover', function(event) { 
-                event.target.classList.contains('chest') && highlight(event.target, chests);
-                event.target.classList.contains('agahnim') && highlight(event.target, encounters);
+                // Check Agahnim first since his .boss div might be highlighted
+                var source = event.target.classList.contains('agahnim') ? encounters :
+                    event.target.classList.contains('boss') ||
+                    event.target.classList.contains('dungeon') ? dungeons :
+                    event.target.classList.contains('chest') ? chests : null;
+                source && highlight(event.target, source);
             });
             map.addEventListener('mouseout', function(event) {
-                if (event.target.classList.contains('chest') ||
-                    event.target.classList.contains('agahnim'))
+                if (event.target.classList.contains('boss') ||
+                    event.target.classList.contains('dungeon') ||
+                    event.target.classList.contains('agahnim') ||
+                    event.target.classList.contains('chest'))
                     unhighlight(event.target);
             });
             map.addEventListener('click', function(event) {
@@ -190,10 +198,12 @@
                 document.querySelector('#map .' + as_location(name)).classList.add(chest.is_opened ? 'opened' : chest.is_available());
             });
             document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_available());
-            for (k = 0; k < dungeons.length; k++) {
-                document.getElementById('bossMap'+k).className = classNames('boss', dungeons[k].is_beatable());
-                document.getElementById('dungeon'+k).className = classNames('dungeon', dungeons[k].can_get_chest());
-            }
+            Object.keys(dungeons).forEach(function(name) {
+                var dungeon = dungeons[name],
+                    location = as_location(name);
+                document.querySelector('#map .boss.' + location).classList.add(dungeon.is_beatable());
+                document.querySelector('#map .dungeon.' + location).classList.add(dungeon.can_get_chest());
+            });
         } else {
             document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
