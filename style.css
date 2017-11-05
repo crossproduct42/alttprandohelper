@@ -179,16 +179,16 @@ body {
 #tracker .agahnim, #caption .agahnim,
 #map .boss.agahnim { background-image:url(images/dungeons/agahnim0.png); }
 #tracker .agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
-.boss0, #bossMap0 { background-image: url(images/dungeons/boss0.png); }
-.boss1, #bossMap1 { background-image: url(images/dungeons/boss1.png); }
-.boss2, #bossMap2 { background-image: url(images/dungeons/boss2.png); }
-.boss3, #bossMap3 { background-image: url(images/dungeons/boss3.png); }
-.boss4, #bossMap4 { background-image: url(images/dungeons/boss4.png); }
-.boss5, #bossMap5 { background-image: url(images/dungeons/boss5.png); }
-.boss6, #bossMap6 { background-image: url(images/dungeons/boss6.png); }
-.boss7, #bossMap7 { background-image: url(images/dungeons/boss7.png); }
-.boss8, #bossMap8 { background-image: url(images/dungeons/boss8.png); }
-.boss9, #bossMap9 { background-image: url(images/dungeons/boss9.png); }
+.boss0, #map .boss.eastern { background-image: url(images/dungeons/boss0.png); }
+.boss1, #map .boss.desert { background-image: url(images/dungeons/boss1.png); }
+.boss2, #map .boss.hera { background-image: url(images/dungeons/boss2.png); }
+.boss3, #map .boss.darkness { background-image: url(images/dungeons/boss3.png); }
+.boss4, #map .boss.swamp { background-image: url(images/dungeons/boss4.png); }
+.boss5, #map .boss.skull { background-image: url(images/dungeons/boss5.png); }
+.boss6, #map .boss.thieves { background-image: url(images/dungeons/boss6.png); }
+.boss7, #map .boss.ice { background-image: url(images/dungeons/boss7.png); }
+.boss8, #map .boss.mire { background-image: url(images/dungeons/boss8.png); }
+.boss9, #map .boss.turtle { background-image: url(images/dungeons/boss9.png); }
 .prize-0 { background-image: url(images/dungeons/prize0.png); }
 .prize-1 { background-image: url(images/dungeons/prize1.png); }
 .prize-2 { background-image: url(images/dungeons/prize2.png); }
@@ -212,16 +212,16 @@ body {
 #caption .pendant-1 { background-image: url(images/overlay/pendant1.png); }
 #caption .pendant-2 { background-image: url(images/overlay/pendant2.png); }
 
-#bossMap0, #dungeon0 { left: 46.8%; top: 38.8%; }
-#bossMap1, #dungeon1 { left: 3.8%;  top: 78.4%; }
-#bossMap2, #dungeon2 { left: 31.0%; top: 5.5%; }
-#bossMap3, #dungeon3 { left: 97.0%; top: 40.0%; }
-#bossMap4, #dungeon4 { left: 73.5%; top: 91.0%; }
-#bossMap5, #dungeon5 { left: 53.3%; top: 5.4%; }
-#bossMap6, #dungeon6 { left: 56.4%; top: 47.9%; }
-#bossMap7, #dungeon7 { left: 89.8%; top: 85.8%; }
-#bossMap8, #dungeon8 { left: 55.8%; top: 82.9%; }
-#bossMap9, #dungeon9 { left: 96.9%; top: 7.0%; }
+#map .eastern  { left: 46.8%; top: 38.8%; }
+#map .desert   { left: 3.8%;  top: 78.4%; }
+#map .hera     { left: 31.0%; top: 5.5%; }
+#map .darkness { left: 97.0%; top: 40.0%; }
+#map .swamp    { left: 73.5%; top: 91.0%; }
+#map .skull    { left: 53.3%; top: 5.4%; }
+#map .thieves  { left: 56.4%; top: 47.9%; }
+#map .ice      { left: 89.8%; top: 85.8%; }
+#map .mire     { left: 55.8%; top: 82.9%; }
+#map .turtle   { left: 96.9%; top: 7.0%; }
 
 #map .agahnim { left: 25.0%; top: 52.6%; }
 
