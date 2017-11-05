@@ -53,8 +53,9 @@
             if (is_boss) {
                 toggle_boss(label);
             }
-            if (label === 'agahnim' || label === 'cape' || label === 'sword' || label === 'lantern') {
-                toggle_agahnim();
+            if (['agahnim', 'cape', 'sword', 'lantern'].includes(label)) {
+                document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
+                    items.agahnim ? 'opened' : encounters.agahnim.is_available());
             }
         }
     };
@@ -112,13 +113,6 @@
         var location = as_location(name);
         document.querySelector('#map .boss.' + location).className = classNames('boss', location,
             dungeons[name].is_beaten ? 'opened' : dungeons[name].is_beatable());
-    }
-
-    if (map_enabled) {
-        window.toggle_agahnim = function() {
-            document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
-                items.agahnim ? 'opened' : encounters.agahnim.is_available());
-        };
     }
 
     function toggle_map(target) {
