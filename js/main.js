@@ -105,7 +105,7 @@
         };
         window.toggle_agahnim = function() {
             document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
-                items.agahnim ? 'opened' : agahnim.is_available());
+                items.agahnim ? 'opened' : encounters.agahnim.is_available());
         };
         // Highlights a chest location and shows the caption (but for dungeons)
         window.highlight_dungeon = function(x) {
@@ -114,14 +114,6 @@
         };
         window.unhighlight_dungeon = function(x) {
             document.getElementById('dungeon'+x).classList.remove('highlight');
-            document.getElementById('caption').innerHTML = '&nbsp;';
-        };
-        window.highlight_agahnim = function() {
-            document.querySelector('#map .encounter.agahnim').classList.add('highlight');
-            document.getElementById('caption').innerHTML = caption_to_html(agahnim.caption);
-        };
-        window.unhighlight_agahnim = function() {
-            document.querySelector('#map .encounter.agahnim').classList.remove('highlight');
             document.getElementById('caption').innerHTML = '&nbsp;';
         };
     }
@@ -135,20 +127,28 @@
             'highlight');
     }
 
-    function highlight(target) {
-        var name = as_identifier(location_name(target.classList));
-        target.classList.add('highlight');
-        document.getElementById('caption').innerHTML = caption_to_html(chests[name].caption);
+    function highlight(target, source) {
+        var location = location_name(target.classList),
+            name = as_identifier(location);
+        location_target(target, location).classList.add('highlight');
+        document.getElementById('caption').innerHTML = caption_to_html(source[name].caption);
     }
 
     function unhighlight(target) {
-        target.classList.remove('highlight');
+        var location = location_name(target.classList)
+        location_target(target, location).classList.remove('highlight');
         document.getElementById('caption').innerHTML = '&nbsp;';
     }
 
     function location_name(class_list) {
-        var terms = ['chest', 'highlight', 'opened', 'unavailable', 'available', 'possible', 'dark'];
+        var terms = ['boss', 'encounter', 'chest', 'highlight', 'opened', 'unavailable', 'available', 'possible', 'dark'];
         return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
+    }
+
+    function location_target(target, location) {
+        return target.classList.contains('boss') ?
+            document.querySelector('#map .encounter.' + location) :
+            target;
     }
 
     function caption_to_html(caption) {
@@ -173,10 +173,13 @@
         if (map_enabled) {
             var map = document.getElementById('map');
             map.addEventListener('mouseover', function(event) { 
-                event.target.classList.contains('chest') && highlight(event.target);
+                event.target.classList.contains('chest') && highlight(event.target, chests);
+                event.target.classList.contains('agahnim') && highlight(event.target, encounters);
             });
             map.addEventListener('mouseout', function(event) {
-                event.target.classList.contains('chest') && unhighlight(event.target);
+                if (event.target.classList.contains('chest') ||
+                    event.target.classList.contains('agahnim'))
+                    unhighlight(event.target);
             });
             map.addEventListener('click', function(event) {
                 event.target.classList.contains('chest') && toggle_map(event.target);
@@ -186,7 +189,7 @@
                 var chest = chests[name];
                 document.querySelector('#map .' + as_location(name)).classList.add(chest.is_opened ? 'opened' : chest.is_available());
             });
-            document.querySelector('#map .encounter.agahnim').classList.add(agahnim.is_available());
+            document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_available());
             for (k = 0; k < dungeons.length; k++) {
                 document.getElementById('bossMap'+k).className = classNames('boss', dungeons[k].is_beatable());
                 document.getElementById('dungeon'+k).className = classNames('dungeon', dungeons[k].can_get_chest());
