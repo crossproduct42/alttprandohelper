@@ -40,20 +40,19 @@
         return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
     }
 
-    // Event of clicking on the item tracker
-    window.toggle = function(label) {
-        var node = document.getElementsByClassName(label)[0];
-        if ((typeof items[label]) === 'boolean') {
-            items[label] = !items[label];
-            node.classList[items[label] ? 'add' : 'remove']('active');
+    function toggle_item(target) {
+        var name = item_name(target.classList);
+        if ((typeof items[name]) === 'boolean') {
+            items[name] = !items[name];
+            target.classList[items[name] ? 'add' : 'remove']('active');
         } else {
-            var value = items.inc(label);
-            node.className = node.className.replace(/ ?active-\w+/, '');
-            if (value) node.classList.add('active-' + value);
+            var value = items.inc(name);
+            target.className = target.className.replace(/ ?active-\w+/, '');
+            if (value) target.classList.add('active-' + value);
         }
         // Initiate bunny graphics!
-        if (label === 'moonpearl' || label === 'tunic') {
-            document.getElementsByClassName('tunic')[0].classList[!items.moonpearl ? 'add' : 'remove']('bunny');
+        if (['moonpearl', 'tunic'].includes(name)) {
+            document.querySelector('#tracker .tunic').classList[!items.moonpearl ? 'add' : 'remove']('bunny');
         }
 
         if (map_enabled) {
@@ -69,12 +68,17 @@
                 if (items['chest'+index])
                     document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
             });
-            if (['agahnim', 'cape', 'sword', 'lantern'].includes(label)) {
+            if (['agahnim', 'cape', 'sword', 'lantern'].includes(name)) {
                 document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
                     items.agahnim ? 'opened' : encounters.agahnim.is_available());
             }
         }
-    };
+    }
+
+    function item_name(class_list) {
+        var terms = ['item', 'active', 'bunny'];
+        return Array.from(class_list).filter(function(x) { return !(terms.includes(x) || x.match(/^active-/)); })[0];
+    }
 
     // event of clicking on a boss's pendant/crystal subsquare
     window.toggle_dungeon = function(n) {
@@ -180,6 +184,7 @@
         document.getElementById('tracker').addEventListener('click', function(event) {
             var target = event.target;
             if (target.classList.contains('boss')) toggle_boss(target);
+            if (target.classList.contains('item')) toggle_item(target);
             if ((target.id || '').startsWith('chest')) toggle_chest(target);
         });
 
