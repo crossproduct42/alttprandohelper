@@ -390,11 +390,9 @@
             caption: 'Sahasrahla {pendant0}',
             is_opened: false,
             is_available: function() {
-                for (var k = 0; k < 10; k++) {
-                    if (prizes[k] === 1 && items['boss'+k])
-                        return 'available';
-                }
-                return 'unavailable';
+                return dungeon_names.reduce(function(state, name, i) {
+                    return prizes[name] === 1 && items['boss'+i] ? 'available' : state;
+                }, 'unavailable');
             }
         },
         stumpy: {
@@ -662,14 +660,11 @@
             caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
             is_opened: false,
             is_available: function() {
-                //crystal check
-                var crystal_count = 0;
-                for (var k = 0; k < 10; k++) {
-                    if (prizes[k] === 4 && items['boss'+k])
-                        crystal_count += 1;
-                }
+                var crystal_count = dungeon_names.reduce(function(s, name, i) {
+                    return prizes[name] === 4 && items['boss'+i] ? s + 1 : s;
+                }, 0);
 
-                if (!items.moonpearl || crystal_count < 2) return 'unavailable';
+                if (crystal_count < 2 || !items.moonpearl) return 'unavailable';
                 return items.hammer && (items.agahnim || items.glove) ||
                     items.agahnim && items.mirror && can_reach_outcast() ? 'available' : 'unavailable';
             }
@@ -678,13 +673,12 @@
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
             is_opened: false,
             is_available: function() {
-                var pendant_count = 0;
-                for (var k = 0; k < 10; k++) {
-                    if ((prizes[k] === 1 || prizes[k] === 2) && items['boss'+k]) {
-                        if (++pendant_count === 3) return 'available';
-                    }
-                }
-                return items.book ? 'possible' : 'unavailable';
+                var pendant_count = dungeon_names.reduce(function(s, name, i) {
+                    return (prizes[name] === 1 || prizes[name] === 2) && items['boss'+i] ? s + 1 : s;
+                }, 0);
+
+                return pendant_count >= 3 ? 'available' :
+                    items.book ? 'possible' : 'unavailable';
             }
         },
         escape_dark: {

@@ -2,7 +2,7 @@
     'use strict';
 
     var query = uri_query();
-    window.prizes = [];
+    window.prizes = {};
     window.medallions = [0, 0];
     window.mode = query.mode;
     window.map_enabled = query.map;
@@ -80,16 +80,17 @@
         return Array.from(class_list).filter(function(x) { return !(terms.includes(x) || x.match(/^active-/)); })[0];
     }
 
-    // event of clicking on a boss's pendant/crystal subsquare
-    window.toggle_dungeon = function(n) {
-        prizes[n] += 1;
-        if (prizes[n] === 5) prizes[n] = 0;
+    function toggle_prize(target) {
+        var index = target.id.replace(/^prize/, ''),
+            name = dungeon_names[index];
+        prizes[name] += 1;
+        if (prizes[name] === 5) prizes[name] = 0;
 
-        document.getElementById('dungeonPrize'+n).className = 'prize-' + prizes[n];
+        target.className = 'prize-' + prizes[name];
 
         if (map_enabled)
             update_prize_locations();
-    };
+    }
 
     // event of clicking on Mire/TRock's medallion subsquare
     window.toggle_medallion = function(n) {
@@ -175,7 +176,7 @@
     }
 
     window.start = function() {
-        dungeon_names.forEach(function() { prizes.push(0); });
+        Object.keys(dungeons).forEach(function(name) { prizes[name] = 0; });
 
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
@@ -186,6 +187,7 @@
             if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('item')) toggle_item(target);
             if ((target.id || '').startsWith('chest')) toggle_chest(target);
+            if ((target.id || '').startsWith('prize')) toggle_prize(target);
         });
 
         if (map_enabled) {
