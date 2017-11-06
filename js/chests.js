@@ -10,12 +10,12 @@
             items.agahnim && items.hookshot && (items.hammer || items.glove || items.flippers));
     }
 
-    function medallion_check(i) {
+    function medallion_check(name) {
         if (!items.sword || !items.bombos && !items.ether && !items.quake) return 'unavailable';
-        if (medallions[i] === 1 && !items.bombos ||
-            medallions[i] === 2 && !items.ether ||
-            medallions[i] === 3 && !items.quake) return 'unavailable';
-        if (medallions[i] === 0 && !(items.bombos && items.ether && items.quake)) return 'possible';
+        if (medallions[name] === 1 && !items.bombos ||
+            medallions[name] === 2 && !items.ether ||
+            medallions[name] === 3 && !items.quake) return 'unavailable';
+        if (medallions[name] === 0 && !(items.bombos && items.ether && items.quake)) return 'possible';
     }
 
     function melee() { return items.sword || items.hammer; }
@@ -152,7 +152,7 @@
                 if (!melee_bow()) return 'unavailable';
                 if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
-                var state = medallion_check(0);
+                var state = medallion_check('mire');
                 if (state) return state;
 
                 return items.lantern || items.firerod ?
@@ -162,7 +162,7 @@
             can_get_chest: function() {
                 if (!items.moonpearl || !items.flute || items.glove !== 2) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
-                var state = medallion_check(0);
+                var state = medallion_check('mire');
                 if (state) return state;
 
                 return (items.chest8 > 1 ?
@@ -178,7 +178,7 @@
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
                 if (!items.icerod || !items.firerod) return 'unavailable';
-                var state = medallion_check(1);
+                var state = medallion_check('turtle');
                 if (state) return state;
 
                 return items.byrna || items.cape || items.shield === 3 ?
@@ -188,7 +188,7 @@
             can_get_chest: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
-                var state = medallion_check(1);
+                var state = medallion_check('turtle');
                 if (state) return state;
 
                 var laser_safety = items.byrna || items.cape || items.shield === 3,
@@ -246,7 +246,7 @@
             is_opened: false,
             is_available: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
-                var state = medallion_check(1);
+                var state = medallion_check('turtle');
                 if (state) return state;
 
                 return items.firerod ?

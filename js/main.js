@@ -3,7 +3,7 @@
 
     var query = uri_query();
     window.prizes = {};
-    window.medallions = [0, 0];
+    window.medallions = {};
     window.mode = query.mode;
     window.map_enabled = query.map;
 
@@ -92,18 +92,17 @@
             update_prize_locations();
     }
 
-    // event of clicking on Mire/TRock's medallion subsquare
-    window.toggle_medallion = function(n) {
-        medallions[n] += 1;
-        if (medallions[n] === 4) medallions[n] = 0;
+    function toggle_medallion(target) {
+        var index = 8 + ~~target.id.replace(/^medallion/, ''),
+            name = dungeon_names[index];
+        medallions[name] += 1;
+        if (medallions[name] === 4) medallions[name] = 0;
 
-        document.getElementById('medallion'+n).className = 'medallion-' + medallions[n];
+        target.className = 'medallion-' + medallions[name];
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
-            var index = 8 + n,
-                name = dungeon_names[index],
-                location = as_location(name);
+            var location = as_location(name);
             update_boss(name);
             if (items['chest'+index])
                 document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
@@ -113,9 +112,9 @@
                     chests.mimic.is_opened ? 'opened' : chests.mimic.is_available());
             }
             // Change the mouseover text on the map
-            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[n]+'}');
+            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[name]+'}');
         }
-    };
+    }
 
     function update_boss(name) {
         var location = as_location(name);
@@ -177,6 +176,7 @@
 
     window.start = function() {
         Object.keys(dungeons).forEach(function(name) { prizes[name] = 0; });
+        ['mire', 'turtle'].forEach(function(name) { medallions[name] = 0; });
 
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
@@ -188,6 +188,7 @@
             if (target.classList.contains('item')) toggle_item(target);
             if ((target.id || '').startsWith('chest')) toggle_chest(target);
             if ((target.id || '').startsWith('prize')) toggle_prize(target);
+            if ((target.id || '').startsWith('medallion')) toggle_medallion(target);
         });
 
         if (map_enabled) {
