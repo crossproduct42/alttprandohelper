@@ -7,20 +7,21 @@
     window.mode = query.mode;
     window.map_enabled = query.map;
 
+    function toggle_chest(target) {
+        var name = target.id;
+        var value = items.dec(name);
+        target.className = 'chest-' + value;
+        if (map_enabled) {
+            var index = name.replace(/^chest/, ''),
+                name = dungeon_names[index],
+                location = as_location(name);
+            document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
+                value ? dungeons[name].can_get_chest() : 'opened');
+        }
+    }
+
     // Event of clicking on the item tracker
     window.toggle = function(label) {
-        if (label.substring(0,5) === 'chest') {
-            var value = items.dec(label);
-            document.getElementById(label).className = 'chest-' + value;
-            if (map_enabled) {
-                var index = label.replace(/^chest/, ''),
-                    name = dungeon_names[index],
-                    location = as_location(name);
-                document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
-                    value ? dungeons[name].can_get_chest() : 'opened');
-            }
-            return;
-        }
         var node = document.getElementsByClassName(label)[0],
             is_boss = node.classList.contains('boss');
         if ((typeof items[label]) === 'boolean') {
@@ -165,6 +166,11 @@
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
         }
+
+        document.getElementById('tracker').addEventListener('click', function(event) {
+            var target = event.target;
+            if ((target.id || '').startsWith('chest')) toggle_chest(target);
+        });
 
         if (map_enabled) {
             var map = document.getElementById('map');
