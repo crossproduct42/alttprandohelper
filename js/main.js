@@ -7,32 +7,6 @@
     window.mode = query.mode;
     window.map_enabled = query.map;
 
-    function toggle_chest(target) {
-        var name = dungeon_name(target.classList),
-            value = count.chests.dec(name);
-
-        target.className = classNames('chest', 'chest-'+value, name);
-
-        if (map_enabled) {
-            var location = as_location(name);
-            document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
-                value ? dungeons[name].can_get_chest() : 'opened');
-        }
-    }
-
-    function toggle_boss(target) {
-        var name = dungeon_name(target.classList);
-        items[name] = !items[name];
-        target.classList[items[name] ? 'add' : 'remove']('defeated');
-
-        // Clicking a boss on the tracker will check it off on the map!
-        if (map_enabled) {
-            dungeons[name].is_beaten = !dungeons[name].is_beaten;
-            update_boss(name);
-            update_prize_locations();
-        }
-    }
-
     function toggle_item(target) {
         var name = item_name(target.classList);
         if ((typeof items[name]) === 'boolean') {
@@ -71,6 +45,32 @@
     function item_name(class_list) {
         var terms = ['item', 'active', 'bunny'];
         return Array.from(class_list).filter(function(x) { return !(terms.includes(x) || x.match(/^active-/)); })[0];
+    }
+
+    function toggle_chest(target) {
+        var name = dungeon_name(target.classList),
+            value = count.chests.dec(name);
+
+        target.className = classNames('chest', 'chest-'+value, name);
+
+        if (map_enabled) {
+            var location = as_location(name);
+            document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
+                value ? dungeons[name].can_get_chest() : 'opened');
+        }
+    }
+
+    function toggle_boss(target) {
+        var name = dungeon_name(target.classList);
+        items[name] = !items[name];
+        target.classList[items[name] ? 'add' : 'remove']('defeated');
+
+        // Clicking a boss on the tracker will check it off on the map!
+        if (map_enabled) {
+            dungeons[name].is_beaten = !dungeons[name].is_beaten;
+            update_boss(name);
+            update_prize_locations();
+        }
     }
 
     function toggle_prize(target) {
@@ -183,9 +183,9 @@
 
         document.getElementById('tracker').addEventListener('click', function(event) {
             var target = event.target;
-            if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('item')) toggle_item(target);
             if (target.classList.contains('chest')) toggle_chest(target);
+            if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('prize')) toggle_prize(target);
             if (target.classList.contains('medallion')) toggle_medallion(target);
         });
