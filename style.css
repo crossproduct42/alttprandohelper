@@ -42,7 +42,7 @@ body {
   bottom: 0;
   right: 0;
 }
-#tracker [class*="medallion-"] {
+#tracker .medallion {
   width: 32px;
   height: 32px;
   position: absolute;
