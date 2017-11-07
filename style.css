@@ -17,7 +17,7 @@ body {
 
 #tracker .item,
 #tracker .boss,
-#tracker [id^="chest"] { width: 64px; height: 64px; }
+#tracker .chest { width: 64px; height: 64px; }
 
 #tracker .tunic { width: 128px; height: 128px; }
 #tracker .sword { position: absolute; top: 0; right: 0; }
@@ -57,7 +57,7 @@ body {
   background-size: 100% 100%;
 }
 
-.chest {
+#map .chest {
   width: 24px;
   height: 24px;
   margin-left: -12px;

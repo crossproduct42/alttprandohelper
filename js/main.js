@@ -8,16 +8,20 @@
     window.map_enabled = query.map;
 
     function toggle_chest(target) {
-        var name = target.id;
-        var value = items.dec(name);
-        target.className = 'chest-' + value;
+        var name = dungeon_name(target.classList),
+            value = count.chests.dec(name);
+
+        target.className = classNames('chest', 'chest-'+value, name);
+
         if (map_enabled) {
-            var index = name.replace(/^chest/, ''),
-                name = dungeon_names[index],
-                location = as_location(name);
+            var location = as_location(name);
             document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
                 value ? dungeons[name].can_get_chest() : 'opened');
         }
+    }
+
+    function dungeon_name(class_list) {
+        return Array.from(class_list).filter(function(x) { return !x.match(/^chest-?/); })[0];
     }
 
     function toggle_boss(target) {
@@ -65,7 +69,7 @@
                 var location = as_location(name);
                 if (!dungeons[name].is_beaten)
                     document.querySelector('#map .boss.' + location).className = classNames('boss', location, dungeons[name].is_beatable());
-                if (items['chest'+index])
+                if (count.chests[name])
                     document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
             });
             if (['agahnim', 'cape', 'sword', 'lantern'].includes(name)) {
@@ -104,7 +108,7 @@
             // Update availability of dungeon boss AND chests
             var location = as_location(name);
             update_boss(name);
-            if (items['chest'+index])
+            if (count.chests[name])
                 document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
             // TRock medallion affects Mimic Cave
             if (name === 'turtle') {
@@ -186,7 +190,7 @@
             var target = event.target;
             if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('item')) toggle_item(target);
-            if ((target.id || '').startsWith('chest')) toggle_chest(target);
+            if (target.classList.contains('chest')) toggle_chest(target);
             if ((target.id || '').startsWith('prize')) toggle_prize(target);
             if ((target.id || '').startsWith('medallion')) toggle_medallion(target);
         });
