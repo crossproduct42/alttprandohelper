@@ -33,11 +33,6 @@
         }
     }
 
-    function dungeon_name(class_list) {
-        var terms = ['boss', 'chest', 'defeated'];
-        return Array.from(class_list).filter(function(x) { return !(terms.includes(x) || x.match(/^chest-?/)); })[0];
-    }
-
     function toggle_item(target) {
         var name = item_name(target.classList);
         if ((typeof items[name]) === 'boolean') {
@@ -79,15 +74,21 @@
     }
 
     function toggle_prize(target) {
-        var index = target.id.replace(/^prize/, ''),
-            name = dungeon_names[index];
+        var name = dungeon_name(target.classList);
         prizes[name] += 1;
         if (prizes[name] === 5) prizes[name] = 0;
 
-        target.className = 'prize-' + prizes[name];
+        target.className = classNames('prize', 'prize-'+prizes[name], name);
 
         if (map_enabled)
             update_prize_locations();
+    }
+
+    function dungeon_name(class_list) {
+        var terms = ['boss', 'chest', 'prize', 'defeated'];
+        return Array.from(class_list).filter(function(x) {
+            return !(terms.includes(x) || x.match(/^(chest|prize)-?/));
+        })[0];
     }
 
     function toggle_medallion(target) {
@@ -185,7 +186,7 @@
             if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('item')) toggle_item(target);
             if (target.classList.contains('chest')) toggle_chest(target);
-            if ((target.id || '').startsWith('prize')) toggle_prize(target);
+            if (target.classList.contains('prize')) toggle_prize(target);
             if ((target.id || '').startsWith('medallion')) toggle_medallion(target);
         });
 
