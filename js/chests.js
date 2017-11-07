@@ -220,8 +220,8 @@
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
             is_opened: false,
             is_available: function() {
-                var pendant_count = dungeon_names.reduce(function(s, name, i) {
-                    return (prizes[name] === 1 || prizes[name] === 2) && items['boss'+i] ? s + 1 : s;
+                var pendant_count = dungeon_names.reduce(function(s, name) {
+                    return (prizes[name] === 1 || prizes[name] === 2) && items[name] ? s + 1 : s;
                 }, 0);
 
                 return pendant_count >= 3 ? 'available' :
@@ -428,8 +428,8 @@
             caption: 'Sahasrahla {pendant0}',
             is_opened: false,
             is_available: function() {
-                return dungeon_names.reduce(function(state, name, i) {
-                    return prizes[name] === 1 && items['boss'+i] ? 'available' : state;
+                return dungeon_names.reduce(function(state, name) {
+                    return prizes[name] === 1 && items[name] ? 'available' : state;
                 }, 'unavailable');
             }
         },
@@ -653,8 +653,8 @@
             caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
             is_opened: false,
             is_available: function() {
-                var crystal_count = dungeon_names.reduce(function(s, name, i) {
-                    return prizes[name] === 4 && items['boss'+i] ? s + 1 : s;
+                var crystal_count = dungeon_names.reduce(function(s, name) {
+                    return prizes[name] === 4 && items[name] ? s + 1 : s;
                 }, 0);
 
                 if (crystal_count < 2 || !items.moonpearl) return 'unavailable';
