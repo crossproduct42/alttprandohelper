@@ -25,8 +25,6 @@
 
     function always() { return 'available'; }
 
-    window.dungeon_names = ['eastern', 'desert', 'hera', 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle'];
-
     window.dungeons = {
         eastern: {
             caption: 'Eastern Palace {lantern}',
@@ -220,7 +218,7 @@
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
             is_opened: false,
             is_available: function() {
-                var pendant_count = dungeon_names.reduce(function(s, name) {
+                var pendant_count = Object.keys(dungeons).reduce(function(s, name) {
                     return (prizes[name] === 1 || prizes[name] === 2) && items[name] ? s + 1 : s;
                 }, 0);
 
@@ -428,7 +426,7 @@
             caption: 'Sahasrahla {pendant0}',
             is_opened: false,
             is_available: function() {
-                return dungeon_names.reduce(function(state, name) {
+                return Object.keys(dungeons).reduce(function(state, name) {
                     return prizes[name] === 1 && items[name] ? 'available' : state;
                 }, 'unavailable');
             }
@@ -653,7 +651,7 @@
             caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
             is_opened: false,
             is_available: function() {
-                var crystal_count = dungeon_names.reduce(function(s, name) {
+                var crystal_count = Object.keys(dungeons).reduce(function(s, name) {
                     return prizes[name] === 4 && items[name] ? s + 1 : s;
                 }, 0);
 
