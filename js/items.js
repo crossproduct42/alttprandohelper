@@ -51,17 +51,6 @@
         boss8: false,
         boss9: false,
 
-        chest0: 3,
-        chest1: 2,
-        chest2: 2,
-        chest3: 5,
-        chest4: 6,
-        chest5: 2,
-        chest6: 4,
-        chest7: 3,
-        chest8: 2,
-        chest9: 5,
-
         inc: limit(1, {
             tunic: { min: 1, max: 3 },
             sword: { max: 4 },
@@ -70,30 +59,46 @@
             bow: { max: 3 },
             boomerang: { max: 3 },
             glove: { max: 2 }
-        }),
-        dec: limit(-1, {
-            chest0: { max: 3 },
-            chest1: { max: 2 },
-            chest2: { max: 2 },
-            chest3: { max: 5 },
-            chest4: { max: 6 },
-            chest5: { max: 2 },
-            chest6: { max: 4 },
-            chest7: { max: 3 },
-            chest8: { max: 2 },
-            chest9: { max: 5 }
         })
+    };
+
+    window.count = {
+        chests: {
+            eastern: 3,
+            desert: 2,
+            hera: 2,
+            darkness: 5,
+            swamp: 6,
+            skull: 2,
+            thieves: 4,
+            ice: 3,
+            mire: 2,
+            turtle: 5,
+            
+            dec: limit(-1, {
+                eastern: { max: 3 },
+                desert: { max: 2 },
+                hera: { max: 2 },
+                darkness: { max: 5 },
+                swamp: { max: 6 },
+                skull: { max: 2 },
+                thieves: { max: 4 },
+                ice: { max: 3 },
+                mire: { max: 2 },
+                turtle: { max: 5 }
+            })
+        }
     };
 
     function limit(delta, limits) {
         return function(item) {
-            var value = items[item],
+            var value = this[item],
                 max = limits[item].max,
                 min = limits[item].min || 0;
             value += delta;
             if (value > max) value = min;
             if (value < min) value = max;
-            return items[item] = value;
+            return this[item] = value;
         };
     }
 }(window));

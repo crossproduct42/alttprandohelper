@@ -37,8 +37,9 @@
                     'unavailable';
             },
             can_get_chest: function() {
-                return items.chest0 <= 2 && !items.lantern ||
-                    items.chest0 === 1 && !(items.bow > 1) ?
+                var chests = count.chests.eastern;
+                return chests <= 2 && !items.lantern ||
+                    chests === 1 && !(items.bow > 1) ?
                     'possible' : 'available';
             }
         },
@@ -54,7 +55,7 @@
             can_get_chest: function() {
                 if (!items.book && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (items.glove && (items.firerod || items.lantern) && items.boots) return 'available';
-                return items.chest1 > 1 && items.boots ? 'available' : 'possible';
+                return count.chests.desert > 1 && items.boots ? 'available' : 'possible';
             }
         },
         hera: {
@@ -84,7 +85,7 @@
                 if (!items.moonpearl) return 'unavailable';
                 if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
                 return !(items.bow > 1 && items.lantern) ||
-                    items.chest3 === 1 && !items.hammer ?
+                    count.chests.darkness === 1 && !items.hammer ?
                     'possible' : 'available';
             }
         },
@@ -101,9 +102,10 @@
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
 
-                if (items.chest4 <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
-                if (items.chest4 <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
-                if (items.chest4 <= 5) return !items.hammer ? 'unavailable' : 'available';
+                var chests = count.chests.swamp;
+                if (chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
+                if (chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
+                if (chests <= 5) return !items.hammer ? 'unavailable' : 'available';
                 return !items.hammer ? 'possible' : 'available';
             }
         },
@@ -128,7 +130,7 @@
             },
             can_get_chest: function() {
                 if (!can_reach_outcast()) return 'unavailable';
-                return items.chest6 === 1 && !items.hammer ? 'possible' : 'available';
+                return count.chests.thieves === 1 && !items.hammer ? 'possible' : 'available';
             }
         },
         ice: {
@@ -165,7 +167,7 @@
                 var state = medallion_check('mire');
                 if (state) return state;
 
-                return (items.chest8 > 1 ?
+                return (count.chests.mire > 1 ?
                     items.lantern || items.firerod :
                     items.lantern && items.somaria) ?
                     'available' : 'possible';
@@ -191,11 +193,12 @@
                 var state = medallion_check('turtle');
                 if (state) return state;
 
-                var laser_safety = items.byrna || items.cape || items.shield === 3,
+                var chests = count.chests.turtle,
+                    laser_safety = items.byrna || items.cape || items.shield === 3,
                     dark_room = items.lantern ? 'available' : 'dark';
-                if (items.chest9 <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
-                if (items.chest9 <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
-                if (items.chest9 <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
+                if (chests <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
+                if (chests <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
+                if (chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
                 return items.firerod && items.lantern ? 'available' : 'possible';
             }
         }
