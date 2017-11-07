@@ -20,28 +20,22 @@
         }
     }
 
-    function dungeon_name(class_list) {
-        return Array.from(class_list).filter(function(x) { return !x.match(/^chest-?/); })[0];
-    }
-
     function toggle_boss(target) {
-        var label = boss_name(target.classList);
-        items[label] = !items[label];
-        target.classList[items[label] ? 'add' : 'remove']('defeated');
+        var name = dungeon_name(target.classList);
+        items[name] = !items[name];
+        target.classList[items[name] ? 'add' : 'remove']('defeated');
 
         // Clicking a boss on the tracker will check it off on the map!
         if (map_enabled) {
-            var index = label.replace(/^boss/, ''),
-                name = dungeon_names[index];
             dungeons[name].is_beaten = !dungeons[name].is_beaten;
             update_boss(name);
             update_prize_locations();
         }
     }
 
-    function boss_name(class_list) {
-        var terms = ['boss', 'defeated'];
-        return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
+    function dungeon_name(class_list) {
+        var terms = ['boss', 'chest', 'defeated'];
+        return Array.from(class_list).filter(function(x) { return !(terms.includes(x) || x.match(/^chest-?/)); })[0];
     }
 
     function toggle_item(target) {
