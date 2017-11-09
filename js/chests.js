@@ -28,13 +28,13 @@
     window.dungeons = {
         eastern: {
             caption: 'Eastern Palace {lantern}',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 return items.bow > 1 ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 var chests = count.chests.eastern;
                 return chests <= 2 && !items.lantern ||
                     chests === 1 && !(items.bow > 1) ?
@@ -43,14 +43,14 @@
         },
         desert: {
             caption: 'Desert Palace',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!(melee_bow() || cane() || rod())) return 'unavailable';
                 if (!(items.book && items.glove) && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (!items.lantern && !items.firerod) return 'unavailable';
                 return items.boots ? 'available' : 'possible';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.book && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (items.glove && (items.firerod || items.lantern) && items.boots) return 'available';
                 return count.chests.desert > 1 && items.boots ? 'available' : 'possible';
@@ -58,12 +58,12 @@
         },
         hera: {
             caption: 'Tower of Hera',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!melee()) return 'unavailable';
-                return this.can_get_chest();
+                return this.is_progressable();
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.flute && !items.glove) return 'unavailable';
                 if (!items.mirror && !(items.hookshot && items.hammer)) return 'unavailable';
                 return items.firerod || items.lantern ?
@@ -73,13 +73,13 @@
         },
         darkness: {
             caption: 'Palace of Darkness {lantern}',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!items.moonpearl || !(items.bow > 1) || !items.hammer) return 'unavailable';
                 if (!items.agahnim && !items.glove) return 'unavailable';
                 return items.lantern ? 'available' : 'dark';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.moonpearl) return 'unavailable';
                 if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
                 return !(items.bow > 1 && items.lantern) ||
@@ -89,14 +89,14 @@
         },
         swamp: {
             caption: 'Swamp Palace {mirror}',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!items.hammer || !items.hookshot) return 'unavailable';
                 if (!items.glove && !items.agahnim) return 'unavailable';
                 return 'available';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
 
@@ -109,37 +109,37 @@
         },
         skull: {
             caption: 'Skull Woods',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 return !can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!can_reach_outcast()) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
             }
         },
         thieves: {
             caption: 'Thieves\' Town',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!(melee() || cane())) return 'unavailable';
                 if (!can_reach_outcast()) return 'unavailable';
                 return 'available';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!can_reach_outcast()) return 'unavailable';
                 return count.chests.thieves === 1 && !items.hammer ? 'possible' : 'available';
             }
         },
         ice: {
             caption: 'Ice Palace (yellow=must bomb jump)',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
                 return items.hookshot || items.somaria ? 'available' : 'possible';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
                 return items.hammer ? 'available' : 'possible';
@@ -147,8 +147,8 @@
         },
         mire: {
             caption: 'Misery Mire {medallion0}{lantern}',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!melee_bow()) return 'unavailable';
                 if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
@@ -159,7 +159,7 @@
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.moonpearl || !items.flute || items.glove !== 2) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
                 var state = medallion_check('mire');
@@ -173,8 +173,8 @@
         },
         turtle: {
             caption: 'Turtle Rock {medallion0}{lantern}',
-            is_beaten: false,
-            is_beatable: function() {
+            completed: false,
+            is_completable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
                 if (!items.icerod || !items.firerod) return 'unavailable';
@@ -185,7 +185,7 @@
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            can_get_chest: function() {
+            is_progressable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
                 var state = medallion_check('turtle');
@@ -205,7 +205,7 @@
     window.encounters = {
         agahnim: {
             caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
-            is_available: function() {
+            is_completable: function() {
                 return items.sword >= 2 || items.cape && items.sword ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
@@ -216,7 +216,7 @@
     window.chests = {
         altar: {
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 var pendant_count = Object.keys(dungeons).reduce(function(s, name) {
                     return (prizes[name] === 1 || prizes[name] === 2) && items[name] ? s + 1 : s;
@@ -228,24 +228,24 @@
         },
         mushroom: {
             caption: 'Mushroom',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         hideout: {
             caption: 'Forest Hideout',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         tree: {
             caption: 'Lumberjack Tree {agahnim}{boots}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.agahnim && items.boots ? 'available' : 'possible';
             }
         },
         lost_man: {
             caption: 'Lost Old Man {lantern}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.glove || items.flute ?
                     items.lantern ? 'available' : 'dark' :
@@ -254,7 +254,7 @@
         },
         spectacle_cave: {
             caption: 'Spectacle Rock Cave',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.glove || items.flute ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -263,7 +263,7 @@
         },
         spectacle_rock: {
             caption: 'Spectacle Rock {mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.glove || items.flute ?
                     items.mirror ?
@@ -274,7 +274,7 @@
         },
         ether: {
             caption: 'Ether Tablet {sword2}{book}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
                     items.sword >= 2 ?
@@ -285,7 +285,7 @@
         },
         paradox: {
             caption: 'Death Mountain East (5 + 2 {bomb})',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -294,7 +294,7 @@
         },
         spiral: {
             caption: 'Spiral Cave',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -303,7 +303,7 @@
         },
         island_dm: {
             caption: 'Floating Island {mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return (items.glove || items.flute) && (items.hookshot || items.hammer && items.mirror) ?
                     items.mirror && items.moonpearl && items.glove === 2 ?
@@ -314,7 +314,7 @@
         },
         mimic: {
             caption: 'Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion0} unkown OR possible w/out {firerod})',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
                 var state = medallion_check('turtle');
@@ -327,21 +327,21 @@
         },
         graveyard_w: {
             caption: 'West of Sanctuary {boots}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.boots ? 'available' : 'unavailable';
             }
         },
         graveyard_n: {
             caption: 'Graveyard Cliff Cave {mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() && items.mirror ? 'available' : 'unavailable';
             }
         },
         graveyard_e: {
             caption: 'King\'s Tomb {boots} + {glove2}/{mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 if (!items.boots) return 'unavailable';
                 if (can_reach_outcast() && items.mirror || items.glove === 2) return 'available';
@@ -350,28 +350,28 @@
         },
         witch: {
             caption: 'Witch: Give her {mushroom}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.mushroom ? 'available' : 'unavailable';
             }
         },
         fairy_lw: {
             caption: 'Waterfall of Wishing (2) {flippers}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.flippers ? 'available' : 'unavailable';
             }
         },
         zora: {
             caption: 'King Zora: Pay 500 rupees',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.flippers || items.glove ? 'available' : 'unavailable';
             }
         },
         river: {
             caption: 'Zora River Ledge {flippers}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 if (items.flippers) return 'available';
                 if (items.glove) return 'possible';
@@ -380,51 +380,51 @@
         },
         well: {
             caption: 'Kakariko Well (4 + {bomb})',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         thief_hut: {
             caption: 'Thieve\'s Hut (4 + {bomb})',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         bottle: {
             caption: 'Bottle Vendor: Pay 100 rupees',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         chicken: {
             caption: 'Chicken House {bomb}',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         kid: {
             caption: 'Dying Boy: Distract him with {bottle} so that you can rob his family!',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.bottle ? 'available' : 'unavailable';
             }
         },
         tavern: {
             caption: 'Tavern',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         bat: {
             caption: 'Mad Batter {hammer}/{mirror} + {powder}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.powder && (items.hammer || items.glove === 2 && items.mirror && items.moonpearl) ? 'available' : 'unavailable';
             }
         },
         sahasrahla_hut: {
             caption: 'Sahasrahla\'s Hut (3) {bomb}/{boots}',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         sahasrahla: {
             caption: 'Sahasrahla {pendant0}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return Object.keys(dungeons).reduce(function(state, name) {
                     return prizes[name] === 1 && items[name] ? 'available' : state;
@@ -433,45 +433,45 @@
         },
         maze: {
             caption: 'Race Minigame {bomb}/{boots}',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         library: {
             caption: 'Library {boots}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.boots ? 'available' : 'possible';
             }
         },
         dig_grove: {
             caption: 'Buried Itam {shovel}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.shovel ? 'available' : 'unavailable';
             }
         },
         desert_w: {
             caption: 'Desert West Ledge {book}/{mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.book || items.flute && items.glove === 2 && items.mirror ? 'available' : 'possible';
             }
         },
         desert_ne: {
             caption: 'Checkerboard Cave {mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.flute && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
             }
         },
         aginah: {
             caption: 'Aginah\'s Cave {bomb}',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         bombos: {
             caption: 'Bombos Tablet {mirror}{sword2}{book}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.book && items.mirror && (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ?
                     items.sword >= 2 ? 'available' : 'possible' :
@@ -480,29 +480,29 @@
         },
         grove_s: {
             caption: 'South of Grove {mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.mirror && (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
             }
         },
         dam: {
             caption: 'Light World Swamp (2)',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         lake_sw: {
             caption: 'Minimoldorm Cave (NPC + 4) {bomb}',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         ice_cave: {
             caption: 'Ice Rod Cave {bomb}',
-            is_opened: false,
+            marked: false,
             is_available: always
         },
         island_lake: {
             caption: 'Lake Hylia Island {mirror}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.flippers ?
                     items.moonpearl && items.mirror && (items.agahnim || items.glove === 2 || items.glove && items.hammer) ?
@@ -512,36 +512,36 @@
         },
         hobo: {
             caption: 'Fugitive under the bridge {flippers}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.flippers ? 'available' : 'unavailable';
             }
         },
         link_house: {
             caption: 'Stoops Lonk\'s Hoose',
-            is_opened: is_standard,
+            marked: is_standard,
             is_available: always
         },
         secret: {
             caption: "Castle Secret Entrance (Uncle + 1)",
-            is_opened: is_standard,
+            marked: is_standard,
             is_available: always
         },
         castle: {
             caption: 'Hyrule Castle Dungeon (3)',
-            is_opened: is_standard,
+            marked: is_standard,
             is_available: always
         },
         escape_dark: {
             caption: 'Escape Sewer Dark Room {lantern}',
-            is_opened: is_standard,
+            marked: is_standard,
             is_available: function() {
                 return is_standard || items.lantern ? 'available' : 'dark';
             }
         },
         escape_side: {
             caption: 'Escape Sewer Side Room (3) {bomb}/{boots}' + (is_standard ? '' : ' (yellow = need small key)'),
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return is_standard || items.glove ? 'available' :
                     items.lantern ? 'possible' : 'dark';
@@ -549,12 +549,12 @@
         },
         sanctuary: {
             caption: 'Sanctuary',
-            is_opened: is_standard,
+            marked: is_standard,
             is_available: always
         },
         bumper: {
             caption: 'Bumper Cave {cape}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() ?
                     items.glove && items.cape ? 'available' : 'possible' :
@@ -563,7 +563,7 @@
         },
         spike: {
             caption: 'Byrna Spike Cave',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove && items.hammer && (items.byrna || items.cape) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -572,7 +572,7 @@
         },
         bunny: {
             caption: 'Super Bunny Chests (2)',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -581,7 +581,7 @@
         },
         rock_hook: {
             caption: 'Cave Under Rock (3 top chests) {hookshot}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove === 2 && items.hookshot ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -590,7 +590,7 @@
         },
         rock_boots: {
             caption: 'Cave Under Rock (bottom chest) {hookshot}/{boots}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove === 2 && (items.hookshot || (items.mirror && items.hammer && items.boots)) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
@@ -599,7 +599,7 @@
         },
         catfish: {
             caption: 'Catfish',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove && (items.agahnim || items.hammer || items.glove === 2 && items.flippers) ?
                     'available' : 'unavailable';
@@ -607,49 +607,49 @@
         },
         chest_game: {
             caption: 'Treasure Chest Minigame: Pay 30 rupees',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         c_house: {
             caption: 'C House',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         bomb_hut: {
             caption: 'Bombable Hut {bomb}',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         frog: {
             caption: 'Take the frog home {mirror} / Save+Quit',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
             }
         },
         purple: {
             caption: 'Gary\'s Lunchbox (save the frog first)',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
             }
         },
         pegs: {
             caption: '{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}!!!!!!!!',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.glove === 2 && items.hammer ? 'available' : 'unavailable';
             }
         },
         fairy_dw: {
             caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 var crystal_count = Object.keys(dungeons).reduce(function(s, name) {
                     return prizes[name] === 4 && items[name] ? s + 1 : s;
@@ -662,7 +662,7 @@
         },
         pyramid: {
             caption: 'Pyramid',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.agahnim || items.glove && items.hammer && items.moonpearl ||
                     items.glove === 2 && items.moonpearl && items.flippers ? 'available' : 'unavailable';
@@ -670,28 +670,28 @@
         },
         dig_game: {
             caption: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         stumpy: {
             caption: 'Ol\' Stumpy',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         swamp_ne: {
             caption: 'Hype Cave! {bomb} (NPC + 4 {bomb})',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return can_reach_outcast() || (items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
             }
         },
         mire_w: {
             caption: 'West of Mire (2)',
-            is_opened: false,
+            marked: false,
             is_available: function() {
                 return items.moonpearl && items.flute && items.glove === 2 ? 'available' : 'unavailable';
             }
