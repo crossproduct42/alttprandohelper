@@ -30,7 +30,7 @@
                 var location = as_location(name);
                 if (!dungeons[name].completed)
                     document.querySelector('#map .boss.' + location).className = classNames('boss', location, dungeons[name].is_completable());
-                if (count.chests[name])
+                if (dungeons[name].chests)
                     document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
             });
             if (['agahnim', 'cape', 'sword', 'lantern'].includes(name)) {
@@ -47,14 +47,16 @@
 
     function toggle_chest(target) {
         var name = dungeon_name(target.classList),
-            value = count.chests.dec(name);
+            dungeon = dungeons[name],
+            value = counter(dungeon.chests, -1, dungeon.chest_limit);
 
+        dungeon.chests = value;
         target.className = classNames('chest', 'chest-'+value, name);
 
         if (map_enabled) {
             var location = as_location(name);
             document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
-                value ? dungeons[name].is_progressable() : 'marked');
+                value ? dungeon.is_progressable() : 'marked');
         }
     }
 
@@ -96,7 +98,7 @@
             // Update availability of dungeon boss AND chests
             var location = as_location(name);
             update_boss(name);
-            if (count.chests[name])
+            if (dungeon.chests)
                 document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
             // TRock medallion affects Mimic Cave
             if (name === 'turtle') {

@@ -36,10 +36,11 @@
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
+            chests: 3,
+            chest_limit: 3,
             is_progressable: function() {
-                var chests = count.chests.eastern;
-                return chests <= 2 && !items.lantern ||
-                    chests === 1 && !(items.bow > 1) ?
+                return this.chests <= 2 && !items.lantern ||
+                    this.chests === 1 && !(items.bow > 1) ?
                     'possible' : 'available';
             }
         },
@@ -53,10 +54,12 @@
                 if (!items.lantern && !items.firerod) return 'unavailable';
                 return items.boots ? 'available' : 'possible';
             },
+            chests: 2,
+            chest_limit: 2,
             is_progressable: function() {
                 if (!items.book && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (items.glove && (items.firerod || items.lantern) && items.boots) return 'available';
-                return count.chests.desert > 1 && items.boots ? 'available' : 'possible';
+                return this.chests > 1 && items.boots ? 'available' : 'possible';
             }
         },
         hera: {
@@ -67,6 +70,8 @@
                 if (!melee()) return 'unavailable';
                 return this.is_progressable();
             },
+            chests: 2,
+            chest_limit: 2,
             is_progressable: function() {
                 if (!items.flute && !items.glove) return 'unavailable';
                 if (!items.mirror && !(items.hookshot && items.hammer)) return 'unavailable';
@@ -84,11 +89,13 @@
                 if (!items.agahnim && !items.glove) return 'unavailable';
                 return items.lantern ? 'available' : 'dark';
             },
+            chests: 5,
+            chest_limit: 5,
             is_progressable: function() {
                 if (!items.moonpearl) return 'unavailable';
                 if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
                 return !(items.bow > 1 && items.lantern) ||
-                    count.chests.darkness === 1 && !items.hammer ?
+                    this.chests === 1 && !items.hammer ?
                     'possible' : 'available';
             }
         },
@@ -102,14 +109,15 @@
                 if (!items.glove && !items.agahnim) return 'unavailable';
                 return 'available';
             },
+            chests: 6,
+            chest_limit: 6,
             is_progressable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
 
-                var chests = count.chests.swamp;
-                if (chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
-                if (chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
-                if (chests <= 5) return !items.hammer ? 'unavailable' : 'available';
+                if (this.chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
+                if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
+                if (this.chests <= 5) return !items.hammer ? 'unavailable' : 'available';
                 return !items.hammer ? 'possible' : 'available';
             }
         },
@@ -120,6 +128,8 @@
             is_completable: function() {
                 return !can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
             },
+            chests: 2,
+            chest_limit: 2,
             is_progressable: function() {
                 if (!can_reach_outcast()) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
@@ -134,9 +144,11 @@
                 if (!can_reach_outcast()) return 'unavailable';
                 return 'available';
             },
+            chests: 4,
+            chest_limit: 4,
             is_progressable: function() {
                 if (!can_reach_outcast()) return 'unavailable';
-                return count.chests.thieves === 1 && !items.hammer ? 'possible' : 'available';
+                return this.chests === 1 && !items.hammer ? 'possible' : 'available';
             }
         },
         ice: {
@@ -148,6 +160,8 @@
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
                 return items.hookshot || items.somaria ? 'available' : 'possible';
             },
+            chests: 3,
+            chest_limit: 3,
             is_progressable: function() {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
@@ -170,13 +184,15 @@
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
+            chests: 2,
+            chest_limit: 2,
             is_progressable: function() {
                 if (!items.moonpearl || !items.flute || items.glove !== 2) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
                 var state = medallion_check('mire');
                 if (state) return state;
 
-                return (count.chests.mire > 1 ?
+                return (this.chests > 1 ?
                     items.lantern || items.firerod :
                     items.lantern && items.somaria) ?
                     'available' : 'possible';
@@ -198,18 +214,19 @@
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
+            chests: 5,
+            chest_limit: 5,
             is_progressable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
                 var state = medallion_check('turtle');
                 if (state) return state;
 
-                var chests = count.chests.turtle,
-                    laser_safety = items.byrna || items.cape || items.shield === 3,
+                var laser_safety = items.byrna || items.cape || items.shield === 3,
                     dark_room = items.lantern ? 'available' : 'dark';
-                if (chests <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
-                if (chests <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
-                if (chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
+                if (this.chests <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
+                if (this.chests <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
+                if (this.chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
                 return items.firerod && items.lantern ? 'available' : 'possible';
             }
         }
