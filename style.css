@@ -104,11 +104,11 @@ body {
 .encounter.highlight,
 .dungeon.highlight { background-image: url(images/overlay/highlighted.png); }
 
+.marked { background-color: #7f7f7f; }
 .unavailable { background-color: red; }
 .available { background-color: lime; }
 .possible { background-color: yellow; }
 .dark { background-color: blue; }
-.opened { background-color: #7f7f7f; }
 
 #caption {
   width: 100%;

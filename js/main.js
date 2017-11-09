@@ -25,19 +25,19 @@
         if (map_enabled) {
             Object.keys(chests).forEach(function(name) {
                 var location = as_location(name);
-                if (!chests[name].is_opened)
+                if (!chests[name].marked)
                     document.querySelector('#map .' + location).className = classNames('chest', location, chests[name].is_available());
             });
             Object.keys(dungeons).forEach(function(name, index) {
                 var location = as_location(name);
-                if (!dungeons[name].is_beaten)
-                    document.querySelector('#map .boss.' + location).className = classNames('boss', location, dungeons[name].is_beatable());
+                if (!dungeons[name].completed)
+                    document.querySelector('#map .boss.' + location).className = classNames('boss', location, dungeons[name].is_completable());
                 if (count.chests[name])
-                    document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
+                    document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
             });
             if (['agahnim', 'cape', 'sword', 'lantern'].includes(name)) {
                 document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
-                    items.agahnim ? 'opened' : encounters.agahnim.is_available());
+                    items.agahnim ? 'marked' : encounters.agahnim.is_completable());
             }
         }
     }
@@ -56,7 +56,7 @@
         if (map_enabled) {
             var location = as_location(name);
             document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
-                value ? dungeons[name].can_get_chest() : 'opened');
+                value ? dungeons[name].is_progressable() : 'marked');
         }
     }
 
@@ -67,7 +67,7 @@
 
         // Clicking a boss on the tracker will check it off on the map!
         if (map_enabled) {
-            dungeons[name].is_beaten = !dungeons[name].is_beaten;
+            dungeons[name].completed = !dungeons[name].completed;
             update_boss(name);
             update_prize_locations();
         }
@@ -97,11 +97,11 @@
             var location = as_location(name);
             update_boss(name);
             if (count.chests[name])
-                document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].can_get_chest());
+                document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
             // TRock medallion affects Mimic Cave
             if (name === 'turtle') {
                 document.querySelector('#map .mimic').className = classNames('chest', 'mimic',
-                    chests.mimic.is_opened ? 'opened' : chests.mimic.is_available());
+                    chests.mimic.marked ? 'marked' : chests.mimic.is_available());
             }
             // Change the mouseover text on the map
             dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[name]+'}');
@@ -118,13 +118,13 @@
     function update_boss(name) {
         var location = as_location(name);
         document.querySelector('#map .boss.' + location).className = classNames('boss', location,
-            dungeons[name].is_beaten ? 'opened' : dungeons[name].is_beatable());
+            dungeons[name].completed ? 'marked' : dungeons[name].is_completable());
     }
 
     function update_prize_locations() {
         ['sahasrahla', 'fairy_dw', 'altar'].forEach(function(name) {
             var location = as_location(name);
-            if (!chests[name].is_opened)
+            if (!chests[name].marked)
                 document.querySelector('#map .' + location).className = classNames('chest', location, chests[name].is_available());
         });
     }
@@ -132,9 +132,9 @@
     function toggle_map(target) {
         var location = location_name(target.classList),
             name = as_identifier(location);
-        chests[name].is_opened = !chests[name].is_opened;
+        chests[name].marked = !chests[name].marked;
         target.className = classNames('chest', location,
-            chests[name].is_opened ? 'opened' : chests[name].is_available(),
+            chests[name].marked ? 'marked' : chests[name].is_available(),
             'highlight');
     }
 
@@ -153,7 +153,7 @@
 
     function location_name(class_list) {
         var terms = ['boss', 'dungeon', 'encounter', 'chest', 'highlight',
-            'opened', 'unavailable', 'available', 'possible', 'dark'];
+            'marked', 'unavailable', 'available', 'possible', 'dark'];
         return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
     }
 
@@ -213,14 +213,14 @@
 
             Object.keys(chests).forEach(function(name) {
                 var chest = chests[name];
-                document.querySelector('#map .' + as_location(name)).classList.add(chest.is_opened ? 'opened' : chest.is_available());
+                document.querySelector('#map .' + as_location(name)).classList.add(chest.marked ? 'marked' : chest.is_available());
             });
-            document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_available());
+            document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_completable());
             Object.keys(dungeons).forEach(function(name) {
                 var dungeon = dungeons[name],
                     location = as_location(name);
-                document.querySelector('#map .boss.' + location).classList.add(dungeon.is_beatable());
-                document.querySelector('#map .dungeon.' + location).classList.add(dungeon.can_get_chest());
+                document.querySelector('#map .boss.' + location).classList.add(dungeon.is_completable());
+                document.querySelector('#map .dungeon.' + location).classList.add(dungeon.is_progressable());
             });
         } else {
             document.getElementById('app').classList.add('mapless');
