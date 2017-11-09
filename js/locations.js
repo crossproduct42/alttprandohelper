@@ -12,10 +12,11 @@
 
     function medallion_check(name) {
         if (!items.sword || !items.bombos && !items.ether && !items.quake) return 'unavailable';
-        if (medallions[name] === 1 && !items.bombos ||
-            medallions[name] === 2 && !items.ether ||
-            medallions[name] === 3 && !items.quake) return 'unavailable';
-        if (medallions[name] === 0 && !(items.bombos && items.ether && items.quake)) return 'possible';
+        var medallion = dungeons[name].medallion;
+        if (medallion === 1 && !items.bombos ||
+            medallion === 2 && !items.ether ||
+            medallion === 3 && !items.quake) return 'unavailable';
+        if (medallion === 0 && !(items.bombos && items.ether && items.quake)) return 'possible';
     }
 
     function melee() { return items.sword || items.hammer; }
@@ -28,6 +29,7 @@
     window.dungeons = {
         eastern: {
             caption: 'Eastern Palace {lantern}',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 return items.bow > 1 ?
@@ -43,6 +45,7 @@
         },
         desert: {
             caption: 'Desert Palace',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 if (!(melee_bow() || cane() || rod())) return 'unavailable';
@@ -58,6 +61,7 @@
         },
         hera: {
             caption: 'Tower of Hera',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 if (!melee()) return 'unavailable';
@@ -73,6 +77,7 @@
         },
         darkness: {
             caption: 'Palace of Darkness {lantern}',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 if (!items.moonpearl || !(items.bow > 1) || !items.hammer) return 'unavailable';
@@ -89,6 +94,7 @@
         },
         swamp: {
             caption: 'Swamp Palace {mirror}',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
@@ -109,6 +115,7 @@
         },
         skull: {
             caption: 'Skull Woods',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 return !can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
@@ -120,6 +127,7 @@
         },
         thieves: {
             caption: 'Thieves\' Town',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 if (!(melee() || cane())) return 'unavailable';
@@ -133,6 +141,7 @@
         },
         ice: {
             caption: 'Ice Palace (yellow=must bomb jump)',
+            prize: 0,
             completed: false,
             is_completable: function() {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
@@ -147,6 +156,8 @@
         },
         mire: {
             caption: 'Misery Mire {medallion0}{lantern}',
+            prize: 0,
+            medallion: 0,
             completed: false,
             is_completable: function() {
                 if (!melee_bow()) return 'unavailable';
@@ -173,6 +184,8 @@
         },
         turtle: {
             caption: 'Turtle Rock {medallion0}{lantern}',
+            prize: 0,
+            medallion: 0,
             completed: false,
             is_completable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
@@ -219,7 +232,7 @@
             marked: false,
             is_available: function() {
                 var pendant_count = Object.keys(dungeons).reduce(function(s, name) {
-                    return (prizes[name] === 1 || prizes[name] === 2) && items[name] ? s + 1 : s;
+                    return [1,2].includes(dungeons[name].prize) && dungeons[name].completed ? s + 1 : s;
                 }, 0);
 
                 return pendant_count >= 3 ? 'available' :
@@ -427,7 +440,7 @@
             marked: false,
             is_available: function() {
                 return Object.keys(dungeons).reduce(function(state, name) {
-                    return prizes[name] === 1 && items[name] ? 'available' : state;
+                    return dungeons[name].prize === 1 && dungeons[name].completed ? 'available' : state;
                 }, 'unavailable');
             }
         },
@@ -652,7 +665,7 @@
             marked: false,
             is_available: function() {
                 var crystal_count = Object.keys(dungeons).reduce(function(s, name) {
-                    return prizes[name] === 4 && items[name] ? s + 1 : s;
+                    return dungeons[name].prize === 4 && dungeons[name].completed ? s + 1 : s;
                 }, 0);
 
                 if (crystal_count < 2 || !items.moonpearl) return 'unavailable';

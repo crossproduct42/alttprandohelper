@@ -40,17 +40,6 @@
         flute: false,
         agahnim: false,
 
-        eastern: false,
-        desert: false,
-        hera: false,
-        darkness: false,
-        swamp: false,
-        skull: false,
-        thieves: false,
-        ice: false,
-        mire: false,
-        turtle: false,
-
         inc: limit(1, {
             tunic: { min: 1, max: 3 },
             sword: { max: 4 },

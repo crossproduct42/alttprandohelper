@@ -2,8 +2,6 @@
     'use strict';
 
     var query = uri_query();
-    window.prizes = {};
-    window.medallions = {};
     window.mode = query.mode;
     window.map_enabled = query.map;
 
@@ -61,24 +59,25 @@
     }
 
     function toggle_boss(target) {
-        var name = dungeon_name(target.classList);
-        items[name] = !items[name];
-        target.classList[items[name] ? 'add' : 'remove']('defeated');
+        var name = dungeon_name(target.classList),
+            dungeon = dungeons[name];
+        dungeon.completed = !dungeon.completed;
+        target.classList[dungeon.completed ? 'add' : 'remove']('defeated');
 
         // Clicking a boss on the tracker will check it off on the map!
         if (map_enabled) {
-            dungeons[name].completed = !dungeons[name].completed;
             update_boss(name);
             update_prize_locations();
         }
     }
 
     function toggle_prize(target) {
-        var name = dungeon_name(target.classList);
-        prizes[name] += 1;
-        if (prizes[name] === 5) prizes[name] = 0;
+        var name = dungeon_name(target.classList),
+            dungeon = dungeons[name];
+        dungeon.prize += 1;
+        if (dungeon.prize > 4) dungeon.prize = 0;
 
-        target.className = classNames('prize', 'prize-'+prizes[name], name);
+        target.className = classNames('prize', 'prize-'+dungeon.prize, name);
 
         if (map_enabled)
             update_prize_locations();
@@ -86,11 +85,12 @@
 
 
     function toggle_medallion(target) {
-        var name = dungeon_name(target.classList);
-        medallions[name] += 1;
-        if (medallions[name] === 4) medallions[name] = 0;
+        var name = dungeon_name(target.classList),
+            dungeon = dungeons[name];
+        dungeon.medallion += 1;
+        if (dungeon.medallion > 3) dungeon.medallion = 0;
 
-        target.className = classNames('medallion', 'medallion-'+medallions[name], name);
+        target.className = classNames('medallion', 'medallion-'+dungeon.medallion, name);
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
@@ -104,7 +104,7 @@
                     chests.mimic.marked ? 'marked' : chests.mimic.is_available());
             }
             // Change the mouseover text on the map
-            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[name]+'}');
+            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+dungeon.medallion+'}');
         }
     }
 
@@ -174,9 +174,6 @@
     }
 
     window.start = function() {
-        Object.keys(dungeons).forEach(function(name) { prizes[name] = 0; });
-        ['mire', 'turtle'].forEach(function(name) { medallions[name] = 0; });
-
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
         }
