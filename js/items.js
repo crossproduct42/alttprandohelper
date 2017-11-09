@@ -40,7 +40,7 @@
         flute: false,
         agahnim: false,
 
-        inc: limit(1, {
+        inc: counters(1, {
             tunic: { min: 1, max: 3 },
             sword: { max: 4 },
             shield: { max: 3 },
@@ -51,43 +51,12 @@
         })
     };
 
-    window.count = {
-        chests: {
-            eastern: 3,
-            desert: 2,
-            hera: 2,
-            darkness: 5,
-            swamp: 6,
-            skull: 2,
-            thieves: 4,
-            ice: 3,
-            mire: 2,
-            turtle: 5,
-            
-            dec: limit(-1, {
-                eastern: { max: 3 },
-                desert: { max: 2 },
-                hera: { max: 2 },
-                darkness: { max: 5 },
-                swamp: { max: 6 },
-                skull: { max: 2 },
-                thieves: { max: 4 },
-                ice: { max: 3 },
-                mire: { max: 2 },
-                turtle: { max: 5 }
-            })
-        }
+    function counters(delta, limits) {
+        return function(item) {
+            var max = limits[item].max,
+                min = limits[item].min;
+            return this[item] = counter(this[item], delta, max, min);
+        };
     };
 
-    function limit(delta, limits) {
-        return function(item) {
-            var value = this[item],
-                max = limits[item].max,
-                min = limits[item].min || 0;
-            value += delta;
-            if (value > max) value = min;
-            if (value < min) value = max;
-            return this[item] = value;
-        };
-    }
 }(window));
