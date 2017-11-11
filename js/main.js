@@ -75,24 +75,23 @@
 
     function toggle_prize(target) {
         var name = dungeon_name(target.classList),
-            dungeon = dungeons[name];
-        dungeon.prize += 1;
-        if (dungeon.prize > 4) dungeon.prize = 0;
+            dungeon = dungeons[name],
+            value = counter(dungeon.prize, 1, 4);
 
-        target.className = classNames('prize', 'prize-'+dungeon.prize, name);
+        dungeon.prize = value;
+        target.className = classNames('prize', 'prize-'+value, name);
 
         if (map_enabled)
             update_prize_locations();
     }
 
-
     function toggle_medallion(target) {
         var name = dungeon_name(target.classList),
-            dungeon = dungeons[name];
-        dungeon.medallion += 1;
-        if (dungeon.medallion > 3) dungeon.medallion = 0;
+            dungeon = dungeons[name],
+            value = counter(dungeon.medallion, 1, 3);
 
-        target.className = classNames('medallion', 'medallion-'+dungeon.medallion, name);
+        dungeon.medallion = value;
+        target.className = classNames('medallion', 'medallion-'+value, name);
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
@@ -106,7 +105,7 @@
                     chests.mimic.marked ? 'marked' : chests.mimic.is_available());
             }
             // Change the mouseover text on the map
-            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+dungeon.medallion+'}');
+            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
         }
     }
 
