@@ -134,7 +134,11 @@
     function toggle_map(target) {
         var location = location_name(target.classList),
             name = as_identifier(location);
+
+        chests = Object.assign({}, chests);
+        chests[name] = create(chests[name].__proto__, chests[name]);
         chests[name].marked = !chests[name].marked;
+
         target.className = classNames('chest', location,
             chests[name].marked ? 'marked' : chests[name].is_available(),
             'highlight');
