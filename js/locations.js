@@ -1,9 +1,6 @@
 (function(window) {
     'use strict';
 
-    var query = uri_query(),
-        is_standard = query.mode === 'standard';
-
     function always() { return 'available'; }
 
     window.dungeons = {
@@ -223,7 +220,7 @@
         }
     };
 
-    window.chests = {
+    var chests = {
         altar: {
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
             marked: false,
@@ -529,37 +526,37 @@
         },
         link_house: {
             caption: 'Stoops Lonk\'s Hoose',
-            marked: is_standard,
+            marked: false,
             is_available: always
         },
         secret: {
             caption: "Castle Secret Entrance (Uncle + 1)",
-            marked: is_standard,
+            marked: false,
             is_available: always
         },
         castle: {
             caption: 'Hyrule Castle Dungeon (3)',
-            marked: is_standard,
+            marked: false,
             is_available: always
         },
         escape_dark: {
             caption: 'Escape Sewer Dark Room {lantern}',
-            marked: is_standard,
+            marked: false,
             is_available: function() {
-                return is_standard || items.lantern ? 'available' : 'dark';
+                return items.lantern ? 'available' : 'dark';
             }
         },
         escape_side: {
-            caption: 'Escape Sewer Side Room (3) {bomb}/{boots}' + (is_standard ? '' : ' (yellow = need small key)'),
+            caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
             marked: false,
             is_available: function() {
-                return is_standard || items.glove ? 'available' :
+                return items.glove ? 'available' :
                     items.lantern ? 'possible' : 'dark';
             }
         },
         sanctuary: {
             caption: 'Sanctuary',
-            marked: is_standard,
+            marked: false,
             is_available: always
         },
         bumper: {
@@ -707,4 +704,24 @@
             }
         }
     };
+
+    if (uri_query().mode === 'standard') {
+        Object.assign(chests, {
+            link_house: Object.assign(chests.link_house, { marked: true }),
+            secret: Object.assign(chests.secret, { marked: true }),
+            castle: Object.assign(chests.castle, { marked: true }),
+            escape_dark: Object.assign(chests.escape_dark, {
+                marked: true,
+                is_available: always
+            }),
+            escape_side: Object.assign(chests.escape_side, {
+                caption: 'Escape Sewer Side Room (3) {bomb}/{boots}',
+                is_available: always
+            }),
+            sanctuary: Object.assign(chests.sanctuary, { marked: true })
+        });
+    }
+
+    window.chests = chests;
+
 }(window));
