@@ -6,15 +6,15 @@
     window.map_enabled = query.map;
 
     function toggle_item(target) {
-        var name = item_name(target.classList);
-        if ((typeof items[name]) === 'boolean') {
-            items[name] = !items[name];
-            target.classList[items[name] ? 'add' : 'remove']('active');
-        } else {
-            var value = items.inc(name);
-            target.className = target.className.replace(/ ?active-\w+/, '');
-            if (value) target.classList.add('active-' + value);
-        }
+        var name = item_name(target.classList),
+            value = items[name],
+            is_toggle = typeof items[name] === 'boolean';
+
+        items[name] = value = is_toggle ? !value : items.inc(name);
+
+        target.className = target.className.replace(/ ?active(-\w+)?/, '');
+        if (value) target.classList.add(is_toggle ? 'active' : 'active-' + value);
+
         // Initiate bunny graphics!
         if (['moonpearl', 'tunic'].includes(name)) {
             document.querySelector('#tracker .tunic').classList[!items.moonpearl ? 'add' : 'remove']('bunny');

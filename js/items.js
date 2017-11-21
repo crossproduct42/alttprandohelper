@@ -76,7 +76,7 @@
         return function(item) {
             var max = limits[item].max,
                 min = limits[item].min;
-            return this[item] = counter(this[item], delta, max, min);
+            return counter(this[item], delta, max, min);
         };
     };
 
