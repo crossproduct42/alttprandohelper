@@ -6,15 +6,12 @@
     window.dungeons = {
         eastern: {
             caption: 'Eastern Palace {lantern}',
-            prize: 0,
-            completed: false,
+            chest_limit: 3,
             is_completable: function() {
                 return items.has_bow() ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
-            chests: 3,
-            chest_limit: 3,
             is_progressable: function() {
                 return this.chests <= 2 && !items.lantern ||
                     this.chests === 1 && !items.has_bow() ?
@@ -23,16 +20,13 @@
         },
         desert: {
             caption: 'Desert Palace',
-            prize: 0,
-            completed: false,
+            chest_limit: 2,
             is_completable: function() {
                 if (!(items.has_melee_bow() || items.has_cane() || items.has_rod())) return 'unavailable';
                 if (!(items.book && items.glove) && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (!items.lantern && !items.firerod) return 'unavailable';
                 return items.boots ? 'available' : 'possible';
             },
-            chests: 2,
-            chest_limit: 2,
             is_progressable: function() {
                 if (!items.book && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (items.glove && (items.firerod || items.lantern) && items.boots) return 'available';
@@ -41,14 +35,11 @@
         },
         hera: {
             caption: 'Tower of Hera',
-            prize: 0,
-            completed: false,
+            chest_limit: 2,
             is_completable: function() {
                 if (!items.has_melee()) return 'unavailable';
                 return this.is_progressable();
             },
-            chests: 2,
-            chest_limit: 2,
             is_progressable: function() {
                 if (!items.flute && !items.glove) return 'unavailable';
                 if (!items.mirror && !(items.hookshot && items.hammer)) return 'unavailable';
@@ -59,15 +50,12 @@
         },
         darkness: {
             caption: 'Palace of Darkness {lantern}',
-            prize: 0,
-            completed: false,
+            chest_limit: 5,
             is_completable: function() {
                 if (!items.moonpearl || !items.has_bow() || !items.hammer) return 'unavailable';
                 if (!items.agahnim && !items.glove) return 'unavailable';
                 return items.lantern ? 'available' : 'dark';
             },
-            chests: 5,
-            chest_limit: 5,
             is_progressable: function() {
                 if (!items.moonpearl) return 'unavailable';
                 if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
@@ -78,16 +66,13 @@
         },
         swamp: {
             caption: 'Swamp Palace {mirror}',
-            prize: 0,
-            completed: false,
+            chest_limit: 6,
             is_completable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!items.hammer || !items.hookshot) return 'unavailable';
                 if (!items.glove && !items.agahnim) return 'unavailable';
                 return 'available';
             },
-            chests: 6,
-            chest_limit: 6,
             is_progressable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!items.can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
@@ -100,13 +85,10 @@
         },
         skull: {
             caption: 'Skull Woods',
-            prize: 0,
-            completed: false,
+            chest_limit: 2,
             is_completable: function() {
                 return !items.can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
             },
-            chests: 2,
-            chest_limit: 2,
             is_progressable: function() {
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
@@ -114,15 +96,12 @@
         },
         thieves: {
             caption: 'Thieves\' Town',
-            prize: 0,
-            completed: false,
+            chest_limit: 4,
             is_completable: function() {
                 if (!(items.has_melee() || items.has_cane())) return 'unavailable';
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return 'available';
             },
-            chests: 4,
-            chest_limit: 4,
             is_progressable: function() {
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return this.chests === 1 && !items.hammer ? 'possible' : 'available';
@@ -130,15 +109,12 @@
         },
         ice: {
             caption: 'Ice Palace (yellow=must bomb jump)',
-            prize: 0,
-            completed: false,
+            chest_limit: 3,
             is_completable: function() {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
                 return items.hookshot || items.somaria ? 'available' : 'possible';
             },
-            chests: 3,
-            chest_limit: 3,
             is_progressable: function() {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
@@ -147,9 +123,7 @@
         },
         mire: {
             caption: 'Misery Mire {medallion0}{lantern}',
-            prize: 0,
-            medallion: 0,
-            completed: false,
+            chest_limit: 2,
             is_completable: function() {
                 if (!items.has_melee_bow()) return 'unavailable';
                 if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return 'unavailable';
@@ -161,8 +135,6 @@
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            chests: 2,
-            chest_limit: 2,
             is_progressable: function() {
                 if (!items.moonpearl || !items.flute || items.glove !== 2) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
@@ -177,9 +149,7 @@
         },
         turtle: {
             caption: 'Turtle Rock {medallion0}{lantern}',
-            prize: 0,
-            medallion: 0,
-            completed: false,
+            chest_limit: 5,
             is_completable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
@@ -191,8 +161,6 @@
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            chests: 5,
-            chest_limit: 5,
             is_progressable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
@@ -656,6 +624,16 @@
             sanctuary: Object.assign(chests.sanctuary, { marked: true })
         });
     }
+
+    Object.keys(dungeons).forEach(function(name) {
+        var dungeon = create(dungeons[name]);
+        dungeons[name] = Object.assign(dungeon, {
+                chests: dungeon.chest_limit,
+                prize: 0,
+                completed: false
+            },
+            ['mire', 'turtle'].includes(name) ? { medallion: 0 } : null);
+    });
 
     Object.keys(chests).forEach(function(name) {
         chests[name] = create(chests[name], { marked: chests[name].marked || false });

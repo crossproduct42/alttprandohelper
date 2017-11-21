@@ -51,21 +51,22 @@
             dungeon = dungeons[name],
             value = counter(dungeon.chests, -1, dungeon.chest_limit);
 
-        dungeon.chests = value;
+        update_dungeon(name, 'chests', value);
         target.className = classNames('chest', 'chest-'+value, name);
 
         if (map_enabled) {
             var location = as_location(name);
             document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
-                value ? dungeon.is_progressable() : 'marked');
+                value ? dungeons[name].is_progressable() : 'marked');
         }
     }
 
     function toggle_boss(target) {
         var name = dungeon_name(target.classList),
-            dungeon = dungeons[name];
-        dungeon.completed = !dungeon.completed;
-        target.classList[dungeon.completed ? 'add' : 'remove']('defeated');
+            value = !dungeons[name].completed;
+
+        update_dungeon(name, 'completed', value);
+        target.classList[value ? 'add' : 'remove']('defeated');
 
         // Clicking a boss on the tracker will check it off on the map!
         if (map_enabled) {
@@ -76,10 +77,9 @@
 
     function toggle_prize(target) {
         var name = dungeon_name(target.classList),
-            dungeon = dungeons[name],
-            value = counter(dungeon.prize, 1, 4);
+            value = counter(dungeons[name].prize, 1, 4);
 
-        dungeon.prize = value;
+        update_dungeon(name, 'prize', value);
         target.className = classNames('prize', 'prize-'+value, name);
 
         if (map_enabled)
@@ -88,17 +88,16 @@
 
     function toggle_medallion(target) {
         var name = dungeon_name(target.classList),
-            dungeon = dungeons[name],
-            value = counter(dungeon.medallion, 1, 3);
+            value = counter(dungeons[name].medallion, 1, 3);
 
-        dungeon.medallion = value;
+        update_dungeon(name, 'medallion', value);
         target.className = classNames('medallion', 'medallion-'+value, name);
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
             var location = as_location(name);
             update_boss(name);
-            if (dungeon.chests)
+            if (dungeons[name].chests)
                 document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
             // TRock medallion affects Mimic Cave
             if (name === 'turtle') {
@@ -115,6 +114,12 @@
         return Array.from(class_list).filter(function(x) {
             return !(terms.includes(x) || x.match(/^(chest|prize|medallion)-?/));
         })[0];
+    }
+
+    function update_dungeon(name, key, value) {
+        dungeons = Object.assign({}, dungeons);
+        dungeons[name] = create(dungeons[name].__proto__, dungeons[name]);
+        dungeons[name][key] = value;
     }
 
     function update_boss(name) {
