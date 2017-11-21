@@ -9,6 +9,11 @@
         return value;
     };
 
+    window.create = function(proto, props) {
+        var result = Object.create(proto);
+        return props != null ? Object.assign(result, props) : result;
+    };
+
     // based on https://github.com/medialize/URI.js/blob/gh-pages/src/URI.js
     window.uri_query = memoize(function() {
         var q, href = location.href + '',

@@ -7,10 +7,11 @@
 
     function toggle_item(target) {
         var name = item_name(target.classList),
-            value = items[name],
-            is_toggle = typeof items[name] === 'boolean';
+            is_toggle = typeof items[name] === 'boolean',
+            value = is_toggle ? !items[name] : items.inc(name);
 
-        items[name] = value = is_toggle ? !value : items.inc(name);
+        items = create(items.__proto__, items);
+        items[name] = value;
 
         target.className = target.className.replace(/ ?active(-\w+)?/, '');
         if (value) target.classList.add(is_toggle ? 'active' : 'active-' + value);

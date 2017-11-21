@@ -1,7 +1,7 @@
 (function(window) {
     'use strict';
 
-    var items = {
+    var items_base = {
         has_melee: function() { return this.sword || this.hammer; },
         has_bow: function() { return this.bow > 1; },
         has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
@@ -30,8 +30,10 @@
             bow: { max: 3 },
             boomerang: { max: 3 },
             glove: { max: 2 }
-        }),
+        })
+    };
 
+    var items = {
         tunic: 1,
         sword: 0,
         shield: 0,
@@ -70,7 +72,7 @@
 
     if (uri_query().mode === 'standard') Object.assign(items, { sword: 1 });
 
-    window.items = items;
+    window.items = create(items_base, items);
 
     function counters(delta, limits) {
         return function(item) {
