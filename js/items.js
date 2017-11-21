@@ -5,6 +5,26 @@
         sword = query.mode === 'open' ? 0 : 1;
 
     window.items = {
+        has_melee: function() { return this.sword || this.hammer; },
+        has_bow: function() { return this.bow > 1; },
+        has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
+        has_cane: function() { return this.somaria || this.byrna; },
+        has_rod: function() { return this.firerod || this.icerod; },
+
+        can_reach_outcast: function() {
+            return this.moonpearl && (
+                this.glove === 2 || this.glove && this.hammer ||
+                this.agahnim && this.hookshot && (this.hammer || this.glove || this.flippers));
+        },
+
+        medallion_check: function(medallion) {
+            if (!this.sword || !this.bombos && !this.ether && !this.quake) return 'unavailable';
+            if (medallion === 1 && !this.bombos ||
+                medallion === 2 && !this.ether ||
+                medallion === 3 && !this.quake) return 'unavailable';
+            if (medallion === 0 && !(this.bombos && this.ether && this.quake)) return 'possible';
+        },
+
         tunic: 1,
         sword: sword,
         shield: 0,

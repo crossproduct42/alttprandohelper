@@ -4,26 +4,6 @@
     var query = uri_query(),
         is_standard = query.mode === 'standard';
 
-    function can_reach_outcast() {
-        return items.moonpearl && (
-            items.glove === 2 || items.glove && items.hammer ||
-            items.agahnim && items.hookshot && (items.hammer || items.glove || items.flippers));
-    }
-
-    function medallion_check(name) {
-        if (!items.sword || !items.bombos && !items.ether && !items.quake) return 'unavailable';
-        var medallion = dungeons[name].medallion;
-        if (medallion === 1 && !items.bombos ||
-            medallion === 2 && !items.ether ||
-            medallion === 3 && !items.quake) return 'unavailable';
-        if (medallion === 0 && !(items.bombos && items.ether && items.quake)) return 'possible';
-    }
-
-    function melee() { return items.sword || items.hammer; }
-    function melee_bow() { return melee() || items.bow > 1; }
-    function cane() { return items.somaria || items.byrna; }
-    function rod() { return items.firerod || items.icerod; }
-
     function always() { return 'available'; }
 
     window.dungeons = {
@@ -32,7 +12,7 @@
             prize: 0,
             completed: false,
             is_completable: function() {
-                return items.bow > 1 ?
+                return items.has_bow() ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
@@ -40,7 +20,7 @@
             chest_limit: 3,
             is_progressable: function() {
                 return this.chests <= 2 && !items.lantern ||
-                    this.chests === 1 && !(items.bow > 1) ?
+                    this.chests === 1 && !items.has_bow() ?
                     'possible' : 'available';
             }
         },
@@ -49,7 +29,7 @@
             prize: 0,
             completed: false,
             is_completable: function() {
-                if (!(melee_bow() || cane() || rod())) return 'unavailable';
+                if (!(items.has_melee_bow() || items.has_cane() || items.has_rod())) return 'unavailable';
                 if (!(items.book && items.glove) && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (!items.lantern && !items.firerod) return 'unavailable';
                 return items.boots ? 'available' : 'possible';
@@ -67,7 +47,7 @@
             prize: 0,
             completed: false,
             is_completable: function() {
-                if (!melee()) return 'unavailable';
+                if (!items.has_melee()) return 'unavailable';
                 return this.is_progressable();
             },
             chests: 2,
@@ -85,7 +65,7 @@
             prize: 0,
             completed: false,
             is_completable: function() {
-                if (!items.moonpearl || !(items.bow > 1) || !items.hammer) return 'unavailable';
+                if (!items.moonpearl || !items.has_bow() || !items.hammer) return 'unavailable';
                 if (!items.agahnim && !items.glove) return 'unavailable';
                 return items.lantern ? 'available' : 'dark';
             },
@@ -94,7 +74,7 @@
             is_progressable: function() {
                 if (!items.moonpearl) return 'unavailable';
                 if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
-                return !(items.bow > 1 && items.lantern) ||
+                return !(items.has_bow() && items.lantern) ||
                     this.chests === 1 && !items.hammer ?
                     'possible' : 'available';
             }
@@ -113,7 +93,7 @@
             chest_limit: 6,
             is_progressable: function() {
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
-                if (!can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
+                if (!items.can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
 
                 if (this.chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
                 if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
@@ -126,12 +106,12 @@
             prize: 0,
             completed: false,
             is_completable: function() {
-                return !can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
+                return !items.can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
             },
             chests: 2,
             chest_limit: 2,
             is_progressable: function() {
-                if (!can_reach_outcast()) return 'unavailable';
+                if (!items.can_reach_outcast()) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
             }
         },
@@ -140,14 +120,14 @@
             prize: 0,
             completed: false,
             is_completable: function() {
-                if (!(melee() || cane())) return 'unavailable';
-                if (!can_reach_outcast()) return 'unavailable';
+                if (!(items.has_melee() || items.has_cane())) return 'unavailable';
+                if (!items.can_reach_outcast()) return 'unavailable';
                 return 'available';
             },
             chests: 4,
             chest_limit: 4,
             is_progressable: function() {
-                if (!can_reach_outcast()) return 'unavailable';
+                if (!items.can_reach_outcast()) return 'unavailable';
                 return this.chests === 1 && !items.hammer ? 'possible' : 'available';
             }
         },
@@ -174,10 +154,10 @@
             medallion: 0,
             completed: false,
             is_completable: function() {
-                if (!melee_bow()) return 'unavailable';
+                if (!items.has_melee_bow()) return 'unavailable';
                 if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
-                var state = medallion_check('mire');
+                var state = items.medallion_check(dungeons['mire'].medallion);
                 if (state) return state;
 
                 return items.lantern || items.firerod ?
@@ -189,7 +169,7 @@
             is_progressable: function() {
                 if (!items.moonpearl || !items.flute || items.glove !== 2) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
-                var state = medallion_check('mire');
+                var state = items.medallion_check(dungeons['mire'].medallion);
                 if (state) return state;
 
                 return (this.chests > 1 ?
@@ -207,7 +187,7 @@
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
                 if (!items.icerod || !items.firerod) return 'unavailable';
-                var state = medallion_check('turtle');
+                var state = items.medallion_check(dungeons['turtle'].medallion);
                 if (state) return state;
 
                 return items.byrna || items.cape || items.shield === 3 ?
@@ -219,7 +199,7 @@
             is_progressable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
-                var state = medallion_check('turtle');
+                var state = items.medallion_check(dungeons['turtle'].medallion);
                 if (state) return state;
 
                 var laser_safety = items.byrna || items.cape || items.shield === 3,
@@ -347,7 +327,7 @@
             marked: false,
             is_available: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
-                var state = medallion_check('turtle');
+                var state = items.medallion_check(dungeons['turtle'].medallion);
                 if (state) return state;
 
                 return items.firerod ?
@@ -366,7 +346,7 @@
             caption: 'Graveyard Cliff Cave {mirror}',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() && items.mirror ? 'available' : 'unavailable';
+                return items.can_reach_outcast() && items.mirror ? 'available' : 'unavailable';
             }
         },
         graveyard_e: {
@@ -374,7 +354,7 @@
             marked: false,
             is_available: function() {
                 if (!items.boots) return 'unavailable';
-                if (can_reach_outcast() && items.mirror || items.glove === 2) return 'available';
+                if (items.can_reach_outcast() && items.mirror || items.glove === 2) return 'available';
                 return 'unavailable';
             }
         },
@@ -503,7 +483,7 @@
             caption: 'Bombos Tablet {mirror}{sword2}{book}',
             marked: false,
             is_available: function() {
-                return items.book && items.mirror && (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ?
+                return items.book && items.mirror && (items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ?
                     items.sword >= 2 ? 'available' : 'possible' :
                     'unavailable';
             }
@@ -512,7 +492,7 @@
             caption: 'South of Grove {mirror}',
             marked: false,
             is_available: function() {
-                return items.mirror && (can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
+                return items.mirror && (items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
             }
         },
         dam: {
@@ -586,7 +566,7 @@
             caption: 'Bumper Cave {cape}',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() ?
+                return items.can_reach_outcast() ?
                     items.glove && items.cape ? 'available' : 'possible' :
                     'unavailable';
             }
@@ -639,21 +619,21 @@
             caption: 'Treasure Chest Minigame: Pay 30 rupees',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() ? 'available' : 'unavailable';
+                return items.can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         c_house: {
             caption: 'C House',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() ? 'available' : 'unavailable';
+                return items.can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         bomb_hut: {
             caption: 'Bombable Hut {bomb}',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() ? 'available' : 'unavailable';
+                return items.can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         frog: {
@@ -687,7 +667,7 @@
 
                 if (crystal_count < 2 || !items.moonpearl) return 'unavailable';
                 return items.hammer && (items.agahnim || items.glove) ||
-                    items.agahnim && items.mirror && can_reach_outcast() ? 'available' : 'unavailable';
+                    items.agahnim && items.mirror && items.can_reach_outcast() ? 'available' : 'unavailable';
             }
         },
         pyramid: {
@@ -702,21 +682,21 @@
             caption: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
+                return items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         stumpy: {
             caption: 'Ol\' Stumpy',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
+                return items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         swamp_ne: {
             caption: 'Hype Cave! {bomb} (NPC + 4 {bomb})',
             marked: false,
             is_available: function() {
-                return can_reach_outcast() || (items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
+                return items.can_reach_outcast() || (items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
             }
         },
         mire_w: {
