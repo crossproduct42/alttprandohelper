@@ -1,10 +1,7 @@
 (function(window) {
     'use strict';
 
-    var query = uri_query(),
-        sword = query.mode === 'open' ? 0 : 1;
-
-    window.items = {
+    var items = {
         has_melee: function() { return this.sword || this.hammer; },
         has_bow: function() { return this.bow > 1; },
         has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
@@ -25,8 +22,18 @@
             if (medallion === 0 && !(this.bombos && this.ether && this.quake)) return 'possible';
         },
 
+        inc: counters(1, {
+            tunic: { min: 1, max: 3 },
+            sword: { max: 4 },
+            shield: { max: 3 },
+            bottle: { max: 4 },
+            bow: { max: 3 },
+            boomerang: { max: 3 },
+            glove: { max: 2 }
+        }),
+
         tunic: 1,
-        sword: sword,
+        sword: 0,
         shield: 0,
         moonpearl: false,
 
@@ -58,18 +65,12 @@
         glove: 0,
         flippers: false,
         flute: false,
-        agahnim: false,
-
-        inc: counters(1, {
-            tunic: { min: 1, max: 3 },
-            sword: { max: 4 },
-            shield: { max: 3 },
-            bottle: { max: 4 },
-            bow: { max: 3 },
-            boomerang: { max: 3 },
-            glove: { max: 2 }
-        })
+        agahnim: false
     };
+
+    if (uri_query().mode === 'standard') Object.assign(items, { sword: 1 });
+
+    window.items = items;
 
     function counters(delta, limits) {
         return function(item) {
