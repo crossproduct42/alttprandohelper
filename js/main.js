@@ -1,6 +1,24 @@
 (function(window) {
     'use strict';
 
+    var Caption = createReactClass({
+        render: function() {
+            var each_part = /[^{]+|\{[\w]+\}/g,
+                text = this.props.text;
+            return div('#caption', !text ? '\u00a0' : text.match(each_part).map(this.parse));
+        },
+
+        parse: function(part) {
+            var dm = part.match(/^\{(medallion|pendant)(\d+)\}/),
+                pm = part.match(/^\{(\w+?)(\d+)?\}/),
+                m = dm || pm;
+            return !m ? part : div('.icon', { className: dm ?
+                m[1]+'-'+m[2] :
+                classNames(m[1], m[2] && 'active-'+m[2])
+            });
+        }
+    });
+
     var query = uri_query();
     window.mode = query.mode;
     window.map_enabled = query.map;
@@ -153,13 +171,17 @@
         var location = location_name(target.classList),
             name = as_identifier(location);
         location_target(target, location).classList.add('highlight');
-        document.getElementById('caption').innerHTML = caption_to_html(source[name].caption);
+        ReactDOM.render(
+            t(Caption, { text: source[name].caption }),
+            document.getElementById('caption-rjs'));
     }
 
     function unhighlight(target) {
         var location = location_name(target.classList)
         location_target(target, location).classList.remove('highlight');
-        document.getElementById('caption').innerHTML = '&nbsp;';
+        ReactDOM.render(
+            t(Caption),
+            document.getElementById('caption-rjs'));
     }
 
     function location_name(class_list) {
@@ -172,16 +194,6 @@
         return target.classList.contains('boss') ?
             document.querySelector('#map ' + (location === 'agahnim' ? '.encounter.' : '.dungeon.') + location) :
             target;
-    }
-
-    function caption_to_html(caption) {
-        return caption.replace(/\{(\w+?)(\d+)?\}/g, function(__, name, n) {
-            var dash = /medallion|pendant/.test(name)
-            return '<div class="icon ' +
-                (dash ? name + '-' + n :
-                n ? name + ' active-' + n :
-                name) + '"></div>';
-        });
     }
 
     window.start = function() {
