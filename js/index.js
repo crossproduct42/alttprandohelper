@@ -14,7 +14,9 @@
         var params = {
                 mode: this.getAttribute('data-mode'),
                 hmap: this.getAttribute('data-map') === 'hmap',
-                vmap: this.getAttribute('data-map') === 'vmap'
+                vmap: this.getAttribute('data-map') === 'vmap',
+                bg: document.getElementById('background-color').value ||
+                    document.getElementById('custom-color').value
             },
             size = {
                 w: params.hmap ? 1340 : params.vmap ? 270 : 448,
@@ -33,12 +35,23 @@
         return compact([
             'mode='+params.mode,
             params.hmap && 'hmap',
-            params.vmap && 'vmap'
+            params.vmap && 'vmap',
+            !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
         ]).join('&');
+    }
+
+    function background_color_changed(event) {
+        var value = event.target.value,
+            custom = document.getElementById('custom-color');
+        custom.classList[value ? 'add' : 'remove']('hidden');
     }
 
     window.start = function() {
         document.querySelectorAll('.launch').forEach(
             function(launch) { launch.addEventListener('click', launch_tracker); });
+        var background_color = document.getElementById('background-color'),
+            custom_color = document.getElementById('custom-color');
+        background_color.value || custom_color.classList.remove('hidden');
+        background_color.addEventListener('change', background_color_changed);
     };
 }(window));

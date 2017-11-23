@@ -327,13 +327,16 @@
 
     var App = createReactClass({
         getInitialState: function() {
-            var mode = uri_query().mode;
+            var mode = this.props.query.mode;
             return Object.assign(item_model(mode), location_model(mode));
         },
 
         render: function() {
-            var query = uri_query();
-            return div('#page', { className: classNames({ row: query.hmap, hmap: query.hmap, vmap: query.vmap }) },
+            var query = this.props.query;
+            return div('#page', {
+                    className: classNames({ row: query.hmap, hmap: query.hmap, vmap: query.vmap }),
+                    style: query.bg && { 'background-color': query.bg }
+                },
                 t(Tracker, Object.assign({
                     item_click: this.item_click,
                     boss_click: this.boss_click,
@@ -379,7 +382,7 @@
     });
 
     window.start = function() {
-        ReactDOM.render(t(App), document.getElementById('app'));
+        ReactDOM.render(t(App, { query: uri_query() }), document.getElementById('app'));
     };
 
     function as_location(s) {

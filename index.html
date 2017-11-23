@@ -7,8 +7,9 @@
   <script src="js/index.js"></script>
   <style>
   body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-  label { width: 5em; display: inline-block; }
+  label { width: 9em; display: inline-block; }
   div { margin: 5px 0; }
+  .hidden { display: none; }
   </style>
 </head>
 <body>
@@ -25,6 +26,18 @@
     <button type="button" class="launch" data-mode="open" data-map="no">Tracker only</button>
     <button type="button" class="launch" data-mode="open" data-map="hmap">Horizontal map</button>
     <button type="button" class="launch" data-mode="open" data-map="vmap">Vertical map</button>
+  </div>
+
+  <div>
+    <label>Background Color</label>
+    <select id="background-color">
+      <option value="black" selected>Black (default)</option>
+      <option value="magenta">Magenta</option>
+      <option value="cyan">Cyan</option>
+      <option value="yellow">Yellow</option>
+      <option value="">CSS Color</option>
+    </select>
+    <input type="text" id="custom-color" class="hidden" title="css color i.e keyword, #RRGGBB" />
   </div>
 
   <script>start()</script>
