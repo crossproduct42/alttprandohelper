@@ -24,6 +24,16 @@
     <button type="button" class="launch" data-mode="open" data-map="yes">With map</button>
   </div>
 
+  <div>
+    <label>BG-Color</label>
+	<select id="bgColor" onchange="toggleCustom()">
+	  <option value="black" selected>Black (default)</option>
+	  <option value="magenta">Magenta</option>
+	  <option value="custom">Custom (name or #RRGGBB)</option>
+	</select>
+	<input style="visibility: hidden" type="text" id="customColor" />
+  </div>
+  
   <script>start()</script>
 
 </body>

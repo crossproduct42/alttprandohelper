@@ -6,6 +6,7 @@
     window.medallions = [0, 0];
     window.mode = query.mode;
     window.map_enabled = query.map;
+	window.bg_color = query.bg;
 
     // Event of clicking on the item tracker
     window.toggle = function(label) {
@@ -175,5 +176,10 @@
             document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
         }
+		if (bg_color)
+		{
+			document.body.style.background = bg_color;
+		}
     };
+	
 }(window));
