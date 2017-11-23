@@ -5,9 +5,9 @@
   <title>launching ALttP tracker</title>
   <script src="js/index.js"></script>
   <style>
-  body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-  label { width: 5em; display: inline-block; }
-  div { margin: 5px 0; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
+    label { width: 5em; display: inline-block; }
+    div { margin: 5px 0; }
   </style>
 </head>
 <body>
@@ -24,6 +24,18 @@
     <button type="button" class="launch" data-mode="open" data-map="yes">With map</button>
   </div>
 
+  <div>
+    <label>BG-Color</label>
+	<select id="bgColor" onchange="toggleCustom()">
+	  <option value="black" selected>Black (default)</option>
+	  <option value="magenta">Magenta</option>
+	  <option value="cyan">Cyan</option>
+	  <option value="yellow">Yellow</option>
+	  <option value="custom">Custom (name / #RGB / #RGBA)</option>
+	</select>
+	<input style="visibility: hidden" type="text" id="customColor" />
+  </div>
+  
   <script>start()</script>
 
 </body>

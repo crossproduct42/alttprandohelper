@@ -31,9 +31,9 @@ body {
 }
 
 #tracker .item,
-#tracker .boss { opacity: .25; }
+#tracker .boss { filter: grayscale(50%) contrast(80%) brightness(30%); }
 #tracker .item[class*="active"],
-#tracker .boss.defeated { opacity: 1; }
+#tracker .boss.defeated { filter: grayscale(0%) contrast(100%) brightness(100%); }
 
 [class*="prize-"] {
   width: 32px;
