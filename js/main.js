@@ -173,6 +173,17 @@
         }
     });
 
+    var Map = createReactClass({
+        render: function() {
+            return div('#map.cell',
+                Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
+                Object.keys(encounters).map(function(name) { return t(MapEncounter, { name: name }); }),
+                Object.keys(dungeons).map(function(name) { return t(MapDungeon, { name: name }); }),
+                t(Caption)
+            );
+        }
+    });
+
     var query = uri_query();
     window.mode = query.mode;
     window.map_enabled = query.map;
@@ -264,13 +275,7 @@
     }
 
     window.start = function() {
-        ReactDOM.render([
-                Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
-                Object.keys(encounters).map(function(name) { return t(MapEncounter, { name: name }); }),
-                Object.keys(dungeons).map(function(name) { return t(MapDungeon, { name: name }); })
-            ],
-            document.getElementById('locations-rjs'));
-        ReactDOM.render(t(Caption), document.getElementById('caption-rjs'));
+        ReactDOM.render(t(Map), document.getElementById('map-rjs'));
 
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
