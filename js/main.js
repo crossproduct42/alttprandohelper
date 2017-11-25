@@ -1,10 +1,70 @@
 (function(window) {
     'use strict';
 
+    var model_changed = announcer();
+
+    var MapChest = createReactClass({
+        getInitialState: function() {
+            return { highlighted: false };
+        },
+
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+
+        handle_change: function(which) {
+            which === 'chest' && this.forceUpdate();
+        },
+
+        render: function() {
+            var name = this.props.name,
+                marked = chests[name].marked;
+            return div('.chest', {
+                className: classNames(
+                    as_location(name),
+                    marked || chests[name].is_available(), {
+                        marked: marked,
+                        highlight: this.state.highlighted
+                    }),
+                onClick: this.handle_click,
+                onMouseOver: this.handle_over,
+                onMouseOut: this.handle_out
+            });
+        },
+
+        handle_click: function() {
+            var name = this.props.name;
+            chests = Object.assign({}, chests);
+            chests[name] = create(chests[name].__proto__, chests[name]);
+            chests[name].marked = !chests[name].marked;
+            this.forceUpdate();
+        },
+
+        handle_over: function() {
+            model_changed('caption', chests[this.props.name].caption);
+            this.setState({ highlighted: true });
+        },
+        
+        handle_out: function() {
+            model_changed('caption', null);
+            this.setState({ highlighted: false });
+        }
+    });
+
     var Caption = createReactClass({
+        getInitialState: function() {
+            return { caption: null };
+        },
+
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+
+        handle_change: function(which, caption) {
+            which === 'caption' && this.setState({ text: caption });
+        },
+
         render: function() {
             var each_part = /[^{]+|\{[\w]+\}/g,
-                text = this.props.text;
+                text = this.state.text;
             return div('#caption', !text ? '\u00a0' : text.match(each_part).map(this.parse));
         },
 
@@ -40,11 +100,7 @@
         }
 
         if (map_enabled) {
-            Object.keys(chests).forEach(function(name) {
-                var location = as_location(name);
-                if (!chests[name].marked)
-                    document.querySelector('#map .' + location).className = classNames('chest', location, chests[name].is_available());
-            });
+            model_changed('chest');
             Object.keys(dungeons).forEach(function(name, index) {
                 var location = as_location(name);
                 if (!dungeons[name].completed)
@@ -89,7 +145,7 @@
         // Clicking a boss on the tracker will check it off on the map!
         if (map_enabled) {
             update_boss(name);
-            update_prize_locations();
+            model_changed('chest');
         }
     }
 
@@ -101,7 +157,7 @@
         target.className = classNames('prize', 'prize-'+value, name);
 
         if (map_enabled)
-            update_prize_locations();
+            model_changed('chest');
     }
 
     function toggle_medallion(target) {
@@ -118,10 +174,7 @@
             if (dungeons[name].chests)
                 document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
             // TRock medallion affects Mimic Cave
-            if (name === 'turtle') {
-                document.querySelector('#map .mimic').className = classNames('chest', 'mimic',
-                    chests.mimic.marked ? 'marked' : chests.mimic.is_available());
-            }
+            model_changed('chest');
             // Change the mouseover text on the map
             dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
         }
@@ -146,46 +199,21 @@
             dungeons[name].completed ? 'marked' : dungeons[name].is_completable());
     }
 
-    function update_prize_locations() {
-        ['sahasrahla', 'fairy_dw', 'altar'].forEach(function(name) {
-            var location = as_location(name);
-            if (!chests[name].marked)
-                document.querySelector('#map .' + location).className = classNames('chest', location, chests[name].is_available());
-        });
-    }
-
-    function toggle_map(target) {
-        var location = location_name(target.classList),
-            name = as_identifier(location);
-
-        chests = Object.assign({}, chests);
-        chests[name] = create(chests[name].__proto__, chests[name]);
-        chests[name].marked = !chests[name].marked;
-
-        target.className = classNames('chest', location,
-            chests[name].marked ? 'marked' : chests[name].is_available(),
-            'highlight');
-    }
-
     function highlight(target, source) {
         var location = location_name(target.classList),
             name = as_identifier(location);
         location_target(target, location).classList.add('highlight');
-        ReactDOM.render(
-            t(Caption, { text: source[name].caption }),
-            document.getElementById('caption-rjs'));
+        model_changed('caption', source[name].caption);
     }
 
     function unhighlight(target) {
         var location = location_name(target.classList)
         location_target(target, location).classList.remove('highlight');
-        ReactDOM.render(
-            t(Caption),
-            document.getElementById('caption-rjs'));
+        model_changed('caption', null);
     }
 
     function location_name(class_list) {
-        var terms = ['boss', 'dungeon', 'encounter', 'chest', 'highlight',
+        var terms = ['boss', 'dungeon', 'encounter', 'highlight',
             'marked', 'unavailable', 'available', 'possible', 'dark'];
         return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
     }
@@ -197,6 +225,11 @@
     }
 
     window.start = function() {
+        ReactDOM.render(
+            Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
+            document.getElementById('locations-rjs'));
+        ReactDOM.render(t(Caption), document.getElementById('caption-rjs'));
+
         if (mode !== 'open') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
         }
@@ -216,25 +249,16 @@
                 // Check Agahnim first since his .boss div might be highlighted
                 var source = event.target.classList.contains('agahnim') ? encounters :
                     event.target.classList.contains('boss') ||
-                    event.target.classList.contains('dungeon') ? dungeons :
-                    event.target.classList.contains('chest') ? chests : null;
+                    event.target.classList.contains('dungeon') ? dungeons : null;
                 source && highlight(event.target, source);
             });
             map.addEventListener('mouseout', function(event) {
                 if (event.target.classList.contains('boss') ||
                     event.target.classList.contains('dungeon') ||
-                    event.target.classList.contains('agahnim') ||
-                    event.target.classList.contains('chest'))
+                    event.target.classList.contains('agahnim'))
                     unhighlight(event.target);
             });
-            map.addEventListener('click', function(event) {
-                event.target.classList.contains('chest') && toggle_map(event.target);
-            });
 
-            Object.keys(chests).forEach(function(name) {
-                var chest = chests[name];
-                document.querySelector('#map .' + as_location(name)).classList.add(chest.marked ? 'marked' : chest.is_available());
-            });
             document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_completable());
             Object.keys(dungeons).forEach(function(name) {
                 var dungeon = dungeons[name],
