@@ -12,7 +12,7 @@
         componentWillUnmount: function() { model_changed.off(this.handle_change); },
 
         handle_change: function(which) {
-            which === 'chest' && this.forceUpdate();
+            which === 'tracker' && this.forceUpdate();
         },
 
         render: function() {
@@ -41,6 +41,54 @@
 
         handle_over: function() {
             model_changed('caption', chests[this.props.name].caption);
+            this.setState({ highlighted: true });
+        },
+        
+        handle_out: function() {
+            model_changed('caption', null);
+            this.setState({ highlighted: false });
+        }
+    });
+
+    var MapDungeon = createReactClass({
+        getInitialState: function() {
+            return { highlighted: false };
+        },
+
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+
+        handle_change: function(which) {
+            which === 'tracker' && this.forceUpdate();
+        },
+
+        render: function() {
+            var name = this.props.name,
+                dungeon = dungeons[name];
+            return [
+                div('.boss', {
+                    className: classNames(
+                        as_location(name),
+                        dungeon.completed || dungeon.is_completable(),
+                        { marked: dungeon.completed }),
+                    onMouseOver: this.handle_over,
+                    onMouseOut: this.handle_out
+                }),
+                div('.dungeon', {
+                    className: classNames(
+                        as_location(name),
+                        dungeon.chests === 0 || dungeon.is_progressable(), {
+                            marked: dungeon.chests === 0,
+                            highlight: this.state.highlighted
+                        }),
+                    onMouseOver: this.handle_over,
+                    onMouseOut: this.handle_out
+                })
+            ];
+        },
+
+        handle_over: function() {
+            model_changed('caption', dungeons[this.props.name].caption);
             this.setState({ highlighted: true });
         },
         
@@ -100,14 +148,7 @@
         }
 
         if (map_enabled) {
-            model_changed('chest');
-            Object.keys(dungeons).forEach(function(name, index) {
-                var location = as_location(name);
-                if (!dungeons[name].completed)
-                    document.querySelector('#map .boss.' + location).className = classNames('boss', location, dungeons[name].is_completable());
-                if (dungeons[name].chests)
-                    document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
-            });
+            model_changed('tracker');
             if (['agahnim', 'cape', 'sword', 'lantern'].includes(name)) {
                 document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
                     items.agahnim ? 'marked' : encounters.agahnim.is_completable());
@@ -128,11 +169,8 @@
         update_dungeon(name, 'chests', value);
         target.className = classNames('chest', 'chest-'+value, name);
 
-        if (map_enabled) {
-            var location = as_location(name);
-            document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location,
-                value ? dungeons[name].is_progressable() : 'marked');
-        }
+        if (map_enabled)
+            model_changed('tracker');
     }
 
     function toggle_boss(target) {
@@ -142,11 +180,8 @@
         update_dungeon(name, 'completed', value);
         target.classList[value ? 'add' : 'remove']('defeated');
 
-        // Clicking a boss on the tracker will check it off on the map!
-        if (map_enabled) {
-            update_boss(name);
-            model_changed('chest');
-        }
+        if (map_enabled)
+            model_changed('tracker');
     }
 
     function toggle_prize(target) {
@@ -157,7 +192,7 @@
         target.className = classNames('prize', 'prize-'+value, name);
 
         if (map_enabled)
-            model_changed('chest');
+            model_changed('tracker');
     }
 
     function toggle_medallion(target) {
@@ -168,13 +203,7 @@
         target.className = classNames('medallion', 'medallion-'+value, name);
 
         if (map_enabled) {
-            // Update availability of dungeon boss AND chests
-            var location = as_location(name);
-            update_boss(name);
-            if (dungeons[name].chests)
-                document.querySelector('#map .dungeon.' + location).className = classNames('dungeon', location, dungeons[name].is_progressable());
-            // TRock medallion affects Mimic Cave
-            model_changed('chest');
+            model_changed('tracker');
             // Change the mouseover text on the map
             dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
         }
@@ -193,40 +222,21 @@
         dungeons[name][key] = value;
     }
 
-    function update_boss(name) {
-        var location = as_location(name);
-        document.querySelector('#map .boss.' + location).className = classNames('boss', location,
-            dungeons[name].completed ? 'marked' : dungeons[name].is_completable());
-    }
-
     function highlight(target, source) {
-        var location = location_name(target.classList),
-            name = as_identifier(location);
-        location_target(target, location).classList.add('highlight');
-        model_changed('caption', source[name].caption);
+        document.querySelector('#map .encounter.agahnim').classList.add('highlight');
+        model_changed('caption', encounters.agahnim.caption);
     }
 
     function unhighlight(target) {
-        var location = location_name(target.classList)
-        location_target(target, location).classList.remove('highlight');
+        document.querySelector('#map .encounter.agahnim').classList.remove('highlight');
         model_changed('caption', null);
     }
 
-    function location_name(class_list) {
-        var terms = ['boss', 'dungeon', 'encounter', 'highlight',
-            'marked', 'unavailable', 'available', 'possible', 'dark'];
-        return Array.from(class_list).filter(function(x) { return !terms.includes(x); })[0];
-    }
-
-    function location_target(target, location) {
-        return target.classList.contains('boss') ?
-            document.querySelector('#map ' + (location === 'agahnim' ? '.encounter.' : '.dungeon.') + location) :
-            target;
-    }
-
     window.start = function() {
-        ReactDOM.render(
-            Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
+        ReactDOM.render([
+                Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
+                Object.keys(dungeons).map(function(name) { return t(MapDungeon, { name: name }); })
+            ],
             document.getElementById('locations-rjs'));
         ReactDOM.render(t(Caption), document.getElementById('caption-rjs'));
 
@@ -246,26 +256,13 @@
         if (map_enabled) {
             var map = document.getElementById('map');
             map.addEventListener('mouseover', function(event) { 
-                // Check Agahnim first since his .boss div might be highlighted
-                var source = event.target.classList.contains('agahnim') ? encounters :
-                    event.target.classList.contains('boss') ||
-                    event.target.classList.contains('dungeon') ? dungeons : null;
-                source && highlight(event.target, source);
+                event.target.classList.contains('agahnim') && highlight(event.target, encounters);
             });
             map.addEventListener('mouseout', function(event) {
-                if (event.target.classList.contains('boss') ||
-                    event.target.classList.contains('dungeon') ||
-                    event.target.classList.contains('agahnim'))
-                    unhighlight(event.target);
+                event.target.classList.contains('agahnim') && unhighlight(event.target);
             });
 
             document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_completable());
-            Object.keys(dungeons).forEach(function(name) {
-                var dungeon = dungeons[name],
-                    location = as_location(name);
-                document.querySelector('#map .boss.' + location).classList.add(dungeon.is_completable());
-                document.querySelector('#map .dungeon.' + location).classList.add(dungeon.is_progressable());
-            });
         } else {
             document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
