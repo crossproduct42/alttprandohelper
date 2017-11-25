@@ -50,6 +50,52 @@
         }
     });
 
+    var MapEncounter = createReactClass({
+        getInitialState: function() {
+            return { highlighted: false };
+        },
+
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+
+        handle_change: function(which) {
+            which === 'tracker' && this.forceUpdate();
+        },
+
+        render: function() {
+            var name = this.props.name,
+                encounter = encounters[name],
+                completed = items[name];
+            return [
+                div('.boss', {
+                    className: as_location(name),
+                    onMouseOver: this.handle_over,
+                    onMouseOut: this.handle_out
+                }),
+                div('.encounter', {
+                    className: classNames(
+                        as_location(name),
+                        completed || encounter.is_completable(), {
+                            marked: completed,
+                            highlight: this.state.highlighted
+                        }),
+                    onMouseOver: this.handle_over,
+                    onMouseOut: this.handle_out
+                })
+            ];
+        },
+
+        handle_over: function() {
+            model_changed('caption', encounters[this.props.name].caption);
+            this.setState({ highlighted: true });
+        },
+        
+        handle_out: function() {
+            model_changed('caption', null);
+            this.setState({ highlighted: false });
+        }
+    });
+
     var MapDungeon = createReactClass({
         getInitialState: function() {
             return { highlighted: false };
@@ -147,13 +193,8 @@
             document.querySelector('#tracker .tunic').classList[!items.moonpearl ? 'add' : 'remove']('bunny');
         }
 
-        if (map_enabled) {
+        if (map_enabled)
             model_changed('tracker');
-            if (['agahnim', 'cape', 'sword', 'lantern'].includes(name)) {
-                document.querySelector('#map .encounter.agahnim').className = classNames('encounter', 'agahnim',
-                    items.agahnim ? 'marked' : encounters.agahnim.is_completable());
-            }
-        }
     }
 
     function item_name(class_list) {
@@ -222,19 +263,10 @@
         dungeons[name][key] = value;
     }
 
-    function highlight(target, source) {
-        document.querySelector('#map .encounter.agahnim').classList.add('highlight');
-        model_changed('caption', encounters.agahnim.caption);
-    }
-
-    function unhighlight(target) {
-        document.querySelector('#map .encounter.agahnim').classList.remove('highlight');
-        model_changed('caption', null);
-    }
-
     window.start = function() {
         ReactDOM.render([
                 Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
+                Object.keys(encounters).map(function(name) { return t(MapEncounter, { name: name }); }),
                 Object.keys(dungeons).map(function(name) { return t(MapDungeon, { name: name }); })
             ],
             document.getElementById('locations-rjs'));
@@ -253,17 +285,7 @@
             if (target.classList.contains('medallion')) toggle_medallion(target);
         });
 
-        if (map_enabled) {
-            var map = document.getElementById('map');
-            map.addEventListener('mouseover', function(event) { 
-                event.target.classList.contains('agahnim') && highlight(event.target, encounters);
-            });
-            map.addEventListener('mouseout', function(event) {
-                event.target.classList.contains('agahnim') && unhighlight(event.target);
-            });
-
-            document.querySelector('#map .encounter.agahnim').classList.add(encounters.agahnim.is_completable());
-        } else {
+        if (!map_enabled) {
             document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
         }
