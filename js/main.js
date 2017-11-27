@@ -51,6 +51,28 @@
         }
     });
 
+    var TrackerChest = createReactClass({
+        render: function() {
+            var name = this.props.name,
+                value = dungeons[name].chests;
+            return div('.chest', {
+                className: classNames('chest-'+value),
+                onClick: this.onClick
+            });
+        },
+
+        onClick: function() {
+            var name = this.props.name,
+                dungeon = dungeons[name],
+                value = counter(dungeon.chests, -1, dungeon.chest_limit);
+
+            update_dungeon(name, 'chests', value);
+
+            this.forceUpdate();
+            model_changed();
+        }
+    });
+
     var Avatar = createReactClass({
         render: function() {
             return [
@@ -257,18 +279,6 @@
     window.mode = query.mode;
     window.map_enabled = query.map;
 
-    function toggle_chest(target) {
-        var name = dungeon_name(target.classList),
-            dungeon = dungeons[name],
-            value = counter(dungeon.chests, -1, dungeon.chest_limit);
-
-        update_dungeon(name, 'chests', value);
-        target.className = classNames('chest', 'chest-'+value, name);
-
-        if (map_enabled)
-            model_changed();
-    }
-
     function toggle_boss(target) {
         var name = dungeon_name(target.classList),
             value = !dungeons[name].completed;
@@ -306,7 +316,7 @@
     }
 
     function dungeon_name(class_list) {
-        var terms = ['boss', 'chest', 'prize', 'medallion', 'defeated'];
+        var terms = ['boss', 'prize', 'medallion', 'defeated'];
         return Array.from(class_list).filter(function(x) {
             return !(terms.includes(x) || x.match(/^(chest|prize|medallion)-?/));
         })[0];
@@ -319,17 +329,16 @@
     }
 
     window.start = function() {
+        var names = ['eastern', 'desert', 'hera', 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle'];
         ReactDOM.render(t(Avatar), document.getElementById('avatar-rjs'));
         ReactDOM.render(t(ItemGrid), document.getElementById('item-grid-rjs'));
+        document.querySelectorAll('.chest-rjs').forEach(function(target, i) {
+            ReactDOM.render(t(TrackerChest, { name: names[i] }), target);
+        });
         ReactDOM.render(t(Map), document.getElementById('map-rjs'));
-
-        if (mode !== 'open') {
-            document.getElementsByClassName('sword')[0].classList.add('active-1');
-        }
 
         document.getElementById('tracker').addEventListener('click', function(event) {
             var target = event.target;
-            if (target.classList.contains('chest')) toggle_chest(target);
             if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('prize')) toggle_prize(target);
             if (target.classList.contains('medallion')) toggle_medallion(target);
