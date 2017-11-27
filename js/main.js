@@ -3,31 +3,46 @@
 
     var model_changed = announcer();
 
-    var MapChest = createReactClass({
-        getInitialState: function() {
-            return { highlighted: false };
-        },
+    function WithHighlight(Wrapped, source) {
+        return createReactClass({
+            getInitialState: function() {
+                return { highlighted: false };
+            },
 
+            render: function() {
+                return t(Wrapped, Object.assign({
+                        highlighted: this.state.highlighted,
+                        onHighlight: this.onHighlight
+                    }, this.props));
+            },
+
+            onHighlight: function(highlighted) {
+                var name = this.props.name;
+                this.props.change_caption(highlighted ? source(name).caption : null);
+                this.setState({ highlighted: highlighted });
+            }
+        })
+    }
+
+    var MapChest = createReactClass({
         componentDidMount: function() { model_changed.on(this.handle_change); },
         componentWillUnmount: function() { model_changed.off(this.handle_change); },
-
-        handle_change: function(which) {
-            which === 'tracker' && this.forceUpdate();
-        },
+        handle_change: function() { this.forceUpdate(); },
 
         render: function() {
             var name = this.props.name,
+                onHighlight = this.props.onHighlight,
                 marked = chests[name].marked;
             return div('.chest', {
                 className: classNames(
                     as_location(name),
                     marked || chests[name].is_available(), {
                         marked: marked,
-                        highlight: this.state.highlighted
+                        highlight: this.props.highlighted
                     }),
                 onClick: this.handle_click,
-                onMouseOver: this.handle_over,
-                onMouseOut: this.handle_out
+                onMouseOver: function() { onHighlight(true); },
+                onMouseOut: function() { onHighlight(false); }
             });
         },
 
@@ -37,79 +52,47 @@
             chests[name] = create(chests[name].__proto__, chests[name]);
             chests[name].marked = !chests[name].marked;
             this.forceUpdate();
-        },
-
-        handle_over: function() {
-            model_changed('caption', chests[this.props.name].caption);
-            this.setState({ highlighted: true });
-        },
-        
-        handle_out: function() {
-            model_changed('caption', null);
-            this.setState({ highlighted: false });
         }
     });
 
     var MapEncounter = createReactClass({
-        getInitialState: function() {
-            return { highlighted: false };
-        },
-
         componentDidMount: function() { model_changed.on(this.handle_change); },
         componentWillUnmount: function() { model_changed.off(this.handle_change); },
-
-        handle_change: function(which) {
-            which === 'tracker' && this.forceUpdate();
-        },
+        handle_change: function() { this.forceUpdate(); },
 
         render: function() {
             var name = this.props.name,
+                onHighlight = this.props.onHighlight,
                 encounter = encounters[name],
                 completed = items[name];
             return [
                 div('.boss', {
                     className: as_location(name),
-                    onMouseOver: this.handle_over,
-                    onMouseOut: this.handle_out
+                    onMouseOver: function() { onHighlight(true); },
+                    onMouseOut: function() { onHighlight(false); }
                 }),
                 div('.encounter', {
                     className: classNames(
                         as_location(name),
                         completed || encounter.is_completable(), {
                             marked: completed,
-                            highlight: this.state.highlighted
+                            highlight: this.props.highlighted
                         }),
-                    onMouseOver: this.handle_over,
-                    onMouseOut: this.handle_out
+                    onMouseOver: function() { onHighlight(true); },
+                    onMouseOut: function() { onHighlight(false); }
                 })
             ];
-        },
-
-        handle_over: function() {
-            model_changed('caption', encounters[this.props.name].caption);
-            this.setState({ highlighted: true });
-        },
-        
-        handle_out: function() {
-            model_changed('caption', null);
-            this.setState({ highlighted: false });
         }
     });
 
     var MapDungeon = createReactClass({
-        getInitialState: function() {
-            return { highlighted: false };
-        },
-
         componentDidMount: function() { model_changed.on(this.handle_change); },
         componentWillUnmount: function() { model_changed.off(this.handle_change); },
-
-        handle_change: function(which) {
-            which === 'tracker' && this.forceUpdate();
-        },
+        handle_change: function() { this.forceUpdate(); },
 
         render: function() {
             var name = this.props.name,
+                onHighlight = this.props.onHighlight,
                 dungeon = dungeons[name];
             return [
                 div('.boss', {
@@ -117,48 +100,31 @@
                         as_location(name),
                         dungeon.completed || dungeon.is_completable(),
                         { marked: dungeon.completed }),
-                    onMouseOver: this.handle_over,
-                    onMouseOut: this.handle_out
+                    onMouseOver: function() { onHighlight(true); },
+                    onMouseOut: function() { onHighlight(false); }
                 }),
                 div('.dungeon', {
                     className: classNames(
                         as_location(name),
                         dungeon.chests === 0 || dungeon.is_progressable(), {
                             marked: dungeon.chests === 0,
-                            highlight: this.state.highlighted
+                            highlight: this.props.highlighted
                         }),
-                    onMouseOver: this.handle_over,
-                    onMouseOut: this.handle_out
+                    onMouseOver: function() { onHighlight(true); },
+                    onMouseOut: function() { onHighlight(false); }
                 })
             ];
-        },
-
-        handle_over: function() {
-            model_changed('caption', dungeons[this.props.name].caption);
-            this.setState({ highlighted: true });
-        },
-        
-        handle_out: function() {
-            model_changed('caption', null);
-            this.setState({ highlighted: false });
         }
     });
 
+    var MapChestWithHighlight = WithHighlight(MapChest, function(name) { return chests[name]; }),
+        MapEncounterWithHighlight = WithHighlight(MapEncounter, function(name) { return encounters[name]; }),
+        MapDungeonWithHighlight = WithHighlight(MapDungeon, function(name) { return dungeons[name]; });
+
     var Caption = createReactClass({
-        getInitialState: function() {
-            return { caption: null };
-        },
-
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-
-        handle_change: function(which, caption) {
-            which === 'caption' && this.setState({ text: caption });
-        },
-
         render: function() {
             var each_part = /[^{]+|\{[\w]+\}/g,
-                text = this.state.text;
+                text = this.props.text;
             return div('#caption', !text ? '\u00a0' : text.match(each_part).map(this.parse));
         },
 
@@ -174,13 +140,28 @@
     });
 
     var Map = createReactClass({
+        getInitialState: function() {
+            return { caption: null };
+        },
+
         render: function() {
+            var change_caption = this.change_caption;
             return div('#map.cell',
-                Object.keys(chests).map(function(name) { return t(MapChest, { name: name }); }),
-                Object.keys(encounters).map(function(name) { return t(MapEncounter, { name: name }); }),
-                Object.keys(dungeons).map(function(name) { return t(MapDungeon, { name: name }); }),
-                t(Caption)
+                Object.keys(chests).map(function(name) {
+                    return t(MapChestWithHighlight, { name: name, change_caption: change_caption });
+                }),
+                Object.keys(encounters).map(function(name) {
+                    return t(MapEncounterWithHighlight, { name: name, change_caption: change_caption });
+                }),
+                Object.keys(dungeons).map(function(name) {
+                    return t(MapDungeonWithHighlight, { name: name, change_caption: change_caption });
+                }),
+                t(Caption, { text: this.state.caption })
             );
+        },
+
+        change_caption: function(caption) {
+            this.setState({ caption: caption });
         }
     });
 
@@ -205,7 +186,7 @@
         }
 
         if (map_enabled)
-            model_changed('tracker');
+            model_changed();
     }
 
     function item_name(class_list) {
@@ -222,7 +203,7 @@
         target.className = classNames('chest', 'chest-'+value, name);
 
         if (map_enabled)
-            model_changed('tracker');
+            model_changed();
     }
 
     function toggle_boss(target) {
@@ -233,7 +214,7 @@
         target.classList[value ? 'add' : 'remove']('defeated');
 
         if (map_enabled)
-            model_changed('tracker');
+            model_changed();
     }
 
     function toggle_prize(target) {
@@ -244,7 +225,7 @@
         target.className = classNames('prize', 'prize-'+value, name);
 
         if (map_enabled)
-            model_changed('tracker');
+            model_changed();
     }
 
     function toggle_medallion(target) {
@@ -255,7 +236,7 @@
         target.className = classNames('medallion', 'medallion-'+value, name);
 
         if (map_enabled) {
-            model_changed('tracker');
+            model_changed();
             // Change the mouseover text on the map
             dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
         }
