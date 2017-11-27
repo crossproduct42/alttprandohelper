@@ -3,6 +3,102 @@
 
     var model_changed = announcer();
 
+    var Item = createReactClass({
+        render: function() {
+            var name = this.props.name,
+                value = items[name];
+            return div('.item', {
+                className: classNames(name,
+                    value === true ? 'active' :
+                    value > 0 ? 'active-'+value : null),
+                onClick: this.onClick
+            });
+        },
+
+        onClick: function() {
+            var name = this.props.name,
+                is_toggle = typeof items[name] === 'boolean',
+                value = is_toggle ? !items[name] : items.inc(name);
+
+            items = create(items.__proto__, items);
+            items[name] = value;
+
+            this.forceUpdate();
+            model_changed();
+        }
+    });
+
+    var TunicItem = createReactClass({
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+        handle_change: function() { this.forceUpdate(); },
+
+        render: function() {
+            var value = items.tunic;
+            return div('.item.tunic', {
+                className: classNames('active-'+value, { bunny: !items.moonpearl }),
+                onClick: this.onClick
+            });
+        },
+
+        onClick: function() {
+            var value = items.inc('tunic');
+
+            items = create(items.__proto__, items);
+            items.tunic = value;
+
+            model_changed();
+        }
+    });
+
+    var Avatar = createReactClass({
+        render: function() {
+            return [
+                t(TunicItem),
+                t(Item, { name: 'sword' }),
+                t(Item, { name: 'shield' }),
+                t(Item, { name: 'moonpearl' }),
+            ];
+        }
+    });
+
+    var ItemGrid = createReactClass({
+        render: function() {
+            return [
+                div('.row',
+                    div('.cell', t(Item, { name: 'bow' })),
+                    div('.cell', t(Item, { name: 'boomerang' })),
+                    div('.cell', t(Item, { name: 'hookshot' })),
+                    div('.cell', t(Item, { name: 'mushroom' })),
+                    div('.cell', t(Item, { name: 'powder' }))),
+                div('.row',
+                    div('.cell', t(Item, { name: 'firerod' })),
+                    div('.cell', t(Item, { name: 'icerod' })),
+                    div('.cell', t(Item, { name: 'bombos' })),
+                    div('.cell', t(Item, { name: 'ether' })),
+                    div('.cell', t(Item, { name: 'quake' }))),
+                div('.row',
+                    div('.cell', t(Item, { name: 'lantern' })),
+                    div('.cell', t(Item, { name: 'hammer' })),
+                    div('.cell', t(Item, { name: 'shovel' })),
+                    div('.cell', t(Item, { name: 'net' })),
+                    div('.cell', t(Item, { name: 'book' }))),
+                div('.row',
+                    div('.cell', t(Item, { name: 'bottle' })),
+                    div('.cell', t(Item, { name: 'somaria' })),
+                    div('.cell', t(Item, { name: 'byrna' })),
+                    div('.cell', t(Item, { name: 'cape' })),
+                    div('.cell', t(Item, { name: 'mirror' }))),
+                div('.row',
+                    div('.cell', t(Item, { name: 'boots' })),
+                    div('.cell', t(Item, { name: 'glove' })),
+                    div('.cell', t(Item, { name: 'flippers' })),
+                    div('.cell', t(Item, { name: 'flute' })),
+                    div('.cell', t(Item, { name: 'agahnim' })))
+            ];
+        }
+    });
+
     function WithHighlight(Wrapped, source) {
         return createReactClass({
             getInitialState: function() {
@@ -161,31 +257,6 @@
     window.mode = query.mode;
     window.map_enabled = query.map;
 
-    function toggle_item(target) {
-        var name = item_name(target.classList),
-            is_toggle = typeof items[name] === 'boolean',
-            value = is_toggle ? !items[name] : items.inc(name);
-
-        items = create(items.__proto__, items);
-        items[name] = value;
-
-        target.className = target.className.replace(/ ?active(-\w+)?/, '');
-        if (value) target.classList.add(is_toggle ? 'active' : 'active-' + value);
-
-        // Initiate bunny graphics!
-        if (['moonpearl', 'tunic'].includes(name)) {
-            document.querySelector('#tracker .tunic').classList[!items.moonpearl ? 'add' : 'remove']('bunny');
-        }
-
-        if (map_enabled)
-            model_changed();
-    }
-
-    function item_name(class_list) {
-        var terms = ['item', 'active', 'bunny'];
-        return Array.from(class_list).filter(function(x) { return !(terms.includes(x) || x.match(/^active-/)); })[0];
-    }
-
     function toggle_chest(target) {
         var name = dungeon_name(target.classList),
             dungeon = dungeons[name],
@@ -248,6 +319,8 @@
     }
 
     window.start = function() {
+        ReactDOM.render(t(Avatar), document.getElementById('avatar-rjs'));
+        ReactDOM.render(t(ItemGrid), document.getElementById('item-grid-rjs'));
         ReactDOM.render(t(Map), document.getElementById('map-rjs'));
 
         if (mode !== 'open') {
@@ -256,7 +329,6 @@
 
         document.getElementById('tracker').addEventListener('click', function(event) {
             var target = event.target;
-            if (target.classList.contains('item')) toggle_item(target);
             if (target.classList.contains('chest')) toggle_chest(target);
             if (target.classList.contains('boss')) toggle_boss(target);
             if (target.classList.contains('prize')) toggle_prize(target);
