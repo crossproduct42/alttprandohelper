@@ -140,51 +140,89 @@
         }
     });
 
-    var Avatar = createReactClass({
+    var Tracker = createReactClass({
         render: function() {
-            return [
-                t(TunicItem),
-                t(Item, { name: 'sword' }),
-                t(Item, { name: 'shield' }),
-                t(Item, { name: 'moonpearl' }),
-            ];
-        }
-    });
-
-    var ItemGrid = createReactClass({
-        render: function() {
-            return [
+            return div('#tracker.cell',
                 div('.row',
-                    div('.cell', t(Item, { name: 'bow' })),
-                    div('.cell', t(Item, { name: 'boomerang' })),
-                    div('.cell', t(Item, { name: 'hookshot' })),
-                    div('.cell', t(Item, { name: 'mushroom' })),
-                    div('.cell', t(Item, { name: 'powder' }))),
+                    div('.cell',
+                        div('.row',
+                            div('.cell',
+                                t(TunicItem),
+                                t(Item, { name: 'sword' }),
+                                t(Item, { name: 'shield' }),
+                                t(Item, { name: 'moonpearl' }),
+                            )
+                        ),
+                        div('.row',
+                            div('.cell', t(Dungeon, { name: 'eastern' })),
+                            div('.cell', t(TrackerChest, { name: 'eastern' }))
+                        ),
+                        div('.row',
+                            div('.cell', t(Dungeon, { name: 'desert' })),
+                            div('.cell', t(TrackerChest, { name: 'desert' }))
+                        ),
+                        div('.row',
+                            div('.cell', t(Dungeon, { name: 'hera' })),
+                            div('.cell', t(TrackerChest, { name: 'hera' }))
+                        )
+                    ),
+                    div('.cell',
+                        div('.row',
+                            div('.cell', t(Item, { name: 'bow' })),
+                            div('.cell', t(Item, { name: 'boomerang' })),
+                            div('.cell', t(Item, { name: 'hookshot' })),
+                            div('.cell', t(Item, { name: 'mushroom' })),
+                            div('.cell', t(Item, { name: 'powder' }))
+                        ),
+                        div('.row',
+                            div('.cell', t(Item, { name: 'firerod' })),
+                            div('.cell', t(Item, { name: 'icerod' })),
+                            div('.cell', t(Item, { name: 'bombos' })),
+                            div('.cell', t(Item, { name: 'ether' })),
+                            div('.cell', t(Item, { name: 'quake' }))
+                        ),
+                        div('.row',
+                            div('.cell', t(Item, { name: 'lantern' })),
+                            div('.cell', t(Item, { name: 'hammer' })),
+                            div('.cell', t(Item, { name: 'shovel' })),
+                            div('.cell', t(Item, { name: 'net' })),
+                            div('.cell', t(Item, { name: 'book' }))
+                        ),
+                        div('.row',
+                            div('.cell', t(Item, { name: 'bottle' })),
+                            div('.cell', t(Item, { name: 'somaria' })),
+                            div('.cell', t(Item, { name: 'byrna' })),
+                            div('.cell', t(Item, { name: 'cape' })),
+                            div('.cell', t(Item, { name: 'mirror' }))
+                        ),
+                        div('.row',
+                            div('.cell', t(Item, { name: 'boots' })),
+                            div('.cell', t(Item, { name: 'glove' })),
+                            div('.cell', t(Item, { name: 'flippers' })),
+                            div('.cell', t(Item, { name: 'flute' })),
+                            div('.cell', t(Item, { name: 'agahnim' }))
+                        )
+                    )
+                ),
                 div('.row',
-                    div('.cell', t(Item, { name: 'firerod' })),
-                    div('.cell', t(Item, { name: 'icerod' })),
-                    div('.cell', t(Item, { name: 'bombos' })),
-                    div('.cell', t(Item, { name: 'ether' })),
-                    div('.cell', t(Item, { name: 'quake' }))),
+                    div('.cell', t(Dungeon, { name: 'darkness' })),
+                    div('.cell', t(Dungeon, { name: 'swamp' })),
+                    div('.cell', t(Dungeon, { name: 'skull' })),
+                    div('.cell', t(Dungeon, { name: 'thieves' })),
+                    div('.cell', t(Dungeon, { name: 'ice' })),
+                    div('.cell', t(DungeonWithMedallion, { name: 'mire' })),
+                    div('.cell', t(DungeonWithMedallion, { name: 'turtle' }))
+                ),
                 div('.row',
-                    div('.cell', t(Item, { name: 'lantern' })),
-                    div('.cell', t(Item, { name: 'hammer' })),
-                    div('.cell', t(Item, { name: 'shovel' })),
-                    div('.cell', t(Item, { name: 'net' })),
-                    div('.cell', t(Item, { name: 'book' }))),
-                div('.row',
-                    div('.cell', t(Item, { name: 'bottle' })),
-                    div('.cell', t(Item, { name: 'somaria' })),
-                    div('.cell', t(Item, { name: 'byrna' })),
-                    div('.cell', t(Item, { name: 'cape' })),
-                    div('.cell', t(Item, { name: 'mirror' }))),
-                div('.row',
-                    div('.cell', t(Item, { name: 'boots' })),
-                    div('.cell', t(Item, { name: 'glove' })),
-                    div('.cell', t(Item, { name: 'flippers' })),
-                    div('.cell', t(Item, { name: 'flute' })),
-                    div('.cell', t(Item, { name: 'agahnim' })))
-            ];
+                    div('.cell', t(TrackerChest, { name: 'darkness' })),
+                    div('.cell', t(TrackerChest, { name: 'swamp' })),
+                    div('.cell', t(TrackerChest, { name: 'skull' })),
+                    div('.cell', t(TrackerChest, { name: 'thieves' })),
+                    div('.cell', t(TrackerChest, { name: 'ice' })),
+                    div('.cell', t(TrackerChest, { name: 'mire' })),
+                    div('.cell', t(TrackerChest, { name: 'turtle' }))
+                )
+            );
         }
     });
 
@@ -353,16 +391,7 @@
     }
 
     window.start = function() {
-        var names = ['eastern', 'desert', 'hera', 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle'];
-        ReactDOM.render(t(Avatar), document.getElementById('avatar-rjs'));
-        ReactDOM.render(t(ItemGrid), document.getElementById('item-grid-rjs'));
-        document.querySelectorAll('.dungeon-rjs').forEach(function(target, i) {
-            var Component = ['mire', 'turtle'].includes(names[i]) ? DungeonWithMedallion : Dungeon;
-            ReactDOM.render(t(Component, { name: names[i] }), target);
-        });
-        document.querySelectorAll('.chest-rjs').forEach(function(target, i) {
-            ReactDOM.render(t(TrackerChest, { name: names[i] }), target);
-        });
+        ReactDOM.render(t(Tracker), document.getElementById('tracker-rjs'));
         ReactDOM.render(t(Map), document.getElementById('map-rjs'));
 
         if (!map_enabled) {
