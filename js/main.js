@@ -51,6 +51,73 @@
         }
     });
 
+    var Dungeon = createReactClass({
+        render: function() {
+            var name = this.props.name,
+                dungeon = dungeons[name];
+            return [
+                div('.boss', {
+                    className: classNames(name, { defeated: dungeon.completed }),
+                    onClick: this.onBossClick
+                }),
+                div('.prize', {
+                    className: 'prize-'+dungeon.prize,
+                    onClick: this.onPrizeClick
+                })
+            ];
+        },
+
+        onBossClick: function() {
+            var name = this.props.name,
+                value = !dungeons[name].completed;
+
+            update_dungeon(name, 'completed', value);
+
+            this.forceUpdate();
+            model_changed();
+        },
+
+        onPrizeClick: function() {
+            var name = this.props.name,
+                value = counter(dungeons[name].prize, 1, 4);
+
+            update_dungeon(name, 'prize', value);
+
+            this.forceUpdate();
+            model_changed();
+        }
+    });
+
+    var WithMedallion = function(Wrapped) {
+        return createReactClass({
+            render: function() {
+                var name = this.props.name,
+                    dungeon = dungeons[name];
+                return [
+                    t(Wrapped, this.props),
+                    div('.medallion', {
+                        className: 'medallion-'+dungeon.medallion,
+                        onClick: this.onMedallionClick
+                    })
+                ];
+            },
+
+            onMedallionClick: function() {
+                var name = this.props.name,
+                    value = counter(dungeons[name].medallion, 1, 3);
+
+                update_dungeon(name, 'medallion', value);
+                // Change the mouseover text on the map
+                dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
+
+                this.forceUpdate();
+                model_changed();
+            }
+        });
+    };
+
+    var DungeonWithMedallion = WithMedallion(Dungeon);
+
     var TrackerChest = createReactClass({
         render: function() {
             var name = this.props.name,
@@ -279,49 +346,6 @@
     window.mode = query.mode;
     window.map_enabled = query.map;
 
-    function toggle_boss(target) {
-        var name = dungeon_name(target.classList),
-            value = !dungeons[name].completed;
-
-        update_dungeon(name, 'completed', value);
-        target.classList[value ? 'add' : 'remove']('defeated');
-
-        if (map_enabled)
-            model_changed();
-    }
-
-    function toggle_prize(target) {
-        var name = dungeon_name(target.classList),
-            value = counter(dungeons[name].prize, 1, 4);
-
-        update_dungeon(name, 'prize', value);
-        target.className = classNames('prize', 'prize-'+value, name);
-
-        if (map_enabled)
-            model_changed();
-    }
-
-    function toggle_medallion(target) {
-        var name = dungeon_name(target.classList),
-            value = counter(dungeons[name].medallion, 1, 3);
-
-        update_dungeon(name, 'medallion', value);
-        target.className = classNames('medallion', 'medallion-'+value, name);
-
-        if (map_enabled) {
-            model_changed();
-            // Change the mouseover text on the map
-            dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
-        }
-    }
-
-    function dungeon_name(class_list) {
-        var terms = ['boss', 'prize', 'medallion', 'defeated'];
-        return Array.from(class_list).filter(function(x) {
-            return !(terms.includes(x) || x.match(/^(chest|prize|medallion)-?/));
-        })[0];
-    }
-
     function update_dungeon(name, key, value) {
         dungeons = Object.assign({}, dungeons);
         dungeons[name] = create(dungeons[name].__proto__, dungeons[name]);
@@ -332,17 +356,14 @@
         var names = ['eastern', 'desert', 'hera', 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle'];
         ReactDOM.render(t(Avatar), document.getElementById('avatar-rjs'));
         ReactDOM.render(t(ItemGrid), document.getElementById('item-grid-rjs'));
+        document.querySelectorAll('.dungeon-rjs').forEach(function(target, i) {
+            var Component = ['mire', 'turtle'].includes(names[i]) ? DungeonWithMedallion : Dungeon;
+            ReactDOM.render(t(Component, { name: names[i] }), target);
+        });
         document.querySelectorAll('.chest-rjs').forEach(function(target, i) {
             ReactDOM.render(t(TrackerChest, { name: names[i] }), target);
         });
         ReactDOM.render(t(Map), document.getElementById('map-rjs'));
-
-        document.getElementById('tracker').addEventListener('click', function(event) {
-            var target = event.target;
-            if (target.classList.contains('boss')) toggle_boss(target);
-            if (target.classList.contains('prize')) toggle_prize(target);
-            if (target.classList.contains('medallion')) toggle_medallion(target);
-        });
 
         if (!map_enabled) {
             document.getElementById('app').classList.add('mapless');
