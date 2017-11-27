@@ -25,10 +25,6 @@
     }
 
     var MapChest = createReactClass({
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-        handle_change: function() { this.forceUpdate(); },
-
         render: function() {
             var name = this.props.name,
                 onHighlight = this.props.onHighlight,
@@ -56,10 +52,6 @@
     });
 
     var MapEncounter = createReactClass({
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-        handle_change: function() { this.forceUpdate(); },
-
         render: function() {
             var name = this.props.name,
                 onHighlight = this.props.onHighlight,
@@ -86,10 +78,6 @@
     });
 
     var MapDungeon = createReactClass({
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-        handle_change: function() { this.forceUpdate(); },
-
         render: function() {
             var name = this.props.name,
                 onHighlight = this.props.onHighlight,
@@ -143,6 +131,10 @@
         getInitialState: function() {
             return { caption: null };
         },
+
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+        handle_change: function() { this.forceUpdate(); },
 
         render: function() {
             var change_caption = this.change_caption;
