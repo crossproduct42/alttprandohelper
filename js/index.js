@@ -25,7 +25,9 @@
             map = get_radio_configuration('map') === 'yes',
             gomode = get_radio_configuration('gomode'),
             width = map ? 1340 : 448,
-            height = gomode ? 548 : 448;
+            height = (gomode !== "no") ? 548 : 448;
+        console.log(gomode)
+        console.log(height)
 
         open('tracker.html?mode={mode}{map}&gomode={gomode}'
                 .replace('{mode}', mode)
