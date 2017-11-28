@@ -12,12 +12,18 @@ body {
 .row:after { clear: both; }
 .cell { position: relative; float: left; }
 
-#app { width: 1340px; height: 448px; }
+#app { width: 1340px; height: 548px; }
 #app.mapless { width: 448px; }
+
+span.caption { color: white; font-weight: bold; font-size: 20px; }
+span.caption.go { color: red; }
 
 #tracker .item,
 #tracker .boss,
 #tracker [id^="chest"] { width: 64px; height: 64px; }
+
+#gomode .item { width: 64px; height: 64px; background-size: 64px 64px; }
+#gomode .combination { width: 32px; height: 32px; background-size: 32px 32px; }
 
 #tracker .tunic { width: 128px; height: 128px; }
 #tracker .sword { position: absolute; top: 0; right: 0; }
@@ -32,6 +38,7 @@ body {
 
 #tracker .item,
 #tracker .boss { opacity: .25; }
+#gomode .item,
 #tracker .item[class*="active"],
 #tracker .boss.defeated { opacity: 1; }
 
