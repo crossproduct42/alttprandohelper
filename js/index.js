@@ -10,17 +10,33 @@
         };
     }
 
-    function launch_tracker() {
-        var mode = this.getAttribute('data-mode'),
-            map = this.getAttribute('data-map') === 'yes',
-            width = map ? 1340 : 448;
+    function get_radio_configuration(name) {
+        var radios = document.getElementsByName(name)
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                return radios[i].value;
+            }
+        }
 
-        open('tracker.html?mode={mode}{map}'
+    }
+
+    function launch_tracker() {
+        var mode = get_radio_configuration('mode'),
+            map = get_radio_configuration('map') === 'yes',
+            gomode = get_radio_configuration('gomode'),
+            width = map ? 1340 : 448,
+            height = (gomode !== "no") ? 548 : 448;
+        console.log(gomode)
+        console.log(height)
+
+        open('tracker.html?mode={mode}{map}&gomode={gomode}'
                 .replace('{mode}', mode)
-                .replace('{map}', map ? '&map' : ''),
+                .replace('{map}', map ? '&map' : '')
+                .replace('{gomode}', gomode),
             '',
-            'width={width},height=448,titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
-                .replace('{width}', width));
+            'width={width},height={height},titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
+                .replace('{width}', width)
+                .replace('{height}', height));
         setTimeout('window.close()', 5000);
     }
 

@@ -1,29 +1,39 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>launching ALttP tracker</title>
   <script src="js/index.js"></script>
   <style>
   body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-  label { width: 5em; display: inline-block; }
-  div { margin: 5px 0; }
+  label { width: 15em; display: inline-block; }
+  label.radio { width: 10em; }
+  div, form { margin: 5px 0; }
   </style>
 </head>
 <body>
-
-  <div>
-    <label>Standard</label>
-    <button type="button" class="launch" data-mode="standard" data-map="no">Without map</button>
-    <button type="button" class="launch" data-mode="standard" data-map="yes">With map</button>
-  </div>
-
-  <div>
-    <label>Open</label>
-    <button type="button" class="launch" data-mode="open" data-map="no">Without map</button>
-    <button type="button" class="launch" data-mode="open" data-map="yes">With map</button>
-  </div>
-
+  <form id="configuration">
+    <h2>Configuration</h2>
+    <div>
+      <label>Game mode</label>
+      <input id="standard" type="radio" name="mode" value="standard" checked /><label class="radio" for="standard">Standard</label>
+      <input id="open" type="radio" name="mode" value="open" /><label class="radio" for="open">Open</label>
+    </div>
+    <div>
+      <label>Show map</label>
+      <input id="nomap" type="radio" name="map" value="no" checked /><label class="radio" for="nomap">No</label>
+      <input id="map" type="radio" name="map" value="yes" /><label class="radio" for="map">Yes</label>
+    </div>
+    <div>
+      <label>Show gomode indicators</label>
+      <input id="nogomode" type="radio" name="gomode" value="no" checked /><label class="radio" for="nogomode">Hide</label>
+      <input id="gomode-n" type="radio" name="gomode" value="ng" /><label class="radio" for="gomode-n">No glitches</label>
+      <input id="gomode-m" type="radio" name="gomode" value="mg" /><label class="radio" for="gomode-m">Minor glitches</label>
+    </div>
+    <div>
+      <button type="button" class="launch">Start</button>
+    </div>
+  </form>
   <script>start()</script>
 
 </body>
