@@ -107,8 +107,6 @@
                     value = counter(dungeons[name].medallion, 1, 3);
 
                 update_dungeon(name, 'medallion', value);
-                // Change the mouseover text on the map
-                dungeons[name].caption = dungeons[name].caption.replace(/\{medallion\d+\}/, '{medallion'+value+'}');
 
                 this.forceUpdate();
                 model_changed();
@@ -240,8 +238,11 @@
             },
 
             onHighlight: function(highlighted) {
-                var name = this.props.name;
-                this.props.change_caption(highlighted ? source(name).caption : null);
+                var name = this.props.name,
+                    location = source(name);
+                this.props.change_caption(highlighted ?
+                    typeof location.caption === 'function' ? location.caption() : location.caption :
+                    null);
                 this.setState({ highlighted: highlighted });
             }
         })

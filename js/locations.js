@@ -122,7 +122,7 @@
             }
         },
         mire: {
-            caption: 'Misery Mire {medallion0}{lantern}',
+            caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
             chest_limit: 2,
             is_completable: function() {
                 if (!items.has_melee_bow()) return 'unavailable';
@@ -148,7 +148,7 @@
             }
         },
         turtle: {
-            caption: 'Turtle Rock {medallion0}{lantern}',
+            caption: medallion_caption('Turtle Rock {medallion}{lantern}', 'turtle'),
             chest_limit: 5,
             is_completable: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
@@ -277,7 +277,7 @@
             }
         },
         mimic: {
-            caption: 'Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion0} unkown OR possible w/out {firerod})',
+            caption: medallion_caption('Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion} unkown OR possible w/out {firerod})', 'turtle'),
             is_available: function() {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
                 var state = items.medallion_check(dungeons['turtle'].medallion);
@@ -607,6 +607,13 @@
             }
         }
     };
+
+    function medallion_caption(caption, name) {
+        return function() {
+            var value = dungeons[name].medallion;
+            return caption.replace('{medallion}', '{medallion'+value+'}');
+        };
+    }
 
     if (uri_query().mode === 'standard') {
         Object.assign(chests, {
