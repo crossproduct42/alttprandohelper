@@ -377,15 +377,11 @@
         }
     });
 
-    var query = uri_query();
-    window.mode = query.mode;
-    window.map_enabled = query.map;
-
     window.start = function() {
         ReactDOM.render(t(Tracker), document.getElementById('tracker-rjs'));
         ReactDOM.render(t(Map), document.getElementById('map-rjs'));
 
-        if (!map_enabled) {
+        if (!uri_query().map) {
             document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
         }
@@ -393,9 +389,5 @@
 
     function as_location(s) {
         return s.replace(/_/, '-');
-    }
-
-    function as_identifier(s) {
-        return s.replace(/^\./, '').replace(/-/, '_');
     }
 }(window));
