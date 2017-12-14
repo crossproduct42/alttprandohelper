@@ -17,11 +17,10 @@
 
         onClick: function() {
             var name = this.props.name,
-                is_toggle = typeof items[name] === 'boolean',
-                value = is_toggle ? !items[name] : items.inc(name);
+                is_toggle = typeof items[name] === 'boolean';
 
-            items = create(items.__proto__, items);
-            items[name] = value;
+            items = update(items, is_toggle ? { $toggle: [name] } :
+                at(name, { $set: items.inc(name) }));
 
             this.forceUpdate();
             model_changed();
@@ -44,8 +43,7 @@
         onClick: function() {
             var value = items.inc('tunic');
 
-            items = create(items.__proto__, items);
-            items.tunic = value;
+            items = update(items, { tunic: { $set: value } });
 
             model_changed();
         }
@@ -71,7 +69,7 @@
             var name = this.props.name,
                 value = !dungeons[name].completed;
 
-            update_dungeon(name, 'completed', value);
+            dungeons = update(dungeons, at(name, { completed: { $set: value } }));
 
             this.forceUpdate();
             model_changed();
@@ -81,7 +79,7 @@
             var name = this.props.name,
                 value = counter(dungeons[name].prize, 1, 4);
 
-            update_dungeon(name, 'prize', value);
+            dungeons = update(dungeons, at(name, { prize: { $set: value } }));
 
             this.forceUpdate();
             model_changed();
@@ -106,7 +104,7 @@
                 var name = this.props.name,
                     value = counter(dungeons[name].medallion, 1, 3);
 
-                update_dungeon(name, 'medallion', value);
+                dungeons = update(dungeons, at(name, { medallion: { $set: value } }));
 
                 this.forceUpdate();
                 model_changed();
@@ -131,7 +129,7 @@
                 dungeon = dungeons[name],
                 value = counter(dungeon.chests, -1, dungeon.chest_limit);
 
-            update_dungeon(name, 'chests', value);
+            dungeons = update(dungeons, at(name, { chests: { $set: value } }));
 
             this.forceUpdate();
             model_changed();
@@ -268,9 +266,7 @@
 
         handle_click: function() {
             var name = this.props.name;
-            chests = Object.assign({}, chests);
-            chests[name] = create(chests[name].__proto__, chests[name]);
-            chests[name].marked = !chests[name].marked;
+            chests = update(chests, at(name, { $toggle: ['marked'] }));
             this.forceUpdate();
         }
     });
@@ -384,12 +380,6 @@
     var query = uri_query();
     window.mode = query.mode;
     window.map_enabled = query.map;
-
-    function update_dungeon(name, key, value) {
-        dungeons = Object.assign({}, dungeons);
-        dungeons[name] = create(dungeons[name].__proto__, dungeons[name]);
-        dungeons[name][key] = value;
-    }
 
     window.start = function() {
         ReactDOM.render(t(Tracker), document.getElementById('tracker-rjs'));

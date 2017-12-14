@@ -615,37 +615,45 @@
         };
     }
 
-    if (uri_query().mode === 'standard') {
-        Object.assign(chests, {
-            link_house: Object.assign(chests.link_house, { marked: true }),
-            secret: Object.assign(chests.secret, { marked: true }),
-            castle: Object.assign(chests.castle, { marked: true }),
-            escape_dark: Object.assign(chests.escape_dark, {
-                marked: true,
-                is_available: always
-            }),
-            escape_side: Object.assign(chests.escape_side, {
-                caption: 'Escape Sewer Side Room (3) {bomb}/{boots}',
-                is_available: always
-            }),
-            sanctuary: Object.assign(chests.sanctuary, { marked: true })
-        });
-    }
+    Object.keys(chests).forEach(function(name) {
+        chests[name] = create(chests[name], { marked: false });
+    });
 
     Object.keys(dungeons).forEach(function(name) {
-        var dungeon = create(dungeons[name]);
-        dungeons[name] = Object.assign(dungeon, {
-                chests: dungeon.chest_limit,
-                prize: 0,
-                completed: false
-            },
-            ['mire', 'turtle'].includes(name) ? { medallion: 0 } : null);
+        dungeons[name] = create(dungeons[name]);
     });
 
-    Object.keys(chests).forEach(function(name) {
-        chests[name] = create(chests[name], { marked: chests[name].marked || false });
+    dungeons = update(dungeons, {
+        eastern:  { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        desert:   { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        hera:     { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        darkness: { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        swamp:    { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        skull:    { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        thieves:  { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        ice:      { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
+        mire:     { $apply: dungeon_chests, $merge: { completed: false, prize: 0, medallion: 0 } },
+        turtle:   { $apply: dungeon_chests, $merge: { completed: false, prize: 0, medallion: 0 } },
     });
 
-    window.chests = chests;
+    function dungeon_chests(dungeon) {
+        return update(dungeon, { $merge: { chests: dungeon.chest_limit } });
+    }
 
+    window.chests = uri_query().mode === 'standard' ?
+        update(chests, {
+            link_house: { $merge: { marked: true } },
+            secret: { $merge: { marked: true } },
+            castle: { $merge: { marked: true } },
+            escape_dark: { $merge: {
+                marked: true,
+                is_available: always
+            } },
+            escape_side: { $merge: {
+                caption: 'Escape Sewer Side Room (3) {bomb}/{boots}',
+                is_available: always
+            } },
+            sanctuary: { $merge: { marked: true } }
+        }) :
+        chests;
 }(window));

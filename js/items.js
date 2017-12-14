@@ -1,7 +1,7 @@
 (function(window) {
     'use strict';
 
-    var items_base = {
+    var items = {
         has_melee: function() { return this.sword || this.hammer; },
         has_bow: function() { return this.bow > 1; },
         has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
@@ -33,7 +33,15 @@
         })
     };
 
-    var items = {
+    function counters(delta, limits) {
+        return function(item) {
+            var max = limits[item].max,
+                min = limits[item].min;
+            return counter(this[item], delta, max, min);
+        };
+    };
+
+    var open_items = {
         tunic: 1,
         sword: 0,
         shield: 0,
@@ -70,16 +78,10 @@
         agahnim: false
     };
 
-    if (uri_query().mode === 'standard') Object.assign(items, { sword: 1 });
+    items = create(items, open_items);
 
-    window.items = create(items_base, items);
-
-    function counters(delta, limits) {
-        return function(item) {
-            var max = limits[item].max,
-                min = limits[item].min;
-            return counter(this[item], delta, max, min);
-        };
-    };
+    window.items = uri_query().mode === 'standard' ?
+        update(items, { sword: { $set: 1 } }) :
+        items;
 
 }(window));

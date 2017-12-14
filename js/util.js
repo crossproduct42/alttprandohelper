@@ -3,6 +3,10 @@
 
     var slice = Array.prototype.slice;
 
+    window.at = function(key, value) {
+        return function(o) { return o[key] = value, o; }({});
+    };
+
     window.announcer = function() {
         var listeners = [],
             methods = {};
