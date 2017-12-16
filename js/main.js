@@ -3,222 +3,203 @@
 
     var model_changed = announcer();
 
-    var Item = createReactClass({
-        render: function() {
-            var name = this.props.name,
-                value = items[name];
-            return div('.item', {
-                className: classNames(name,
-                    value === true ? 'active' :
-                    value > 0 ? 'active-'+value : null),
-                onClick: this.onClick
-            });
-        },
+    var Item = function(props) {
+        var name = props.name,
+            value = items[name];
+        return div('.item', {
+            className: classNames(name,
+                value === true ? 'active' :
+                value > 0 ? 'active-'+value : null),
+            onClick: function() { props.onClick(name); }
+        });
+    };
 
-        onClick: function() {
-            var name = this.props.name,
-                is_toggle = typeof items[name] === 'boolean';
+    var TunicItem = function(props) {
+        var value = items.tunic;
+        return div('.item.tunic', {
+            className: classNames('active-'+value, { bunny: !items.moonpearl }),
+            onClick: function() { props.onClick('tunic'); }
+        });
+    };
 
-            items = update(items, is_toggle ? { $toggle: [name] } :
-                at(name, { $set: items.inc(name) }));
-
-            this.forceUpdate();
-            model_changed();
-        }
-    });
-
-    var TunicItem = createReactClass({
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-        handle_change: function() { this.forceUpdate(); },
-
-        render: function() {
-            var value = items.tunic;
-            return div('.item.tunic', {
-                className: classNames('active-'+value, { bunny: !items.moonpearl }),
-                onClick: this.onClick
-            });
-        },
-
-        onClick: function() {
-            var value = items.inc('tunic');
-
-            items = update(items, { tunic: { $set: value } });
-
-            model_changed();
-        }
-    });
-
-    var Dungeon = createReactClass({
-        render: function() {
-            var name = this.props.name,
-                dungeon = dungeons[name];
-            return [
-                div('.boss', {
-                    className: classNames(name, { defeated: dungeon.completed }),
-                    onClick: this.onBossClick
-                }),
-                div('.prize', {
-                    className: 'prize-'+dungeon.prize,
-                    onClick: this.onPrizeClick
-                })
-            ];
-        },
-
-        onBossClick: function() {
-            var name = this.props.name,
-                value = !dungeons[name].completed;
-
-            dungeons = update(dungeons, at(name, { completed: { $set: value } }));
-
-            this.forceUpdate();
-            model_changed();
-        },
-
-        onPrizeClick: function() {
-            var name = this.props.name,
-                value = counter(dungeons[name].prize, 1, 4);
-
-            dungeons = update(dungeons, at(name, { prize: { $set: value } }));
-
-            this.forceUpdate();
-            model_changed();
-        }
-    });
+    var Dungeon = function(props) {
+        var name = props.name,
+            dungeon = dungeons[name];
+        return [
+            div('.boss', {
+                className: classNames(name, { defeated: dungeon.completed }),
+                onClick: function() { props.onBossClick(name); }
+            }),
+            div('.prize', {
+                className: 'prize-'+dungeon.prize,
+                onClick: function() { props.onPrizeClick(name); }
+            })
+        ];
+    };
 
     var WithMedallion = function(Wrapped) {
-        return createReactClass({
-            render: function() {
-                var name = this.props.name,
-                    dungeon = dungeons[name];
-                return [
-                    t(Wrapped, this.props),
-                    div('.medallion', {
-                        className: 'medallion-'+dungeon.medallion,
-                        onClick: this.onMedallionClick
-                    })
-                ];
-            },
-
-            onMedallionClick: function() {
-                var name = this.props.name,
-                    value = counter(dungeons[name].medallion, 1, 3);
-
-                dungeons = update(dungeons, at(name, { medallion: { $set: value } }));
-
-                this.forceUpdate();
-                model_changed();
-            }
-        });
+        return function(props) {
+            var name = props.name,
+                dungeon = dungeons[name];
+            return [
+                t(Wrapped, props),
+                div('.medallion', {
+                    className: 'medallion-'+dungeon.medallion,
+                    onClick: function() { props.onMedallionClick(name); }
+                })
+            ];
+        };
     };
 
     var DungeonWithMedallion = WithMedallion(Dungeon);
 
-    var TrackerChest = createReactClass({
-        render: function() {
-            var name = this.props.name,
-                value = dungeons[name].chests;
-            return div('.chest', {
-                className: classNames('chest-'+value),
-                onClick: this.onClick
-            });
-        },
-
-        onClick: function() {
-            var name = this.props.name,
-                dungeon = dungeons[name],
-                value = counter(dungeon.chests, -1, dungeon.chest_limit);
-
-            dungeons = update(dungeons, at(name, { chests: { $set: value } }));
-
-            this.forceUpdate();
-            model_changed();
-        }
-    });
+    var TrackerChest = function(props) {
+        var name = props.name,
+            value = dungeons[name].chests;
+        return div('.chest', {
+            className: 'chest-'+value,
+            onClick: function() { props.onClick(name); }
+        });
+    };
 
     var Tracker = createReactClass({
+        componentDidMount: function() { model_changed.on(this.handle_change); },
+        componentWillUnmount: function() { model_changed.off(this.handle_change); },
+        handle_change: function() { this.forceUpdate(); },
+
         render: function() {
             return div('#tracker.cell',
                 div('.row',
                     div('.cell',
                         div('.row',
                             div('.cell',
-                                t(TunicItem),
-                                t(Item, { name: 'sword' }),
-                                t(Item, { name: 'shield' }),
-                                t(Item, { name: 'moonpearl' }),
+                                this.tunic(),
+                                this.item('sword'),
+                                this.item('shield'),
+                                this.item('moonpearl'),
                             )
                         ),
                         div('.row',
-                            div('.cell', t(Dungeon, { name: 'eastern' })),
-                            div('.cell', t(TrackerChest, { name: 'eastern' }))
+                            div('.cell', this.dungeon('eastern')),
+                            div('.cell', this.chest('eastern'))
                         ),
                         div('.row',
-                            div('.cell', t(Dungeon, { name: 'desert' })),
-                            div('.cell', t(TrackerChest, { name: 'desert' }))
+                            div('.cell', this.dungeon('desert')),
+                            div('.cell', this.chest('desert'))
                         ),
                         div('.row',
-                            div('.cell', t(Dungeon, { name: 'hera' })),
-                            div('.cell', t(TrackerChest, { name: 'hera' }))
+                            div('.cell', this.dungeon('hera')),
+                            div('.cell', this.chest('hera'))
                         )
                     ),
                     div('.cell',
                         div('.row',
-                            div('.cell', t(Item, { name: 'bow' })),
-                            div('.cell', t(Item, { name: 'boomerang' })),
-                            div('.cell', t(Item, { name: 'hookshot' })),
-                            div('.cell', t(Item, { name: 'mushroom' })),
-                            div('.cell', t(Item, { name: 'powder' }))
+                            div('.cell', this.item('bow')),
+                            div('.cell', this.item('boomerang')),
+                            div('.cell', this.item('hookshot')),
+                            div('.cell', this.item('mushroom')),
+                            div('.cell', this.item('powder'))
                         ),
                         div('.row',
-                            div('.cell', t(Item, { name: 'firerod' })),
-                            div('.cell', t(Item, { name: 'icerod' })),
-                            div('.cell', t(Item, { name: 'bombos' })),
-                            div('.cell', t(Item, { name: 'ether' })),
-                            div('.cell', t(Item, { name: 'quake' }))
+                            div('.cell', this.item('firerod')),
+                            div('.cell', this.item('icerod')),
+                            div('.cell', this.item('bombos')),
+                            div('.cell', this.item('ether')),
+                            div('.cell', this.item('quake'))
                         ),
                         div('.row',
-                            div('.cell', t(Item, { name: 'lantern' })),
-                            div('.cell', t(Item, { name: 'hammer' })),
-                            div('.cell', t(Item, { name: 'shovel' })),
-                            div('.cell', t(Item, { name: 'net' })),
-                            div('.cell', t(Item, { name: 'book' }))
+                            div('.cell', this.item('lantern')),
+                            div('.cell', this.item('hammer')),
+                            div('.cell', this.item('shovel')),
+                            div('.cell', this.item('net')),
+                            div('.cell', this.item('book'))
                         ),
                         div('.row',
-                            div('.cell', t(Item, { name: 'bottle' })),
-                            div('.cell', t(Item, { name: 'somaria' })),
-                            div('.cell', t(Item, { name: 'byrna' })),
-                            div('.cell', t(Item, { name: 'cape' })),
-                            div('.cell', t(Item, { name: 'mirror' }))
+                            div('.cell', this.item('bottle')),
+                            div('.cell', this.item('somaria')),
+                            div('.cell', this.item('byrna')),
+                            div('.cell', this.item('cape')),
+                            div('.cell', this.item('mirror'))
                         ),
                         div('.row',
-                            div('.cell', t(Item, { name: 'boots' })),
-                            div('.cell', t(Item, { name: 'glove' })),
-                            div('.cell', t(Item, { name: 'flippers' })),
-                            div('.cell', t(Item, { name: 'flute' })),
-                            div('.cell', t(Item, { name: 'agahnim' }))
+                            div('.cell', this.item('boots')),
+                            div('.cell', this.item('glove')),
+                            div('.cell', this.item('flippers')),
+                            div('.cell', this.item('flute')),
+                            div('.cell', this.item('agahnim'))
                         )
                     )
                 ),
                 div('.row',
-                    div('.cell', t(Dungeon, { name: 'darkness' })),
-                    div('.cell', t(Dungeon, { name: 'swamp' })),
-                    div('.cell', t(Dungeon, { name: 'skull' })),
-                    div('.cell', t(Dungeon, { name: 'thieves' })),
-                    div('.cell', t(Dungeon, { name: 'ice' })),
-                    div('.cell', t(DungeonWithMedallion, { name: 'mire' })),
-                    div('.cell', t(DungeonWithMedallion, { name: 'turtle' }))
+                    div('.cell', this.dungeon('darkness')),
+                    div('.cell', this.dungeon('swamp')),
+                    div('.cell', this.dungeon('skull')),
+                    div('.cell', this.dungeon('thieves')),
+                    div('.cell', this.dungeon('ice')),
+                    div('.cell', this.medallion_dungeon('mire')),
+                    div('.cell', this.medallion_dungeon('turtle'))
                 ),
                 div('.row',
-                    div('.cell', t(TrackerChest, { name: 'darkness' })),
-                    div('.cell', t(TrackerChest, { name: 'swamp' })),
-                    div('.cell', t(TrackerChest, { name: 'skull' })),
-                    div('.cell', t(TrackerChest, { name: 'thieves' })),
-                    div('.cell', t(TrackerChest, { name: 'ice' })),
-                    div('.cell', t(TrackerChest, { name: 'mire' })),
-                    div('.cell', t(TrackerChest, { name: 'turtle' }))
+                    div('.cell', this.chest('darkness')),
+                    div('.cell', this.chest('swamp')),
+                    div('.cell', this.chest('skull')),
+                    div('.cell', this.chest('thieves')),
+                    div('.cell', this.chest('ice')),
+                    div('.cell', this.chest('mire')),
+                    div('.cell', this.chest('turtle'))
                 )
             );
+        },
+
+        tunic: function() {
+            return t(TunicItem, { onClick: this.item_click });
+        },
+
+        item: function(name) {
+            return t(Item, { name: name, onClick: this.item_click });
+        },
+
+        dungeon: function(name) {
+            return t(Dungeon, { name: name, onBossClick: this.boss_click, onPrizeClick: this.prize_click });
+        },
+
+        medallion_dungeon: function(name) {
+            return t(DungeonWithMedallion, { name: name, onBossClick: this.boss_click,
+                onPrizeClick: this.prize_click, onMedallionClick: this.medallion_click });
+        },
+
+        chest: function(name) {
+            return t(TrackerChest, { name: name, onClick: this.chest_click });
+        },
+
+        item_click: function(name) {
+            items = update(items, typeof items[name] === 'boolean' ?
+                { $toggle: [name] } :
+                at(name, { $set: items.inc(name) }));
+            model_changed();
+        },
+
+        boss_click: function(name) {
+            dungeons = update(dungeons, at(name, { $toggle: ['completed'] }));
+            model_changed();
+        },
+
+        prize_click: function(name) {
+            var value = counter(dungeons[name].prize, 1, 4);
+            dungeons = update(dungeons, at(name, { prize: { $set: value } }));
+            model_changed();
+        },
+
+        medallion_click: function(name) {
+            var value = counter(dungeons[name].medallion, 1, 3);
+            dungeons = update(dungeons, at(name, { medallion: { $set: value } }));
+            model_changed();
+        },
+
+        chest_click: function(name) {
+            var value = counter(dungeons[name].chests, -1, dungeons[name].chest_limit);
+            dungeons = update(dungeons, at(name, { chests: { $set: value } }));
+            model_changed();
         }
     });
 
@@ -377,14 +358,18 @@
         }
     });
 
-    window.start = function() {
-        ReactDOM.render(t(Tracker), document.getElementById('tracker-rjs'));
-        ReactDOM.render(t(Map), document.getElementById('map-rjs'));
-
-        if (!uri_query().map) {
-            document.getElementById('app').classList.add('mapless');
-            document.getElementById('map').style.display = 'none';
+    var App = createReactClass({
+        render: function() {
+            var map = this.props.map;
+            return div('#page.row', { className: classNames({ mapless: !map }) },
+                t(Tracker),
+                map && t(Map));
         }
+    });
+
+    window.start = function() {
+        var map = uri_query().map;
+        ReactDOM.render(t(App, { map: map }), document.getElementById('app'));
     };
 
     function as_location(s) {

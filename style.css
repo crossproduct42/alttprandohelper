@@ -12,8 +12,8 @@ body {
 .row:after { clear: both; }
 .cell { position: relative; float: left; }
 
-#app { width: 1340px; height: 448px; }
-#app.mapless { width: 448px; }
+#page { width: 1340px; height: 448px; }
+#page.mapless { width: 448px; }
 
 #tracker .item,
 #tracker .boss,
