@@ -1,6 +1,8 @@
 (function(window) {
     'use strict';
 
+    var slice = Array.prototype.slice;
+
     var Item = function(props) {
         var name = props.name,
             value = props.value;
@@ -64,86 +66,70 @@
     var Tracker = createReactClass({
         render: function() {
             return div('#tracker.cell',
-                div('.row',
-                    div('.cell',
-                        div('.row',
-                            div('.cell',
-                                this.tunic(),
-                                this.item('sword'),
-                                this.item('shield'),
-                                this.item('moonpearl'),
-                            )
-                        ),
-                        div('.row',
-                            div('.cell', this.dungeon('eastern')),
-                            div('.cell', this.chest('eastern'))
-                        ),
-                        div('.row',
-                            div('.cell', this.dungeon('desert')),
-                            div('.cell', this.chest('desert'))
-                        ),
-                        div('.row',
-                            div('.cell', this.dungeon('hera')),
-                            div('.cell', this.chest('hera'))
-                        )
-                    ),
-                    div('.cell',
-                        div('.row',
-                            div('.cell', this.item('bow')),
-                            div('.cell', this.item('boomerang')),
-                            div('.cell', this.item('hookshot')),
-                            div('.cell', this.item('mushroom')),
-                            div('.cell', this.item('powder'))
-                        ),
-                        div('.row',
-                            div('.cell', this.item('firerod')),
-                            div('.cell', this.item('icerod')),
-                            div('.cell', this.item('bombos')),
-                            div('.cell', this.item('ether')),
-                            div('.cell', this.item('quake'))
-                        ),
-                        div('.row',
-                            div('.cell', this.item('lantern')),
-                            div('.cell', this.item('hammer')),
-                            div('.cell', this.item('shovel')),
-                            div('.cell', this.item('net')),
-                            div('.cell', this.item('book'))
-                        ),
-                        div('.row',
-                            div('.cell', this.item('bottle')),
-                            div('.cell', this.item('somaria')),
-                            div('.cell', this.item('byrna')),
-                            div('.cell', this.item('cape')),
-                            div('.cell', this.item('mirror'))
-                        ),
-                        div('.row',
-                            div('.cell', this.item('boots')),
-                            div('.cell', this.item('glove')),
-                            div('.cell', this.item('flippers')),
-                            div('.cell', this.item('flute')),
-                            div('.cell', this.item('agahnim'))
-                        )
-                    )
-                ),
-                div('.row',
-                    div('.cell', this.dungeon('darkness')),
-                    div('.cell', this.dungeon('swamp')),
-                    div('.cell', this.dungeon('skull')),
-                    div('.cell', this.dungeon('thieves')),
-                    div('.cell', this.dungeon('ice')),
-                    div('.cell', this.medallion_dungeon('mire')),
-                    div('.cell', this.medallion_dungeon('turtle'))
-                ),
-                div('.row',
-                    div('.cell', this.chest('darkness')),
-                    div('.cell', this.chest('swamp')),
-                    div('.cell', this.chest('skull')),
-                    div('.cell', this.chest('thieves')),
-                    div('.cell', this.chest('ice')),
-                    div('.cell', this.chest('mire')),
-                    div('.cell', this.chest('turtle'))
-                )
-            );
+                grid([
+                    grid([[
+                        this.tunic(),
+                        this.item('sword'),
+                        this.item('shield'),
+                        this.item('moonpearl'),
+                    ]], [
+                        this.dungeon('eastern'),
+                        this.chest('eastern')
+                    ], [
+                        this.dungeon('desert'),
+                        this.chest('desert')
+                    ], [
+                        this.dungeon('hera'),
+                        this.chest('hera')
+                    ]),
+                    grid([
+                        this.item('bow'),
+                        this.item('boomerang'),
+                        this.item('hookshot'),
+                        this.item('mushroom'),
+                        this.item('powder')
+                    ], [
+                        this.item('firerod'),
+                        this.item('icerod'),
+                        this.item('bombos'),
+                        this.item('ether'),
+                        this.item('quake')
+                    ], [
+                        this.item('lantern'),
+                        this.item('hammer'),
+                        this.item('shovel'),
+                        this.item('net'),
+                        this.item('book')
+                    ], [
+                        this.item('bottle'),
+                        this.item('somaria'),
+                        this.item('byrna'),
+                        this.item('cape'),
+                        this.item('mirror')
+                    ], [
+                        this.item('boots'),
+                        this.item('glove'),
+                        this.item('flippers'),
+                        this.item('flute'),
+                        this.item('agahnim')
+                    ])
+                ], [
+                    this.dungeon('darkness'),
+                    this.dungeon('swamp'),
+                    this.dungeon('skull'),
+                    this.dungeon('thieves'),
+                    this.dungeon('ice'),
+                    this.medallion_dungeon('mire'),
+                    this.medallion_dungeon('turtle')
+                ], [
+                    this.chest('darkness'),
+                    this.chest('swamp'),
+                    this.chest('skull'),
+                    this.chest('thieves'),
+                    this.chest('ice'),
+                    this.chest('mire'),
+                    this.chest('turtle')
+                ]));
         },
 
         tunic: function() {
@@ -175,6 +161,15 @@
             return t(TrackerChest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
         }
     });
+
+    function grid(rows) {
+        rows = slice.call(arguments);
+        return rows.map(function(row) {
+            return div('.row', row.map(function(cell) {
+                return div('.cell', cell);
+            }));
+        });
+    }
 
     function WithHighlight(Wrapped, source) {
         return createReactClass({
