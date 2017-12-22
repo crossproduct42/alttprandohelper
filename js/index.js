@@ -11,17 +11,24 @@
     }
 
     function launch_tracker() {
-        var mode = this.getAttribute('data-mode'),
-            map = this.getAttribute('data-map') === 'yes',
-            width = map ? 1340 : 448;
+        var params = {
+                mode: this.getAttribute('data-mode'),
+                map: this.getAttribute('data-map') === 'yes'
+            },
+            width = params.map ? 1340 : 448;
 
-        open('tracker.html?mode={mode}{map}'
-                .replace('{mode}', mode)
-                .replace('{map}', map ? '&map' : ''),
+        open('tracker.html?' + query(params),
             '',
             'width={width},height=448,titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
                 .replace('{width}', width));
         setTimeout('window.close()', 5000);
+    }
+
+    function query(params) {
+        return compact([
+            'mode='+params.mode,
+            params.map && 'map'
+        ]).join('&');
     }
 
     window.start = function() {
