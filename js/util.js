@@ -7,27 +7,6 @@
         return function(o) { return o[key] = value, o; }({});
     };
 
-    window.announcer = function() {
-        var listeners = [],
-            methods = {};
-
-        function announce() {
-            var args = slice.call(arguments);
-            listeners.forEach(function(f) { f.apply(null, args); });
-        };
-
-        methods.on = function(f) {
-            listeners.push(f);
-        };
-
-        methods.off = function(f) {
-            var index = listeners.findIndex(function(x) { return x === f; });
-            if (index >= 0) listeners.splice(index, 1);
-        };
-
-        return Object.assign(announce, methods);
-    };
-
     window.counter = function(value, delta, max, min) {
         min = min || 0;
         value += delta;

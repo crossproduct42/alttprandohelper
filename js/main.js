@@ -1,8 +1,6 @@
 (function(window) {
     'use strict';
 
-    var model_changed = announcer();
-
     var Item = function(props) {
         var name = props.name,
             value = props.value;
