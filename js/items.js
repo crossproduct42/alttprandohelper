@@ -41,7 +41,7 @@
         };
     };
 
-    var open_items = {
+    var open_items = create(items, {
         tunic: 1,
         sword: 0,
         shield: 0,
@@ -76,12 +76,11 @@
         flippers: false,
         flute: false,
         agahnim: false
+    });
+
+    var standard_items = update(open_items, { sword: { $set: 1 } });
+
+    window.item_model = function(mode) {
+        return { items: { standard: standard_items, open: open_items }[mode] };
     };
-
-    items = create(items, open_items);
-
-    window.items = uri_query().mode === 'standard' ?
-        update(items, { sword: { $set: 1 } }) :
-        items;
-
 }(window));

@@ -5,7 +5,7 @@
 
     var Item = function(props) {
         var name = props.name,
-            value = items[name];
+            value = props.value;
         return div('.item', {
             className: classNames(name,
                 value === true ? 'active' :
@@ -15,16 +15,17 @@
     };
 
     var TunicItem = function(props) {
-        var value = items.tunic;
+        var value = props.items.tunic,
+            has_pearl = props.items.moonpearl;
         return div('.item.tunic', {
-            className: classNames('active-'+value, { bunny: !items.moonpearl }),
+            className: classNames('active-'+value, { bunny: !has_pearl }),
             onClick: function() { props.onClick('tunic'); }
         });
     };
 
     var Dungeon = function(props) {
         var name = props.name,
-            dungeon = dungeons[name];
+            dungeon = props.value;
         return [
             div('.boss', {
                 className: classNames(name, { defeated: dungeon.completed }),
@@ -40,7 +41,7 @@
     var WithMedallion = function(Wrapped) {
         return function(props) {
             var name = props.name,
-                dungeon = dungeons[name];
+                dungeon = props.value;
             return [
                 t(Wrapped, props),
                 div('.medallion', {
@@ -55,18 +56,14 @@
 
     var TrackerChest = function(props) {
         var name = props.name,
-            value = dungeons[name].chests;
+            dungeon = props.value;
         return div('.chest', {
-            className: 'chest-'+value,
+            className: 'chest-'+dungeon.chests,
             onClick: function() { props.onClick(name); }
         });
     };
 
     var Tracker = createReactClass({
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-        handle_change: function() { this.forceUpdate(); },
-
         render: function() {
             return div('#tracker.cell',
                 div('.row',
@@ -152,54 +149,32 @@
         },
 
         tunic: function() {
-            return t(TunicItem, { onClick: this.item_click });
+            return t(TunicItem, { items: this.props.items, onClick: this.props.item_click });
         },
 
         item: function(name) {
-            return t(Item, { name: name, onClick: this.item_click });
+            return t(Item, { name: name, value: this.props.items[name], onClick: this.props.item_click });
         },
 
         dungeon: function(name) {
-            return t(Dungeon, { name: name, onBossClick: this.boss_click, onPrizeClick: this.prize_click });
+            return t(Dungeon, {
+                name: name,
+                value: this.props.dungeons[name],
+                onBossClick: this.props.boss_click,
+                onPrizeClick: this.props.prize_click });
         },
 
         medallion_dungeon: function(name) {
-            return t(DungeonWithMedallion, { name: name, onBossClick: this.boss_click,
-                onPrizeClick: this.prize_click, onMedallionClick: this.medallion_click });
+            return t(DungeonWithMedallion, {
+                name: name,
+                value: this.props.dungeons[name],
+                onBossClick: this.props.boss_click,
+                onPrizeClick: this.props.prize_click,
+                onMedallionClick: this.props.medallion_click });
         },
 
         chest: function(name) {
-            return t(TrackerChest, { name: name, onClick: this.chest_click });
-        },
-
-        item_click: function(name) {
-            items = update(items, typeof items[name] === 'boolean' ?
-                { $toggle: [name] } :
-                at(name, { $set: items.inc(name) }));
-            model_changed();
-        },
-
-        boss_click: function(name) {
-            dungeons = update(dungeons, at(name, { $toggle: ['completed'] }));
-            model_changed();
-        },
-
-        prize_click: function(name) {
-            var value = counter(dungeons[name].prize, 1, 4);
-            dungeons = update(dungeons, at(name, { prize: { $set: value } }));
-            model_changed();
-        },
-
-        medallion_click: function(name) {
-            var value = counter(dungeons[name].medallion, 1, 3);
-            dungeons = update(dungeons, at(name, { medallion: { $set: value } }));
-            model_changed();
-        },
-
-        chest_click: function(name) {
-            var value = counter(dungeons[name].chests, -1, dungeons[name].chest_limit);
-            dungeons = update(dungeons, at(name, { chests: { $set: value } }));
-            model_changed();
+            return t(TrackerChest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
         }
     });
 
@@ -218,97 +193,86 @@
 
             onHighlight: function(highlighted) {
                 var name = this.props.name,
-                    location = source(name);
+                    model = this.props.model,
+                    location = model[source][name];
                 this.props.change_caption(highlighted ?
-                    typeof location.caption === 'function' ? location.caption() : location.caption :
+                    typeof location.caption === 'function' ? location.caption(model) : location.caption :
                     null);
                 this.setState({ highlighted: highlighted });
             }
-        })
+        });
     }
 
-    var MapChest = createReactClass({
-        render: function() {
-            var name = this.props.name,
-                onHighlight = this.props.onHighlight,
-                marked = chests[name].marked;
-            return div('.chest', {
+    var MapChest = function(props) {
+        var name = props.name,
+            model = props.model,
+            chest = model.chests[name];
+        return div('.chest', {
+            className: classNames(
+                as_location(name),
+                chest.marked || chest.is_available(model.items, model), {
+                    marked: chest.marked,
+                    highlight: props.highlighted
+                }),
+            onClick: function() { props.onClick(name) },
+            onMouseOver: function() { props.onHighlight(true); },
+            onMouseOut: function() { props.onHighlight(false); }
+        });
+    };
+
+    var MapEncounter = function(props) {
+        var name = props.name,
+            model = props.model,
+            encounter = model.encounters[name],
+            completed = model.items[name];
+        return [
+            div('.boss', {
+                className: as_location(name),
+                onMouseOver: function() { props.onHighlight(true); },
+                onMouseOut: function() { props.onHighlight(false); }
+            }),
+            div('.encounter', {
                 className: classNames(
                     as_location(name),
-                    marked || chests[name].is_available(), {
-                        marked: marked,
-                        highlight: this.props.highlighted
+                    completed || encounter.is_completable(model.items, model), {
+                        marked: completed,
+                        highlight: props.highlighted
                     }),
-                onClick: this.handle_click,
-                onMouseOver: function() { onHighlight(true); },
-                onMouseOut: function() { onHighlight(false); }
-            });
-        },
+                onMouseOver: function() { props.onHighlight(true); },
+                onMouseOut: function() { props.onHighlight(false); }
+            })
+        ];
+    };
 
-        handle_click: function() {
-            var name = this.props.name;
-            chests = update(chests, at(name, { $toggle: ['marked'] }));
-            this.forceUpdate();
-        }
-    });
+    var MapDungeon = function(props) {
+        var name = props.name,
+            model = props.model,
+            dungeon = model.dungeons[name];
+        return [
+            div('.boss', {
+                className: classNames(
+                    as_location(name),
+                    dungeon.completed || dungeon.is_completable(model.items, model),
+                    { marked: dungeon.completed }),
+                onMouseOver: function() { props.onHighlight(true); },
+                onMouseOut: function() { props.onHighlight(false); }
+            }),
+            div('.dungeon', {
+                className: classNames(
+                    as_location(name),
+                    dungeon.chests === 0 || dungeon.is_progressable(model.items, model), {
+                        marked: dungeon.chests === 0,
+                        highlight: props.highlighted
+                    }),
+                onMouseOver: function() { props.onHighlight(true); },
+                onMouseOut: function() { props.onHighlight(false); }
+            })
+        ];
+    };
 
-    var MapEncounter = createReactClass({
-        render: function() {
-            var name = this.props.name,
-                onHighlight = this.props.onHighlight,
-                encounter = encounters[name],
-                completed = items[name];
-            return [
-                div('.boss', {
-                    className: as_location(name),
-                    onMouseOver: function() { onHighlight(true); },
-                    onMouseOut: function() { onHighlight(false); }
-                }),
-                div('.encounter', {
-                    className: classNames(
-                        as_location(name),
-                        completed || encounter.is_completable(), {
-                            marked: completed,
-                            highlight: this.props.highlighted
-                        }),
-                    onMouseOver: function() { onHighlight(true); },
-                    onMouseOut: function() { onHighlight(false); }
-                })
-            ];
-        }
-    });
-
-    var MapDungeon = createReactClass({
-        render: function() {
-            var name = this.props.name,
-                onHighlight = this.props.onHighlight,
-                dungeon = dungeons[name];
-            return [
-                div('.boss', {
-                    className: classNames(
-                        as_location(name),
-                        dungeon.completed || dungeon.is_completable(),
-                        { marked: dungeon.completed }),
-                    onMouseOver: function() { onHighlight(true); },
-                    onMouseOut: function() { onHighlight(false); }
-                }),
-                div('.dungeon', {
-                    className: classNames(
-                        as_location(name),
-                        dungeon.chests === 0 || dungeon.is_progressable(), {
-                            marked: dungeon.chests === 0,
-                            highlight: this.props.highlighted
-                        }),
-                    onMouseOver: function() { onHighlight(true); },
-                    onMouseOut: function() { onHighlight(false); }
-                })
-            ];
-        }
-    });
-
-    var MapChestWithHighlight = WithHighlight(MapChest, function(name) { return chests[name]; }),
-        MapEncounterWithHighlight = WithHighlight(MapEncounter, function(name) { return encounters[name]; }),
-        MapDungeonWithHighlight = WithHighlight(MapDungeon, function(name) { return dungeons[name]; });
+    var MapChestWithHighlight = WithHighlight(MapChest, 'chests'),
+        MapEncounterWithHighlight = WithHighlight(MapEncounter, 'encounters'),
+        MapDungeonWithHighlight = WithHighlight(MapDungeon, 'dungeons');
 
     var Caption = createReactClass({
         render: function() {
@@ -333,21 +297,19 @@
             return { caption: null };
         },
 
-        componentDidMount: function() { model_changed.on(this.handle_change); },
-        componentWillUnmount: function() { model_changed.off(this.handle_change); },
-        handle_change: function() { this.forceUpdate(); },
-
         render: function() {
-            var change_caption = this.change_caption;
+            var model = this.props,
+                chest_click = this.props.chest_click,
+                change_caption = this.change_caption;
             return div('#map.cell',
-                Object.keys(chests).map(function(name) {
-                    return t(MapChestWithHighlight, { name: name, change_caption: change_caption });
+                Object.keys(model.chests).map(function(name) {
+                    return t(MapChestWithHighlight, { name: name, model: model, onClick: chest_click, change_caption: change_caption });
                 }),
-                Object.keys(encounters).map(function(name) {
-                    return t(MapEncounterWithHighlight, { name: name, change_caption: change_caption });
+                Object.keys(model.encounters).map(function(name) {
+                    return t(MapEncounterWithHighlight, { name: name, model: model, change_caption: change_caption });
                 }),
-                Object.keys(dungeons).map(function(name) {
-                    return t(MapDungeonWithHighlight, { name: name, change_caption: change_caption });
+                Object.keys(model.dungeons).map(function(name) {
+                    return t(MapDungeonWithHighlight, { name: name, model: model, change_caption: change_caption });
                 }),
                 t(Caption, { text: this.state.caption })
             );
@@ -359,17 +321,59 @@
     });
 
     var App = createReactClass({
+        getInitialState: function() {
+            var mode = uri_query().mode;
+            return Object.assign(item_model(mode), location_model(mode));
+        },
+
         render: function() {
-            var map = this.props.map;
+            var map = uri_query().map;
             return div('#page.row', { className: classNames({ mapless: !map }) },
-                t(Tracker),
-                map && t(Map));
+                t(Tracker, Object.assign({
+                    item_click: this.item_click,
+                    boss_click: this.boss_click,
+                    prize_click: this.prize_click,
+                    medallion_click: this.medallion_click,
+                    chest_click: this.chest_click
+                }, this.state)),
+                map && t(Map, Object.assign({ chest_click: this.map_chest_click }, this.state)));
+        },
+
+        item_click: function(name) {
+            var items = this.state.items,
+                change = typeof items[name] === 'boolean' ?
+                    { $toggle: [name] } :
+                    at(name, { $set: items.inc(name) });
+            this.setState(update(this.state, { items: change }));
+        },
+
+        boss_click: function(name) {
+            this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
+        },
+
+        prize_click: function(name) {
+            var value = counter(this.state.dungeons[name].prize, 1, 4);
+            this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
+        },
+
+        medallion_click: function(name) {
+            var value = counter(this.state.dungeons[name].medallion, 1, 3);
+            this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
+        },
+
+        chest_click: function(name) {
+            var dungeon = this.state.dungeons[name],
+                value = counter(dungeon.chests, -1, dungeon.chest_limit);
+            this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
+        },
+
+        map_chest_click: function(name) {
+            this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
         }
     });
 
     window.start = function() {
-        var map = uri_query().map;
-        ReactDOM.render(t(App, { map: map }), document.getElementById('app'));
+        ReactDOM.render(t(App), document.getElementById('app'));
     };
 
     function as_location(s) {
