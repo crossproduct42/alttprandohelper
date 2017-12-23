@@ -1,3 +1,9 @@
+@import url('theme_christmas.css');
+@import url('theme_mega_man.css');
+@import url('theme_mega_man_x.css');
+@import url('theme_retro.css');
+@import url('theme_super_metroid.css');
+@import url('theme_vanilla.css');
 @import url('sprite.css');
 
 body {

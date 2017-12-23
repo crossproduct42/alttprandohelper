@@ -16,6 +16,7 @@
                 hmap: this.getAttribute('data-map') === 'hmap',
                 vmap: this.getAttribute('data-map') === 'vmap',
                 sprite: document.getElementById('sprite').value,
+                theme: document.getElementById('theme').value,
                 bg: document.getElementById('background-color').value ||
                     document.getElementById('custom-color').value
             },
@@ -40,6 +41,7 @@
             params.hmap && 'hmap',
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,
+            params.theme && 'theme='+params.theme,
             !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
         ]).join('&');
     }

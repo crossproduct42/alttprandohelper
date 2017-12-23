@@ -1,0 +1,25 @@
+.mega-man-x .moonpearl { background-image: url(images/themes/mega_man_x/items/moonpearl.png); }
+.mega-man-x .boomerang { background-image: url(images/themes/mega_man_x/items/boomerang1.png); }
+.mega-man-x .boomerang.active-2 { background-image: url(images/themes/mega_man_x/items/boomerang2.png); }
+/*.mega-man-x .boomerang.active-3 { background-image: url(images/themes/mega_man_x/items/boomerang3.png); }*/
+.mega-man-x .firerod { background-image: url(images/themes/mega_man_x/items/firerod.png); }
+.mega-man-x .icerod { background-image: url(images/themes/mega_man_x/items/icerod.png); }
+.mega-man-x .bottle { background-image: url(images/themes/mega_man_x/items/bottle0.png); }
+.mega-man-x .bottle.active-1 { background-image: url(images/themes/mega_man_x/items/bottle1.png); }
+.mega-man-x .bottle.active-2 { background-image: url(images/themes/mega_man_x/items/bottle2.png); }
+.mega-man-x .bottle.active-3 { background-image: url(images/themes/mega_man_x/items/bottle3.png); }
+.mega-man-x .bottle.active-4 { background-image: url(images/themes/mega_man_x/items/bottle4.png); }
+.mega-man-x .byrna { background-image: url(images/themes/mega_man_x/items/byrna.png); }
+.mega-man-x .cape { background-image: url(images/themes/mega_man_x/items/cape.png); }
+.mega-man-x .mirror { background-image: url(images/themes/mega_man_x/items/mirror.png); }
+.mega-man-x .boots { background-image: url(images/themes/mega_man_x/items/boots.png); }
+
+.mega-man-x .agahnim { background-image:url(images/themes/mega_man_x/dungeons/agahnim0.png); }
+.mega-man-x .agahnim.active { background-image:url(images/themes/mega_man_x/dungeons/agahnim1.png); }
+.mega-man-x .chest-0 { background-image: url(images/themes/mega_man_x/dungeons/chest0.png); }
+.mega-man-x .chest-1 { background-image: url(images/themes/mega_man_x/dungeons/chest1.png); }
+.mega-man-x .chest-2 { background-image: url(images/themes/mega_man_x/dungeons/chest2.png); }
+.mega-man-x .chest-3 { background-image: url(images/themes/mega_man_x/dungeons/chest3.png); }
+.mega-man-x .chest-4 { background-image: url(images/themes/mega_man_x/dungeons/chest4.png); }
+.mega-man-x .chest-5 { background-image: url(images/themes/mega_man_x/dungeons/chest5.png); }
+.mega-man-x .chest-6 { background-image: url(images/themes/mega_man_x/dungeons/chest6.png); }

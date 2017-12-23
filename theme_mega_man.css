@@ -1,0 +1,45 @@
+.mega-man .moonpearl { background-image: url(images/themes/mega_man/items/moonpearl.png); }
+.mega-man .bow { background-image: url(images/themes/mega_man/items/bow0.png); }
+.mega-man .bow.active-1 { background-image: url(images/themes/mega_man/items/bow1.png); }
+.mega-man .bow.active-2 { background-image: url(images/themes/mega_man/items/bow2.png); }
+.mega-man .bow.active-3 { background-image: url(images/themes/mega_man/items/bow3.png); }
+.mega-man .boomerang { background-image: url(images/themes/mega_man/items/boomerang1.png); }
+.mega-man .boomerang.active-2 { background-image: url(images/themes/mega_man/items/boomerang2.png); }
+.mega-man .boomerang.active-3 { background-image: url(images/themes/mega_man/items/boomerang3.png); }
+.mega-man .hookshot { background-image: url(images/themes/mega_man/items/hookshot.png); }
+.mega-man .mushroom { background-image: url(images/themes/mega_man/items/mushroom.png); }
+.mega-man .powder { background-image: url(images/themes/mega_man/items/powder.png); }
+.mega-man .firerod { background-image: url(images/themes/mega_man/items/firerod.png); }
+.mega-man .icerod { background-image: url(images/themes/mega_man/items/icerod.png); }
+.mega-man .bombos { background-image: url(images/themes/mega_man/items/bombos.png); }
+.mega-man .ether { background-image: url(images/themes/mega_man/items/ether.png); }
+.mega-man .quake { background-image: url(images/themes/mega_man/items/quake.png); }
+.mega-man .lantern { background-image: url(images/themes/mega_man/items/lantern.png); }
+.mega-man .hammer { background-image: url(images/themes/mega_man/items/hammer.png); }
+.mega-man .shovel { background-image: url(images/themes/mega_man/items/shovel.png); }
+.mega-man .net { background-image: url(images/themes/mega_man/items/net.png); }
+.mega-man .book { background-image: url(images/themes/mega_man/items/book.png); }
+.mega-man .bottle { background-image: url(images/themes/mega_man/items/bottle0.png); }
+.mega-man .bottle.active-1 { background-image: url(images/themes/mega_man/items/bottle1.png); }
+.mega-man .bottle.active-2 { background-image: url(images/themes/mega_man/items/bottle2.png); }
+.mega-man .bottle.active-3 { background-image: url(images/themes/mega_man/items/bottle3.png); }
+.mega-man .bottle.active-4 { background-image: url(images/themes/mega_man/items/bottle4.png); }
+.mega-man .somaria { background-image: url(images/themes/mega_man/items/somaria.png); }
+.mega-man .byrna { background-image: url(images/themes/mega_man/items/byrna.png); }
+.mega-man .cape { background-image: url(images/themes/mega_man/items/cape.png); }
+.mega-man .mirror { background-image: url(images/themes/mega_man/items/mirror.png); }
+.mega-man .boots { background-image: url(images/themes/mega_man/items/boots.png); }
+.mega-man .glove { background-image: url(images/themes/mega_man/items/glove1.png); }
+.mega-man .glove.active-2 { background-image: url(images/themes/mega_man/items/glove2.png); }
+.mega-man .flippers { background-image: url(images/themes/mega_man/items/flippers.png); }
+.mega-man .flute { background-image: url(images/themes/mega_man/items/flute.png); }
+
+.mega-man .agahnim { background-image:url(images/themes/mega_man/dungeons/agahnim0.png); }
+.mega-man .agahnim.active { background-image:url(images/themes/mega_man/dungeons/agahnim1.png); }
+.mega-man .chest-0 { background-image: url(images/themes/mega_man/dungeons/chest0.png); }
+.mega-man .chest-1 { background-image: url(images/themes/mega_man/dungeons/chest1.png); }
+.mega-man .chest-2 { background-image: url(images/themes/mega_man/dungeons/chest2.png); }
+.mega-man .chest-3 { background-image: url(images/themes/mega_man/dungeons/chest3.png); }
+.mega-man .chest-4 { background-image: url(images/themes/mega_man/dungeons/chest4.png); }
+.mega-man .chest-5 { background-image: url(images/themes/mega_man/dungeons/chest5.png); }
+.mega-man .chest-6 { background-image: url(images/themes/mega_man/dungeons/chest6.png); }
