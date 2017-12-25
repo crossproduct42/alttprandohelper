@@ -15,6 +15,7 @@
                 mode: this.getAttribute('data-mode'),
                 hmap: this.getAttribute('data-map') === 'hmap',
                 vmap: this.getAttribute('data-map') === 'vmap',
+                sprite: document.getElementById('sprite').value,
                 bg: document.getElementById('background-color').value ||
                     document.getElementById('custom-color').value
             },
@@ -38,6 +39,7 @@
             'mode='+params.mode,
             params.hmap && 'hmap',
             params.vmap && 'vmap',
+            params.sprite && 'sprite='+params.sprite,
             !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
         ]).join('&');
     }
