@@ -23,6 +23,8 @@
                 h: params.vmap ? 806 : 448
             };
 
+        if (!valid_css_color(params.bg)) return;
+
         open('tracker.html?' + query(params),
             '',
             'width={width},height={height},titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
@@ -42,8 +44,16 @@
 
     function background_color_changed(event) {
         var value = event.target.value,
-            custom = document.getElementById('custom-color');
+            custom = document.getElementById('custom-color'),
+            valid = valid_css_color(custom.value);
         custom.classList[value ? 'add' : 'remove']('hidden');
+        custom.classList[valid ? 'remove' : 'add']('invalid');
+    }
+
+    function custom_color_changed(event) {
+        var custom = event.target,
+            valid = valid_css_color(custom.value);
+        custom.classList[valid ? 'remove' : 'add']('invalid');
     }
 
     window.start = function() {
@@ -53,5 +63,6 @@
             custom_color = document.getElementById('custom-color');
         background_color.value || custom_color.classList.remove('hidden');
         background_color.addEventListener('change', background_color_changed);
+        custom_color.addEventListener('input', custom_color_changed);
     };
 }(window));

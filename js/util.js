@@ -82,4 +82,16 @@
         memoized._cache = {};
         return memoized;
     };
+
+    window.valid_css_color = function(text) {
+        if (!text || text === 'inherit' || text === 'transparent') return false;
+        var e1 = document.createElement('div'),
+            e2 = document.createElement('div');
+        e1.style.color = 'rgb(0,0,0)';
+        e1.style.color = text;
+        e2.style.color = 'rgb(255,255,255)';
+        e2.style.color = text;
+        return e1.style.color.replace(/ /g, '') !== 'rgb(0,0,0)' ||
+            e2.style.color.replace(/ /g, '') !== 'rgb(255,255,255)';
+    };
 }(window));
