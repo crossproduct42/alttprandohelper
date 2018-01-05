@@ -17,8 +17,8 @@
                 vmap: this.getAttribute('data-map') === 'vmap'
             },
             size = {
-                w: params.hmap ? 1340 : 448,
-                h: params.vmap ? 1340 : 448
+                w: params.hmap ? 1340 : params.vmap ? 270 : 448,
+                h: params.vmap ? 806 : 448
             };
 
         open('tracker.html?' + query(params),
