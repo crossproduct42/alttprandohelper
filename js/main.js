@@ -65,7 +65,7 @@
 
     var Tracker = createReactClass({
         render: function() {
-            return div('#tracker.cell',
+            return div('#tracker', { className: classNames({ cell: this.props.horizontal })},
                 grid([
                     grid([[
                         this.tunic(),
@@ -161,15 +161,6 @@
             return t(TrackerChest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
         }
     });
-
-    function grid(rows) {
-        rows = slice.call(arguments);
-        return rows.map(function(row) {
-            return div('.row', row.map(function(cell) {
-                return div('.cell', cell);
-            }));
-        });
-    }
 
     function WithHighlight(Wrapped, source) {
         return createReactClass({
@@ -294,16 +285,28 @@
             var model = this.props,
                 chest_click = this.props.chest_click,
                 change_caption = this.change_caption;
-            return div('#map.cell',
-                Object.keys(model.chests).map(function(name) {
-                    return t(MapChestWithHighlight, { name: name, model: model, onClick: chest_click, change_caption: change_caption });
-                }),
-                Object.keys(model.encounters).map(function(name) {
-                    return t(MapEncounterWithHighlight, { name: name, model: model, change_caption: change_caption });
-                }),
-                Object.keys(model.dungeons).map(function(name) {
-                    return t(MapDungeonWithHighlight, { name: name, model: model, change_caption: change_caption });
-                }),
+
+            var locations = partition(flatten([
+                    map(model.chests, function(chest, name) {
+                        return { darkworld: chest.darkworld,
+                            tag: t(MapChestWithHighlight, { name: name, model: model, onClick: chest_click, change_caption: change_caption }) };
+                    }),
+                    map(model.encounters, function(encounter, name) {
+                        return { darkworld: encounter.darkworld,
+                            tag: t(MapEncounterWithHighlight, { name: name, model: model, change_caption: change_caption }) };
+                    }),
+                    map(model.dungeons, function(dungeon, name) {
+                        return { darkworld: dungeon.darkworld,
+                            tag: t(MapDungeonWithHighlight, { name: name, model: model, change_caption: change_caption }) };
+                    })
+                ]), function(x) { return !x.darkworld; }),
+                worlds = [
+                    div('.world-light', locations[0].map(property('tag'))),
+                    div('.world-dark', locations[1].map(property('tag')))
+                ];
+
+            return div('#map', { className: classNames({ cell: this.props.horizontal }) },
+                this.props.horizontal ? grid.call(null, worlds) : worlds,
                 t(Caption, { text: this.state.caption })
             );
         },
@@ -313,6 +316,15 @@
         }
     });
 
+    function grid(rows) {
+        rows = slice.call(arguments);
+        return rows.map(function(row) {
+            return div('.row', row.map(function(cell) {
+                return div('.cell', cell);
+            }));
+        });
+    }
+
     var App = createReactClass({
         getInitialState: function() {
             var mode = uri_query().mode;
@@ -320,16 +332,17 @@
         },
 
         render: function() {
-            var map = uri_query().map;
-            return div('#page.row', { className: classNames({ mapless: !map }) },
+            var query = uri_query();
+            return div('#page', { className: classNames({ row: query.hmap, hmap: query.hmap, vmap: query.vmap }) },
                 t(Tracker, Object.assign({
                     item_click: this.item_click,
                     boss_click: this.boss_click,
                     prize_click: this.prize_click,
                     medallion_click: this.medallion_click,
-                    chest_click: this.chest_click
+                    chest_click: this.chest_click,
+                    horizontal: query.hmap
                 }, this.state)),
-                map && t(Map, Object.assign({ chest_click: this.map_chest_click }, this.state)));
+                (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap }, this.state)));
         },
 
         item_click: function(name) {

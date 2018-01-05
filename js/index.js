@@ -13,21 +13,27 @@
     function launch_tracker() {
         var params = {
                 mode: this.getAttribute('data-mode'),
-                map: this.getAttribute('data-map') === 'yes'
+                hmap: this.getAttribute('data-map') === 'hmap',
+                vmap: this.getAttribute('data-map') === 'vmap'
             },
-            width = params.map ? 1340 : 448;
+            size = {
+                w: params.hmap ? 1340 : 448,
+                h: params.vmap ? 1340 : 448
+            };
 
         open('tracker.html?' + query(params),
             '',
-            'width={width},height=448,titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
-                .replace('{width}', width));
+            'width={width},height={height},titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
+                .replace('{width}', size.w)
+                .replace('{height}', size.h));
         setTimeout('window.close()', 5000);
     }
 
     function query(params) {
         return compact([
             'mode='+params.mode,
-            params.map && 'map'
+            params.hmap && 'hmap',
+            params.vmap && 'vmap'
         ]).join('&');
     }
 

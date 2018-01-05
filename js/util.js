@@ -27,6 +27,31 @@
         return props != null ? Object.assign(result, props) : result;
     };
 
+    window.flatten = function(array) {
+        return array.reduce(function(result, value) { return result.concat(value); }, []);
+    };
+
+    window.map = function(collection, iteratee) {
+        return Array.isArray(collection) ?
+            collection.map(iteratee) :
+            Object.keys(collection).map(function(key) {
+                return iteratee(collection[key], key, collection);
+            });
+    };
+
+    window.partition = function(collection, iteratee) {
+        var values = Array.isArray(collection) ? collection : map(collection, identity);
+        return values.reduce(function(result, value) {
+            return result[iteratee(value) ? 0 : 1].push(value), result;
+        }, [[],[]]);
+    };
+
+    function identity(v) { return v; }
+
+    window.property = function(key) {
+        return function(object) { return object[key]; };
+    };
+
     // based on https://github.com/medialize/URI.js/blob/gh-pages/src/URI.js
     window.uri_query = memoize(function() {
         var q, href = location.href + '',

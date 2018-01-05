@@ -12,8 +12,9 @@ body {
 .row:after { clear: both; }
 .cell { position: relative; float: left; }
 
-#page { width: 1340px; height: 448px; }
-#page.mapless { width: 448px; }
+#page { width: 448px; height: 448px; }
+#page.hmap { width: 1340px; }
+#page.vmap { height: 1340px; }
 
 #tracker .item,
 #tracker .boss,
@@ -49,13 +50,16 @@ body {
   bottom: 0;
 }
 
-#map {
-  width: 884px;
-  height: 448px;
-  margin-left: 8px;
-  background-image: url(images/overlay/map.png);
-  background-size: 100% 100%;
-}
+#map { width: 448px; height: 448px; position: relative; }
+#map .world-light,
+#map .world-dark { width: 442px; height: 442px; position: relative; background-size: 100% 100%; }
+#map .world-light { background-image: url(images/overlay/map_lw.png); }
+#map .world-dark { background-image: url(images/overlay/map_dw.png); }
+.hmap #map { width: 888px; margin-left: 4px; }
+.vmap #map { height: 888px; margin-top: 4px; }
+.hmap #map .world-dark { margin-left: 4px; }
+.vmap #map .world-light { margin: 0 auto; }
+.vmap #map .world-dark { margin: 4px auto 0; }
 
 #map .chest {
   width: 24px;
@@ -212,81 +216,83 @@ body {
 #caption .pendant-1 { background-image: url(images/overlay/pendant1.png); }
 #caption .pendant-2 { background-image: url(images/overlay/pendant2.png); }
 
-#map .eastern  { left: 46.8%; top: 38.8%; }
-#map .desert   { left: 3.8%;  top: 78.4%; }
-#map .hera     { left: 31.0%; top: 5.5%; }
-#map .darkness { left: 97.0%; top: 40.0%; }
-#map .swamp    { left: 73.5%; top: 91.0%; }
-#map .skull    { left: 53.3%; top: 5.4%; }
-#map .thieves  { left: 56.4%; top: 47.9%; }
-#map .ice      { left: 89.8%; top: 85.8%; }
-#map .mire     { left: 55.8%; top: 82.9%; }
-#map .turtle   { left: 96.9%; top: 7.0%; }
+#map .eastern  { left: 93.6%; top: 38.8%; }
+#map .desert   { left: 7.6%;  top: 78.4%; }
+#map .hera     { left: 62.0%; top: 5.5%; }
 
-#map .agahnim { left: 25.0%; top: 52.6%; }
+#map .darkness { left: 94.0%; top: 40.0%; }
+#map .swamp    { left: 47.0%; top: 91.0%; }
+#map .skull    { left: 6.6%;  top: 5.4%; }
+#map .thieves  { left: 12.8%; top: 47.9%; }
+#map .ice      { left: 79.6%; top: 85.8%; }
+#map .mire     { left: 11.6%; top: 82.9%; }
+#map .turtle   { left: 93.8%; top: 7.0%; }
 
-#map .altar          { left: 2.5%;  top: 3.2%; }
-#map .mushroom       { left: 6.2%;  top: 8.6%; }
-#map .hideout        { left: 9.4%;  top: 13.0%; }
-#map .tree           { left: 15.1%; top: 7.6%; }
-#map .lost-man       { left: 20.8%; top: 20.4%; }
-#map .spectacle-cave { left: 24.3%; top: 14.8%; }
-#map .spectacle-rock { left: 25.4%; top: 8.5%; }
-#map .ether          { left: 21.0%; top: 3.0%; }
-#map .paradox        { left: 41.4%; top: 17.1%; }
-#map .spiral         { left: 39.9%; top: 9.3%; }
-#map .island-dm      { left: 40.2%; top: 3.0%; }
-#map .mimic          { left: 42.6%; top: 9.3%; }
-#map .graveyard-w    { left: 19.5%; top: 29.3%; }
-#map .graveyard-n    { left: 28.1%; top: 27.0%; }
-#map .graveyard-e    { left: 30.8%; top: 29.6%; }
-#map .witch          { left: 40.8%; top: 32.5%; }
-#map .fairy-lw       { left: 44.9%; top: 14.7%; }
-#map .zora           { left: 48.0%; top: 12.1%; }
-#map .river          { left: 47.7%; top: 17.3%; }
-#map .well           { left: 1.7%;  top: 41.0%; }
-#map .thief-hut      { left: 6.4%;  top: 41.0%; }
-#map .bottle         { left: 4.5%;  top: 46.8%; }
-#map .chicken        { left: 4.4%;  top: 54.2%; }
-#map .kid            { left: 7.8%;  top: 52.1%; }
-#map .tavern         { left: 8.1%;  top: 57.8%; }
-#map .bat            { left: 16.0%; top: 58.0%; }
-#map .sahasrahla-hut { left: 40.7%; top: 41.4%; }
-#map .sahasrahla     { left: 40.7%; top: 46.7%; }
-#map .maze           { left: 1.8%;  top: 69.8%; }
-#map .library        { left: 7.7%;  top: 65.9%; }
-#map .dig-grove      { left: 14.4%; top: 66.2%; }
-#map .desert-w       { left: 1.5%;  top: 91.0%; }
-#map .desert-ne      { left: 8.8%;  top: 77.3%; }
-#map .aginah         { left: 10.0%; top: 82.6%; }
-#map .bombos         { left: 11.0%; top: 92.2%; }
-#map .grove-s        { left: 14.1%; top: 84.1%; }
-#map .dam            { left: 23.4%; top: 93.4%; }
-#map .lake-sw        { left: 32.6%; top: 93.4%; }
-#map .ice-cave       { left: 44.7%; top: 76.9%; }
-#map .island-lake    { left: 36.1%; top: 82.9%; }
-#map .hobo           { left: 35.4%; top: 69.7%; }
-#map .link-house     { left: 27.4%; top: 67.9%; }
-#map .secret         { left: 29.8%; top: 41.8%; }
-#map .castle         { left: 25.0%; top: 44.1%; }
-#map .escape-dark    { left: 25.6%; top: 38.2%; }
-#map .escape-side    { left: 26.8%; top: 32.4%; }
-#map .sanctuary      { left: 23.0%; top: 28.0%; }
-#map .bumper         { left: 67.1%; top: 15.2%; }
-#map .spike          { left: 78.6%; top: 14.9%; }
-#map .bunny          { left: 92.8%; top: 14.7%; }
-#map .rock-hook      { left: 91.6%; top: 3.4%; }
-#map .rock-boots     { left: 91.6%; top: 8.6%; }
-#map .catfish        { left: 96.0%; top: 17.2%; }
-#map .chest-game     { left: 52.1%; top: 46.4%; }
-#map .c-house        { left: 60.8%; top: 47.9%; }
-#map .bomb-hut       { left: 55.4%; top: 57.8%; }
-#map .frog           { left: 15.2%; top: 51.8%; }
-#map .purple         { left: 65.2%; top: 52.2%; }
-#map .pegs           { left: 65.8%; top: 60.1%; }
-#map .fairy-dw       { left: 73.5%; top: 48.5%; }
-#map .pyramid        { left: 79.0%; top: 43.5%; }
-#map .dig-game       { left: 52.9%; top: 69.2%; }
-#map .stumpy         { left: 65.5%; top: 68.6%; }
-#map .swamp-ne       { left: 80.0%; top: 77.1%; }
-#map .mire-w         { left: 51.7%; top: 79.5%; }
+#map .agahnim { left: 50.0%; top: 52.6%; }
+
+#map .altar          { left: 5.0%;  top: 3.2%; }
+#map .mushroom       { left: 12.4%; top: 8.6%; }
+#map .hideout        { left: 18.8%; top: 13.0%; }
+#map .tree           { left: 30.2%; top: 7.6%; }
+#map .lost-man       { left: 41.6%; top: 20.4%; }
+#map .spectacle-cave { left: 48.6%; top: 14.8%; }
+#map .spectacle-rock { left: 50.8%; top: 8.5%; }
+#map .ether          { left: 42.0%; top: 3.0%; }
+#map .paradox        { left: 82.8%; top: 17.1%; }
+#map .spiral         { left: 79.8%; top: 9.3%; }
+#map .island-dm      { left: 80.4%; top: 3.0%; }
+#map .mimic          { left: 85.2%; top: 9.3%; }
+#map .graveyard-w    { left: 39.0%; top: 29.3%; }
+#map .graveyard-n    { left: 56.2%; top: 27.0%; }
+#map .graveyard-e    { left: 61.6%; top: 29.6%; }
+#map .witch          { left: 81.6%; top: 32.5%; }
+#map .fairy-lw       { left: 89.8%; top: 14.7%; }
+#map .zora           { left: 96.0%; top: 12.1%; }
+#map .river          { left: 95.4%; top: 17.3%; }
+#map .well           { left: 3.4%;  top: 41.0%; }
+#map .thief-hut      { left: 12.8%; top: 41.0%; }
+#map .bottle         { left: 9.0%;  top: 46.8%; }
+#map .chicken        { left: 8.8%;  top: 54.2%; }
+#map .kid            { left: 15.6%; top: 52.1%; }
+#map .tavern         { left: 16.2%; top: 57.8%; }
+#map .frog           { left: 30.4%; top: 51.8%; }
+#map .bat            { left: 32.0%; top: 58.0%; }
+#map .sahasrahla-hut { left: 81.4%; top: 41.4%; }
+#map .sahasrahla     { left: 81.4%; top: 46.7%; }
+#map .maze           { left: 3.6%;  top: 69.8%; }
+#map .library        { left: 15.4%; top: 65.9%; }
+#map .dig-grove      { left: 28.8%; top: 66.2%; }
+#map .desert-w       { left: 3.0%;  top: 91.0%; }
+#map .desert-ne      { left: 17.6%; top: 77.3%; }
+#map .aginah         { left: 20.0%; top: 82.6%; }
+#map .bombos         { left: 22.0%; top: 92.2%; }
+#map .grove-s        { left: 28.2%; top: 84.1%; }
+#map .dam            { left: 46.8%; top: 93.4%; }
+#map .lake-sw        { left: 65.2%; top: 93.4%; }
+#map .ice-cave       { left: 89.4%; top: 76.9%; }
+#map .island-lake    { left: 72.2%; top: 82.9%; }
+#map .hobo           { left: 70.8%; top: 69.7%; }
+#map .link-house     { left: 54.8%; top: 67.9%; }
+#map .secret         { left: 59.6%; top: 41.8%; }
+#map .castle         { left: 50.0%; top: 44.1%; }
+#map .escape-dark    { left: 51.2%; top: 38.2%; }
+#map .escape-side    { left: 53.6%; top: 32.4%; }
+#map .sanctuary      { left: 46.0%; top: 28.0%; }
+
+#map .bumper         { left: 34.2%; top: 15.2%; }
+#map .spike          { left: 57.2%; top: 14.9%; }
+#map .bunny          { left: 85.6%; top: 14.7%; }
+#map .rock-hook      { left: 83.2%; top: 3.4%; }
+#map .rock-boots     { left: 83.2%; top: 8.6%; }
+#map .catfish        { left: 92.0%; top: 17.2%; }
+#map .chest-game     { left: 4.2%;  top: 46.4%; }
+#map .c-house        { left: 21.6%; top: 47.9%; }
+#map .bomb-hut       { left: 10.8%; top: 57.8%; }
+#map .purple         { left: 30.4%; top: 52.2%; }
+#map .pegs           { left: 31.6%; top: 60.1%; }
+#map .fairy-dw       { left: 47.0%; top: 48.5%; }
+#map .pyramid        { left: 58.0%; top: 43.5%; }
+#map .dig-game       { left: 5.8%;  top: 69.2%; }
+#map .stumpy         { left: 31.0%; top: 68.6%; }
+#map .swamp-ne       { left: 60.0%; top: 77.1%; }
+#map .mire-w         { left: 3.4%;  top: 79.5%; }
