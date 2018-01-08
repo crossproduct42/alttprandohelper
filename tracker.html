@@ -17,33 +17,77 @@
       <div class="row">
         <div class="cell">
           <div class="row">
-            <div class="cell">
+            <div id="normalopenitems" class="cell">
               <div class="item tunic active-1 bunny" onClick="toggle('tunic')"></div>
               <div class="item sword" onClick="toggle('sword')"></div>
               <div class="item shield" onClick="toggle('shield')"></div>
               <div class="item moonpearl" onClick="toggle('moonpearl')"></div>
             </div>
+
+            <div id="keysanityitems" class="hidden">
+              <div class="cell">
+                <div style="width: 96px; height: 96px;">
+                  <div class="item tunic keysanitytunic active-1 bunny" onClick="toggle('tunic')"></div>
+                  <div class="item sword keysanity" onClick="toggle('sword')"></div>
+                  <div class="item shield keysanity" onClick="toggle('shield')"></div>
+                  <div class="item moonpearl keysanitymoonpearl" onClick="toggle('moonpearl')"></div>
+                </div>
+              </div>
+              <div>
+                <div class="cell"><div id="smallhalfheader0" class="smallhalfheader">HC</div></div>
+                <div class="cell"><div id="smallkeyhalf0" class="smallkeyhalf" onClick="toggle('smallkeyhalf0')">0</div></div>
+                <div class="cell"><div id="smallhalfheader1" class="smallhalfheader">CT</div></div>
+                <div class="cell"><div id="smallkeyhalf1" class="smallkeyhalf" onClick="toggle('smallkeyhalf1')">0</div></div>
+              </div>
+              <div class="row">
+                <div class="cell"><div id="keychest10" class="keychest" onClick="toggle('keychest10')">27</div></div>
+                <div class="cell"><div id="bigkey10" class="bigkey" onClick="toggle('bigkey10')"></div></div>
+                <div class="cell"><div id="smallkey10" class="smallkeyfull" onClick="toggle('smallkey10')">0</div></div>
+              </div>
+            </div>
           </div>
+
           <div class="row">
             <div class="cell">
               <div class="boss boss0" onClick="toggle('boss0')"></div>
               <div id="dungeonPrize0" class="prize-0" onClick="toggle_dungeon(0)"></div>
             </div>
-            <div class="cell"><div id="chest0" class="chest-3" onClick="toggle('chest0')"></div></div>
+            <div id="normalopen0">
+              <div class="cell"><div id="chest0" class="chest-3" onClick="toggle('chest0')"></div></div>
+            </div>
+            <div id="keysanity0" class="hidden">
+              <div class="cell"><div id="keychest0" class="keychest" onClick="toggle('keychest0')">6</div></div>
+              <div class="cell"><div id="bigkey0" class="bigkey" onClick="toggle('bigkey0')"></div></div>
+              <div class="cell"><div id="smallkey0" class="smallkeyfull" onClick="toggle('smallkey0')">0</div></div>
+            </div>
           </div>
           <div class="row">
             <div class="cell">
               <div class="boss boss1" onClick="toggle('boss1')"></div>
               <div id="dungeonPrize1" class="prize-0" onClick="toggle_dungeon(1)"></div>
             </div>
-            <div class="cell"><div id="chest1" class="chest-2" onClick="toggle('chest1')"></div></div>
+            <div id="normalopen1">
+              <div class="cell"><div id="chest1" class="chest-2" onClick="toggle('chest1')"></div></div>
+            </div>
+            <div id="keysanity1" class="hidden">
+              <div class="cell"><div id="keychest1" class="keychest" onClick="toggle('keychest1')">6</div></div>
+              <div class="cell"><div id="bigkey1" class="bigkey" onClick="toggle('bigkey1')"></div></div>
+              <div class="cell"><div id="smallkey1" class="smallkeyfull" onClick="toggle('smallkey1')">0</div></div>
+            </div>
           </div>
           <div class="row">
             <div class="cell">
               <div class="boss boss2" onClick="toggle('boss2')"></div>
               <div id="dungeonPrize2" class="prize-0" onClick="toggle_dungeon(2)"></div>
             </div>
-            <div class="cell"><div id="chest2" class="chest-2" onClick="toggle('chest2')"></div></div>
+            <div id="normalopen2">
+              <div class="cell"><div id="chest2" class="chest-2" onClick="toggle('chest2')"></div></div>
+            </div>
+            <div id="keysanity2" class="hidden">
+              <div class="cell"><div id="keychest2" class="keychest" onClick="toggle('keychest2')">6</div></div>
+              <div class="cell"><div id="bigkey2" class="bigkey" onClick="toggle('bigkey2')"></div></div>
+              <div class="cell"><div id="smallkey2" class="smallkeyfull" onClick="toggle('smallkey2')">0</div></div>
+            </div>
           </div>
         </div>
         <div class="cell">
@@ -117,13 +161,52 @@
         </div>
       </div>
       <div class="row">
-        <div class="cell"><div id="chest3" class="chest-5" onClick="toggle('chest3')"></div></div>
-        <div class="cell"><div id="chest4" class="chest-6" onClick="toggle('chest4')"></div></div>
-        <div class="cell"><div id="chest5" class="chest-2" onClick="toggle('chest5')"></div></div>
-        <div class="cell"><div id="chest6" class="chest-4" onClick="toggle('chest6')"></div></div>
-        <div class="cell"><div id="chest7" class="chest-3" onClick="toggle('chest7')"></div></div>
-        <div class="cell"><div id="chest8" class="chest-2" onClick="toggle('chest8')"></div></div>
-        <div class="cell"><div id="chest9" class="chest-5" onClick="toggle('chest9')"></div></div>
+        <div id="normalopen3">
+          <div class="cell"><div id="chest3" class="chest-5" onClick="toggle('chest3')"></div></div>
+          <div class="cell"><div id="chest4" class="chest-6" onClick="toggle('chest4')"></div></div>
+          <div class="cell"><div id="chest5" class="chest-2" onClick="toggle('chest5')"></div></div>
+          <div class="cell"><div id="chest6" class="chest-4" onClick="toggle('chest6')"></div></div>
+          <div class="cell"><div id="chest7" class="chest-3" onClick="toggle('chest7')"></div></div>
+          <div class="cell"><div id="chest8" class="chest-2" onClick="toggle('chest8')"></div></div>
+          <div class="cell"><div id="chest9" class="chest-5" onClick="toggle('chest9')"></div></div>
+        </div>
+        <div id="keysanity3" class="hidden">
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest3" class="keychest" onClick="toggle('keychest3')">14</div></div>
+            <div class="cell"><div id="bigkey3" class="bigkey" onClick="toggle('bigkey3')"></div></div>
+            <div class="cell"><div id="smallkey3" class="smallkeyfull" onClick="toggle('smallkey3')">0</div></div>
+          </div>
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest4" class="keychest" onClick="toggle('keychest4')">10</div></div>
+            <div class="cell"><div id="bigkey4" class="bigkey" onClick="toggle('bigkey4')"></div></div>
+            <div class="cell"><div id="smallkey4" class="smallkeyfull" onClick="toggle('smallkey4')">0</div></div>
+          </div>
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest5" class="keychest" onClick="toggle('keychest5')">8</div></div>
+            <div class="cell"><div id="bigkey5" class="bigkey" onClick="toggle('bigkey5')"></div></div>
+            <div class="cell"><div id="smallkey5" class="smallkeyfull" onClick="toggle('smallkey5')">0</div></div>
+          </div>
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest6" class="keychest" onClick="toggle('keychest6')">8</div></div>
+            <div class="cell"><div id="bigkey6" class="bigkey" onClick="toggle('bigkey6')"></div></div>
+            <div class="cell"><div id="smallkey6" class="smallkeyfull" onClick="toggle('smallkey6')">0</div></div>
+          </div>
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest7" class="keychest" onClick="toggle('keychest7')">8</div></div>
+            <div class="cell"><div id="bigkey7" class="bigkey" onClick="toggle('bigkey7')"></div></div>
+            <div class="cell"><div id="smallkey7" class="smallkeyfull" onClick="toggle('smallkey7')">0</div></div>
+          </div>
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest8" class="keychest" onClick="toggle('keychest8')">8</div></div>
+            <div class="cell"><div id="bigkey8" class="bigkey" onClick="toggle('bigkey8')"></div></div>
+            <div class="cell"><div id="smallkey8" class="smallkeyfull" onClick="toggle('smallkey8')">0</div></div>
+          </div>
+          <div class="lowerchest">
+            <div class="cell"><div id="keychest9" class="keychest" onClick="toggle('keychest9')">12</div></div>
+            <div class="cell"><div id="bigkey9" class="bigkey" onClick="toggle('bigkey9')"></div></div>
+            <div class="cell"><div id="smallkey9" class="smallkeyfull" onClick="toggle('smallkey9')">0</div></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -193,6 +276,8 @@
       <div id="chestMap62" onClick="toggle_chest(62)" onMouseover="highlight(62)" onMouseout="unhighlight(62)"></div>
       <div id="chestMap63" onClick="toggle_chest(63)" onMouseover="highlight(63)" onMouseout="unhighlight(63)"></div>
       <div id="chestMap64" onClick="toggle_chest(64)" onMouseover="highlight(64)" onMouseout="unhighlight(64)"></div>
+      <div id="chestMap65" onClick="toggle_chest(65)" onMouseover="highlight(65)" onMouseout="unhighlight(65)"></div>
+      <div id="chestMap66" onClick="toggle_chest(66)" onMouseover="highlight(66)" onMouseout="unhighlight(66)"></div>
       <div id="bossMapAgahnim" onMouseover="highlight_agahnim()" onMouseout="unhighlight_agahnim()"></div>
       <div id="castle" onMouseover="highlight_agahnim()" onMouseout="unhighlight_agahnim()"></div>
       <div id="bossMap0" onMouseover="highlight_dungeon(0)" onMouseout="unhighlight_dungeon(0)"></div>
@@ -215,6 +300,8 @@
       <div id="dungeon8" onMouseover="highlight_dungeon(8)" onMouseout="unhighlight_dungeon(8)"></div>
       <div id="bossMap9" onMouseover="highlight_dungeon(9)" onMouseout="unhighlight_dungeon(9)"></div>
       <div id="dungeon9" onMouseover="highlight_dungeon(9)" onMouseout="unhighlight_dungeon(9)"></div>
+      <div id="bossMap10" onMouseover="highlight_dungeon(10)" onMouseout="unhighlight_dungeon(10)"></div>
+      <div id="dungeon10" onMouseover="highlight_dungeon(10)" onMouseout="unhighlight_dungeon(10)"></div>
       <div id="caption">&nbsp;</div>
     </div>
   </div>

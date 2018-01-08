@@ -19,21 +19,67 @@
             }
             return;
         }
-        var node = document.getElementsByClassName(label)[0],
-            is_boss = node.classList.contains('boss');
-        if ((typeof items[label]) === 'boolean') {
-            items[label] = !items[label];
-            node.classList[items[label] ? 'add' : 'remove'](is_boss ? 'defeated' : 'active');
-        } else {
-            var value = items.inc(label);
-            node.className = node.className.replace(/ ?active-\w+/, '');
-            if (value) node.classList.add('active-' + value);
-        }
-        // Initiate bunny graphics!
-        if (label === 'moonpearl' || label === 'tunic') {
-            document.getElementsByClassName('tunic')[0].classList[!items.moonpearl ? 'add' : 'remove']('bunny');
+        if (label.substring(0,8) === 'keychest') {
+            var value = items.dec(label);
+            if (value === 0) {
+                document.getElementById(label).className = 'keychest-' + value;
+                document.getElementById(label).innerHTML = '';
+            } else {
+                document.getElementById(label).className = 'keychest';
+                document.getElementById(label).innerHTML = value;
+            }
+
+            if (map_enabled) {
+                var x = label.substring(8);
+                document.getElementById('dungeon'+x).className = 'dungeon ' +
+                    (value ? dungeons[x].can_get_chest() : 'opened');
+            }
+            return;
         }
 
+        var skipkey = false;
+
+        if (label.substring(0,6) === 'bigkey') {
+            items[label] = !items[label];
+
+            if (items[label]) {
+                document.getElementById(label).className = 'bigkey collected';
+            } else {
+                document.getElementById(label).className = 'bigkey';
+            }
+
+            skipkey = true;
+        }
+
+        if (label.substring(0,12) === 'smallkeyhalf') {
+            var value = items.inc(label);
+            document.getElementById(label).innerHTML = value;
+            skipkey = true;
+        }
+        if (label.substring(0,8) === 'smallkey' && label.substring(0,12) != 'smallkeyhalf') {
+            var value = items.inc(label);
+            document.getElementById(label).innerHTML = value;
+            skipkey = true;
+        }
+
+        if (!skipkey) {
+            var which = query.mode === 'keysanity' && ['moonpearl', 'tunic', 'sword', 'shield'].includes(label) ? 1 : 0,
+                node = document.getElementsByClassName(label)[which],
+                is_boss = node.classList.contains('boss');
+            if ((typeof items[label]) === 'boolean') {
+                items[label] = !items[label];
+                node.classList[items[label] ? 'add' : 'remove'](is_boss ? 'defeated' : 'active');
+            } else {
+                var value = items.inc(label);
+                node.className = node.className.replace(/ ?active-\w+/, '');
+                if (value) node.classList.add('active-' + value);
+            }
+            // Initiate bunny graphics!
+            if (label === 'moonpearl' || label === 'tunic') {
+                var which = query.mode === 'keysanity' ? 1 : 0;
+                document.getElementsByClassName('tunic')[which].classList[!items.moonpearl ? 'add' : 'remove']('bunny');
+            }
+        }
         if (map_enabled) {
             for (var k = 0; k < chests.length; k++) {
                 if (!chests[k].is_opened)
@@ -42,14 +88,20 @@
             for (var k = 0; k < dungeons.length; k++) {
                 if (!dungeons[k].is_beaten)
                     document.getElementById('bossMap'+k).className = 'boss ' + dungeons[k].is_beatable();
-                if (items['chest'+k])
-                    document.getElementById('dungeon'+k).className = 'dungeon ' + dungeons[k].can_get_chest();
+                if (query.mode === 'keysanity') {
+                    if (items['keychest'+k])
+                        document.getElementById('dungeon'+k).className = 'dungeon ' + dungeons[k].can_get_chest();
+                } else {
+                    if (items['chest'+k])
+                        document.getElementById('dungeon'+k).className = 'dungeon ' + dungeons[k].can_get_chest();
+                }
+
             }
             // Clicking a boss on the tracker will check it off on the map!
             if (is_boss) {
                 toggle_boss(label.substring(4));
             }
-            if (label === 'agahnim' || label === 'cape' || label === 'sword' || label === 'lantern') {
+            if (['agahnim', 'cape', 'sword', 'lantern', 'smallkeyhalf1'].includes(label)) {
                 toggle_agahnim();
             }
         }
@@ -78,6 +130,32 @@
         if (medallions[n] === 4) medallions[n] = 0;
 
         document.getElementById('medallion'+n).className = 'medallion-' + medallions[n];
+
+        if (map_enabled) {
+            // Update availability of dungeon boss AND chests
+            dungeons[8+n].is_beaten = !dungeons[8+n].is_beaten;
+            toggle_boss(8+n);
+            if (items['chest'+(8+n)] > 0)
+                document.getElementById('dungeon'+(8+n)).className = 'dungeon ' + dungeons[8+n].can_get_chest();
+            // TRock medallion affects Mimic Cave
+            if (n === 1) {
+                chests[4].is_opened = !chests[4].is_opened;
+                toggle_chest(4);
+            }
+            // Change the mouseover text on the map
+            dungeons[8+n].caption = dungeons[8+n].caption.replace(/\{medallion\d+\}/, '{medallion'+medallions[n]+'}');
+        }
+    };
+
+
+    // event of clicking on each dungeon's bigkey
+    window.toggle_bigkey = function(n) {
+        items['bigkey'+n] = !items['bigkey'+n];
+        if (items['bigkey'+n]) {
+            document.getElementById('bigkey'+n).className = 'bigkey collected';
+        } else {
+            document.getElementById('bigkey'+n).className = 'bigkey';
+        }
 
         if (map_enabled) {
             // Update availability of dungeon boss AND chests
@@ -157,7 +235,7 @@
             prizes[k] = 0;
         }
 
-        if (mode !== 'open') {
+        if (mode === 'standard') {
             document.getElementsByClassName('sword')[0].classList.add('active-1');
         }
 
@@ -175,5 +253,24 @@
             document.getElementById('app').classList.add('mapless');
             document.getElementById('map').style.display = 'none';
         }
+
+        if (window.mode === 'keysanity') {
+            document.getElementById('normalopen0').className = 'hidden';
+            document.getElementById('normalopen1').className = 'hidden';
+            document.getElementById('normalopen2').className = 'hidden';
+            document.getElementById('normalopen3').className = 'hidden';
+            document.getElementById('normalopenitems').className = 'hidden';
+            document.getElementById('keysanity0').className = '';
+            document.getElementById('keysanity1').className = '';
+            document.getElementById('keysanity2').className = '';
+            document.getElementById('keysanity3').className = '';
+            document.getElementById('keysanityitems').className = '';
+        } else {
+            document.getElementById('chestMap65').style.visibility = 'hidden';
+            document.getElementById('chestMap66').style.visibility = 'hidden';
+            document.getElementById('bossMap10').style.visibility = 'hidden';
+            document.getElementById('dungeon10').style.visibility = 'hidden';
+        }
+
     };
 }(window));

@@ -7,17 +7,42 @@ body {
 
 * { box-sizing: border-box; }
 
+.hidden { display: none; }
+
 .row:before,
 .row:after { content: " "; display: table; }
 .row:after { clear: both; }
 .cell { position: relative; float: left; }
 
-#app { width: 1340px; height: 448px; }
+#app { width: 1340px; height: 448px; overflow: hidden; }
 #app.mapless { width: 448px; }
 
 #tracker .item,
 #tracker .boss,
 #tracker [id^="chest"] { width: 64px; height: 64px; }
+#tracker [id^="bigkey"] { width: 32px; height: 32px; }
+#tracker [id^="keychest"] { width: 32px; height: 32px; font-size: 20px; }
+#tracker [id^="smallkey"] { width: 64px; height: 32px; padding-left: 32px; font-size: 20px; }
+#tracker [id^="smallkeyhalf"] { width: 32px; height: 32px; padding-top: 6px; padding-left: 6px; font-size: 20px; }
+#tracker [id^="smallhalfheader"] { width: 32px; height: 16px; padding-top: 2px; font-size: 9px; }
+
+#tracker [id^="keychest"],
+#tracker [id^="smallkey"],
+#tracker [id^="smallkeyhalf"],
+#tracker [id^="smallhalfheader"] {
+  color: white;
+  text-align: center;
+  /* this is horrible when zoomed in,
+     but it's better than text-stroke with 1 or 2 px */
+  text-shadow: -2px -2px black,  0px -2px black,
+                2px -2px black,  2px  0px black,
+                2px  2px black,  0px  2px black,
+               -2px  2px black, -2px  0px black;
+  font-family: "Arial Black", Gadget, sans-serif;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
 
 #tracker .tunic { width: 128px; height: 128px; }
 #tracker .sword { position: absolute; top: 0; right: 0; }
@@ -31,9 +56,14 @@ body {
 }
 
 #tracker .item,
-#tracker .boss { opacity: .25; }
+#tracker .boss,
+#tracker .bigkey { opacity: .25; }
 #tracker .item[class*="active"],
-#tracker .boss.defeated { opacity: 1; }
+#tracker .boss.defeated,
+#tracker .bigkey.collected { opacity: 1; }
+#tracker .keysanitytunic { height: 96px; width: 96px; background-size: 100%; }
+#tracker .keysanitymoonpearl { height: 40px; width: 40px; background-size: 100%; }
+#tracker .keysanity { height: 48px; width: 48px; background-size: 100%; }
 
 [class*="prize-"] {
   width: 32px;
@@ -64,6 +94,11 @@ body {
   margin-top: -12px;
   position: absolute;
   background-size: 100% 100%;
+}
+
+.lowerchest {
+  width: 64px;
+  float: left;
 }
 
 #map .boss {
@@ -142,6 +177,24 @@ body {
 .shield.active-2 { background-image: url(images/items/shield2.png); }
 .shield.active-3 { background-image: url(images/items/shield3.png); }
 .moonpearl { background-image: url(images/items/moonpearl.png); }
+
+.tunickeysanity.active-1 { background-image: url(images/items/tunic1.png); background-size:100%; float:left; }
+.tunickeysanity.active-2 { background-image: url(images/items/tunic2.png); background-size:100%; float:left; }
+.tunickeysanity.active-3 { background-image: url(images/items/tunic3.png); background-size:100%; float:left; }
+.tunickeysanity.active-1.bunny { background-image: url(images/items/tunicbunny1.png); }
+.tunickeysanity.active-2.bunny { background-image: url(images/items/tunicbunny2.png); }
+.tunickeysanity.active-3.bunny { background-image: url(images/items/tunicbunny3.png); }
+.swordkeysanity.active-0 { background-image: url(images/items/sword1.png); opacity: .25; background-size:100%; float:left; }
+.swordkeysanity.active-1 { background-image: url(images/items/sword1.png); background-size:100%; float:left; }
+.swordkeysanity.active-2 { background-image: url(images/items/sword2.png); background-size:100%; float:left; }
+.swordkeysanity.active-3 { background-image: url(images/items/sword3.png); background-size:100%; float:left; }
+.swordkeysanity.active-4 { background-image: url(images/items/sword4.png); background-size:100%; float:left; }
+.shieldkeysanity.active-0 { background-image: url(images/items/shield1.png); opacity: .25; background-size:100%; float:left; }
+.shieldkeysanity.active-1 { background-image: url(images/items/shield1.png); background-size:100%; float:left; }
+.shieldkeysanity.active-2 { background-image: url(images/items/shield2.png); background-size:100%; float:left; }
+.shieldkeysanity.active-3 { background-image: url(images/items/shield3.png); background-size:100%; float:left; }
+.moonpearlkeysanity { background-image: url(images/items/moonpearl.png); background-size:100%; }
+
 .bow { background-image: url(images/items/bow0.png); }
 .bow.active-1 { background-image: url(images/items/bow1.png); }
 .bow.active-2 { background-image: url(images/items/bow2.png); }
@@ -188,6 +241,7 @@ body {
 .boss7, #bossMap7 { background-image: url(images/dungeons/boss7.png); }
 .boss8, #bossMap8 { background-image: url(images/dungeons/boss8.png); }
 .boss9, #bossMap9 { background-image: url(images/dungeons/boss9.png); }
+.boss10, #bossMap10 { background-image: url(images/dungeons/boss10.png); }
 .prize-0 { background-image: url(images/dungeons/prize0.png); }
 .prize-1 { background-image: url(images/dungeons/prize1.png); }
 .prize-2 { background-image: url(images/dungeons/prize2.png); }
@@ -204,6 +258,11 @@ body {
 .chest-4 { background-image: url(images/dungeons/chest4.png); }
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
+.keychest-0 { background-image: url(images/dungeons/keychest0.png); }
+.keychest { background-image: url(images/dungeons/keychest.png); }
+.bigkey { background-image: url(images/dungeons/bigkey.png); }
+.smallkeyfull { background-image: url(images/dungeons/smallkeyfull.png); }
+.smallkeyhalf { background-image: url(images/dungeons/smallkeyhalf.png); }
 
 .bomb { background-image: url(images/overlay/bomb.png); }
 .crystal { background-image: url(images/overlay/crystal.png); }
@@ -221,6 +280,7 @@ body {
 #bossMap7, #dungeon7 { left: 89.8%; top: 85.8%; }
 #bossMap8, #dungeon8 { left: 55.8%; top: 82.9%; }
 #bossMap9, #dungeon9 { left: 96.9%; top: 7.0%; }
+#bossMap10, #dungeon10 { left: 79.0%; top: 5.5%; }
 
 #bossMapAgahnim, #castle { left: 25.0%; top: 52.6%; }
 
@@ -289,3 +349,5 @@ body {
 #chestMap62 { left: 2.5%;  top: 3.2%; }
 #chestMap63 { left: 25.6%; top: 38.2%; }
 #chestMap64 { left: 44.9%; top: 14.7%; }
+#chestMap65 { left: 21.0%; top: 52.6%; }
+#chestMap66 { left: 29.0%; top: 52.6%; }
