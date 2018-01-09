@@ -1,0 +1,48 @@
+v4.0
+- Tracker layout updated!
+- Silver Arrow (no Bow) is now trackable
+- Sword, Shield, Tunic, and Moon Pearl are combined to one mega square!
+- Pendant and Crystal squares replaced by boss icons
+- Each boss square has a sub-square to remember prizes
+- Vitreous and Trinexx also have a medallion sub-square
+
+- Three new locations added to Tracker Map!
+- Master Sword Pedestal
+- Dwarven Swordsmiths
+- Fat Fairy Fountain
+
+- New Tracker Map features and updated dungeon logic!
+- Yellow squares for visible (but unobtainable) items (and unknown
+  Mimic Cave availability)
+- Boss Icons on the map correspond to their pictures on the Item Tracker
+- Tracker Map now properly calculates obtainable dungeon chests
+- Misery Mire and Turtle Rock calculations now consider medallions
+
+- Removed Horizontal layout. Later versions may contain better customization :-/
+
+- Updated version of the large, detailed overworld map!
+
+- Readme updated!
+
+v3.1
+- Christmas DLC is included in the ZIP file!
+- Added 1 to each dungeon chest count, since boss drops are mixed in
+  with dungeon chests.
+- Dungeon chest logic for the location tracker may be a little off until
+  I have time to review it, considering the boss drops.
+
+v3.0
+- Now has a map that helps new players find chests they may have missed!
+- New launcher with multiple options!
+
+v2.2
+- Now includes tracker-h.html and launcher-h.html for a 24x2 layout.
+  Horizontal tracker doesn't include Agahnim, though :(
+
+v2.1
+- Changed the opacity of disabled icons from 20% to 15%
+- This version includes a launcher that opens a new browser window for the tracker.
+  Internet Explorer works best because it will disable address bar and resizability.
+  The launcher will close itself after 5 seconds, which should give you
+  enough time to override popup blocker. If it doesn't work, you can just
+  open tracker.html normally.
