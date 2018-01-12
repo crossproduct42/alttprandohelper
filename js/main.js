@@ -111,7 +111,7 @@
                         this.item('glove'),
                         this.item('flippers'),
                         this.item('flute'),
-                        this.item('agahnim')
+                        this.encounter('agahnim')
                     ])
                 ], [
                     this.dungeon('darkness'),
@@ -155,6 +155,14 @@
                 onBossClick: this.props.boss_click,
                 onPrizeClick: this.props.prize_click,
                 onMedallionClick: this.props.medallion_click });
+        },
+
+        encounter: function(name) {
+            return t(Item, {
+                name: name,
+                value: this.props.encounters[name].completed,
+                onClick: this.props.encounter_click
+            });
         },
 
         chest: function(name) {
@@ -207,8 +215,7 @@
     var MapEncounter = function(props) {
         var name = props.name,
             model = props.model,
-            encounter = model.encounters[name],
-            completed = model.items[name];
+            encounter = model.encounters[name];
         return [
             div('.boss', {
                 className: as_location(name),
@@ -218,8 +225,8 @@
             div('.encounter', {
                 className: classNames(
                     as_location(name),
-                    completed || encounter.is_completable(model.items, model), {
-                        marked: completed,
+                    encounter.completed || encounter.is_completable(model.items, model), {
+                        marked: encounter.completed,
                         highlight: props.highlighted
                     }),
                 onMouseOver: function() { props.onHighlight(true); },
@@ -342,6 +349,7 @@
                     boss_click: this.boss_click,
                     prize_click: this.prize_click,
                     medallion_click: this.medallion_click,
+                    encounter_click: this.encounter_click,
                     chest_click: this.chest_click,
                     horizontal: query.hmap
                 }, this.state)),
@@ -368,6 +376,10 @@
         medallion_click: function(name) {
             var value = counter(this.state.dungeons[name].medallion, 1, 3);
             this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
+        },
+
+        encounter_click: function(name) {
+            this.setState(update(this.state, { encounters: at(name, { $toggle: ['completed'] }) }));
         },
 
         chest_click: function(name) {

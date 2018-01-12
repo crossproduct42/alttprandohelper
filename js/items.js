@@ -8,10 +8,11 @@
         has_cane: function() { return this.somaria || this.byrna; },
         has_rod: function() { return this.firerod || this.icerod; },
 
-        can_reach_outcast: function() {
+        can_reach_outcast: function(model) {
+            var agahnim = model.encounters.agahnim.completed;
             return this.moonpearl && (
                 this.glove === 2 || this.glove && this.hammer ||
-                this.agahnim && this.hookshot && (this.hammer || this.glove || this.flippers));
+                agahnim && this.hookshot && (this.hammer || this.glove || this.flippers));
         },
 
         medallion_check: function(medallion) {
@@ -74,8 +75,7 @@
         boots: false,
         glove: 0,
         flippers: false,
-        flute: false,
-        agahnim: false
+        flute: false
     });
 
     var standard_items = update(open_items, { sword: { $set: 1 } });
