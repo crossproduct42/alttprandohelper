@@ -635,38 +635,6 @@
         }
     };
 
-    function medallion_caption(caption, name) {
-        return function(model) {
-            var value = model.dungeons[name].medallion;
-            return caption.replace('{medallion}', '{medallion'+value+'}');
-        };
-    }
-
-    Object.keys(chests).forEach(function(name) {
-        chests[name] = create(chests[name], { marked: false });
-    });
-
-    Object.keys(dungeons).forEach(function(name) {
-        dungeons[name] = create(dungeons[name]);
-    });
-
-    dungeons = update(dungeons, {
-        eastern:  { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        desert:   { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        hera:     { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        darkness: { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        swamp:    { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        skull:    { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        thieves:  { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        ice:      { $apply: dungeon_chests, $merge: { completed: false, prize: 0 } },
-        mire:     { $apply: dungeon_chests, $merge: { completed: false, prize: 0, medallion: 0 } },
-        turtle:   { $apply: dungeon_chests, $merge: { completed: false, prize: 0, medallion: 0 } },
-    });
-
-    function dungeon_chests(dungeon) {
-        return update(dungeon, { $merge: { chests: dungeon.chest_limit } });
-    }
-
     var standard_chests = update(chests, {
         link_house: { $merge: { marked: true } },
         secret: { $merge: { marked: true } },
@@ -681,6 +649,40 @@
         } },
         sanctuary: { $merge: { marked: true } }
     });
+
+    function medallion_caption(caption, name) {
+        return function(model) {
+            var value = model.dungeons[name].medallion;
+            return caption.replace('{medallion}', '{medallion'+value+'}');
+        };
+    }
+
+    dungeons = finalize_dungeons(dungeons,
+        function(dungeon) { return update(dungeon, { $merge: { chests: dungeon.chest_limit } }); });
+
+    function finalize_dungeons(dungeons, apply) {
+        return update(map_values(dungeons, function(d) { return create(d); }), {
+            eastern:  { $apply: apply, $merge: { completed: false, prize: 0 } },
+            desert:   { $apply: apply, $merge: { completed: false, prize: 0 } },
+            hera:     { $apply: apply, $merge: { completed: false, prize: 0 } },
+            darkness: { $apply: apply, $merge: { completed: false, prize: 0 } },
+            swamp:    { $apply: apply, $merge: { completed: false, prize: 0 } },
+            skull:    { $apply: apply, $merge: { completed: false, prize: 0 } },
+            thieves:  { $apply: apply, $merge: { completed: false, prize: 0 } },
+            ice:      { $apply: apply, $merge: { completed: false, prize: 0 } },
+            mire:     { $apply: apply, $merge: { completed: false, prize: 0, medallion: 0 } },
+            turtle:   { $apply: apply, $merge: { completed: false, prize: 0, medallion: 0 } },
+        });
+    }
+
+    chests = finalize_chests(chests);
+    standard_chests = finalize_chests(standard_chests);
+
+    function finalize_chests(chests) {
+        return map_values(chests, function(chest) {
+            return create(chest, { marked: chest.marked || false });
+        });
+    }
 
     window.location_model = function(mode) {
         return {

@@ -39,6 +39,14 @@
             });
     };
 
+    window.map_values = function(object, iteratee) {
+        var result = {};
+        Object.keys(object).forEach(function(key) {
+            result[key] = iteratee(object[key], key, object);
+        });
+        return result;
+    }
+
     window.partition = function(collection, iteratee) {
         var values = Array.isArray(collection) ? collection : map(collection, identity);
         return values.reduce(function(result, value) {
