@@ -130,21 +130,21 @@
             caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
             darkworld: true,
             chest_limit: 2,
-            is_completable: function(items, model) {
+            is_completable: function(items) {
                 if (!items.has_melee_bow()) return 'unavailable';
                 if (!items.moonpearl || !items.flute || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
-                var state = items.medallion_check(model.dungeons.mire.medallion);
+                var state = items.medallion_check(this.medallion);
                 if (state) return state;
 
                 return items.lantern || items.firerod ?
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            is_progressable: function(items, model) {
+            is_progressable: function(items) {
                 if (!items.moonpearl || !items.flute || items.glove !== 2) return 'unavailable';
                 if (!items.boots && !items.hookshot) return 'unavailable';
-                var state = items.medallion_check(model.dungeons.mire.medallion);
+                var state = items.medallion_check(this.medallion);
                 if (state) return state;
 
                 return (this.chests > 1 ?
@@ -157,21 +157,21 @@
             caption: medallion_caption('Turtle Rock {medallion}{lantern}', 'turtle'),
             darkworld: true,
             chest_limit: 5,
-            is_completable: function(items, model) {
+            is_completable: function(items) {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
                 if (!items.icerod || !items.firerod) return 'unavailable';
-                var state = items.medallion_check(model.dungeons.turtle.medallion);
+                var state = items.medallion_check(this.medallion);
                 if (state) return state;
 
                 return items.byrna || items.cape || items.shield === 3 ?
                     items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            is_progressable: function(items, model) {
+            is_progressable: function(items) {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria) return 'unavailable';
                 if (!items.hookshot && !items.mirror) return 'unavailable';
-                var state = items.medallion_check(model.dungeons.turtle.medallion);
+                var state = items.medallion_check(this.medallion);
                 if (state) return state;
 
                 var laser_safety = items.byrna || items.cape || items.shield === 3,
