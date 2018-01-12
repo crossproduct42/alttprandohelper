@@ -54,7 +54,7 @@
 
     var DungeonWithMedallion = WithMedallion(Dungeon);
 
-    var TrackerChest = function(props) {
+    var Chest = function(props) {
         var name = props.name,
             dungeon = props.value;
         return div('.chest', {
@@ -158,7 +158,7 @@
         },
 
         chest: function(name) {
-            return t(TrackerChest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
+            return t(Chest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
         }
     });
 
