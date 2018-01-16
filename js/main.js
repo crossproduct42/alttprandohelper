@@ -63,7 +63,7 @@
         });
     };
 
-    var Tracker = createReactClass({
+    var _tracker = {
         render: function() {
             return div('#tracker', { className: classNames({ cell: this.props.horizontal })},
                 grid([
@@ -73,14 +73,14 @@
                         this.item('shield'),
                         this.item('moonpearl'),
                     ]], [
-                        this.dungeon('eastern'),
-                        this.chest('eastern')
+                        this.dungeon_boss('eastern'),
+                        this.dungeon('eastern')
                     ], [
-                        this.dungeon('desert'),
-                        this.chest('desert')
+                        this.dungeon_boss('desert'),
+                        this.dungeon('desert')
                     ], [
-                        this.dungeon('hera'),
-                        this.chest('hera')
+                        this.dungeon_boss('hera'),
+                        this.dungeon('hera')
                     ]),
                     grid([
                         this.item('bow'),
@@ -111,24 +111,24 @@
                         this.item('glove'),
                         this.item('flippers'),
                         this.item('flute'),
-                        this.encounter('agahnim')
+                        this.agahnim()
                     ])
+                ], [
+                    this.dungeon_boss('darkness'),
+                    this.dungeon_boss('swamp'),
+                    this.dungeon_boss('skull'),
+                    this.dungeon_boss('thieves'),
+                    this.dungeon_boss('ice'),
+                    this.medallion_dungeon_boss('mire'),
+                    this.medallion_dungeon_boss('turtle')
                 ], [
                     this.dungeon('darkness'),
                     this.dungeon('swamp'),
                     this.dungeon('skull'),
                     this.dungeon('thieves'),
                     this.dungeon('ice'),
-                    this.medallion_dungeon('mire'),
-                    this.medallion_dungeon('turtle')
-                ], [
-                    this.chest('darkness'),
-                    this.chest('swamp'),
-                    this.chest('skull'),
-                    this.chest('thieves'),
-                    this.chest('ice'),
-                    this.chest('mire'),
-                    this.chest('turtle')
+                    this.dungeon('mire'),
+                    this.dungeon('turtle')
                 ]));
         },
 
@@ -138,37 +138,41 @@
 
         item: function(name) {
             return t(Item, { name: name, value: this.props.model.items[name], onClick: this.props.item_click });
-        },
+        }
+    };
 
-        dungeon: function(name) {
+    var Tracker = createReactClass(Object.assign({}, _tracker, {
+        dungeon_boss: function(name) {
             return t(Dungeon, {
                 name: name,
                 value: this.props.model.dungeons[name],
                 onBossClick: this.props.boss_click,
-                onPrizeClick: this.props.prize_click });
+                onPrizeClick: this.props.prize_click
+            });
         },
 
-        medallion_dungeon: function(name) {
+        medallion_dungeon_boss: function(name) {
             return t(DungeonWithMedallion, {
                 name: name,
                 value: this.props.model.dungeons[name],
                 onBossClick: this.props.boss_click,
                 onPrizeClick: this.props.prize_click,
-                onMedallionClick: this.props.medallion_click });
+                onMedallionClick: this.props.medallion_click
+            });
         },
 
-        encounter: function(name) {
+        agahnim: function() {
             return t(Item, {
-                name: name,
-                value: this.props.model.encounters[name].completed,
+                name: 'agahnim',
+                value: this.props.model.encounters.agahnim.completed,
                 onClick: this.props.encounter_click
             });
         },
 
-        chest: function(name) {
+        dungeon: function(name) {
             return t(Chest, { name: name, value: this.props.model.dungeons[name], onClick: this.props.chest_click });
         }
-    });
+    }));
 
     function WithHighlight(Wrapped, source) {
         return createReactClass({
