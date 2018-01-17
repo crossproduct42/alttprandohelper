@@ -7,6 +7,10 @@
         return function(o) { return o[key] = value, o; }({});
     };
 
+    window.cast_array = function(value) {
+        return Array.isArray(value) ? value : [value];
+    };
+
     window.compact = function(array) {
         if (array == null) return [];
         return array.reduce(function(acc, value) {

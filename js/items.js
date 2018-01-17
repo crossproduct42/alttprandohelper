@@ -80,6 +80,6 @@
     var standard_items = update(open_items, { sword: { $set: 1 } });
 
     window.item_model = function(mode) {
-        return { items: { standard: standard_items, open: open_items }[mode] };
+        return { items: { standard: standard_items }[mode] || open_items };
     };
 }(window));

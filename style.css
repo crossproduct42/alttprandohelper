@@ -20,7 +20,8 @@ body {
 
 #tracker .item,
 #tracker .boss,
-#tracker .chest { width: 64px; height: 64px; }
+#tracker .chest,
+#tracker .dungeon { width: 64px; height: 64px; }
 
 #tracker .tunic { width: 128px; height: 128px; }
 #tracker .sword { position: absolute; top: 0; right: 0; }
@@ -32,24 +33,54 @@ body {
   bottom: 0;
   right: 0;
 }
+.keysanity .avatar { transform: scale(.75) translate(-25%, -25%); }
 
 #tracker .item,
-#tracker .boss { filter: contrast(80%) brightness(30%); }
+#tracker .boss,
+#tracker .big-key { filter: contrast(80%) brightness(30%); }
 #tracker .item[class*="active"],
-#tracker .boss.defeated { filter: contrast(100%) brightness(100%); }
+#tracker .boss.defeated,
+#tracker .big-key.collected { filter: contrast(100%) brightness(100%); }
 
-.prize {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-#tracker .medallion {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  bottom: 0;
+.prize,
+#tracker .medallion,
+.big-key,
+.keys,
+.keysanity #tracker .chest { width: 32px; height: 32px; position: absolute; }
+
+.ganon-tower .chest { top: 0; right: 0; }
+.ganon-tower .keys { top: 32px; right: 0; }
+.ganon-tower .big-key { top: 64px; right: 0; }
+
+.prize { bottom: 0; right: 0; }
+#tracker .medallion { bottom: 0; }
+.keysanity #tracker .medallion { top: 0; right: 0; }
+.big-key { bottom: 0; }
+.dungeon .keys { left: 16px; }
+.keysanity .dungeon .chest { bottom: 0; left: 16px }
+.agahnim-keys .keys:first-child { top: 0; right: 0; }
+.agahnim-keys .keys:last-child { bottom: 0; right: 0; }
+
+.keys,
+.keysanity #tracker .chest { display: table; }
+.keysanity #tracker .chest > span { font-size: 20px; }
+.keys > span,
+.keysanity #tracker .chest > span {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+
+  color: white;
+  font-weight: bold;
+  /* this looks horrible if zoomed in, but it's
+     better than text-stroke with 1px or 2px */
+  text-shadow: -2px -2px black,  0px -2px black,
+                2px -2px black,  2px  0px black,
+                2px  2px black,  0px  2px black,
+               -2px  2px black, -2px  0px black;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 #map { width: 448px; height: 448px; position: relative; }
@@ -93,7 +124,7 @@ body {
   background-size: 100% 100%;
 }
 
-.dungeon {
+#map .dungeon {
   width: 48px;
   height: 48px;
   margin-left: -24px;
@@ -183,7 +214,6 @@ body {
 .flute { background-image: url(images/items/flute.png); }
 .agahnim { background-image:url(images/dungeons/agahnim0.png); }
 .agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
-#map .boss.agahnim { background-color: transparent; }
 .boss.eastern { background-image: url(images/dungeons/boss0.png); }
 .boss.desert { background-image: url(images/dungeons/boss1.png); }
 .boss.hera { background-image: url(images/dungeons/boss2.png); }
@@ -210,6 +240,10 @@ body {
 .chest-4 { background-image: url(images/dungeons/chest4.png); }
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
+.big-key { background-image: url(images/dungeons/big_key.png); }
+.keys { background-image: url(images/dungeons/key.png); }
+.keysanity .chest { background-image: url(images/dungeons/chest_single.png); }
+.keysanity .chest.empty { background-image: url(images/dungeons/chest_empty.png); }
 
 .bomb { background-image: url(images/overlay/bomb.png); }
 .crystal { background-image: url(images/overlay/crystal.png); }
@@ -279,6 +313,8 @@ body {
 #map .escape-dark    { left: 51.2%; top: 38.2%; }
 #map .escape-side    { left: 53.6%; top: 32.4%; }
 #map .sanctuary      { left: 46.0%; top: 28.0%; }
+#map .castle-foyer   { left: 56.9%; top: 55.3%; }
+#map .castle-maze    { left: 56.9%; top: 49.7%; }
 
 #map .bumper         { left: 34.2%; top: 15.2%; }
 #map .spike          { left: 57.2%; top: 14.9%; }

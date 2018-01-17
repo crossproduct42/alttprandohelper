@@ -184,6 +184,70 @@
         }
     };
 
+    // Todo: implement logic later
+    var keysanity_dungeons = update(dungeons, {
+        eastern: { $merge: {
+            chest_limit: 6,
+            key_limit: 0,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        desert: { $merge: {
+            chest_limit: 6,
+            key_limit: 1,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        hera: { $merge: {
+            chest_limit: 6,
+            key_limit: 1,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        darkness: { $merge: {
+            chest_limit: 14,
+            key_limit: 6,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        swamp: { $merge: {
+            chest_limit: 10,
+            key_limit: 1,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        skull: { $merge: {
+            chest_limit: 8,
+            key_limit: 3,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        thieves: { $merge: {
+            chest_limit: 8,
+            key_limit: 1,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        ice: { $merge: {
+            chest_limit: 8,
+            key_limit: 2,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        mire: { $merge: {
+            chest_limit: 8,
+            key_limit: 3,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } },
+        turtle: { $merge: {
+            chest_limit: 12,
+            key_limit: 4,
+            is_completable: function() { return 'unavailable'; },
+            is_progressable: function() { return 'unavailable'; }
+        } }
+    });
+
     var encounters = {
         agahnim: {
             caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
@@ -193,6 +257,22 @@
                     'unavailable';
             }
         }
+    };
+
+    var keysanity_encounters = update(encounters, {
+        agahnim: { $merge: {
+            is_completable: function(items, model) {
+                return model.regions.castle_tower.keys === 2 ?
+                    encounters.agahnim.is_completable.call(this, items) :
+                    'unavailable';
+            }
+        } }
+    });
+
+    var keysanity_regions = {
+        escape: { key_limit: 1 },
+        castle_tower: { key_limit: 2 },
+        ganon_tower: { key_limit: 4, chest_limit: 27 }
     };
 
     var chests = {
@@ -648,6 +728,42 @@
         sanctuary: { $merge: { marked: true } }
     });
 
+    // Todo: verify
+    var keysanity_chests = update(chests, {
+        mimic: { $merge: {
+            is_available: function(items, model) {
+                if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
+                var state = items.medallion_check(model.dungeons.turtle.medallion);
+                if (state) return state;
+                return model.dungeons.turtle.keys <= 1 ? 'unavailable' : 'available';
+            }
+        } },
+        escape_side: { $merge: {
+            is_available: function(items, model) {
+                if (items.glove) return 'available';
+                return model.regions.escape.keys === 1 ?
+                    items.lantern ? 'available' : 'dark' :
+                    'unavailable';
+            }
+        } },
+        $merge: {
+            castle_foyer: {
+                caption: 'Castle Tower Foyer',
+                is_available: function(items) {
+                    return items.sword >= 2 || items.cape && items.sword ? 'available' : 'unavailable';
+                }
+            },
+            castle_maze: {
+                caption: 'Castle Tower Dark Maze',
+                is_available: function(items, model) {
+                    return model.regions.castle_tower.keys > 0 && (items.sword >= 2 || items.cape && items.sword) ?
+                        items.lantern ? 'available' : 'dark' :
+                        'unavailable';
+                }
+            }
+        }
+    });
+
     function medallion_caption(caption, name) {
         return function(model) {
             var value = model.dungeons[name].medallion;
@@ -655,9 +771,42 @@
         };
     }
 
-    dungeons = finalize_dungeons(dungeons);
+    window.location_model = function(mode) {
+        var model = {
+            open: open,
+            standard: standard,
+            keysanity: keysanity
+        }[mode]();
+        return Object.assign(model,
+            { agahnim: function() { return this.encounters.agahnim.completed; } });
+    };
 
-    function finalize_dungeons(dungeons) {
+    function open() {
+        return {
+            dungeons: dungeon_values(dungeons),
+            encounters: encounter_values(encounters),
+            chests: chest_values(chests)
+        };
+    }
+
+    function standard() {
+        return {
+            dungeons: dungeon_values(dungeons),
+            encounters: encounter_values(encounters),
+            chests: chest_values(standard_chests)
+        };
+    }
+
+    function keysanity() {
+        return {
+            dungeons: with_dungeon_keys(dungeon_values(keysanity_dungeons)),
+            encounters: encounter_values(keysanity_encounters),
+            regions: region_values(keysanity_regions),
+            chests: chest_values(keysanity_chests)
+        };
+    }
+
+    function dungeon_values(dungeons) {
         return update(map_values(dungeons, function(dungeon) {
             return create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 });
         }), {
@@ -666,29 +815,32 @@
         });
     }
 
-    encounters = finalize_encounters(encounters);
-
-    function finalize_encounters(encounters) {
-        return map_values(encounters, function(e) {
-            return create(e, { completed: false });
+    function encounter_values(encounters) {
+        return map_values(encounters, function(encounter) {
+            return create(encounter, { completed: false });
         });
     }
 
-    chests = finalize_chests(chests);
-    standard_chests = finalize_chests(standard_chests);
+    function region_values(regions) {
+        return update(map_values(regions, function(region) { return create(region); }), {
+            escape: { $merge: { keys: 0 } },
+            castle_tower: { $merge: { keys: 0 } },
+            ganon_tower: {
+                $merge: { keys: 0, big_key: false },
+                $apply: function(x) { return update(x, { $merge: { chests: x.chest_limit } }); }
+            }
+        });
+    }
 
-    function finalize_chests(chests) {
+    function chest_values(chests) {
         return map_values(chests, function(chest) {
             return create(chest, { marked: chest.marked || false });
         });
     }
 
-    window.location_model = function(mode) {
-        return {
-            dungeons: dungeons,
-            encounters: encounters,
-            chests: { standard: standard_chests, open: chests }[mode],
-            agahnim: function() { return this.encounters.agahnim.completed; }
-        };
-    };
+    function with_dungeon_keys(dungeons) {
+        return map_values(dungeons, function(dungeon) {
+            return update(dungeon, { $merge: { keys: 0, big_key: false } });
+        });
+    }
 }(window));
