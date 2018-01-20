@@ -222,7 +222,7 @@
         if (!condition) {
             var args = slice.call(arguments, 2);
             throw Object.assign(
-                new Error(format.replace(/%/g, function() { return args.unshift(); })), {
+                new Error(format.replace(/%/g, function() { return args.shift(); })), {
                     name: 'Invariant Violation',
                     framesToPop: 1 // we don't care about invariant's own frame
                 });
