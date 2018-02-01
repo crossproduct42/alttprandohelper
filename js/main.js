@@ -133,17 +133,17 @@
         },
 
         tunic: function() {
-            return t(TunicItem, { items: this.props.items, onClick: this.props.item_click });
+            return t(TunicItem, { items: this.props.model.items, onClick: this.props.item_click });
         },
 
         item: function(name) {
-            return t(Item, { name: name, value: this.props.items[name], onClick: this.props.item_click });
+            return t(Item, { name: name, value: this.props.model.items[name], onClick: this.props.item_click });
         },
 
         dungeon: function(name) {
             return t(Dungeon, {
                 name: name,
-                value: this.props.dungeons[name],
+                value: this.props.model.dungeons[name],
                 onBossClick: this.props.boss_click,
                 onPrizeClick: this.props.prize_click });
         },
@@ -151,7 +151,7 @@
         medallion_dungeon: function(name) {
             return t(DungeonWithMedallion, {
                 name: name,
-                value: this.props.dungeons[name],
+                value: this.props.model.dungeons[name],
                 onBossClick: this.props.boss_click,
                 onPrizeClick: this.props.prize_click,
                 onMedallionClick: this.props.medallion_click });
@@ -160,13 +160,13 @@
         encounter: function(name) {
             return t(Item, {
                 name: name,
-                value: this.props.encounters[name].completed,
+                value: this.props.model.encounters[name].completed,
                 onClick: this.props.encounter_click
             });
         },
 
         chest: function(name) {
-            return t(Chest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
+            return t(Chest, { name: name, value: this.props.model.dungeons[name], onClick: this.props.chest_click });
         }
     });
 
@@ -289,7 +289,7 @@
         },
 
         render: function() {
-            var model = this.props,
+            var model = this.props.model,
                 chest_click = this.props.chest_click,
                 change_caption = this.change_caption;
 
@@ -335,7 +335,7 @@
     var App = createReactClass({
         getInitialState: function() {
             var mode = this.props.query.mode;
-            return Object.assign(item_model(mode), location_model(mode));
+            return { model: Object.assign(item_model(mode), location_model(mode)) };
         },
 
         render: function() {
@@ -344,52 +344,57 @@
                     className: classNames({ row: query.hmap, hmap: query.hmap, vmap: query.vmap }, query.sprite),
                     style: query.bg && { 'background-color': query.bg }
                 },
-                t(Tracker, Object.assign({
+                t(Tracker, {
                     item_click: this.item_click,
                     boss_click: this.boss_click,
                     prize_click: this.prize_click,
                     medallion_click: this.medallion_click,
                     encounter_click: this.encounter_click,
                     chest_click: this.chest_click,
-                    horizontal: query.hmap
-                }, this.state)),
-                (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap }, this.state)));
+                    horizontal: query.hmap,
+                    model: this.state.model
+                }),
+                (query.hmap || query.vmap) && t(Map, {
+                    chest_click: this.map_chest_click,
+                    horizontal: query.hmap,
+                    model: this.state.model
+                }));
         },
 
         item_click: function(name) {
-            var items = this.state.items,
+            var items = this.state.model.items,
                 change = typeof items[name] === 'boolean' ?
                     { $toggle: [name] } :
                     at(name, { $set: items.inc(name) });
-            this.setState(update(this.state, { items: change }));
+            this.setState({ model: update(this.state.model, { items: change }) });
         },
 
         boss_click: function(name) {
-            this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
+            this.setState({ model: update(this.state.model, { dungeons: at(name, { $toggle: ['completed'] }) }) });
         },
 
         prize_click: function(name) {
-            var value = counter(this.state.dungeons[name].prize, 1, 4);
-            this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
+            var value = counter(this.state.model.dungeons[name].prize, 1, 4);
+            this.setState({ model: update(this.state.model, { dungeons: at(name, { prize: { $set: value } }) }) });
         },
 
         medallion_click: function(name) {
-            var value = counter(this.state.dungeons[name].medallion, 1, 3);
-            this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
+            var value = counter(this.state.model.dungeons[name].medallion, 1, 3);
+            this.setState({ model: update(this.state.model, { dungeons: at(name, { medallion: { $set: value } }) }) });
         },
 
         encounter_click: function(name) {
-            this.setState(update(this.state, { encounters: at(name, { $toggle: ['completed'] }) }));
+            this.setState({ model: update(this.state.model, { encounters: at(name, { $toggle: ['completed'] }) }) });
         },
 
         chest_click: function(name) {
-            var dungeon = this.state.dungeons[name],
+            var dungeon = this.state.model.dungeons[name],
                 value = counter(dungeon.chests, -1, dungeon.chest_limit);
-            this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
+            this.setState({ model: update(this.state.model, { dungeons: at(name, { chests: { $set: value } }) }) });
         },
 
         map_chest_click: function(name) {
-            this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
+            this.setState({ model: update(this.state.model, { chests: at(name, { $toggle: ['marked'] }) }) });
         }
     });
 
