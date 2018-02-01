@@ -60,6 +60,14 @@
 
     function identity(v) { return v; }
 
+    window.partial = function(func, partials) {
+        partials = slice.call(arguments, 1);
+        return function(args) {
+            args = slice.call(arguments);
+            return func.apply(this, partials.concat(args));
+        }
+    };
+
     window.property = function(key) {
         return function(object) { return object[key]; };
     };
