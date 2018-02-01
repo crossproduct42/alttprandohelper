@@ -98,7 +98,7 @@
             }
         },
         thieves: {
-            caption: 'Thieves\' Town',
+            caption: 'Steves\' Town',
             darkworld: true,
             chest_limit: 4,
             is_completable: function(items) {
