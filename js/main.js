@@ -285,31 +285,6 @@
         }
     }));
 
-    function WithHighlight(Wrapped, source) {
-        return createReactClass({
-            getInitialState: function() {
-                return { highlighted: false };
-            },
-
-            render: function() {
-                return t(Wrapped, Object.assign({
-                        highlighted: this.state.highlighted,
-                        onHighlight: this.onHighlight
-                    }, this.props));
-            },
-
-            onHighlight: function(highlighted) {
-                var name = this.props.name,
-                    model = this.props.model,
-                    location = model[source][name];
-                this.props.change_caption(highlighted ?
-                    typeof location.caption === 'function' ? location.caption(model) : location.caption :
-                    null);
-                this.setState({ highlighted: highlighted });
-            }
-        });
-    }
-
     var MapChest = function(props) {
         var name = props.name,
             model = props.model,
@@ -325,6 +300,10 @@
             onMouseOver: function() { props.onHighlight(true); },
             onMouseOut: function() { props.onHighlight(false); }
         });
+    };
+
+    MapChest.source = function(props) {
+        return get(props.model, ['chests', props.name]);
     };
 
     var MapEncounter = function(props) {
@@ -350,35 +329,131 @@
         ];
     };
 
+    MapEncounter.source = function(props) {
+        return get(props.model, ['encounters', props.name]);
+    };
+
     var MapDungeon = function(props) {
         var name = props.name,
             model = props.model,
+            deviated = props.deviated,
             dungeon = model.dungeons[name];
         return [
             div('.boss', {
                 className: classNames(
                     as_location(name),
-                    dungeon.completed || dungeon.can_complete(model.items, model),
-                    { marked: dungeon.completed }),
+                    !deviated && !dungeon.completed && dungeon.can_complete(model.items, model), {
+                        marked: dungeon.completed,
+                        possible: deviated && !dungeon.completed,
+                    }),
+                onClick: function() { props.onClick(name); },
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
             }),
             div('.dungeon', {
                 className: classNames(
                     as_location(name),
-                    dungeon.chests === 0 || dungeon.can_progress(model.items, model), {
+                    !deviated && dungeon.chests !== 0 && dungeon.can_progress(model.items, model), {
                         marked: dungeon.chests === 0,
+                        possible: deviated && dungeon.chests !== 0,
                         highlight: props.highlighted
                     }),
+                onClick: function() { props.onClick(name); },
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
             })
         ];
     };
 
-    var MapChestWithHighlight = WithHighlight(MapChest, 'chests'),
-        MapEncounterWithHighlight = WithHighlight(MapEncounter, 'encounters'),
-        MapDungeonWithHighlight = WithHighlight(MapDungeon, 'dungeons');
+    MapDungeon.source = function(props) {
+        return get(props.model, ['dungeons', props.name]);
+    };
+
+    var MapChestWithHighlight = WithHighlight(MapChest),
+        MapEncounterWithHighlight = WithHighlight(MapEncounter),
+        MapDungeonWithHighlight = WithHighlight(MapDungeon);
+
+    var MiniMapDoor = function(props) {
+        var name = props.name,
+            dungeon_name = props.dungeon,
+            model = props.model,
+            dungeon = model.dungeons[dungeon_name],
+            door = dungeon.doors[name];
+        return div('.door', {
+            className: classNames(
+                as_location(name),
+                props.dungeon,
+                !props.deviated && !door.opened && door.can_reach.call(dungeon, model.items, model), {
+                    marked: door.opened,
+                    possible: props.deviated && !door.opened,
+                    highlight: props.highlighted
+                }),
+            onClick: function() { props.onClick(dungeon_name, name); },
+            onMouseOver: function() { props.onHighlight(true); },
+            onMouseOut: function() { props.onHighlight(false); }
+            },
+            div('.image')
+        );
+    };
+
+    MiniMapDoor.source = function(props) {
+        return get(props.model, ['dungeons', props.dungeon, 'doors', props.name]);
+    };
+
+    var MiniMapLocation = function(props) {
+        var name = props.name,
+            dungeon_name = props.dungeon,
+            model = props.model,
+            dungeon = model.dungeons[dungeon_name],
+            location = dungeon.locations[name];
+        return div('.location', {
+            className: classNames(
+                as_location(name),
+                !props.deviated && !location.marked && location.can_reach.call(dungeon, model.items, model), {
+                    marked: location.marked,
+                    possible: props.deviated && !location.marked,
+                    highlight: props.highlighted
+                }),
+            onClick: function() { props.onClick(dungeon_name, name); },
+            onMouseOver: function() { props.onHighlight(true); },
+            onMouseOut: function() { props.onHighlight(false); }
+            },
+            name === 'big_chest' && div('.image'),
+            name === 'boss' && div('.image.boss', { className: props.dungeon })
+        );
+    };
+
+    MiniMapLocation.source = function(props) {
+        return get(props.model, ['dungeons', props.dungeon, 'locations', props.name]);
+    };
+
+    var MiniMapDoorWithHighlight = WithHighlight(MiniMapDoor),
+        MiniMapLocationWithHighlight = WithHighlight(MiniMapLocation);
+
+    function WithHighlight(Wrapped) {
+        return createReactClass({
+            getInitialState: function() {
+                return { highlighted: false };
+            },
+
+            render: function() {
+                return t(Wrapped, Object.assign({
+                        highlighted: this.state.highlighted,
+                        onHighlight: this.onHighlight
+                    }, this.props));
+            },
+
+            onHighlight: function(highlighted) {
+                var name = this.props.name,
+                    model = this.props.model,
+                    location = Wrapped.source(this.props);
+                this.props.change_caption(highlighted ?
+                    typeof location.caption === 'function' ? location.caption(model) : location.caption :
+                    null);
+                this.setState({ highlighted: highlighted });
+            }
+        });
+    }
 
     var Caption = createReactClass({
         render: function() {
@@ -404,33 +479,82 @@
         },
 
         render: function() {
-            var model = this.props.model,
-                chest_click = this.props.chest_click,
-                change_caption = this.change_caption;
-
-            var locations = partition(flatten([
-                    map(model.chests, function(chest, name) {
-                        return { darkworld: chest.darkworld,
-                            tag: t(MapChestWithHighlight, { name: name, model: model, onClick: chest_click, change_caption: change_caption }) };
-                    }),
-                    map(model.encounters, function(encounter, name) {
-                        return { darkworld: encounter.darkworld,
-                            tag: t(MapEncounterWithHighlight, { name: name, model: model, change_caption: change_caption }) };
-                    }),
-                    map(model.dungeons, function(dungeon, name) {
-                        return { darkworld: dungeon.darkworld,
-                            tag: t(MapDungeonWithHighlight, { name: name, model: model, change_caption: change_caption }) };
-                    })
-                ]), function(x) { return !x.darkworld; }),
-                worlds = [
-                    div('.world-light', locations[0].map(property('tag'))),
-                    div('.world-dark', locations[1].map(property('tag')))
+            var dungeon = this.props.dungeon,
+                points = partition(
+                    dungeon ? this.dungeon_locations() : this.world_locations(),
+                    property('second')),
+                maps = [
+                    div('.first', { className: dungeon || 'world' }, points[1].map(property('tag'))),
+                    div('.second', { className: dungeon || 'world' }, points[0].map(property('tag')))
                 ];
 
             return div('#map', { className: classNames({ cell: this.props.horizontal }) },
-                this.props.horizontal ? grid.call(null, worlds) : worlds,
+                this.props.horizontal ? grid.call(null, maps) : maps,
                 t(Caption, { text: this.state.caption })
             );
+        },
+
+        world_locations: function() {
+            var model = this.props.model,
+                keysanity = this.props.keysanity,
+                chest_click = this.props.chest_click,
+                dungeon_click = this.dungeon_click,
+                change_caption = this.change_caption;
+
+            return flatten([
+                map(model.chests, function(chest, name) {
+                    return { second: chest.darkworld,
+                        tag: t(MapChestWithHighlight, { name: name, model: model, onClick: chest_click, change_caption: change_caption }) };
+                }),
+                map(model.encounters, function(encounter, name) {
+                    return { second: encounter.darkworld,
+                        tag: t(MapEncounterWithHighlight, { name: name, model: model, change_caption: change_caption }) };
+                }),
+                map(model.dungeons, function(dungeon, name) {
+                    return {
+                        second: dungeon.darkworld,
+                        tag: t(MapDungeonWithHighlight, {
+                            name: name, model: model, deviated: keysanity && dungeon.is_deviating(),
+                            onClick: dungeon_click, change_caption: change_caption })
+                    };
+                })
+            ]);
+        },
+
+        dungeon_locations: function(dungeon_name) {
+            var model = this.props.model,
+                dungeon_name = this.props.dungeon,
+                dungeon = model.dungeons[dungeon_name],
+                deviated = dungeon.is_deviating(),
+                door_click = this.props.door_click,
+                location_click = this.props.location_click,
+                change_caption = this.change_caption;
+
+            return flatten([
+                map(dungeon.doors, function(door, name) {
+                    return {
+                        second: door.second_map,
+                        tag: t(MiniMapDoorWithHighlight, {
+                            name: name, dungeon: dungeon_name, model: model, deviated: deviated,
+                            onClick: door_click, change_caption: change_caption })
+                    };
+                }),
+                map(dungeon.locations, function(location, name) {
+                    return {
+                        second: location.second_map,
+                        tag: t(MiniMapLocationWithHighlight, {
+                            name: name, dungeon: dungeon_name, model: model, deviated: deviated,
+                            onClick: location_click, change_caption: change_caption })
+                    };
+                })
+            ]);
+        },
+
+        dungeon_click: function(name) {
+            if (this.props.dungeon_click) {
+                this.props.dungeon_click(name);
+                this.change_caption(null);
+            }
         },
 
         change_caption: function(caption) {
@@ -449,8 +573,9 @@
 
     var App = createReactClass({
         getInitialState: function() {
-            var mode = this.props.query.mode;
-            return { model: Object.assign(item_model(mode), location_model(mode)) };
+            var q = this.props.query,
+                opts = { ipbj: !!q.ipbj, podbj: !!q.podbj };
+            return { model: Object.assign(item_model(q.mode), location_model(q.mode, opts)) };
         },
 
         render: function() {
@@ -477,11 +602,34 @@
                         big_key_click: this.big_key_click,
                         key_click: this.key_click
                     })),
-                (query.hmap || query.vmap) && t(Map, {
+                (query.hmap || query.vmap) && t(Map, Object.assign({
                     chest_click: this.map_chest_click,
                     horizontal: query.hmap,
                     model: this.state.model
-                }));
+                }, !keysanity ? null : {
+                    dungeon_click: this.map_dungeon_click,
+                    door_click: this.door_click,
+                    location_click: this.location_click,
+                    dungeon: this.state.dungeon,
+                    keysanity: true
+                }))
+            );
+        },
+
+        componentDidMount: function() {
+            document.addEventListener('keydown', this.escape_press);
+        },
+
+        componentWillUnmount: function() {
+            document.removeEventListener('keydown', this.escape_press);
+        },
+
+        map_dungeon_click: function(name) {
+            this.setState({ dungeon: name });
+        },
+
+        escape_press: function(event) {
+            event.key === 'Escape' && this.setState({ dungeon: null });
         },
 
         item_click: function(name) {
@@ -493,7 +641,18 @@
         },
 
         completion_click: function(source, name) {
-            this.setState({ model: update(this.state.model, at(source, at(name, { $toggle: ['completed'] }))) });
+            var query = this.props.query,
+                model = this.state.model,
+                target = model[source][name],
+                completed = target.completed;
+
+            this.setState({ model: update(model, at(source, at(name, Object.assign(
+                { completed: { $set: !completed } },
+                query.mode === 'keysanity' && source === 'dungeons' && {
+                    locations: { boss: { marked: { $set: !completed } } },
+                    chests: target.is_deviating() ? {} : function(x) { return x - (!completed ? 1 : -1); }
+                }))))
+            });
         },
 
         prize_click: function(name) {
@@ -504,6 +663,21 @@
         medallion_click: function(name) {
             var value = counter(this.state.model.dungeons[name].medallion, 1, 3);
             this.setState({ model: update(this.state.model, { dungeons: at(name, { medallion: { $set: value } }) }) });
+        },
+
+        door_click: function(dungeon, name) {
+            this.setState({ model: update(this.state.model, { dungeons: at(dungeon, { doors: at(name, { $toggle: ['opened'] }) }) }) });
+        },
+
+        location_click: function(dungeon, name) {
+            var target = this.state.model.dungeons[dungeon],
+                marked = target.locations[name].marked;
+            
+            this.setState({ model: update(this.state.model, { dungeons: at(dungeon, {
+                locations: at(name, { marked: { $set: !marked } }),
+                completed: name !== 'boss' ? {} : { $set: !marked },
+                chests: target.is_deviating() ? {} : function(x) { return x - (!marked ? 1 : -1); }
+            }) }) });
         },
 
         big_key_click: function(source, name) {

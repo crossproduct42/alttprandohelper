@@ -7,7 +7,7 @@
   <script src="js/index.js"></script>
   <style>
   body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-  label { width: 9em; display: inline-block; }
+  label:first-child { width: 9em; display: inline-block; }
   div { margin: 5px 0; }
   .hidden { display: none; }
   .invalid { background-color: #ffcccc; }
@@ -34,6 +34,8 @@
     <button type="button" class="launch" data-mode="keysanity" data-map="no">Tracker only</button>
     <button type="button" class="launch" data-mode="keysanity" data-map="hmap">Horizontal map</button>
     <button type="button" class="launch" data-mode="keysanity" data-map="vmap">Vertical map</button>
+    <label><input type="checkbox" id="ipbj" checked> IP Bomb Jump</label>
+    <label><input type="checkbox" id="podbj" checked> PoD Bomb Jump</label>
   </div>
 
   <div>
