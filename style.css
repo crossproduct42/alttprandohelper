@@ -1,4 +1,5 @@
 @import url('sprite.css');
+@import url('keysanity.css');
 
 body {
   margin: 0px;
@@ -44,7 +45,7 @@ body {
 
 .prize,
 #tracker .medallion,
-.big-key,
+#tracker .big-key,
 .keys,
 .keysanity #tracker .chest { width: 32px; height: 32px; position: absolute; }
 
@@ -55,7 +56,7 @@ body {
 .prize { bottom: 0; right: 0; }
 #tracker .medallion { bottom: 0; }
 .keysanity #tracker .medallion { top: 0; right: 0; }
-.big-key { bottom: 0; }
+#tracker .big-key { bottom: 0; }
 .dungeon .keys { left: 16px; }
 .keysanity .dungeon .chest { bottom: 0; left: 16px }
 .agahnim-keys .keys:first-child { top: 0; right: 0; }
@@ -84,17 +85,16 @@ body {
 }
 
 #map { width: 448px; height: 448px; position: relative; }
-#map .world-light,
-#map .world-dark { width: 442px; height: 442px; position: relative; background-size: 100% 100%; }
-#map .world-light { background-image: url(images/overlay/map_lw.png); }
-#map .world-dark { background-image: url(images/overlay/map_dw.png); }
+#map .first,
+#map .second { width: 442px; height: 442px; position: relative; background-size: 100% 100%; }
 .hmap #map { width: 888px; margin-left: 4px; }
 .vmap #map { height: 888px; margin-top: 4px; }
-.hmap #map .world-dark { margin-left: 4px; }
-.vmap #map .world-light { margin: 0 auto; }
-.vmap #map .world-dark { margin: 4px auto 0; }
+.hmap #map .second { margin-left: 4px; }
+.vmap #map .first { margin: 0 auto; }
+.vmap #map .second { margin: 4px auto 0; }
 
-#map .chest {
+#map .chest,
+#map .location {
   width: 24px;
   height: 24px;
   margin-left: -12px;
@@ -103,7 +103,7 @@ body {
   background-size: 100% 100%;
 }
 
-#map .boss {
+#map .world .boss {
   width: 24px;
   height: 24px;
   margin-left: -12px;
@@ -115,7 +115,10 @@ body {
   z-index: 2;
 }
 
-.encounter {
+.encounter,
+#map .door,
+#map .location.big-chest,
+#map .location.boss {
   width: 36px;
   height: 36px;
   margin-left: -18px;
@@ -133,12 +136,24 @@ body {
   background-size: 100% 100%;
 }
 
+#map .door .image,
+#map .location .image {
+  width: 24px;
+  height: 24px;
+  margin: 6px;
+  background-size: 100% 100%;
+}
+
 #map .chest,
 #map .encounter,
-#map .dungeon { background-image: url(images/overlay/poi.png); }
+#map .dungeon,
+#map .door,
+#map .location { background-image: url(images/overlay/poi.png); }
 #map .chest.highlight,
 #map .encounter.highlight,
-#map .dungeon.highlight { background-image: url(images/overlay/highlighted.png); }
+#map .dungeon.highlight,
+#map .door.highlight,
+#map .location.highlight { background-image: url(images/overlay/highlighted.png); }
 
 .marked { background-color: #7f7f7f; }
 .unavailable { background-color: red; }
@@ -240,10 +255,6 @@ body {
 .chest-4 { background-image: url(images/dungeons/chest4.png); }
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
-.big-key { background-image: url(images/dungeons/big_key.png); }
-.keys { background-image: url(images/dungeons/key.png); }
-.keysanity .chest { background-image: url(images/dungeons/chest_single.png); }
-.keysanity .chest.empty { background-image: url(images/dungeons/chest_empty.png); }
 
 .bomb { background-image: url(images/overlay/bomb.png); }
 .crystal { background-image: url(images/overlay/crystal.png); }
@@ -251,17 +262,20 @@ body {
 .pendant-1 { background-image: url(images/overlay/pendant1.png); }
 .pendant-2 { background-image: url(images/overlay/pendant2.png); }
 
-#map .eastern  { left: 93.6%; top: 38.8%; }
-#map .desert   { left: 7.6%;  top: 78.4%; }
-#map .hera     { left: 62.0%; top: 5.5%; }
+#map .first.world { background-image: url(images/overlay/map_lw.png); }
+#map .second.world { background-image: url(images/overlay/map_dw.png); }
 
-#map .darkness { left: 94.0%; top: 40.0%; }
-#map .swamp    { left: 47.0%; top: 91.0%; }
-#map .skull    { left: 6.6%;  top: 5.4%; }
-#map .thieves  { left: 12.8%; top: 47.9%; }
-#map .ice      { left: 79.6%; top: 85.8%; }
-#map .mire     { left: 11.6%; top: 82.9%; }
-#map .turtle   { left: 93.8%; top: 7.0%; }
+#map .world .eastern  { left: 93.6%; top: 38.8%; }
+#map .world .desert   { left: 7.6%;  top: 78.4%; }
+#map .world .hera     { left: 62.0%; top: 5.5%; }
+
+#map .world .darkness { left: 94.0%; top: 40.0%; }
+#map .world .swamp    { left: 47.0%; top: 91.0%; }
+#map .world .skull    { left: 6.6%;  top: 5.4%; }
+#map .world .thieves  { left: 12.8%; top: 47.9%; }
+#map .world .ice      { left: 79.6%; top: 85.8%; }
+#map .world .mire     { left: 11.6%; top: 82.9%; }
+#map .world .turtle   { left: 93.8%; top: 7.0%; }
 
 #map .agahnim { left: 50.0%; top: 52.6%; }
 
