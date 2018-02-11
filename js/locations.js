@@ -53,15 +53,13 @@
             darkworld: true,
             chest_limit: 5,
             is_completable: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
                 if (!items.moonpearl || !items.has_bow() || !items.hammer) return 'unavailable';
-                if (!agahnim && !items.glove) return 'unavailable';
+                if (!model.agahnim() && !items.glove) return 'unavailable';
                 return items.lantern ? 'available' : 'dark';
             },
             is_progressable: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
                 if (!items.moonpearl) return 'unavailable';
-                if (!agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
+                if (!model.agahnim() && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
                 return !(items.has_bow() && items.lantern) ||
                     this.chests === 1 && !items.hammer ?
                     'possible' : 'available';
@@ -72,16 +70,14 @@
             darkworld: true,
             chest_limit: 6,
             is_completable: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
                 if (!items.hammer || !items.hookshot) return 'unavailable';
-                if (!items.glove && !agahnim) return 'unavailable';
+                if (!items.glove && !model.agahnim()) return 'unavailable';
                 return 'available';
             },
             is_progressable: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
                 if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
-                if (!items.can_reach_outcast(model) && !(agahnim && items.hammer)) return 'unavailable';
+                if (!items.can_reach_outcast(model.agahnim()) && !(model.agahnim() && items.hammer)) return 'unavailable';
 
                 if (this.chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
                 if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
@@ -94,10 +90,10 @@
             darkworld: true,
             chest_limit: 2,
             is_completable: function(items, model) {
-                return !items.can_reach_outcast(model) || !items.firerod || !items.sword ? 'unavailable' : 'available';
+                return !items.can_reach_outcast(model.agahnim()) || !items.firerod || !items.sword ? 'unavailable' : 'available';
             },
             is_progressable: function(items, model) {
-                if (!items.can_reach_outcast(model)) return 'unavailable';
+                if (!items.can_reach_outcast(model.agahnim())) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
             }
         },
@@ -107,11 +103,11 @@
             chest_limit: 4,
             is_completable: function(items, model) {
                 if (!(items.has_melee() || items.has_cane())) return 'unavailable';
-                if (!items.can_reach_outcast(model)) return 'unavailable';
+                if (!items.can_reach_outcast(model.agahnim())) return 'unavailable';
                 return 'available';
             },
             is_progressable: function(items, model) {
-                if (!items.can_reach_outcast(model)) return 'unavailable';
+                if (!items.can_reach_outcast(model.agahnim())) return 'unavailable';
                 return this.chests === 1 && !items.hammer ? 'possible' : 'available';
             }
         },
@@ -223,8 +219,7 @@
         tree: {
             caption: 'Lumberjack Tree {agahnim}{boots}',
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return agahnim && items.boots ? 'available' : 'possible';
+                return model.agahnim() && items.boots ? 'available' : 'possible';
             }
         },
         lost_man: {
@@ -310,15 +305,13 @@
         graveyard_n: {
             caption: 'Graveyard Cliff Cave {mirror}',
             is_available: function(items, model) {
-                return items.can_reach_outcast(model) && items.mirror ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) && items.mirror ? 'available' : 'unavailable';
             }
         },
         graveyard_e: {
             caption: 'King\'s Tomb {boots} + {glove2}/{mirror}',
             is_available: function(items, model) {
-                if (!items.boots) return 'unavailable';
-                if (items.can_reach_outcast(model) && items.mirror || items.glove === 2) return 'available';
-                return 'unavailable';
+                return items.boots && (items.glove === 2 || items.can_reach_outcast(model.agahnim()) && items.mirror) ? 'available' : 'unavailable';
             }
         },
         witch: {
@@ -433,8 +426,7 @@
         bombos: {
             caption: 'Bombos Tablet {mirror}{sword2}{book}',
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return items.book && items.mirror && (items.can_reach_outcast(model) || agahnim && items.moonpearl && items.hammer) ?
+                return items.book && items.mirror && (items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer) ?
                     items.sword >= 2 ? 'available' : 'possible' :
                     'unavailable';
             }
@@ -442,8 +434,7 @@
         grove_s: {
             caption: 'South of Grove {mirror}',
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return items.mirror && (items.can_reach_outcast(model) || agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
+                return items.mirror && (items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
             }
         },
         dam: {
@@ -461,9 +452,8 @@
         island_lake: {
             caption: 'Lake Hylia Island {mirror}',
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
                 return items.flippers ?
-                    items.moonpearl && items.mirror && (agahnim || items.glove === 2 || items.glove && items.hammer) ?
+                    items.moonpearl && items.mirror && (model.agahnim() || items.glove === 2 || items.glove && items.hammer) ?
                         'available' : 'possible' :
                     'unavailable';
             }
@@ -507,7 +497,7 @@
             caption: 'Bumper Cave {cape}',
             darkworld: true,
             is_available: function(items, model) {
-                return items.can_reach_outcast(model) ?
+                return items.can_reach_outcast(model.agahnim()) ?
                     items.glove && items.cape ? 'available' : 'possible' :
                     'unavailable';
             }
@@ -552,8 +542,7 @@
             caption: 'Catfish',
             darkworld: true,
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return items.moonpearl && items.glove && (agahnim || items.hammer || items.glove === 2 && items.flippers) ?
+                return items.moonpearl && items.glove && (model.agahnim() || items.hammer || items.glove === 2 && items.flippers) ?
                     'available' : 'unavailable';
             }
         },
@@ -561,21 +550,21 @@
             caption: 'Treasure Chest Minigame: Pay 30 rupees',
             darkworld: true,
             is_available: function(items, model) {
-                return items.can_reach_outcast(model) ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         c_house: {
             caption: 'C House',
             darkworld: true,
             is_available: function(items, model) {
-                return items.can_reach_outcast(model) ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         bomb_hut: {
             caption: 'Bombable Hut {bomb}',
             darkworld: true,
             is_available: function(items, model) {
-                return items.can_reach_outcast(model) ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         purple: {
@@ -602,17 +591,15 @@
                 }, 0);
 
                 if (crystal_count < 2 || !items.moonpearl) return 'unavailable';
-                var agahnim = model.encounters.agahnim.completed;
-                return items.hammer && (agahnim || items.glove) ||
-                    agahnim && items.mirror && items.can_reach_outcast(model) ? 'available' : 'unavailable';
+                return items.hammer && (model.agahnim() || items.glove) ||
+                    model.agahnim() && items.mirror && items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         pyramid: {
             caption: 'Pyramid',
             darkworld: true,
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return agahnim || items.glove && items.hammer && items.moonpearl ||
+                return model.agahnim() || items.glove && items.hammer && items.moonpearl ||
                     items.glove === 2 && items.moonpearl && items.flippers ? 'available' : 'unavailable';
             }
         },
@@ -620,24 +607,21 @@
             caption: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
             darkworld: true,
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return items.can_reach_outcast(model) || agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         stumpy: {
             caption: 'Ol\' Stumpy',
             darkworld: true,
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return items.can_reach_outcast(model) || agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         swamp_ne: {
             caption: 'Hype Cave! {bomb} (NPC + 4 {bomb})',
             darkworld: true,
             is_available: function(items, model) {
-                var agahnim = model.encounters.agahnim.completed;
-                return items.can_reach_outcast(model) || agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
+                return items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         mire_w: {
@@ -703,7 +687,8 @@
         return {
             dungeons: dungeons,
             encounters: encounters,
-            chests: { standard: standard_chests, open: chests }[mode]
+            chests: { standard: standard_chests, open: chests }[mode],
+            agahnim: function() { return this.encounters.agahnim.completed; }
         };
     };
 }(window));

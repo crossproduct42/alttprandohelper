@@ -8,8 +8,7 @@
         has_cane: function() { return this.somaria || this.byrna; },
         has_rod: function() { return this.firerod || this.icerod; },
 
-        can_reach_outcast: function(model) {
-            var agahnim = model.encounters.agahnim.completed;
+        can_reach_outcast: function(agahnim) {
             return this.moonpearl && (
                 this.glove === 2 || this.glove && this.hammer ||
                 agahnim && this.hookshot && (this.hammer || this.glove || this.flippers));
