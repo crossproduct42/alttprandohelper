@@ -7,6 +7,7 @@
         has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
         has_cane: function() { return this.somaria || this.byrna; },
         has_rod: function() { return this.firerod || this.icerod; },
+        has_fire: function() { return this.lantern || this.firerod; },
 
         can_reach_outcast: function(agahnim) {
             return this.moonpearl && (
