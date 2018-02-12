@@ -340,7 +340,7 @@
             div('.encounter', {
                 className: classNames(
                     as_location(name),
-                    encounter.completed || encounter.is_completable(model.items, model), {
+                    encounter.completed || encounter.can_complete(model.items, model), {
                         marked: encounter.completed,
                         highlight: props.highlighted
                     }),
@@ -358,7 +358,7 @@
             div('.boss', {
                 className: classNames(
                     as_location(name),
-                    dungeon.completed || dungeon.is_completable(model.items, model),
+                    dungeon.completed || dungeon.can_complete(model.items, model),
                     { marked: dungeon.completed }),
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
@@ -366,7 +366,7 @@
             div('.dungeon', {
                 className: classNames(
                     as_location(name),
-                    dungeon.chests === 0 || dungeon.is_progressable(model.items, model), {
+                    dungeon.chests === 0 || dungeon.can_progress(model.items, model), {
                         marked: dungeon.chests === 0,
                         highlight: props.highlighted
                     }),
