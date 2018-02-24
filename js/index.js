@@ -16,13 +16,22 @@
                 hmap: this.getAttribute('data-map') === 'hmap',
                 vmap: this.getAttribute('data-map') === 'vmap',
                 sprite: document.getElementById('sprite').value,
+                scale: document.getElementById('scale').value,
                 bg: document.getElementById('background-color').value ||
                     document.getElementById('custom-color').value
             },
-            size = {
-                w: params.hmap ? 1340 : params.vmap ? 270 : 448,
-                h: params.vmap ? 806 : 448
-            };
+            size = function(scale, size) {
+                return {
+                    w: params.hmap ? size[scale].m : size[scale].t,
+                    h: params.vmap ? size[scale].m : size[scale].t
+                };
+            }(params.scale || '_', {
+                _: { t: 448, m: 1340 },
+                '90': { t: 404, m: 1206 },
+                '80': { t: 359, m: 1072 },
+                '70': { t: 314, m: 938 },
+                '60': { t: 269, m: 804 }
+            });
 
         if (!valid_css_color(params.bg)) return;
 
@@ -40,6 +49,7 @@
             params.hmap && 'hmap',
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,
+            params.scale && 'scale='+params.scale,
             !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
         ]).join('&');
     }

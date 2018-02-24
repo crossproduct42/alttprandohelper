@@ -334,7 +334,13 @@
         render: function() {
             var query = this.props.query;
             return div('#page', {
-                    className: classNames({ row: query.hmap, hmap: query.hmap, vmap: query.vmap }, query.sprite),
+                    className: classNames({
+                            row: query.hmap,
+                            hmap: query.hmap,
+                            vmap: query.vmap
+                        },
+                        query.scale && 'scale-'+query.scale,
+                        query.sprite),
                     style: query.bg && { 'background-color': query.bg }
                 },
                 t(Tracker, Object.assign({
