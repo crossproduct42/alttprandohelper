@@ -30,6 +30,15 @@
             bow: { max: 3 },
             boomerang: { max: 3 },
             glove: { max: 2 }
+        }),
+        dec: counters(-1, {
+            tunic: { min: 1, max: 3 },
+            sword: { max: 4 },
+            shield: { max: 3 },
+            bottle: { max: 4 },
+            bow: { max: 3 },
+            boomerang: { max: 3 },
+            glove: { max: 2 }
         })
     };
 

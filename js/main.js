@@ -10,7 +10,8 @@
             className: classNames(name,
                 value === true ? 'active' :
                 value > 0 ? 'active-'+value : null),
-            onClick: function() { props.onClick(name); }
+            onClick: function() { props.onClick(name) },
+            onContextMenu: function(e) { e.preventDefault(); props.ContextMenu(name)  }
         });
     };
 
@@ -137,7 +138,7 @@
         },
 
         item: function(name) {
-            return t(Item, { name: name, value: this.props.items[name], onClick: this.props.item_click });
+            return t(Item, { name: name, value: this.props.items[name], onClick: this.props.item_click, ContextMenu: this.props.item_click_back });
         },
 
         dungeon: function(name) {
@@ -345,6 +346,7 @@
                 },
                 t(Tracker, Object.assign({
                     item_click: this.item_click,
+                    item_click_back: this.item_click_back,
                     boss_click: this.boss_click,
                     prize_click: this.prize_click,
                     medallion_click: this.medallion_click,
@@ -359,6 +361,13 @@
                 change = typeof items[name] === 'boolean' ?
                     { $toggle: [name] } :
                     at(name, { $set: items.inc(name) });
+            this.setState(update(this.state, { items: change }));
+        },
+        item_click_back: function(name) {
+            var items = this.state.items,
+                change = typeof items[name] === 'boolean' ?
+                    { $toggle: [name] } :
+                    at(name, { $set: items.dec(name) });
             this.setState(update(this.state, { items: change }));
         },
 
