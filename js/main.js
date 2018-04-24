@@ -20,7 +20,9 @@
             has_pearl = props.items.moonpearl;
         return div('.item.tunic', {
             className: classNames('active-'+value, { bunny: !has_pearl }),
-            onClick: function() { props.onClick('tunic'); }
+            onClick: function() { props.onClick('tunic'); },
+            onContextMenu: function(e) { e.preventDefault(); props.ContextMenu('tunic')  }
+
         });
     };
 
@@ -30,11 +32,13 @@
         return [
             div('.boss', {
                 className: classNames(name, { defeated: dungeon.completed }),
-                onClick: function() { props.onBossClick(name); }
+                onClick: function() { props.onBossClick(name); },
+                onContextMenu: function(e) { e.preventDefault(); }
             }),
             div('.prize', {
                 className: 'prize-'+dungeon.prize,
-                onClick: function() { props.onPrizeClick(name); }
+                onClick: function() { props.onPrizeClick(name); },
+                onContextMenu: function(e) { e.preventDefault(); props.onPrizeClickBack(name) }
             })
         ];
     };
@@ -47,7 +51,8 @@
                 t(Wrapped, props),
                 div('.medallion', {
                     className: 'medallion-'+dungeon.medallion,
-                    onClick: function() { props.onMedallionClick(name); }
+                    onClick: function() { props.onMedallionClick(name); },
+                    onContextMenu: function(e) { e.preventDefault(); props.onMedallionClickBack(name) }
                 })
             ];
         };
@@ -60,7 +65,8 @@
             dungeon = props.value;
         return div('.chest', {
             className: 'chest-'+dungeon.chests,
-            onClick: function() { props.onClick(name); }
+            onClick: function() { props.onClick(name); },
+            onContextMenu: function(e) { e.preventDefault(); props.ContextMenu(name) }
         });
     };
 
@@ -134,7 +140,7 @@
         },
 
         tunic: function() {
-            return t(TunicItem, { items: this.props.items, onClick: this.props.item_click });
+            return t(TunicItem, { items: this.props.items, onClick: this.props.item_click, ContextMenu: this.props.item_click_back });
         },
 
         item: function(name) {
@@ -146,7 +152,8 @@
                 name: name,
                 value: this.props.dungeons[name],
                 onBossClick: this.props.boss_click,
-                onPrizeClick: this.props.prize_click });
+                onPrizeClick: this.props.prize_click,
+                onPrizeClickBack: this.props.prize_click_back });
         },
 
         medallion_dungeon: function(name) {
@@ -155,11 +162,13 @@
                 value: this.props.dungeons[name],
                 onBossClick: this.props.boss_click,
                 onPrizeClick: this.props.prize_click,
-                onMedallionClick: this.props.medallion_click });
+                onPrizeClickBack: this.props.prize_click_back,
+                onMedallionClick: this.props.medallion_click,
+                onMedallionClickBack: this.props.medallion_click_back });
         },
 
         chest: function(name) {
-            return t(Chest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
+            return t(Chest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click, ContextMenu: this.props.chest_click_back });
         }
     });
 
@@ -349,8 +358,11 @@
                     item_click_back: this.item_click_back,
                     boss_click: this.boss_click,
                     prize_click: this.prize_click,
+                    prize_click_back: this.prize_click_back,
                     medallion_click: this.medallion_click,
+                    medallion_click_back: this.medallion_click_back,
                     chest_click: this.chest_click,
+                    chest_click_back: this.chest_click_back,
                     horizontal: query.hmap
                 }, this.state)),
                 (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap }, this.state)));
@@ -374,9 +386,12 @@
         boss_click: function(name) {
             this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
         },
-
         prize_click: function(name) {
             var value = counter(this.state.dungeons[name].prize, 1, 4);
+            this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
+        },
+        prize_click_back: function(name) {
+            var value = counter(this.state.dungeons[name].prize, -1, 4);
             this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
         },
 
@@ -384,13 +399,20 @@
             var value = counter(this.state.dungeons[name].medallion, 1, 3);
             this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
         },
-
+        medallion_click_back: function(name) {
+            var value = counter(this.state.dungeons[name].medallion, -1, 3);
+            this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
+        },
         chest_click: function(name) {
             var dungeon = this.state.dungeons[name],
                 value = counter(dungeon.chests, -1, dungeon.chest_limit);
             this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
         },
-
+        chest_click_back: function(name) {
+            var dungeon = this.state.dungeons[name],
+                value = counter(dungeon.chests, 1, dungeon.chest_limit);
+            this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
+        },
         map_chest_click: function(name) {
             this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
         }
