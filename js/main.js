@@ -209,6 +209,7 @@
                     highlight: props.highlighted
                 }),
             onClick: function() { props.onClick(name) },
+            onContextMenu: function(e) { e.preventDefault() },
             onMouseOver: function() { props.onHighlight(true); },
             onMouseOut: function() { props.onHighlight(false); }
         });
@@ -222,6 +223,7 @@
         return [
             div('.boss', {
                 className: as_location(name),
+                onContextMenu: function(e) { e.preventDefault() },
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
             }),
@@ -232,6 +234,7 @@
                         marked: completed,
                         highlight: props.highlighted
                     }),
+                onContextMenu: function(e) { e.preventDefault() },
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
             })
@@ -248,6 +251,7 @@
                     as_location(name),
                     dungeon.completed || dungeon.is_completable(model.items, model),
                     { marked: dungeon.completed }),
+                onContextMenu: function(e) { e.preventDefault() },
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
             }),
@@ -258,6 +262,7 @@
                         marked: dungeon.chests === 0,
                         highlight: props.highlighted
                     }),
+                onContextMenu: function(e) { e.preventDefault() },
                 onMouseOver: function() { props.onHighlight(true); },
                 onMouseOut: function() { props.onHighlight(false); }
             })
