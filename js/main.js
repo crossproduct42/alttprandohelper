@@ -320,7 +320,7 @@
                     div('.world-dark', locations[1].map(property('tag')))
                 ];
 
-            return div('#map', { className: classNames({ cell: this.props.horizontal }) },
+            return div('#map', { className: classNames({ cell: this.props.horizontal }), onContextMenu: function(e) { e.preventDefault() }, },
                 this.props.horizontal ? grid.call(null, worlds) : worlds,
                 t(Caption, { text: this.state.caption })
             );
