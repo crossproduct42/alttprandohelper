@@ -341,7 +341,7 @@
                         },
                         query.scale && 'scale-'+query.scale,
                         query.sprite),
-                    style: query.bg && { 'background-color': query.bg }
+                    style: { 'background-color': query.bg || 'black' }
                 },
                 t(Tracker, Object.assign({
                     item_click: this.item_click,

@@ -51,7 +51,7 @@
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,
             params.scale && 'scale='+params.scale,
-            'bg='+encodeURIComponent(params.bg)
+            !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
         ]).join('&');
     }
 
