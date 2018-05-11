@@ -33,7 +33,8 @@
                 '60': { t: 269, m: 804 }
             });
 
-        if (!valid_css_color(params.bg)) return;
+        if (!document.getElementById('background-color').value &&
+            !valid_css_color(params.bg)) return;
 
         open('tracker.html?' + query(params),
             '',
@@ -50,7 +51,7 @@
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,
             params.scale && 'scale='+params.scale,
-            !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
+            'bg='+encodeURIComponent(params.bg)
         ]).join('&');
     }
 
