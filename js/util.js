@@ -92,7 +92,7 @@
     };
 
     window.valid_css_color = function(text) {
-        if (!text || text === 'inherit' || text === 'transparent') return false;
+        if (!text || text === 'inherit') return false;
         var e1 = document.createElement('div'),
             e2 = document.createElement('div');
         e1.style.color = 'rgb(0,0,0)';

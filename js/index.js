@@ -33,8 +33,7 @@
                 '60': { t: 269, m: 804 }
             });
 
-        if (!document.getElementById('background-color').value &&
-            !valid_css_color(params.bg)) return;
+        if (!valid_css_color(params.bg)) return;
 
         open('tracker.html?' + query(params),
             '',
