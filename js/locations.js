@@ -584,7 +584,7 @@
             }
         },
         fairy_dw: {
-            caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
+            caption: 'Pyramid Faerie: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
             darkworld: true,
             is_available: function(items, model) {
                 var crystal_count = Object.keys(model.dungeons).reduce(function(s, name) {
