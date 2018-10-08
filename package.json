@@ -1,0 +1,21 @@
+{
+  "name": "alttprandohelper",
+  "private": true,
+  "scripts": {
+    "build": "babel src -d js",
+    "watch": "babel src -d js --watch"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  },
+  "babel": {
+    "presets": [
+      ["env", { "modules": false }],
+      "stage-2",
+      "react"
+    ]
+  }
+}
