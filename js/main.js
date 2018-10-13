@@ -625,7 +625,7 @@
         item_click: function(name) {
             var items = this.state.model.items,
                 change = typeof items[name] === 'boolean' ?
-                    { $toggle: [name] } :
+                    update.toggle(name) :
                     at(name, { $set: items.inc(name) });
             this.setState({ model: update(this.state.model, { items: change }) });
         },
@@ -656,7 +656,7 @@
         },
 
         door_click: function(dungeon, name) {
-            this.setState({ model: update(this.state.model, { dungeons: at(dungeon, { doors: at(name, { $toggle: ['opened'] }) }) }) });
+            this.setState({ model: update(this.state.model, { dungeons: at(dungeon, { doors: at(name, update.toggle('opened')) }) }) });
         },
 
         location_click: function(dungeon, name) {
@@ -671,7 +671,7 @@
         },
 
         big_key_click: function(source, name) {
-            this.setState({ model: update(this.state.model, at(source, at(name, { $toggle: ['big_key'] }))) });
+            this.setState({ model: update(this.state.model, at(source, at(name, update.toggle('big_key')))) });
         },
 
         key_click: function(source, name) {
@@ -687,7 +687,7 @@
         },
 
         map_chest_click: function(name) {
-            this.setState({ model: update(this.state.model, { chests: at(name, { $toggle: ['marked'] }) }) });
+            this.setState({ model: update(this.state.model, { chests: at(name, update.toggle('marked')) }) });
         }
     });
 
