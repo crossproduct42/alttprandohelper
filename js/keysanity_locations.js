@@ -171,7 +171,7 @@
                 // Todo: verify
                 hammery_jump: opts.podbj,
                 keys_left: function() {
-                    return this.keys - sum(map(this.doors, property('opened')));
+                    return this.keys - _.sum(_.map(this.doors, property('opened')));
                 },
                 doors: function() {
                     var keys_left = function() {
@@ -601,7 +601,7 @@
                         'unavailable';
                 },
                 keys_left: function() {
-                    return this.keys + !this.locations.big_key.marked - sum(map(this.doors, property('opened')));
+                    return this.keys + !this.locations.big_key.marked - _.sum(_.map(this.doors, property('opened')));
                 },
                 doors: {
                     crystaroller: {
@@ -688,7 +688,7 @@
             } }
         });
 
-        return map_values(dungeons, function(dungeon) {
+        return _.mapValues(dungeons, function(dungeon) {
             return update(dungeon, { $merge: {
                 can_complete: can_complete,
                 can_progress: can_progress,
@@ -703,13 +703,13 @@
 
     function can_progress(items, model) {
         var _this = this;
-        var locations = filter(this.locations, not(property('marked')));
-        var states = map(locations, function(location) { return location.can_reach.call(_this, items, model); });
-        return max_by(states, function(state) { return ['unavailable', 'dark', 'possible', 'available'].indexOf(state); });
+        var locations = _.filter(this.locations, not(property('marked')));
+        var states = _.map(locations, function(location) { return location.can_reach.call(_this, items, model); });
+        return _.maxBy(states, function(state) { return ['unavailable', 'dark', 'possible', 'available'].indexOf(state); });
     }
 
     function is_deviating() {
-        return this.chests !== filter(this.locations, not(property('marked'))).length;
+        return this.chests !== _.filter(this.locations, not(property('marked'))).length;
     }
 
     function update_keysanity_encounters(encounters) {
@@ -777,17 +777,17 @@
     };
 
     function build_keysanity_dungeons(dungeons) {
-        return map_values(dungeons, function(dungeon) {
+        return _.mapValues(dungeons, function(dungeon) {
             return update(dungeon, {
                 $merge: { keys: 0, big_key: false },
                 doors: function(doors) {
-                    return doors && map_values(doors, function(door) {
-                        return create(door, { opened: false });
+                    return doors && _.mapValues(doors, function(door) {
+                        return _.create(door, { opened: false });
                     });
                 },
                 locations: function(locations) {
-                    return map_values(locations, function(location) {
-                        return create(location, { marked: false });
+                    return _.mapValues(locations, function(location) {
+                        return _.create(location, { marked: false });
                     });
                 }
             });
@@ -795,7 +795,7 @@
     }
 
     function build_regions(regions) {
-        return update(map_values(regions, function(region) { return create(region); }), {
+        return update(_.mapValues(regions, function(region) { return _.create(region); }), {
             escape: { $merge: { keys: 0 } },
             castle_tower: { $merge: { keys: 0 } },
             ganon_tower: {

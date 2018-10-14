@@ -303,7 +303,7 @@
     };
 
     MapChest.source = function(props) {
-        return get(props.model, ['chests', props.name]);
+        return _.get(props.model, ['chests', props.name]);
     };
 
     var MapEncounter = function(props) {
@@ -330,7 +330,7 @@
     };
 
     MapEncounter.source = function(props) {
-        return get(props.model, ['encounters', props.name]);
+        return _.get(props.model, ['encounters', props.name]);
     };
 
     var MapDungeon = function(props) {
@@ -366,7 +366,7 @@
     };
 
     MapDungeon.source = function(props) {
-        return get(props.model, ['dungeons', props.name]);
+        return _.get(props.model, ['dungeons', props.name]);
     };
 
     var MapChestWithHighlight = WithHighlight(MapChest),
@@ -397,7 +397,7 @@
     };
 
     MiniMapDoor.source = function(props) {
-        return get(props.model, ['dungeons', props.dungeon, 'doors', props.name]);
+        return _.get(props.model, ['dungeons', props.dungeon, 'doors', props.name]);
     };
 
     var MiniMapLocation = function(props) {
@@ -424,7 +424,7 @@
     };
 
     MiniMapLocation.source = function(props) {
-        return get(props.model, ['dungeons', props.dungeon, 'locations', props.name]);
+        return _.get(props.model, ['dungeons', props.dungeon, 'locations', props.name]);
     };
 
     var MiniMapDoorWithHighlight = WithHighlight(MiniMapDoor),
@@ -480,7 +480,7 @@
 
         render: function() {
             var dungeon = this.props.dungeon,
-                points = partition(
+                points = _.partition(
                     dungeon ? this.dungeon_locations() : this.world_locations(),
                     property('second')),
                 maps = [
@@ -503,16 +503,16 @@
                 dungeon_click = this.dungeon_click,
                 change_caption = this.change_caption;
 
-            return flatten([
-                map(model.chests, function(chest, name) {
+            return _.flatten([
+                _.map(model.chests, function(chest, name) {
                     return { second: chest.darkworld,
                         tag: t(MapChestWithHighlight, { name: name, model: model, onClick: chest_click, change_caption: change_caption }) };
                 }),
-                map(model.encounters, function(encounter, name) {
+                _.map(model.encounters, function(encounter, name) {
                     return { second: encounter.darkworld,
                         tag: t(MapEncounterWithHighlight, { name: name, model: model, change_caption: change_caption }) };
                 }),
-                map(model.dungeons, function(dungeon, name) {
+                _.map(model.dungeons, function(dungeon, name) {
                     return {
                         second: dungeon.darkworld,
                         tag: t(MapDungeonWithHighlight, {
@@ -532,8 +532,8 @@
                 location_click = this.props.location_click,
                 change_caption = this.change_caption;
 
-            return flatten([
-                map(dungeon.doors, function(door, name) {
+            return _.flatten([
+                _.map(dungeon.doors, function(door, name) {
                     return {
                         second: door.second_map,
                         tag: t(MiniMapDoorWithHighlight, {
@@ -541,7 +541,7 @@
                             onClick: door_click, change_caption: change_caption })
                     };
                 }),
-                map(dungeon.locations, function(location, name) {
+                _.map(dungeon.locations, function(location, name) {
                     return {
                         second: location.second_map,
                         tag: t(MiniMapLocationWithHighlight, {

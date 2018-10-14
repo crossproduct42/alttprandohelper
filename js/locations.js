@@ -687,8 +687,8 @@
 
     var build = {
         dungeons: function(dungeons) {
-            return update(map_values(dungeons, function(dungeon) {
-                return create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 });
+            return update(_.mapValues(dungeons, function(dungeon) {
+                return _.create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 });
             }), {
                 mire:   { $merge: { medallion: 0 } },
                 turtle: { $merge: { medallion: 0 } }
@@ -696,14 +696,14 @@
         },
 
         encounters: function(encounters) {
-            return map_values(encounters, function(encounter) {
-                return create(encounter, { completed: false });
+            return _.mapValues(encounters, function(encounter) {
+                return _.create(encounter, { completed: false });
             });
         },
 
         chests: function(chests) {
-            return map_values(chests, function(chest) {
-                return create(chest, { marked: chest.marked || false });
+            return _.mapValues(chests, function(chest) {
+                return _.create(chest, { marked: chest.marked || false });
             });
         }
     };

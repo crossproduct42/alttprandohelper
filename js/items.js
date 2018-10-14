@@ -42,7 +42,7 @@
         };
     };
 
-    var open_items = create(items, {
+    var open_items = _.create(items, {
         tunic: 1,
         sword: 0,
         shield: 0,
