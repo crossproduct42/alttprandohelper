@@ -1,21 +1,21 @@
 (function(window) {
     'use strict';
 
-    var items = {
-        has_melee: function() { return this.sword || this.hammer; },
-        has_bow: function() { return this.bow > 1; },
-        has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
-        has_cane: function() { return this.somaria || this.byrna; },
-        has_rod: function() { return this.firerod || this.icerod; },
-        has_fire: function() { return this.lantern || this.firerod; },
+    const items = {
+        get has_melee() { return this.sword || this.hammer; },
+        get has_bow() { return this.bow > 1; },
+        get has_melee_bow() { return this.has_melee || this.has_bow; },
+        get has_cane() { return this.somaria || this.byrna; },
+        get has_rod() { return this.firerod || this.icerod; },
+        get has_fire() { return this.lantern || this.firerod; },
 
-        can_reach_outcast: function(agahnim) {
+        can_reach_outcast(agahnim) {
             return this.moonpearl && (
                 this.glove === 2 || this.glove && this.hammer ||
                 agahnim && this.hookshot && (this.hammer || this.glove || this.flippers));
         },
 
-        medallion_check: function(medallion) {
+        medallion_check(medallion) {
             if (!this.sword || !this.bombos && !this.ether && !this.quake) return 'unavailable';
             if (medallion === 1 && !this.bombos ||
                 medallion === 2 && !this.ether ||
@@ -36,13 +36,13 @@
 
     function counters(delta, limits) {
         return function(item) {
-            var max = limits[item].max,
-                min = limits[item].min;
+            const max = limits[item].max;
+            const min = limits[item].min;
             return counter(this[item], delta, max, min);
         };
     };
 
-    var open_items = _.create(items, {
+    const open_items = _.create(items, {
         tunic: 1,
         sword: 0,
         shield: 0,
@@ -78,7 +78,7 @@
         flute: false
     });
 
-    var standard_items = update(open_items, { sword: { $set: 1 } });
+    const standard_items = update(open_items, { sword: { $set: 1 } });
 
     window.item_model = function(mode) {
         return { items: { standard: standard_items }[mode] || open_items };

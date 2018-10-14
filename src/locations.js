@@ -1,53 +1,53 @@
 (function(window) {
     'use strict';
 
-    function always() { return 'available'; }
+    const always = () => 'available';
 
-    var dungeons = {
+    const dungeons = {
         eastern: {
             caption: 'Eastern Palace {lantern}',
             chest_limit: 3,
-            can_complete: function(items) {
-                return items.has_bow() ?
+            can_complete(items) {
+                return items.has_bow ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
-            can_progress: function(items) {
+            can_progress(items) {
                 return (this.chests > 2 || items.lantern) &&
-                    (this.chests > 1 || items.has_bow()) ?
+                    (this.chests > 1 || items.has_bow) ?
                     'available' : 'possible';
             }
         },
         desert: {
             caption: 'Desert Palace',
             chest_limit: 2,
-            can_enter: function(items) {
+            can_enter(items) {
                 return items.book || items.flute && items.glove === 2 && items.mirror;
             },
-            can_complete: function(items) {
-                if (!(items.has_melee_bow() || items.has_cane() || items.has_rod())) return 'unavailable';
+            can_complete(items) {
+                if (!(items.has_melee_bow || items.has_cane || items.has_rod)) return 'unavailable';
                 if (!this.can_enter(items)) return 'unavailable';
-                if (!items.glove || !items.has_fire()) return 'unavailable';
+                if (!items.glove || !items.has_fire) return 'unavailable';
                 return items.boots ? 'available' : 'possible';
             },
-            can_progress: function(items) {
+            can_progress(items) {
                 if (!this.can_enter(items)) return 'unavailable';
-                if (items.glove && items.has_fire() && items.boots) return 'available';
+                if (items.glove && items.has_fire && items.boots) return 'available';
                 return this.chests > 1 && items.boots ? 'available' : 'possible';
             }
         },
         hera: {
             caption: 'Tower of Hera',
             chest_limit: 2,
-            can_enter: function(items) {
+            can_enter(items) {
                 return (items.mirror || items.hookshot && items.hammer) && (items.glove || items.flute);
             },
-            can_complete: function(items) {
-                return items.has_melee() ? this.can_progress(items) : 'unavailable';
+            can_complete(items) {
+                return items.has_melee ? this.can_progress(items) : 'unavailable';
             },
-            can_progress: function(items) {
+            can_progress(items) {
                 return this.can_enter(items) ?
-                    items.has_fire() ?
+                    items.has_fire ?
                         items.flute || items.lantern ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
@@ -57,17 +57,17 @@
             caption: 'Palace of Darkness {lantern}',
             darkworld: true,
             chest_limit: 5,
-            can_enter: function(items, model) {
+            can_enter(items, model) {
                 return items.moonpearl && (model.agahnim() || items.glove && items.hammer || items.glove === 2 && items.flippers);
             },
-            can_complete: function(items, model) {
-                return this.can_enter(items, model) && items.has_bow() && items.hammer ?
+            can_complete(items, model) {
+                return this.can_enter(items, model) && items.has_bow && items.hammer ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
-            can_progress: function(items, model) {
+            can_progress(items, model) {
                 return this.can_enter(items, model) ?
-                    items.has_bow() && items.lantern &&
+                    items.has_bow && items.lantern &&
                         (this.chests > 1 || items.hammer) ?
                         'available' : 'possible' :
                     'unavailable';
@@ -77,14 +77,14 @@
             caption: 'Swamp Palace {mirror}',
             darkworld: true,
             chest_limit: 6,
-            can_enter: function(items, model) {
+            can_enter(items, model) {
                 return items.moonpearl && items.mirror && items.flippers &&
                     (items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.hammer);
             },
-            can_complete: function(items, model) {
+            can_complete(items, model) {
                 return this.can_enter(items, model) && items.hammer && items.hookshot ? 'available' : 'unavailable';
             },
-            can_progress: function(items, model) {
+            can_progress(items, model) {
                 if (!this.can_enter(items, model)) return 'unavailable';
                 if (this.chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
                 if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
@@ -96,14 +96,14 @@
             caption: 'Skull Woods',
             darkworld: true,
             chest_limit: 2,
-            can_enter: function(items, model) {
+            can_enter(items, model) {
                 return items.can_reach_outcast(model.agahnim());
             },
-            can_complete: function(items, model) {
+            can_complete(items, model) {
                 return this.can_enter(items, model) &&
                     items.firerod && items.sword ? 'available' : 'unavailable';
             },
-            can_progress: function(items, model) {
+            can_progress(items, model) {
                 return this.can_enter(items, model) ?
                     items.firerod && (this.chests > 1 || items.sword) ? 'available' : 'possible' :
                     'unavailable';
@@ -113,13 +113,13 @@
             caption: 'Thieves\' Town',
             darkworld: true,
             chest_limit: 4,
-            can_enter: function(items, model) {
+            can_enter(items, model) {
                 return items.can_reach_outcast(model.agahnim());
             },
-            can_complete: function(items, model) {
-                return (items.has_melee() || items.has_cane()) && this.can_enter(items, model) ? 'available' : 'unavailable';
+            can_complete(items, model) {
+                return (items.has_melee || items.has_cane) && this.can_enter(items, model) ? 'available' : 'unavailable';
             },
-            can_progress: function(items, model) {
+            can_progress(items, model) {
                 return this.can_enter(items, model) ?
                     this.chests > 1 || items.hammer ? 'available' : 'possible' :
                     'unavailable';
@@ -129,15 +129,15 @@
             caption: 'Ice Palace (yellow = might need bomb jump)',
             darkworld: true,
             chest_limit: 3,
-            can_enter: function(items) {
+            can_enter(items) {
                 return items.moonpearl && items.flippers && items.glove === 2 && (items.firerod || items.sword && items.bombos);
             },
-            can_complete: function(items) {
+            can_complete(items) {
                 return this.can_enter(items) && items.hammer ?
                     items.hookshot || items.somaria ? 'available' : 'possible' :
                     'unavailable';
             },
-            can_progress: function(items) {
+            can_progress(items) {
                 return this.can_enter(items) ?
                     items.hammer ? 'available' : 'possible' :
                     'unavailable';
@@ -147,21 +147,21 @@
             caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
             darkworld: true,
             chest_limit: 2,
-            can_enter: function(items) {
+            can_enter(items) {
                 return items.moonpearl && items.flute && items.glove === 2 && (items.boots || items.hookshot);
             },
-            can_complete: function(items) {
+            can_complete(items) {
                 return this.can_enter(items) && items.somaria ?
-                    items.medallion_check(this.medallion) || (items.has_fire() ?
+                    items.medallion_check(this.medallion) || (items.has_fire ?
                         items.lantern ? 'available' : 'dark' :
                         'possible') :
                     'unavailable';
             },
-            can_progress: function(items) {
+            can_progress(items) {
                 return this.can_enter(items) ?
                     items.medallion_check(this.medallion) || (
                         (this.chests > 1 ?
-                            items.has_fire() :
+                            items.has_fire :
                             items.lantern && items.somaria) ?
                         'available' : 'possible') :
                     'unavailable';
@@ -171,22 +171,22 @@
             caption: medallion_caption('Turtle Rock {medallion}{lantern}', 'turtle'),
             darkworld: true,
             chest_limit: 5,
-            can_enter: function(items) {
+            can_enter(items) {
                 return items.moonpearl && items.hammer && items.glove === 2 && items.somaria && (items.hookshot || items.mirror);
             },
-            can_complete: function(items) {
+            can_complete(items) {
                 return this.can_enter(items) && items.icerod && items.firerod ?
                     items.medallion_check(this.medallion) || (items.byrna || items.cape || items.shield === 3 ?
                         items.lantern ? 'available' : 'dark' :
                         'possible') :
                 'unavailable';
             },
-            can_progress: function(items) {
-                var state = this.can_enter(items) ? items.medallion_check(this.medallion) : 'unavailable';
+            can_progress(items) {
+                const state = this.can_enter(items) ? items.medallion_check(this.medallion) : 'unavailable';
                 if (state) return state;
 
-                var laser_safety = items.byrna || items.cape || items.shield === 3,
-                    dark_room = items.lantern ? 'available' : 'dark';
+                const laser_safety = items.byrna || items.cape || items.shield === 3;
+                const dark_room = items.lantern ? 'available' : 'dark';
                 if (this.chests <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
                 if (this.chests <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
                 if (this.chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
@@ -195,10 +195,10 @@
         }
     };
 
-    var encounters = {
+    const encounters = {
         agahnim: {
             caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
-            can_complete: function(items) {
+            can_complete(items) {
                 return items.sword >= 2 || items.cape && items.sword ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
@@ -206,12 +206,12 @@
         }
     };
 
-    var chests = {
+    const chests = {
         altar: {
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
-            is_available: function(items, model) {
-                var pendant_count = Object.keys(model.dungeons).reduce(function(s, name) {
-                    var dungeon = model.dungeons[name];
+            is_available(items, model) {
+                const pendant_count = Object.keys(model.dungeons).reduce((s, name) => {
+                    const dungeon = model.dungeons[name];
                     return [1,2].includes(dungeon.prize) && dungeon.completed ? s + 1 : s;
                 }, 0);
 
@@ -229,13 +229,13 @@
         },
         tree: {
             caption: 'Lumberjack Tree {agahnim}{boots}',
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return model.agahnim() && items.boots ? 'available' : 'possible';
             }
         },
         lost_man: {
             caption: 'Lost Old Man {lantern}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.glove || items.flute ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
@@ -243,7 +243,7 @@
         },
         spectacle_cave: {
             caption: 'Spectacle Rock Cave',
-            is_available: function(items) {
+            is_available(items) {
                 return items.glove || items.flute ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -251,7 +251,7 @@
         },
         spectacle_rock: {
             caption: 'Spectacle Rock {mirror}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.glove || items.flute ?
                     items.mirror ?
                         items.lantern || items.flute ? 'available' : 'dark' :
@@ -261,7 +261,7 @@
         },
         ether: {
             caption: 'Ether Tablet {sword2}{book}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
                     items.sword >= 2 ?
                         items.lantern || items.flute ? 'available' : 'dark' :
@@ -271,7 +271,7 @@
         },
         paradox: {
             caption: 'Death Mountain East (5 + 2 {bomb})',
-            is_available: function(items) {
+            is_available(items) {
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -279,7 +279,7 @@
         },
         spiral: {
             caption: 'Spiral Cave',
-            is_available: function(items) {
+            is_available(items) {
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -287,7 +287,7 @@
         },
         island_dm: {
             caption: 'Floating Island {mirror}',
-            is_available: function(items) {
+            is_available(items) {
                 return (items.glove || items.flute) && (items.hookshot || items.hammer && items.mirror) ?
                     items.mirror && items.moonpearl && items.glove === 2 ?
                         items.lantern || items.flute ? 'available' : 'dark' :
@@ -297,9 +297,9 @@
         },
         mimic: {
             caption: medallion_caption('Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion} unkown OR possible w/out {firerod})', 'turtle'),
-            is_available: function(items, model) {
+            is_available(items, model) {
                 if (!items.moonpearl || !items.hammer || items.glove !== 2 || !items.somaria || !items.mirror) return 'unavailable';
-                var state = items.medallion_check(model.dungeons.turtle.medallion);
+                const state = items.medallion_check(model.dungeons.turtle.medallion);
                 if (state) return state;
 
                 return items.firerod ?
@@ -309,43 +309,43 @@
         },
         graveyard_w: {
             caption: 'West of Sanctuary {boots}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.boots ? 'available' : 'unavailable';
             }
         },
         graveyard_n: {
             caption: 'Graveyard Cliff Cave {mirror}',
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) && items.mirror ? 'available' : 'unavailable';
             }
         },
         graveyard_e: {
             caption: 'King\'s Tomb {boots} + {glove2}/{mirror}',
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.boots && (items.glove === 2 || items.can_reach_outcast(model.agahnim()) && items.mirror) ? 'available' : 'unavailable';
             }
         },
         witch: {
             caption: 'Witch: Give her {mushroom}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.mushroom ? 'available' : 'unavailable';
             }
         },
         fairy_lw: {
             caption: 'Waterfall of Wishing (2) {flippers}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.flippers ? 'available' : 'unavailable';
             }
         },
         zora: {
             caption: 'King Zora: Pay 500 rupees',
-            is_available: function(items) {
+            is_available(items) {
                 return items.flippers || items.glove ? 'available' : 'unavailable';
             }
         },
         river: {
             caption: 'Zora River Ledge {flippers}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.flippers ? 'available' :
                     items.glove ? 'possible' :
                     'unavailable';
@@ -369,7 +369,7 @@
         },
         kid: {
             caption: 'Dying Boy: Distract him with {bottle} so that you can rob his family!',
-            is_available: function(items) {
+            is_available(items) {
                 return items.bottle ? 'available' : 'unavailable';
             }
         },
@@ -379,13 +379,13 @@
         },
         frog: {
             caption: 'Take the frog home {mirror} / Save+Quit',
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
             }
         },
         bat: {
             caption: 'Mad Batter {hammer}/{mirror} + {powder}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.powder && (items.hammer || items.glove === 2 && items.mirror && items.moonpearl) ? 'available' : 'unavailable';
             }
         },
@@ -395,9 +395,9 @@
         },
         sahasrahla: {
             caption: 'Sahasrahla {pendant0}',
-            is_available: function(items, model) {
-                return Object.keys(model.dungeons).reduce(function(state, name) {
-                    var dungeon = model.dungeons[name];
+            is_available(items, model) {
+                return Object.keys(model.dungeons).reduce((state, name) => {
+                    const dungeon = model.dungeons[name];
                     return dungeon.prize === 1 && dungeon.completed ? 'available' : state;
                 }, 'unavailable');
             }
@@ -408,25 +408,25 @@
         },
         library: {
             caption: 'Library {boots}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.boots ? 'available' : 'possible';
             }
         },
         dig_grove: {
             caption: 'Buried Itam {shovel}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.shovel ? 'available' : 'unavailable';
             }
         },
         desert_w: {
             caption: 'Desert West Ledge {book}/{mirror}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.book || items.flute && items.glove === 2 && items.mirror ? 'available' : 'possible';
             }
         },
         desert_ne: {
             caption: 'Checkerboard Cave {mirror}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.flute && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
             }
         },
@@ -436,7 +436,7 @@
         },
         bombos: {
             caption: 'Bombos Tablet {mirror}{sword2}{book}',
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.book && items.mirror && (items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer) ?
                     items.sword >= 2 ? 'available' : 'possible' :
                     'unavailable';
@@ -444,7 +444,7 @@
         },
         grove_s: {
             caption: 'South of Grove {mirror}',
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.mirror && (items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
             }
         },
@@ -462,14 +462,14 @@
         },
         island_lake: {
             caption: 'Lake Hylia Island {mirror}',
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.flippers && items.moonpearl && items.mirror &&
                     (model.agahnim() || items.glove === 2 || items.glove && items.hammer) ? 'available' : 'possible';
             }
         },
         hobo: {
             caption: 'Fugitive under the bridge {flippers}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.flippers ? 'available' : 'unavailable';
             }
         },
@@ -487,13 +487,13 @@
         },
         escape_dark: {
             caption: 'Escape Sewer Dark Room {lantern}',
-            is_available: function(items) {
+            is_available(items) {
                 return items.lantern ? 'available' : 'dark';
             }
         },
         escape_side: {
             caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
-            is_available: function(items) {
+            is_available(items) {
                 return items.glove ? 'available' :
                     items.lantern ? 'possible' : 'dark';
             }
@@ -505,7 +505,7 @@
         bumper: {
             caption: 'Bumper Cave {cape}',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) ?
                     items.glove && items.cape ? 'available' : 'possible' :
                     'unavailable';
@@ -514,7 +514,7 @@
         spike: {
             caption: 'Byrna Spike Cave',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove && items.hammer && (items.byrna || items.cape) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -523,7 +523,7 @@
         bunny: {
             caption: 'Super Bunny Chests (2)',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -532,7 +532,7 @@
         rock_hook: {
             caption: 'Cave Under Rock (3 top chests) {hookshot}',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove === 2 && items.hookshot ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -541,7 +541,7 @@
         rock_boots: {
             caption: 'Cave Under Rock (bottom chest) {hookshot}/{boots}',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove === 2 && (items.hookshot || (items.mirror && items.hammer && items.boots)) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
@@ -550,7 +550,7 @@
         catfish: {
             caption: 'Catfish',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.moonpearl && items.glove && (model.agahnim() || items.hammer || items.glove === 2 && items.flippers) ?
                     'available' : 'unavailable';
             }
@@ -558,44 +558,44 @@
         chest_game: {
             caption: 'Treasure Chest Minigame: Pay 30 rupees',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         c_house: {
             caption: 'C House',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         bomb_hut: {
             caption: 'Bombable Hut {bomb}',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
             }
         },
         purple: {
             caption: 'Gary\'s Lunchbox (save the frog first)',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
             }
         },
         pegs: {
             caption: '{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}!!!!!!!!',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.glove === 2 && items.hammer ? 'available' : 'unavailable';
             }
         },
         fairy_dw: {
             caption: 'Pyramid Faerie: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
             darkworld: true,
-            is_available: function(items, model) {
-                var crystal_count = Object.keys(model.dungeons).reduce(function(s, name) {
-                    var dungeon = model.dungeons[name];
+            is_available(items, model) {
+                const crystal_count = Object.keys(model.dungeons).reduce((s, name) => {
+                    const dungeon = model.dungeons[name];
                     return dungeon.prize === 4 && dungeon.completed ? s + 1 : s;
                 }, 0);
 
@@ -607,7 +607,7 @@
         pyramid: {
             caption: 'Pyramid',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return model.agahnim() || items.glove && items.hammer && items.moonpearl ||
                     items.glove === 2 && items.moonpearl && items.flippers ? 'available' : 'unavailable';
             }
@@ -615,28 +615,28 @@
         dig_game: {
             caption: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         stumpy: {
             caption: 'Ol\' Stumpy',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         swamp_ne: {
             caption: 'Hype Cave! {bomb} (NPC + 4 {bomb})',
             darkworld: true,
-            is_available: function(items, model) {
+            is_available(items, model) {
                 return items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer ? 'available' : 'unavailable';
             }
         },
         mire_w: {
             caption: 'West of Mire (2)',
             darkworld: true,
-            is_available: function(items) {
+            is_available(items) {
                 return items.moonpearl && items.flute && items.glove === 2 ? 'available' : 'unavailable';
             }
         }
@@ -660,17 +660,16 @@
     }
 
     function medallion_caption(caption, name) {
-        return function(model) {
-            var value = model.dungeons[name].medallion;
-            return caption.replace('{medallion}', '{medallion'+value+'}');
-        };
+        return (model) => caption.replace('{medallion}', `{medallion${model.dungeons[name].medallion}}`);
     }
 
-    window.location_model = function(mode, opts) {
-        var location = { dungeons: dungeons, encounters: encounters, chests: chests },
-            model = { open: open, standard: standard, keysanity: keysanity };
-        return Object.assign(model[mode](location, build, opts),
-            { agahnim: function() { return this.encounters.agahnim.completed; } });
+    window.location_model = (mode, opts) => {
+        const location = { dungeons: dungeons, encounters: encounters, chests: chests };
+        const model = { open: open, standard: standard, keysanity: keysanity };
+        return {
+            ...model[mode](location, build, opts),
+            agahnim() { return this.encounters.agahnim.completed; }
+    };
     };
 
     function open(location, build) {
@@ -682,29 +681,26 @@
     }
 
     function standard(location, build) {
-        return open(Object.assign(location, { chests: update_standard_chests(location.chests) }), build);
+        return open({ ...location, chests: update_standard_chests(location.chests) }, build);
     }
 
-    var build = {
-        dungeons: function(dungeons) {
-            return update(_.mapValues(dungeons, function(dungeon) {
-                return _.create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 });
-            }), {
+    const build = {
+        dungeons(dungeons) {
+            return update(_.mapValues(dungeons, (dungeon) =>
+                _.create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 })), {
                 mire:   { $merge: { medallion: 0 } },
                 turtle: { $merge: { medallion: 0 } }
             });
         },
 
-        encounters: function(encounters) {
-            return _.mapValues(encounters, function(encounter) {
-                return _.create(encounter, { completed: false });
-            });
+        encounters(encounters) {
+            return _.mapValues(encounters, (encounter) =>
+                _.create(encounter, { completed: false }));
         },
 
-        chests: function(chests) {
-            return _.mapValues(chests, function(chest) {
-                return _.create(chest, { marked: chest.marked || false });
-            });
+        chests(chests) {
+            return _.mapValues(chests, (chest) =>
+                _.create(chest, { marked: chest.marked || false }));
         }
     };
 }(window));

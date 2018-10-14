@@ -1,26 +1,23 @@
 (function(window) {
-    var has = result;
-
-    var always = function() { return 'available'; },
-        can_enter = function(items, model) { return this.can_enter(items, model) ? 'available' : 'unavailable'; },
-        can_enter_and = function(cond) {
-            return function(items, model) { return this.can_enter(items, model) && cond.call(this, items, model) ? 'available' : 'unavailable'; };
-        },
-        can_enter_and_then = function(cond, then) {
-            return function(items, model) {
-                return this.can_enter(items, model) && cond.call(this, items, model) ?
-                    then.call(this, items, model) :
-                    'unavailable';
-            };
-        },
-        can_enter_state = function(items, model) { return this.can_enter_state(items, model); },
-        can_enter_state_if = function(cond) {
-            return function(items, model) { return cond.call(this, items, model) ? this.can_enter_state(items, model) : 'unavailable'; };
-        },
-        has_keys = function() { return this.keys; },
-        has_big_key = function() { return this.big_key; },
-        available_or_dark = function(items) { return items.lantern ? 'available' : 'dark'; },
-        medallion_or_dark = function(items) { return items.medallion_check(this.medallion) || (items.lantern ? 'available' : 'dark'); };
+    const always = () => 'available';
+    const can_enter = function(items, model) { return this.can_enter(items, model) ? 'available' : 'unavailable'; };
+    const can_enter_and = (cond) =>
+        function(items, model) {
+            return this.can_enter(items, model) && cond.call(this, items, model) ? 'available' : 'unavailable';
+        };
+    const can_enter_and_then = (cond, then) =>
+        function(items, model) {
+            return this.can_enter(items, model) && cond.call(this, items, model) ? then.call(this, items, model) : 'unavailable';
+        };
+    const can_enter_state = function(items, model) { return this.can_enter_state(items, model); };
+    const can_enter_state_if = (cond) =>
+        function(items, model) {
+            return cond.call(this, items, model) ? this.can_enter_state(items, model) : 'unavailable';
+        };
+    const has_keys = function() { return this.keys; };
+    const has_big_key = function() { return this.big_key; };
+    const available_or_dark = (items) => items.lantern ? 'available' : 'dark';
+    const medallion_or_dark = (items) => items.medallion_check(this.medallion) || (items.lantern ? 'available' : 'dark');
 
     function update_keysanity_dungeons(dungeons, opts) {
         dungeons = update(dungeons, {
@@ -43,7 +40,7 @@
                     },
                     big_chest: {
                         caption: 'Big Chest',
-                        can_reach: function() {
+                        can_reach() {
                             return this.big_key ? 'available' : 'unavailable';
                         }
                     },
@@ -54,8 +51,8 @@
                     boss: {
                         caption: 'Armos Knights',
                         second_map: true,
-                        can_reach: function(items) {
-                            return this.big_key && items.has_bow() ?
+                        can_reach(items) {
+                            return this.big_key && items.has_bow ?
                                 available_or_dark(items) :
                                 'unavailable';
                         }
@@ -82,8 +79,8 @@
                         })
                     }
                 },
-                locations: function() {
-                    var reach_east_wing = function(items) {
+                locations: (() => {
+                    const reach_east_wing = function(items) {
                         return this.doors.south.opened || !this.doors.north.opened && items.glove || this.keys;
                     };
 
@@ -101,7 +98,7 @@
                         torch: {
                             caption: 'Item on Torch',
                             second_map: true,
-                            can_reach: can_enter_and(has('boots'))
+                            can_reach: can_enter_and(has => has.boots)
                         },
                         big_key: {
                             caption: 'Big Key Chest',
@@ -116,20 +113,20 @@
                         boss: {
                             caption: 'Lanmolas',
                             can_reach: can_enter_and(function(items) {
-                                return (items.has_melee_bow() || items.has_cane() || items.has_rod()) &&
+                                return (items.has_melee_bow || items.has_cane || items.has_rod) &&
                                     items.glove && (this.doors.north.opened || !this.doors.south.opened || this.keys) &&
-                                    items.has_fire() && this.big_key;
+                                    items.has_fire && this.big_key;
                             })
                         }
                     };
-                }()
+                })()
             } },
 
             hera: { $merge: {
                 chest_limit: 6,
                 key_limit: 1,
                 // Todo: verify
-                can_enter_state: function(items) {
+                can_enter_state(items) {
                     return this.can_enter(items) ?
                         items.flute || items.lantern ? 'available' : 'dark' :
                         'unavailable';
@@ -156,11 +153,11 @@
                     big_key: {
                         caption: 'Big Key Chest',
                         second_map: true,
-                        can_reach: can_enter_state_if(function(items) { return this.keys && items.has_fire(); })
+                        can_reach: can_enter_state_if(function(items) { return this.keys && items.has_fire; })
                     },
                     boss: {
                         caption: 'Moldorm',
-                        can_reach: can_enter_state_if(function(items) { return this.big_key && items.has_melee(); })
+                        can_reach: can_enter_state_if(function(items) { return this.big_key && items.has_melee; })
                     }
                 }
             } },
@@ -170,23 +167,23 @@
                 key_limit: 6,
                 // Todo: verify
                 hammery_jump: opts.podbj,
-                keys_left: function() {
-                    return this.keys - _.sum(_.map(this.doors, property('opened')));
+                keys_left() {
+                    return this.keys - _.sum(_.map(this.doors, x => x.opened));
                 },
-                doors: function() {
-                    var keys_left = function() {
+                doors: (() => {
+                    const keys_left = function() {
                             return this.keys_left();
-                        },
-                        reach_arena = function(items) {
-                            var keys = this.keys_left();
-                            return keys >= 2 || keys && (this.doors.front.opened || items.has_bow() && items.hammer);
-                        },
-                        reach_back = function(items) {
-                            var keys = this.keys_left();
+                    };
+                    const reach_arena = function(items) {
+                        const keys = this.keys_left();
+                        return keys >= 2 || keys && (this.doors.front.opened || items.has_bow && items.hammer);
+                    };
+                    const reach_back = function(items) {
+                        const keys = this.keys_left();
                             return keys >= 3 ||
                                 (keys >= 2 || keys && this.doors.arena.opened) &&
-                                (this.doors.front.opened || items.has_bow() && items.hammer);
-                        };
+                            (this.doors.front.opened || items.has_bow && items.hammer);
+                    };
 
                     return {
                         front: {
@@ -214,14 +211,15 @@
                         boss: {
                             caption: 'Boss',
                             can_reach: can_enter_and_then(function(items) {
-                                return items.has_bow() && items.hammer && this.keys_left();
+                                const keys = this.keys_left();
+                                return items.has_bow && items.hammer && this.keys_left();
                             }, available_or_dark)
                         }
                     };
-                }(),
-                locations: function() {
-                    var reach_arena = function(items) { return this.doors.front.opened || this.keys_left() || items.has_bow() && items.hammer; },
-                        hammery_or_dark = function(items) { return this.hammery_jump || items.lantern ? 'available' : 'dark'; };
+                })(),
+                locations: (() => {
+                    const reach_arena = function(items) { return this.doors.front.opened || this.keys_left() || items.has_bow && items.hammer; };
+                    const hammery_or_dark = function(items) { return this.hammery_jump || items.lantern ? 'available' : 'dark'; };
 
                     return {
                         shooter: {
@@ -231,11 +229,11 @@
                         },
                         map: {
                             caption: 'Map Chest',
-                            can_reach: can_enter_and(result('has_bow'))
+                            can_reach: can_enter_and(items => items.has_bow)
                         },
                         arena_ledge: {
                             caption: 'Statler & Waldorf',
-                            can_reach: can_enter_and(result('has_bow'))
+                            can_reach: can_enter_and(items => items.has_bow)
                         },
                         arena_bridge: {
                             caption: 'Arena Bridge',
@@ -250,7 +248,7 @@
                             caption: 'Big Key Chest',
                             second_map: true,
                             can_reach: can_enter_and(function(items) { return 2
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.big_key.opened
                                 <= this.keys_left();
                             })
@@ -258,7 +256,7 @@
                         compass: {
                             caption: 'Compass Chest (Terrorpin Station)',
                             can_reach: can_enter_and(function(items) { return 2
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.arena.opened
                                 <= this.keys_left();
                             })
@@ -266,7 +264,7 @@
                         basement_left: {
                             caption: 'Treasury - Left Chest',
                             can_reach: can_enter_and_then(function(items) { return 2
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.arena.opened
                                 <= this.keys_left();
                             }, available_or_dark)
@@ -274,7 +272,7 @@
                         basement_right: {
                             caption: 'Treasury - Right Chest',
                             can_reach: can_enter_and_then(function(items) { return 2
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.arena.opened
                                 <= this.keys_left();
                             }, available_or_dark)
@@ -283,7 +281,7 @@
                             caption: 'Big Chest',
                             can_reach: can_enter_and_then(function(items) {
                                 return this.big_key && 3
-                                    - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                    - (this.doors.front.opened || items.has_bow && items.hammer)
                                     - this.doors.arena.opened
                                     - (this.doors.maze.opened || this.hammery_jump)
                                     <= this.keys_left();
@@ -292,7 +290,7 @@
                         hellway: {
                             caption: 'Harmless Hellway',
                             can_reach: can_enter_and(function(items) { return 3
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.arena.opened
                                 - this.doors.hellway.opened
                                 <= this.keys_left();
@@ -301,7 +299,7 @@
                         maze_top: {
                             caption: 'Dark Maze - Top Chest',
                             can_reach: can_enter_and_then(function(items) { return 3
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.arena.opened
                                 - (this.doors.maze.opened || this.hammery_jump)
                                 <= this.keys_left();
@@ -310,7 +308,7 @@
                         maze_bottom: {
                             caption: 'Dark Maze - Bottom Chest',
                             can_reach: can_enter_and_then(function(items) { return 3
-                                - (this.doors.front.opened || items.has_bow() && items.hammer)
+                                - (this.doors.front.opened || items.has_bow && items.hammer)
                                 - this.doors.arena.opened
                                 - (this.doors.maze.opened || this.hammery_jump)
                                 <= this.keys_left();
@@ -319,21 +317,21 @@
                         boss: {
                             caption: 'Helmasaur King',
                             can_reach: can_enter_and_then(function(items) {
-                                return items.has_bow() && items.hammer && (this.doors.boss.opened || this.keys_left()) && this.big_key;
+                                return items.has_bow && items.hammer && (this.doors.boss.opened || this.keys_left()) && this.big_key;
                             }, available_or_dark)
                         }
                     };
-                }()
+                })()
             } },
 
             swamp: { $merge: {
                 chest_limit: 10,
                 key_limit: 1,
                 // Todo: verify
-                locations: function() {
-                    var has_keys_hammer = function(items) { return this.keys && items.hammer; },
-                        has_keys_hammer_big_key = function(items) { return this.keys && items.hammer && this.big_key; },
-                        has_keys_hammer_hookshot = function(items) { return this.keys && items.hammer && items.hookshot; };
+                locations: (() => {
+                    const has_keys_hammer = function(items) { return this.keys && items.hammer; };
+                    const has_keys_hammer_big_key = function(items) { return this.keys && items.hammer && this.big_key; };
+                    const has_keys_hammer_hookshot = function(items) { return this.keys && items.hammer && items.hookshot; };
 
                     return {
                         entrance: {
@@ -383,7 +381,7 @@
                             can_reach: can_enter_and(has_keys_hammer_hookshot)
                         }
                     };
-                }()
+                })()
             } },
 
             skull: { $merge: {
@@ -418,7 +416,7 @@
                     },
                     bridge: {
                         caption: 'Bridge Room',
-                        can_reach: can_enter_and(function(items) { return items.firerod; })
+                        can_reach: can_enter_and(has => has.firerod)
                     },
                     boss: {
                         caption: 'Mothula',
@@ -467,7 +465,7 @@
                     },
                     boss: {
                         caption: 'Blind',
-                        can_reach: can_enter_and(function(items) { return this.big_key && (items.has_melee() || items.has_cane()); })
+                        can_reach: can_enter_and(function(items) { return this.big_key && (items.has_melee || items.has_cane); })
                     }
                 }
             } },
@@ -478,7 +476,7 @@
                 // Todo: verify
                 bomb_jump: opts.ipbj,
                 locations: function() {
-                    var reach_east_wing = function(items) {
+                    const reach_east_wing = function(items) {
                         return this.can_enter(items) ?
                             this.bomb_jump || items.hookshot ? 'available' : 'possible' :
                             'unavailable';
@@ -543,14 +541,13 @@
                 chest_limit: 8,
                 key_limit: 3,
                 // Todo: verify
-                locations: function() {
-                    var can_enter_with_medallion = function(items) {
-                            return this.can_enter(items) ? items.medallion_check(this.medallion) || 'available' : 'unavailable';
-                        },
-                        can_enter_with_medallion_and = function(cond) {
-                            return function(items) {
-                                return this.can_enter(items) && cond.call(this, items) ? items.medallion_check(this.medallion) || 'available' : 'unavailable';
-                            };
+                locations: (() => {
+                    const can_enter_with_medallion = function(items) {
+                        return this.can_enter(items) ? items.medallion_check(this.medallion) || 'available' : 'unavailable';
+                    };
+                    const can_enter_with_medallion_and = (cond) =>
+                        function(items) {
+                            return this.can_enter(items) && cond.call(this, items) ? items.medallion_check(this.medallion) || 'available' : 'unavailable';
                         };
 
                     return {
@@ -572,11 +569,11 @@
                         },
                         compass: {
                             caption: 'Compass Chest',
-                            can_reach: can_enter_with_medallion_and(result('has_fire'))
+                            can_reach: can_enter_with_medallion_and(items => items.has_fire)
                         },
                         big_key: {
                             caption: 'Big Key Chest',
-                            can_reach: can_enter_with_medallion_and(result('has_fire'))
+                            can_reach: can_enter_with_medallion_and(items => items.has_fire)
                         },
                         big_chest: {
                             caption: 'Big Chest',
@@ -588,20 +585,20 @@
                             can_reach: can_enter_and_then(function(items) { return this.big_key && items.somaria; }, medallion_or_dark)
                         }
                     };
-                }()
+                })()
             } },
 
             turtle: { $merge: {
                 chest_limit: 12,
                 key_limit: 4,
                 // Todo: verify
-                can_enter_state: function(items) {
+                can_enter_state(items) {
                     return this.can_enter(items) ?
                         items.medallion_check(this.medallion) || (items.flute || items.lantern ? 'available' : 'dark') :
                         'unavailable';
                 },
-                keys_left: function() {
-                    return this.keys + !this.locations.big_key.marked - _.sum(_.map(this.doors, property('opened')));
+                keys_left() {
+                    return this.keys + !this.locations.big_key.marked - _.sum(_.map(this.doors, x => x.opened));
                 },
                 doors: {
                     crystaroller: {
@@ -613,13 +610,13 @@
                     boss: {
                         caption: 'Boss',
                         can_reach: can_enter_and_then(function() {
-                            var keys = this.keys_left();
+                            const keys = this.keys_left();
                             return (keys >= 4 || keys >= 3 && this.doors.crystaroller.opened) && this.big_key;
                         }, medallion_or_dark)
                     }
                 },
-                locations: function() {
-                    var laser_bridge = can_enter_and_then(function(items) {
+                locations: (() => {
+                    const laser_bridge = can_enter_and_then(function(items) {
                         return (this.doors.crystaroller.opened || this.keys_left() >= 3) && this.big_key &&
                             (items.cape || items.byrna || items.shield === 3);
                     }, medallion_or_dark);
@@ -633,12 +630,12 @@
                         roller_left: {
                             caption: 'Roller Room - Left Chest',
                             second_map: true,
-                            can_reach: can_enter_state_if(has('firerod'))
+                            can_reach: can_enter_state_if((has) => has.firerod)
                         },
                         roller_right: {
                             caption: 'Roller Room - Right Chest',
                             second_map: true,
-                            can_reach: can_enter_state_if(has('firerod'))
+                            can_reach: can_enter_state_if((has) => has.firerod)
                         },
                         chain_chomps: {
                             caption: 'Chain Chomps',
@@ -684,17 +681,17 @@
                             }, medallion_or_dark)
                         }
                     };
-                }()
+                })()
             } }
         });
 
-        return _.mapValues(dungeons, function(dungeon) {
-            return update(dungeon, { $merge: {
+        return _.mapValues(dungeons, dungeon =>
+            update(dungeon, { $merge: {
                 can_complete: can_complete,
                 can_progress: can_progress,
                 is_deviating: is_deviating
-            } });
-        });
+            } })
+        );
     }
 
     function can_complete(items, model) {
@@ -702,20 +699,19 @@
     }
 
     function can_progress(items, model) {
-        var _this = this;
-        var locations = _.filter(this.locations, not(property('marked')));
-        var states = _.map(locations, function(location) { return location.can_reach.call(_this, items, model); });
-        return _.maxBy(states, function(state) { return ['unavailable', 'dark', 'possible', 'available'].indexOf(state); });
+        const locations = _.filter(this.locations, location => !location.marked);
+        const states = _.map(locations, (location) => location.can_reach.call(this, items, model));
+        return _.maxBy(states, state => ['unavailable', 'dark', 'possible', 'available'].indexOf(state));
     }
 
     function is_deviating() {
-        return this.chests !== _.filter(this.locations, not(property('marked'))).length;
+        return this.chests !== _.filter(this.locations, x => !x.marked).length;
     }
 
     function update_keysanity_encounters(encounters) {
         return update(encounters, {
             agahnim: { $merge: {
-                can_complete: function(items, model) {
+                can_complete(items, model) {
                     return model.regions.castle_tower.keys === 2 ?
                         encounters.agahnim.can_complete.call(this, items) :
                         'unavailable';
@@ -724,7 +720,7 @@
         });
     }
 
-    var keysanity_regions = {
+    const keysanity_regions = {
         escape: { key_limit: 1 },
         castle_tower: { key_limit: 2 },
         ganon_tower: { key_limit: 4, chest_limit: 27 }
@@ -734,7 +730,7 @@
     function update_keysanity_chests(chests) {
         return update(chests, {
             mimic: { $merge: {
-                is_available: function(items, model) {
+                is_available(items, model) {
                     return items.moonpearl && items.hammer && items.glove === 2 && items.somaria && items.mirror ?
                         items.medallion_check(model.dungeons.turtle.medallion) ||
                             (model.dungeons.turtle.keys > 1 ? 'available' : 'unavailable') :
@@ -742,7 +738,7 @@
                 }
             } },
             escape_side: { $merge: {
-                is_available: function(items, model) {
+                is_available(items, model) {
                     return items.glove || model.regions.escape.keys ?
                         items.glove || items.lantern ? 'available' : 'dark' :
                         'unavailable';
@@ -751,13 +747,13 @@
             $merge: {
                 castle_foyer: {
                     caption: 'Castle Tower Foyer',
-                    is_available: function(items) {
+                    is_available(items) {
                         return items.sword >= 2 || items.cape ? 'available' : 'unavailable';
                     }
                 },
                 castle_maze: {
                     caption: 'Castle Tower Dark Maze',
-                    is_available: function(items, model) {
+                    is_available(items, model) {
                         return model.regions.castle_tower.keys && (items.sword >= 2 || items.cape) ?
                             items.lantern ? 'available' : 'dark' :
                             'unavailable';
@@ -777,30 +773,22 @@
     };
 
     function build_keysanity_dungeons(dungeons) {
-        return _.mapValues(dungeons, function(dungeon) {
-            return update(dungeon, {
+        return _.mapValues(dungeons, dungeon =>
+            update(dungeon, {
                 $merge: { keys: 0, big_key: false },
-                doors: function(doors) {
-                    return doors && _.mapValues(doors, function(door) {
-                        return _.create(door, { opened: false });
-                    });
-                },
-                locations: function(locations) {
-                    return _.mapValues(locations, function(location) {
-                        return _.create(location, { marked: false });
-                    });
+                doors: doors => doors && _.mapValues(doors, door => _.create(door, { opened: false })),
+                locations: locations => _.mapValues(locations, location => _.create(location, { marked: false }))
+            })
+        );
                 }
-            });
-        });
-    }
 
     function build_regions(regions) {
-        return update(_.mapValues(regions, function(region) { return _.create(region); }), {
+        return update(_.mapValues(regions, region => _.create(region)), {
             escape: { $merge: { keys: 0 } },
             castle_tower: { $merge: { keys: 0 } },
             ganon_tower: {
                 $merge: { keys: 0, big_key: false },
-                $apply: function(x) { return update(x, { $merge: { chests: x.chest_limit } }); }
+                $apply: x => update(x, { $merge: { chests: x.chest_limit } })
             }
         });
     }

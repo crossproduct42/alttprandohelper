@@ -4,27 +4,27 @@
     if (window.NodeList && !NodeList.prototype.forEach) {
         NodeList.prototype.forEach = function(callback, _this) {
             _this = _this || window;
-            for (var i = 0; i < this.length; i++) {
+            for (let i = 0; i < this.length; i++) {
                 callback.call(_this, this[i], i, this);
             }
         };
     }
 
     function launch_tracker() {
-        var params = {
-                mode: this.getAttribute('data-mode'),
-                hmap: this.getAttribute('data-map') === 'hmap',
-                vmap: this.getAttribute('data-map') === 'vmap',
-                ipbj: document.getElementById('ipbj').checked,
-                podbj: document.getElementById('podbj').checked,
-                sprite: document.getElementById('sprite').value,
-                bg: document.getElementById('background-color').value ||
-                    document.getElementById('custom-color').value
-            },
-            size = {
-                w: params.hmap ? 1340 : params.vmap ? 270 : 448,
-                h: params.vmap ? 806 : 448
-            };
+        const params = {
+            mode: this.getAttribute('data-mode'),
+            hmap: this.getAttribute('data-map') === 'hmap',
+            vmap: this.getAttribute('data-map') === 'vmap',
+            ipbj: document.getElementById('ipbj').checked,
+            podbj: document.getElementById('podbj').checked,
+            sprite: document.getElementById('sprite').value,
+            bg: document.getElementById('background-color').value ||
+                document.getElementById('custom-color').value
+        };
+        const size = {
+            w: params.hmap ? 1340 : params.vmap ? 270 : 448,
+            h: params.vmap ? 806 : 448
+        };
 
         if (!valid_css_color(params.bg)) return;
 
@@ -49,23 +49,23 @@
     }
 
     function background_color_changed(event) {
-        var value = event.target.value,
-            custom = document.getElementById('custom-color'),
-            valid = valid_css_color(custom.value);
+        const value = event.target.value;
+        const custom = document.getElementById('custom-color');
+        const valid = valid_css_color(custom.value);
         custom.classList[value ? 'add' : 'remove']('hidden');
         custom.classList[valid ? 'remove' : 'add']('invalid');
     }
 
     function custom_color_changed(event) {
-        var custom = event.target,
-            valid = valid_css_color(custom.value);
+        const custom = event.target;
+        const valid = valid_css_color(custom.value);
         custom.classList[valid ? 'remove' : 'add']('invalid');
     }
 
     function valid_css_color(text) {
         if (!text || text === 'inherit' || text === 'transparent') return false;
-        var e1 = document.createElement('div'),
-            e2 = document.createElement('div');
+        const e1 = document.createElement('div');
+        const e2 = document.createElement('div');
         e1.style.color = 'rgb(0,0,0)';
         e1.style.color = text;
         e2.style.color = 'rgb(255,255,255)';
@@ -77,8 +77,9 @@
     window.start = function() {
         document.querySelectorAll('.launch').forEach(
             function(launch) { launch.addEventListener('click', launch_tracker); });
-        var background_color = document.getElementById('background-color'),
-            custom_color = document.getElementById('custom-color');
+
+        const background_color = document.getElementById('background-color');
+        const custom_color = document.getElementById('custom-color');
         background_color.value || custom_color.classList.remove('hidden');
         background_color.addEventListener('change', background_color_changed);
         custom_color.addEventListener('input', custom_color_changed);
