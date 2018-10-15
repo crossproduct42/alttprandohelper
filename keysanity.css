@@ -1,7 +1,5 @@
 #tracker .big-key { background-image: url(images/dungeons/big_key.png); }
 .keys { background-image: url(images/dungeons/key.png); }
-.keysanity #tracker .chest { background-image: url(images/dungeons/chest_single.png); }
-.keysanity #tracker .chest.empty { background-image: url(images/dungeons/chest_empty.png); }
 
 #map .first.eastern { background-image: url(images/overlay/map_eastern1.png); }
 #map .second.eastern { background-image: url(images/overlay/map_eastern2.png); }

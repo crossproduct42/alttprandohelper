@@ -3,9 +3,11 @@
 
     const styled = window.styled.default;
 
-    const ActiveItem = styled.div`
+    const Slot = styled.div`
       width: 64px;
       height: 64px;
+    `;
+    const ActiveItem = styled(Slot)`
       filter: contrast(${props => props.active ? 100 : 80}%)
               brightness(${props => props.active ? 100 : 30}%);
     `;
@@ -82,19 +84,42 @@
     const DungeonWithBigkey = WithBigKey(Dungeon);
     const DungeonWithMedallionWithBigkey = WithBigKey(DungeonWithMedallion);
 
-    const SingleChest = (props) => {
-        const dungeon = props.value;
-        return <div className={classNames('chest', { empty: !dungeon.chests })}
-          onClick={() => props.onClick(props.name)}>
-          <span>{`${dungeon.chests}`}</span>
-        </div>;
-    };
+    const Chests = (props) =>
+      <Slot className={`chest-${props.dungeon.chests}`}
+        onClick={() => props.onLevel(props.name)} />;
 
-    const Chests = (props) => {
-        const dungeon = props.value;
-        return <div className={`chest chest-${dungeon.chests}`}
-          onClick={() => props.onClick(props.name)} />;
-    };
+    const OutlinedText = styled.span`
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      color: white;
+      font-weight: bold;
+      text-shadow:
+        -2px -2px black,  0px -2px black,
+         2px -2px black,  2px  0px black,
+         2px  2px black,  0px  2px black,
+        -2px  2px black, -2px  0px black;
+      user-select: none;
+    `;
+    const ChestText = styled(OutlinedText)`
+      font-size: 20px;
+    `;
+    const SubSlot = styled.div`
+      width: 32px;
+      height: 32px;
+      position: absolute;
+    `;
+    const StyledKeysanityChest = styled(SubSlot)`
+      display: table;
+      .dungeon & { bottom: 0; left: 16px }
+      .ganon-tower & { top: 0; right: 0; }
+    `;
+
+    const KeysanityChest = (props) =>
+      <StyledKeysanityChest className={classNames('chest', { 'chest--empty': !props.source.chests })}
+        onClick={() => props.onLevel(props.name)}>
+        <ChestText>{`${props.source.chests}`}</ChestText>
+      </StyledKeysanityChest>;
 
     class BaseTracker extends React.Component {
         render() {
@@ -207,8 +232,8 @@
         }
 
         dungeon(name) {
-            return <Chests name={name} value={this.props.model.dungeons[name]}
-              onClick={name => this.props.chest_click('dungeons', name)} />;
+            return <Chests name={name} dungeon={this.props.model.dungeons[name]}
+              onLevel={name => this.props.chest_click('dungeons', name)} />;
         }
     }
 
@@ -218,7 +243,7 @@
 
     class KeysanityTracker extends BaseTracker {
         corner() {
-            const value = this.props.model.regions.ganon_tower;
+            const source = this.props.model.regions.ganon_tower;
             return <React.Fragment>
               <KeysanityAvatar>
                 {this.tunic()}
@@ -227,9 +252,9 @@
                 {this.item('moonpearl')}
               </KeysanityAvatar>
               <div className="ganon-tower">
-                <SingleChest name="ganon_tower" value={value} onClick={name => this.props.chest_click('regions', name)} />
-                <Keys name="ganon_tower" value={value} onClick={name => this.props.key_click('regions', name)} />
-                <BigKey name="ganon_tower" value={value} onClick={name => this.props.big_key_click('regions', name)} />
+                <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
+                <Keys name="ganon_tower" value={source} onClick={name => this.props.key_click('regions', name)} />
+                <BigKey name="ganon_tower" value={source} onClick={name => this.props.big_key_click('regions', name)} />
               </div>
             </React.Fragment>;
         }
@@ -262,9 +287,10 @@
         }
 
         dungeon(name) {
+            const dungeon = this.props.model.dungeons[name];
             return <div className="dungeon">
-              <Keys name={name} value={this.props.model.dungeons[name]} onClick={name => this.props.key_click('dungeons', name)} />
-              <SingleChest name={name} value={this.props.model.dungeons[name]} onClick={name => this.props.chest_click('dungeons', name)} />
+              <Keys name={name} value={dungeon} onClick={name => this.props.key_click('dungeons', name)} />
+              <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
             </div>;
         }
     }

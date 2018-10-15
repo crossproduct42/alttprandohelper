@@ -20,7 +20,6 @@ body {
 #page.vmap { transform: scale(.6, .6) translate(-33%, -33%); }
 
 #tracker .boss,
-#tracker .chest,
 #tracker .dungeon { width: 64px; height: 64px; }
 
 #tracker .sword { position: absolute; top: 0; right: 0; }
@@ -41,10 +40,8 @@ body {
 .prize,
 #tracker .medallion,
 #tracker .big-key,
-.keys,
-.keysanity #tracker .chest { width: 32px; height: 32px; position: absolute; }
+.keys { width: 32px; height: 32px; position: absolute; }
 
-.ganon-tower .chest { top: 0; right: 0; }
 .ganon-tower .keys { top: 32px; right: 0; }
 .ganon-tower .big-key { top: 64px; right: 0; }
 
@@ -53,15 +50,11 @@ body {
 .keysanity #tracker .medallion { top: 0; right: 0; }
 #tracker .big-key { bottom: 0; }
 .dungeon .keys { left: 16px; }
-.keysanity .dungeon .chest { bottom: 0; left: 16px }
 .agahnim-keys .keys:first-child { top: 0; right: 0; }
 .agahnim-keys .keys:last-child { bottom: 0; right: 0; }
 
-.keys,
-.keysanity #tracker .chest { display: table; }
-.keysanity #tracker .chest > span { font-size: 20px; }
-.keys > span,
-.keysanity #tracker .chest > span {
+.keys { display: table; }
+.keys > span {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
@@ -225,6 +218,8 @@ body {
 .medallion-1 { background-image: url(images/dungeons/medallion1.png); }
 .medallion-2 { background-image: url(images/dungeons/medallion2.png); }
 .medallion-3 { background-image: url(images/dungeons/medallion3.png); }
+.chest { background-image: url(images/dungeons/chest_single.png); }
+.chest--empty { background-image: url(images/dungeons/chest_empty.png); }
 .chest-0 { background-image: url(images/dungeons/chest0.png); }
 .chest-1 { background-image: url(images/dungeons/chest1.png); }
 .chest-2 { background-image: url(images/dungeons/chest2.png); }
