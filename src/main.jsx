@@ -1,18 +1,36 @@
 (function(window) {
     'use strict';
 
-    const Item = (props) =>
-      <div className={classNames('item', props.name,
-          props.value === true ? 'active' :
-          props.value > 0 ? `active-${props.value}` : null)}
-        onClick={() => props.onClick(props.name)} />;
+    const styled = window.styled.default;
 
-    const TunicItem = (props) => {
-        const { tunic, moonpearl } = props.items;
-        return <div className={classNames('item', 'tunic',
-            'active-'+tunic, { bunny: !moonpearl })}
-          onClick={() => props.onClick('tunic')} />;
-    };
+    const ActiveItem = styled.div`
+      width: 64px;
+      height: 64px;
+      filter: contrast(${props => props.active ? 100 : 80}%)
+              brightness(${props => props.active ? 100 : 30}%);
+    `;
+
+    const Item = (props) =>
+      <ActiveItem
+        className={classNames(props.name, props.value && `${props.name}--active`)}
+        active={props.value}
+        onClick={() => props.onToggle(props.name)} />;
+
+    const LeveledItem = (props) =>
+      <ActiveItem
+        className={classNames(props.name, props.value && `${props.name}--active-${props.value}`)}
+        active={props.value > 0}
+        onClick={() => props.onLevel(props.name)} />
+
+    const StyledTunicItem = styled.div`
+      width: 128px;
+      height: 128px;
+    `;
+
+    const TunicItem = (props) =>
+      <StyledTunicItem
+        className={classNames(`tunic--active-${props.tunic}`, { 'tunic--bunny': !props.moonpearl })}
+        onClick={() => props.onLevel('tunic')} />;
 
     const Dungeon = (props) =>
       <React.Fragment>
@@ -95,8 +113,8 @@
                       this.dungeon('hera')
                   ]),
                   grid([
-                      this.item('bow'),
-                      this.item('boomerang'),
+                      this.leveled_item('bow'),
+                      this.leveled_item('boomerang'),
                       this.item('hookshot'),
                       this.item('mushroom'),
                       this.item('powder')
@@ -113,14 +131,14 @@
                       this.item('net'),
                       this.item('book')
                   ], [
-                      this.item('bottle'),
+                      this.leveled_item('bottle'),
                       this.item('somaria'),
                       this.item('byrna'),
                       this.item('cape'),
                       this.item('mirror')
                   ], [
                       this.item('boots'),
-                      this.item('glove'),
+                      this.leveled_item('glove'),
                       this.item('flippers'),
                       this.item('flute'),
                       this.agahnim()
@@ -148,18 +166,23 @@
         corner() {
             return <React.Fragment>
               {this.tunic()}
-              {this.item('sword')}
-              {this.item('shield')}
+              {this.leveled_item('sword')}
+              {this.leveled_item('shield')}
               {this.item('moonpearl')}
             </React.Fragment>;
         }
 
-        tunic() {
-            return <TunicItem items={this.props.model.items} onClick={this.props.item_click} />;
+        item(name) {
+            return <Item name={name} value={this.props.model.items[name]} onToggle={this.props.item_click} />;
         }
 
-        item(name) {
-            return <Item name={name} value={this.props.model.items[name]} onClick={this.props.item_click} />;
+        leveled_item(name) {
+            return <LeveledItem name={name} value={this.props.model.items[name]} onLevel={this.props.item_click} />;
+        }
+
+        tunic() {
+            const items = this.props.model.items;
+            return <TunicItem tunic={items.tunic} moonpearl={items.moonpearl} onLevel={this.props.item_click} />;
         }
     }
 
@@ -180,7 +203,7 @@
         agahnim() {
             return <Item name="agahnim"
               value={this.props.model.encounters.agahnim.completed}
-              onClick={name => this.props.completion_click('encounters', name)} />;
+              onToggle={name => this.props.completion_click('encounters', name)} />;
         }
 
         dungeon(name) {
@@ -189,16 +212,20 @@
         }
     }
 
+    const KeysanityAvatar = styled.div`
+      transform: scale(.75) translate(-25%, -25%);
+    `;
+
     class KeysanityTracker extends BaseTracker {
         corner() {
             const value = this.props.model.regions.ganon_tower;
             return <React.Fragment>
-              <div className="avatar">
+              <KeysanityAvatar>
                 {this.tunic()}
-                {this.item('sword')}
-                {this.item('shield')}
+                {this.leveled_item('sword')}
+                {this.leveled_item('shield')}
                 {this.item('moonpearl')}
-              </div>
+              </KeysanityAvatar>
               <div className="ganon-tower">
                 <SingleChest name="ganon_tower" value={value} onClick={name => this.props.chest_click('regions', name)} />
                 <Keys name="ganon_tower" value={value} onClick={name => this.props.key_click('regions', name)} />
@@ -226,7 +253,7 @@
             const model = this.props.model;
             return <React.Fragment>
               <Item name="agahnim" value={model.encounters.agahnim.completed}
-                onClick={name => this.props.completion_click('encounters', name)} />
+                onToggle={name => this.props.completion_click('encounters', name)} />
               <div className="agahnim-keys">
                 <Keys name="castle_tower" value={model.regions.castle_tower} onClick={name => this.props.key_click('regions', name)} />
                 <Keys name="escape" value={model.regions.escape} onClick={name => this.props.key_click('regions', name)} />
@@ -369,21 +396,47 @@
     const MiniMapDoorWithHighlight = WithHighlight(MiniMapDoor);
     const MiniMapLocationWithHighlight = WithHighlight(MiniMapLocation);
 
+    const Close = styled.span`
+      margin: 10px;
+      position: absolute;
+      top: 0;
+      color: white;
+      line-height: 1;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    `;
+    const StyledCaption = styled.div`
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      color: white;
+      background-color: black;
+      font-size: 16px;
+      text-align: center;
+    `;
+    const CaptionIcon = styled.div`
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      vertical-align: text-bottom;
+      background-size: 100%;
+    `;
+
     class Caption extends React.Component {
         render() {
             const each_part = /[^{]+|\{[\w]+\}/g;
             const text = this.props.text;
-            return <div id="caption">{!text ? '\u00a0' : text.match(each_part).map(this.parse)}</div>;
+            return <StyledCaption>{!text ? '\u00a0' : text.match(each_part).map(this.parse)}</StyledCaption>;
         }
 
         parse = (part) => {
             const dm = part.match(/^\{(medallion|pendant)(\d+)\}/);
             const pm = part.match(/^\{(\w+?)(\d+)?\}/);
             const m = dm || pm;
-            return !m ? part : <div className={classNames(
-              'icon',
+            return !m ? part : <CaptionIcon className={classNames(
               dm ? `${m[1]}-${m[2]}` : m[1],
-              !dm && m[2] && `active-${m[2]}`
+              !dm && m[2] && `${m[1]}--active-${m[2]}`
             )} />;
         }
     }
@@ -392,17 +445,16 @@
         state = { caption: null }
 
         render() {
-            const { horizontal, dungeon } = this.props;
+            const { horizontal, dungeon, dungeon_click } = this.props;
             const locations = _.partition(dungeon ? this.dungeon_locations() : this.world_locations(), x => x.second);
             const maps = [
                 <div className={`first ${dungeon || 'world'}`}>{locations[1].map(x => x.tag)}</div>,
                 <div className={`second ${dungeon || 'world'}`}>{locations[0].map(x => x.tag)}</div>
             ];
 
-            var dungeon_click = this.props.dungeon_click;
             return <div id="map" className={classNames({ cell: this.props.horizontal })}>
                 {this.props.horizontal ? grid(maps) : maps}
-                {dungeon && span('.close', { onClick: function() { dungeon_click(null); } }, '\u00d7')}
+                {dungeon && <Close onClick={() => dungeon_click(null)} >{'\u00d7'}</Close>}
                 <Caption text={this.state.caption} />
             </div>;
         }

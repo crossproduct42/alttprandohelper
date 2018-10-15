@@ -1,1028 +1,433 @@
-._4slink-armors .tunic.active-1 { background-image: url(images/sprites/4slink-armors/tunic1.png); }
-._4slink-armors .tunic.active-2 { background-image: url(images/sprites/4slink-armors/tunic2.png); }
-._4slink-armors .tunic.active-3 { background-image: url(images/sprites/4slink-armors/tunic3.png); }
-._4slink-armors .tunic.active-1.bunny { background-image: url(images/sprites/4slink-armors/tunicbunny1.png); }
-._4slink-armors .tunic.active-2.bunny { background-image: url(images/sprites/4slink-armors/tunicbunny2.png); }
-._4slink-armors .tunic.active-3.bunny { background-image: url(images/sprites/4slink-armors/tunicbunny3.png); }
-
-.arrghus .tunic.active-1 { background-image: url(images/sprites/arrghus/tunic1.png); }
-.arrghus .tunic.active-2 { background-image: url(images/sprites/arrghus/tunic2.png); }
-.arrghus .tunic.active-3 { background-image: url(images/sprites/arrghus/tunic3.png); }
-.arrghus .tunic.active-1.bunny { background-image: url(images/sprites/arrghus/tunicbunny1.png); }
-.arrghus .tunic.active-2.bunny { background-image: url(images/sprites/arrghus/tunicbunny2.png); }
-.arrghus .tunic.active-3.bunny { background-image: url(images/sprites/arrghus/tunicbunny3.png); }
-
-.beau .tunic.active-1 { background-image: url(images/sprites/beau/tunic1.png); }
-.beau .tunic.active-2 { background-image: url(images/sprites/beau/tunic2.png); }
-.beau .tunic.active-3 { background-image: url(images/sprites/beau/tunic3.png); }
-.beau .tunic.active-1.bunny { background-image: url(images/sprites/beau/tunicbunny1.png); }
-.beau .tunic.active-2.bunny { background-image: url(images/sprites/beau/tunicbunny2.png); }
-.beau .tunic.active-3.bunny { background-image: url(images/sprites/beau/tunicbunny3.png); }
-
-.bewp .tunic.active-1 { background-image: url(images/sprites/bewp/tunic1.png); }
-.bewp .tunic.active-2 { background-image: url(images/sprites/bewp/tunic2.png); }
-.bewp .tunic.active-3 { background-image: url(images/sprites/bewp/tunic3.png); }
-.bewp .tunic.active-1.bunny { background-image: url(images/sprites/bewp/tunicbunny1.png); }
-.bewp .tunic.active-2.bunny { background-image: url(images/sprites/bewp/tunicbunny2.png); }
-.bewp .tunic.active-3.bunny { background-image: url(images/sprites/bewp/tunicbunny3.png); }
-
-.bigkey .tunic.active-1 { background-image: url(images/sprites/bigkey/tunic1.png); }
-.bigkey .tunic.active-2 { background-image: url(images/sprites/bigkey/tunic2.png); }
-.bigkey .tunic.active-3 { background-image: url(images/sprites/bigkey/tunic3.png); }
-.bigkey .tunic.active-1.bunny { background-image: url(images/sprites/bigkey/tunicbunny1.png); }
-.bigkey .tunic.active-2.bunny { background-image: url(images/sprites/bigkey/tunicbunny2.png); }
-.bigkey .tunic.active-3.bunny { background-image: url(images/sprites/bigkey/tunicbunny3.png); }
-
-.blacksmithlink .tunic.active-1 { background-image: url(images/sprites/blacksmithlink/tunic1.png); }
-.blacksmithlink .tunic.active-2 { background-image: url(images/sprites/blacksmithlink/tunic2.png); }
-.blacksmithlink .tunic.active-3 { background-image: url(images/sprites/blacksmithlink/tunic3.png); }
-.blacksmithlink .tunic.active-1.bunny { background-image: url(images/sprites/blacksmithlink/tunicbunny1.png); }
-.blacksmithlink .tunic.active-2.bunny { background-image: url(images/sprites/blacksmithlink/tunicbunny2.png); }
-.blacksmithlink .tunic.active-3.bunny { background-image: url(images/sprites/blacksmithlink/tunicbunny3.png); }
-
-.bob .tunic.active-1 { background-image: url(images/sprites/bob/tunic1.png); }
-.bob .tunic.active-2 { background-image: url(images/sprites/bob/tunic2.png); }
-.bob .tunic.active-3 { background-image: url(images/sprites/bob/tunic3.png); }
-.bob .tunic.active-1.bunny { background-image: url(images/sprites/bob/tunicbunny1.png); }
-.bob .tunic.active-2.bunny { background-image: url(images/sprites/bob/tunicbunny2.png); }
-.bob .tunic.active-3.bunny { background-image: url(images/sprites/bob/tunicbunny3.png); }
-
-.boo .tunic.active-1 { background-image: url(images/sprites/boo/tunic1.png); }
-.boo .tunic.active-2 { background-image: url(images/sprites/boo/tunic2.png); }
-.boo .tunic.active-3 { background-image: url(images/sprites/boo/tunic3.png); }
-.boo .tunic.active-1.bunny { background-image: url(images/sprites/boo/tunicbunny1.png); }
-.boo .tunic.active-2.bunny { background-image: url(images/sprites/boo/tunicbunny2.png); }
-.boo .tunic.active-3.bunny { background-image: url(images/sprites/boo/tunicbunny3.png); }
-
-.boo-two .tunic.active-1 { background-image: url(images/sprites/boo-two/tunic1.png); }
-.boo-two .tunic.active-2 { background-image: url(images/sprites/boo-two/tunic2.png); }
-.boo-two .tunic.active-3 { background-image: url(images/sprites/boo-two/tunic3.png); }
-.boo-two .tunic.active-1.bunny { background-image: url(images/sprites/boo-two/tunicbunny1.png); }
-.boo-two .tunic.active-2.bunny { background-image: url(images/sprites/boo-two/tunicbunny2.png); }
-.boo-two .tunic.active-3.bunny { background-image: url(images/sprites/boo-two/tunicbunny3.png); }
-
-.broccoli .tunic.active-1 { background-image: url(images/sprites/broccoli/tunic1.png); }
-.broccoli .tunic.active-2 { background-image: url(images/sprites/broccoli/tunic2.png); }
-.broccoli .tunic.active-3 { background-image: url(images/sprites/broccoli/tunic3.png); }
-.broccoli .tunic.active-1.bunny { background-image: url(images/sprites/broccoli/tunicbunny1.png); }
-.broccoli .tunic.active-2.bunny { background-image: url(images/sprites/broccoli/tunicbunny2.png); }
-.broccoli .tunic.active-3.bunny { background-image: url(images/sprites/broccoli/tunicbunny3.png); }
-
-.bronzor .tunic.active-1 { background-image: url(images/sprites/bronzor/tunic1.png); }
-.bronzor .tunic.active-2 { background-image: url(images/sprites/bronzor/tunic2.png); }
-.bronzor .tunic.active-3 { background-image: url(images/sprites/bronzor/tunic3.png); }
-.bronzor .tunic.active-1.bunny { background-image: url(images/sprites/bronzor/tunicbunny1.png); }
-.bronzor .tunic.active-2.bunny { background-image: url(images/sprites/bronzor/tunicbunny2.png); }
-.bronzor .tunic.active-3.bunny { background-image: url(images/sprites/bronzor/tunicbunny3.png); }
-
-.bsboy .tunic.active-1 { background-image: url(images/sprites/bsboy/tunic1.png); }
-.bsboy .tunic.active-2 { background-image: url(images/sprites/bsboy/tunic2.png); }
-.bsboy .tunic.active-3 { background-image: url(images/sprites/bsboy/tunic3.png); }
-.bsboy .tunic.active-1.bunny { background-image: url(images/sprites/bsboy/tunicbunny1.png); }
-.bsboy .tunic.active-2.bunny { background-image: url(images/sprites/bsboy/tunicbunny2.png); }
-.bsboy .tunic.active-3.bunny { background-image: url(images/sprites/bsboy/tunicbunny3.png); }
-
-.bsgirl .tunic.active-1 { background-image: url(images/sprites/bsgirl/tunic1.png); }
-.bsgirl .tunic.active-2 { background-image: url(images/sprites/bsgirl/tunic2.png); }
-.bsgirl .tunic.active-3 { background-image: url(images/sprites/bsgirl/tunic3.png); }
-.bsgirl .tunic.active-1.bunny { background-image: url(images/sprites/bsgirl/tunicbunny1.png); }
-.bsgirl .tunic.active-2.bunny { background-image: url(images/sprites/bsgirl/tunicbunny2.png); }
-.bsgirl .tunic.active-3.bunny { background-image: url(images/sprites/bsgirl/tunicbunny3.png); }
-
-.cactuar .tunic.active-1 { background-image: url(images/sprites/cactuar/tunic1.png); }
-.cactuar .tunic.active-2 { background-image: url(images/sprites/cactuar/tunic2.png); }
-.cactuar .tunic.active-3 { background-image: url(images/sprites/cactuar/tunic3.png); }
-.cactuar .tunic.active-1.bunny { background-image: url(images/sprites/cactuar/tunicbunny1.png); }
-.cactuar .tunic.active-2.bunny { background-image: url(images/sprites/cactuar/tunicbunny2.png); }
-.cactuar .tunic.active-3.bunny { background-image: url(images/sprites/cactuar/tunicbunny3.png); }
-
-.casual-zelda .tunic.active-1 { background-image: url(images/sprites/casual-zelda/tunic1.png); }
-.casual-zelda .tunic.active-2 { background-image: url(images/sprites/casual-zelda/tunic2.png); }
-.casual-zelda .tunic.active-3 { background-image: url(images/sprites/casual-zelda/tunic3.png); }
-.casual-zelda .tunic.active-1.bunny { background-image: url(images/sprites/casual-zelda/tunicbunny1.png); }
-.casual-zelda .tunic.active-2.bunny { background-image: url(images/sprites/casual-zelda/tunicbunny2.png); }
-.casual-zelda .tunic.active-3.bunny { background-image: url(images/sprites/casual-zelda/tunicbunny3.png); }
-
-.cat .tunic.active-1 { background-image: url(images/sprites/cat/tunic1.png); }
-.cat .tunic.active-2 { background-image: url(images/sprites/cat/tunic2.png); }
-.cat .tunic.active-3 { background-image: url(images/sprites/cat/tunic3.png); }
-.cat .tunic.active-1.bunny { background-image: url(images/sprites/cat/tunicbunny1.png); }
-.cat .tunic.active-2.bunny { background-image: url(images/sprites/cat/tunicbunny2.png); }
-.cat .tunic.active-3.bunny { background-image: url(images/sprites/cat/tunicbunny3.png); }
-
-.catboo .tunic.active-1 { background-image: url(images/sprites/catboo/tunic1.png); }
-.catboo .tunic.active-2 { background-image: url(images/sprites/catboo/tunic2.png); }
-.catboo .tunic.active-3 { background-image: url(images/sprites/catboo/tunic3.png); }
-.catboo .tunic.active-1.bunny { background-image: url(images/sprites/catboo/tunicbunny1.png); }
-.catboo .tunic.active-2.bunny { background-image: url(images/sprites/catboo/tunicbunny2.png); }
-.catboo .tunic.active-3.bunny { background-image: url(images/sprites/catboo/tunicbunny3.png); }
-
-.cdilink .tunic.active-1 { background-image: url(images/sprites/cdilink/tunic1.png); }
-.cdilink .tunic.active-2 { background-image: url(images/sprites/cdilink/tunic2.png); }
-.cdilink .tunic.active-3 { background-image: url(images/sprites/cdilink/tunic3.png); }
-.cdilink .tunic.active-1.bunny { background-image: url(images/sprites/cdilink/tunicbunny1.png); }
-.cdilink .tunic.active-2.bunny { background-image: url(images/sprites/cdilink/tunicbunny2.png); }
-.cdilink .tunic.active-3.bunny { background-image: url(images/sprites/cdilink/tunicbunny3.png); }
-
-.celes .tunic.active-1 { background-image: url(images/sprites/celes/tunic1.png); }
-.celes .tunic.active-2 { background-image: url(images/sprites/celes/tunic2.png); }
-.celes .tunic.active-3 { background-image: url(images/sprites/celes/tunic3.png); }
-.celes .tunic.active-1.bunny { background-image: url(images/sprites/celes/tunicbunny1.png); }
-.celes .tunic.active-2.bunny { background-image: url(images/sprites/celes/tunicbunny2.png); }
-.celes .tunic.active-3.bunny { background-image: url(images/sprites/celes/tunicbunny3.png); }
-
-.cheepcheep .tunic.active-1 { background-image: url(images/sprites/cheepcheep/tunic1.png); }
-.cheepcheep .tunic.active-2 { background-image: url(images/sprites/cheepcheep/tunic2.png); }
-.cheepcheep .tunic.active-3 { background-image: url(images/sprites/cheepcheep/tunic3.png); }
-.cheepcheep .tunic.active-1.bunny { background-image: url(images/sprites/cheepcheep/tunicbunny1.png); }
-.cheepcheep .tunic.active-2.bunny { background-image: url(images/sprites/cheepcheep/tunicbunny2.png); }
-.cheepcheep .tunic.active-3.bunny { background-image: url(images/sprites/cheepcheep/tunicbunny3.png); }
-
-.cirno .tunic.active-1 { background-image: url(images/sprites/cirno/tunic1.png); }
-.cirno .tunic.active-2 { background-image: url(images/sprites/cirno/tunic2.png); }
-.cirno .tunic.active-3 { background-image: url(images/sprites/cirno/tunic3.png); }
-.cirno .tunic.active-1.bunny { background-image: url(images/sprites/cirno/tunicbunny1.png); }
-.cirno .tunic.active-2.bunny { background-image: url(images/sprites/cirno/tunicbunny2.png); }
-.cirno .tunic.active-3.bunny { background-image: url(images/sprites/cirno/tunicbunny3.png); }
-
-.clifford .tunic.active-1 { background-image: url(images/sprites/clifford/tunic1.png); }
-.clifford .tunic.active-2 { background-image: url(images/sprites/clifford/tunic2.png); }
-.clifford .tunic.active-3 { background-image: url(images/sprites/clifford/tunic3.png); }
-.clifford .tunic.active-1.bunny { background-image: url(images/sprites/clifford/tunicbunny1.png); }
-.clifford .tunic.active-2.bunny { background-image: url(images/sprites/clifford/tunicbunny2.png); }
-.clifford .tunic.active-3.bunny { background-image: url(images/sprites/clifford/tunicbunny3.png); }
-
-.conker .tunic.active-1 { background-image: url(images/sprites/conker/tunic1.png); }
-.conker .tunic.active-2 { background-image: url(images/sprites/conker/tunic2.png); }
-.conker .tunic.active-3 { background-image: url(images/sprites/conker/tunic3.png); }
-.conker .tunic.active-1.bunny { background-image: url(images/sprites/conker/tunicbunny1.png); }
-.conker .tunic.active-2.bunny { background-image: url(images/sprites/conker/tunicbunny2.png); }
-.conker .tunic.active-3.bunny { background-image: url(images/sprites/conker/tunicbunny3.png); }
-
-.cursor .tunic.active-1 { background-image: url(images/sprites/cursor/tunic1.png); }
-.cursor .tunic.active-2 { background-image: url(images/sprites/cursor/tunic2.png); }
-.cursor .tunic.active-3 { background-image: url(images/sprites/cursor/tunic3.png); }
-.cursor .tunic.active-1.bunny { background-image: url(images/sprites/cursor/tunicbunny1.png); }
-.cursor .tunic.active-2.bunny { background-image: url(images/sprites/cursor/tunicbunny2.png); }
-.cursor .tunic.active-3.bunny { background-image: url(images/sprites/cursor/tunicbunny3.png); }
-
-.darkboy .tunic.active-1 { background-image: url(images/sprites/darkboy/tunic1.png); }
-.darkboy .tunic.active-2 { background-image: url(images/sprites/darkboy/tunic2.png); }
-.darkboy .tunic.active-3 { background-image: url(images/sprites/darkboy/tunic3.png); }
-.darkboy .tunic.active-1.bunny { background-image: url(images/sprites/darkboy/tunicbunny1.png); }
-.darkboy .tunic.active-2.bunny { background-image: url(images/sprites/darkboy/tunicbunny2.png); }
-.darkboy .tunic.active-3.bunny { background-image: url(images/sprites/darkboy/tunicbunny3.png); }
-
-.darkgirl .tunic.active-1 { background-image: url(images/sprites/darkgirl/tunic1.png); }
-.darkgirl .tunic.active-2 { background-image: url(images/sprites/darkgirl/tunic2.png); }
-.darkgirl .tunic.active-3 { background-image: url(images/sprites/darkgirl/tunic3.png); }
-.darkgirl .tunic.active-1.bunny { background-image: url(images/sprites/darkgirl/tunicbunny1.png); }
-.darkgirl .tunic.active-2.bunny { background-image: url(images/sprites/darkgirl/tunicbunny2.png); }
-.darkgirl .tunic.active-3.bunny { background-image: url(images/sprites/darkgirl/tunicbunny3.png); }
-
-.darklink-tunic .tunic.active-1 { background-image: url(images/sprites/darklink-tunic/tunic1.png); }
-.darklink-tunic .tunic.active-2 { background-image: url(images/sprites/darklink-tunic/tunic2.png); }
-.darklink-tunic .tunic.active-3 { background-image: url(images/sprites/darklink-tunic/tunic3.png); }
-.darklink-tunic .tunic.active-1.bunny { background-image: url(images/sprites/darklink-tunic/tunicbunny1.png); }
-.darklink-tunic .tunic.active-2.bunny { background-image: url(images/sprites/darklink-tunic/tunicbunny2.png); }
-.darklink-tunic .tunic.active-3.bunny { background-image: url(images/sprites/darklink-tunic/tunicbunny3.png); }
-
-.darklink .tunic.active-1 { background-image: url(images/sprites/darklink/tunic1.png); }
-.darklink .tunic.active-2 { background-image: url(images/sprites/darklink/tunic2.png); }
-.darklink .tunic.active-3 { background-image: url(images/sprites/darklink/tunic3.png); }
-.darklink .tunic.active-1.bunny { background-image: url(images/sprites/darklink/tunicbunny1.png); }
-.darklink .tunic.active-2.bunny { background-image: url(images/sprites/darklink/tunicbunny2.png); }
-.darklink .tunic.active-3.bunny { background-image: url(images/sprites/darklink/tunicbunny3.png); }
-
-.darkswatchy .tunic.active-1 { background-image: url(images/sprites/darkswatchy/tunic1.png); }
-.darkswatchy .tunic.active-2 { background-image: url(images/sprites/darkswatchy/tunic2.png); }
-.darkswatchy .tunic.active-3 { background-image: url(images/sprites/darkswatchy/tunic3.png); }
-.darkswatchy .tunic.active-1.bunny { background-image: url(images/sprites/darkswatchy/tunicbunny1.png); }
-.darkswatchy .tunic.active-2.bunny { background-image: url(images/sprites/darkswatchy/tunicbunny2.png); }
-.darkswatchy .tunic.active-3.bunny { background-image: url(images/sprites/darkswatchy/tunicbunny3.png); }
-
-.darkzelda .tunic.active-1 { background-image: url(images/sprites/darkzelda/tunic1.png); }
-.darkzelda .tunic.active-2 { background-image: url(images/sprites/darkzelda/tunic2.png); }
-.darkzelda .tunic.active-3 { background-image: url(images/sprites/darkzelda/tunic3.png); }
-.darkzelda .tunic.active-1.bunny { background-image: url(images/sprites/darkzelda/tunicbunny1.png); }
-.darkzelda .tunic.active-2.bunny { background-image: url(images/sprites/darkzelda/tunicbunny2.png); }
-.darkzelda .tunic.active-3.bunny { background-image: url(images/sprites/darkzelda/tunicbunny3.png); }
-
-.darkzora .tunic.active-1 { background-image: url(images/sprites/darkzora/tunic1.png); }
-.darkzora .tunic.active-2 { background-image: url(images/sprites/darkzora/tunic2.png); }
-.darkzora .tunic.active-3 { background-image: url(images/sprites/darkzora/tunic3.png); }
-.darkzora .tunic.active-1.bunny { background-image: url(images/sprites/darkzora/tunicbunny1.png); }
-.darkzora .tunic.active-2.bunny { background-image: url(images/sprites/darkzora/tunicbunny2.png); }
-.darkzora .tunic.active-3.bunny { background-image: url(images/sprites/darkzora/tunicbunny3.png); }
-
-.deadrock .tunic.active-1 { background-image: url(images/sprites/deadrock/tunic1.png); }
-.deadrock .tunic.active-2 { background-image: url(images/sprites/deadrock/tunic2.png); }
-.deadrock .tunic.active-3 { background-image: url(images/sprites/deadrock/tunic3.png); }
-.deadrock .tunic.active-1.bunny { background-image: url(images/sprites/deadrock/tunicbunny1.png); }
-.deadrock .tunic.active-2.bunny { background-image: url(images/sprites/deadrock/tunicbunny2.png); }
-.deadrock .tunic.active-3.bunny { background-image: url(images/sprites/deadrock/tunicbunny3.png); }
-
-.decidueye .tunic.active-1 { background-image: url(images/sprites/decidueye/tunic1.png); }
-.decidueye .tunic.active-2 { background-image: url(images/sprites/decidueye/tunic2.png); }
-.decidueye .tunic.active-3 { background-image: url(images/sprites/decidueye/tunic3.png); }
-.decidueye .tunic.active-1.bunny { background-image: url(images/sprites/decidueye/tunicbunny1.png); }
-.decidueye .tunic.active-2.bunny { background-image: url(images/sprites/decidueye/tunicbunny2.png); }
-.decidueye .tunic.active-3.bunny { background-image: url(images/sprites/decidueye/tunicbunny3.png); }
-
-.demonlink .tunic.active-1 { background-image: url(images/sprites/demonlink/tunic1.png); }
-.demonlink .tunic.active-2 { background-image: url(images/sprites/demonlink/tunic2.png); }
-.demonlink .tunic.active-3 { background-image: url(images/sprites/demonlink/tunic3.png); }
-.demonlink .tunic.active-1.bunny { background-image: url(images/sprites/demonlink/tunicbunny1.png); }
-.demonlink .tunic.active-2.bunny { background-image: url(images/sprites/demonlink/tunicbunny2.png); }
-.demonlink .tunic.active-3.bunny { background-image: url(images/sprites/demonlink/tunicbunny3.png); }
-
-.dragonite .tunic.active-1 { background-image: url(images/sprites/dragonite/tunic1.png); }
-.dragonite .tunic.active-2 { background-image: url(images/sprites/dragonite/tunic2.png); }
-.dragonite .tunic.active-3 { background-image: url(images/sprites/dragonite/tunic3.png); }
-.dragonite .tunic.active-1.bunny { background-image: url(images/sprites/dragonite/tunicbunny1.png); }
-.dragonite .tunic.active-2.bunny { background-image: url(images/sprites/dragonite/tunicbunny2.png); }
-.dragonite .tunic.active-3.bunny { background-image: url(images/sprites/dragonite/tunicbunny3.png); }
-
-.eggplant .tunic.active-1 { background-image: url(images/sprites/eggplant/tunic1.png); }
-.eggplant .tunic.active-2 { background-image: url(images/sprites/eggplant/tunic2.png); }
-.eggplant .tunic.active-3 { background-image: url(images/sprites/eggplant/tunic3.png); }
-.eggplant .tunic.active-1.bunny { background-image: url(images/sprites/eggplant/tunicbunny1.png); }
-.eggplant .tunic.active-2.bunny { background-image: url(images/sprites/eggplant/tunicbunny2.png); }
-.eggplant .tunic.active-3.bunny { background-image: url(images/sprites/eggplant/tunicbunny3.png); }
-
-.emosaru .tunic.active-1 { background-image: url(images/sprites/emosaru/tunic1.png); }
-.emosaru .tunic.active-2 { background-image: url(images/sprites/emosaru/tunic2.png); }
-.emosaru .tunic.active-3 { background-image: url(images/sprites/emosaru/tunic3.png); }
-.emosaru .tunic.active-1.bunny { background-image: url(images/sprites/emosaru/tunicbunny1.png); }
-.emosaru .tunic.active-2.bunny { background-image: url(images/sprites/emosaru/tunicbunny2.png); }
-.emosaru .tunic.active-3.bunny { background-image: url(images/sprites/emosaru/tunicbunny3.png); }
-
-.foxlink .tunic.active-1 { background-image: url(images/sprites/foxlink/tunic1.png); }
-.foxlink .tunic.active-2 { background-image: url(images/sprites/foxlink/tunic2.png); }
-.foxlink .tunic.active-3 { background-image: url(images/sprites/foxlink/tunic3.png); }
-.foxlink .tunic.active-1.bunny { background-image: url(images/sprites/foxlink/tunicbunny1.png); }
-.foxlink .tunic.active-2.bunny { background-image: url(images/sprites/foxlink/tunicbunny2.png); }
-.foxlink .tunic.active-3.bunny { background-image: url(images/sprites/foxlink/tunicbunny3.png); }
-
-.froglink .tunic.active-1 { background-image: url(images/sprites/froglink/tunic1.png); }
-.froglink .tunic.active-2 { background-image: url(images/sprites/froglink/tunic2.png); }
-.froglink .tunic.active-3 { background-image: url(images/sprites/froglink/tunic3.png); }
-.froglink .tunic.active-1.bunny { background-image: url(images/sprites/froglink/tunicbunny1.png); }
-.froglink .tunic.active-2.bunny { background-image: url(images/sprites/froglink/tunicbunny2.png); }
-.froglink .tunic.active-3.bunny { background-image: url(images/sprites/froglink/tunicbunny3.png); }
-
-.ganondorf .tunic.active-1 { background-image: url(images/sprites/ganondorf/tunic1.png); }
-.ganondorf .tunic.active-2 { background-image: url(images/sprites/ganondorf/tunic2.png); }
-.ganondorf .tunic.active-3 { background-image: url(images/sprites/ganondorf/tunic3.png); }
-.ganondorf .tunic.active-1.bunny { background-image: url(images/sprites/ganondorf/tunicbunny1.png); }
-.ganondorf .tunic.active-2.bunny { background-image: url(images/sprites/ganondorf/tunicbunny2.png); }
-.ganondorf .tunic.active-3.bunny { background-image: url(images/sprites/ganondorf/tunicbunny3.png); }
-
-.garfield .tunic.active-1 { background-image: url(images/sprites/garfield/tunic1.png); }
-.garfield .tunic.active-2 { background-image: url(images/sprites/garfield/tunic2.png); }
-.garfield .tunic.active-3 { background-image: url(images/sprites/garfield/tunic3.png); }
-.garfield .tunic.active-1.bunny { background-image: url(images/sprites/garfield/tunicbunny1.png); }
-.garfield .tunic.active-2.bunny { background-image: url(images/sprites/garfield/tunicbunny2.png); }
-.garfield .tunic.active-3.bunny { background-image: url(images/sprites/garfield/tunicbunny3.png); }
-
-.goomba .tunic.active-1 { background-image: url(images/sprites/goomba/tunic1.png); }
-.goomba .tunic.active-2 { background-image: url(images/sprites/goomba/tunic2.png); }
-.goomba .tunic.active-3 { background-image: url(images/sprites/goomba/tunic3.png); }
-.goomba .tunic.active-1.bunny { background-image: url(images/sprites/goomba/tunicbunny1.png); }
-.goomba .tunic.active-2.bunny { background-image: url(images/sprites/goomba/tunicbunny2.png); }
-.goomba .tunic.active-3.bunny { background-image: url(images/sprites/goomba/tunicbunny3.png); }
-
-.grandpoobear .tunic.active-1 { background-image: url(images/sprites/grandpoobear/tunic1.png); }
-.grandpoobear .tunic.active-2 { background-image: url(images/sprites/grandpoobear/tunic2.png); }
-.grandpoobear .tunic.active-3 { background-image: url(images/sprites/grandpoobear/tunic3.png); }
-.grandpoobear .tunic.active-1.bunny { background-image: url(images/sprites/grandpoobear/tunicbunny1.png); }
-.grandpoobear .tunic.active-2.bunny { background-image: url(images/sprites/grandpoobear/tunicbunny2.png); }
-.grandpoobear .tunic.active-3.bunny { background-image: url(images/sprites/grandpoobear/tunicbunny3.png); }
-
-.grunclestan .tunic.active-1 { background-image: url(images/sprites/grunclestan/tunic1.png); }
-.grunclestan .tunic.active-2 { background-image: url(images/sprites/grunclestan/tunic2.png); }
-.grunclestan .tunic.active-3 { background-image: url(images/sprites/grunclestan/tunic3.png); }
-.grunclestan .tunic.active-1.bunny { background-image: url(images/sprites/grunclestan/tunicbunny1.png); }
-.grunclestan .tunic.active-2.bunny { background-image: url(images/sprites/grunclestan/tunicbunny2.png); }
-.grunclestan .tunic.active-3.bunny { background-image: url(images/sprites/grunclestan/tunicbunny3.png); }
-
-.headlesslink .tunic.active-1 { background-image: url(images/sprites/headlesslink/tunic1.png); }
-.headlesslink .tunic.active-2 { background-image: url(images/sprites/headlesslink/tunic2.png); }
-.headlesslink .tunic.active-3 { background-image: url(images/sprites/headlesslink/tunic3.png); }
-.headlesslink .tunic.active-1.bunny { background-image: url(images/sprites/headlesslink/tunicbunny1.png); }
-.headlesslink .tunic.active-2.bunny { background-image: url(images/sprites/headlesslink/tunicbunny2.png); }
-.headlesslink .tunic.active-3.bunny { background-image: url(images/sprites/headlesslink/tunicbunny3.png); }
-
-.hoarder-bush .tunic.active-1 { background-image: url(images/sprites/hoarder-bush/tunic1.png); }
-.hoarder-bush .tunic.active-2 { background-image: url(images/sprites/hoarder-bush/tunic2.png); }
-.hoarder-bush .tunic.active-3 { background-image: url(images/sprites/hoarder-bush/tunic3.png); }
-.hoarder-bush .tunic.active-1.bunny { background-image: url(images/sprites/hoarder-bush/tunicbunny1.png); }
-.hoarder-bush .tunic.active-2.bunny { background-image: url(images/sprites/hoarder-bush/tunicbunny2.png); }
-.hoarder-bush .tunic.active-3.bunny { background-image: url(images/sprites/hoarder-bush/tunicbunny3.png); }
-
-.hoarder-pot .tunic.active-1 { background-image: url(images/sprites/hoarder-pot/tunic1.png); }
-.hoarder-pot .tunic.active-2 { background-image: url(images/sprites/hoarder-pot/tunic2.png); }
-.hoarder-pot .tunic.active-3 { background-image: url(images/sprites/hoarder-pot/tunic3.png); }
-.hoarder-pot .tunic.active-1.bunny { background-image: url(images/sprites/hoarder-pot/tunicbunny1.png); }
-.hoarder-pot .tunic.active-2.bunny { background-image: url(images/sprites/hoarder-pot/tunicbunny2.png); }
-.hoarder-pot .tunic.active-3.bunny { background-image: url(images/sprites/hoarder-pot/tunicbunny3.png); }
-
-.hoarder-rock .tunic.active-1 { background-image: url(images/sprites/hoarder-rock/tunic1.png); }
-.hoarder-rock .tunic.active-2 { background-image: url(images/sprites/hoarder-rock/tunic2.png); }
-.hoarder-rock .tunic.active-3 { background-image: url(images/sprites/hoarder-rock/tunic3.png); }
-.hoarder-rock .tunic.active-1.bunny { background-image: url(images/sprites/hoarder-rock/tunicbunny1.png); }
-.hoarder-rock .tunic.active-2.bunny { background-image: url(images/sprites/hoarder-rock/tunicbunny2.png); }
-.hoarder-rock .tunic.active-3.bunny { background-image: url(images/sprites/hoarder-rock/tunicbunny3.png); }
-
-.homer .tunic.active-1 { background-image: url(images/sprites/homer/tunic1.png); }
-.homer .tunic.active-2 { background-image: url(images/sprites/homer/tunic2.png); }
-.homer .tunic.active-3 { background-image: url(images/sprites/homer/tunic3.png); }
-.homer .tunic.active-1.bunny { background-image: url(images/sprites/homer/tunicbunny1.png); }
-.homer .tunic.active-2.bunny { background-image: url(images/sprites/homer/tunicbunny2.png); }
-.homer .tunic.active-3.bunny { background-image: url(images/sprites/homer/tunicbunny3.png); }
-
-.hyruleknight .tunic.active-1 { background-image: url(images/sprites/hyruleknight/tunic1.png); }
-.hyruleknight .tunic.active-2 { background-image: url(images/sprites/hyruleknight/tunic2.png); }
-.hyruleknight .tunic.active-3 { background-image: url(images/sprites/hyruleknight/tunic3.png); }
-.hyruleknight .tunic.active-1.bunny { background-image: url(images/sprites/hyruleknight/tunicbunny1.png); }
-.hyruleknight .tunic.active-2.bunny { background-image: url(images/sprites/hyruleknight/tunicbunny2.png); }
-.hyruleknight .tunic.active-3.bunny { background-image: url(images/sprites/hyruleknight/tunicbunny3.png); }
-
-.ignignokt .tunic.active-1 { background-image: url(images/sprites/ignignokt/tunic1.png); }
-.ignignokt .tunic.active-2 { background-image: url(images/sprites/ignignokt/tunic2.png); }
-.ignignokt .tunic.active-3 { background-image: url(images/sprites/ignignokt/tunic3.png); }
-.ignignokt .tunic.active-1.bunny { background-image: url(images/sprites/ignignokt/tunicbunny1.png); }
-.ignignokt .tunic.active-2.bunny { background-image: url(images/sprites/ignignokt/tunicbunny2.png); }
-.ignignokt .tunic.active-3.bunny { background-image: url(images/sprites/ignignokt/tunicbunny3.png); }
-
-.inkling .tunic.active-1 { background-image: url(images/sprites/inkling/tunic1.png); }
-.inkling .tunic.active-2 { background-image: url(images/sprites/inkling/tunic2.png); }
-.inkling .tunic.active-3 { background-image: url(images/sprites/inkling/tunic3.png); }
-.inkling .tunic.active-1.bunny { background-image: url(images/sprites/inkling/tunicbunny1.png); }
-.inkling .tunic.active-2.bunny { background-image: url(images/sprites/inkling/tunicbunny2.png); }
-.inkling .tunic.active-3.bunny { background-image: url(images/sprites/inkling/tunicbunny3.png); }
-
-.invisibleman .tunic.active-1 { background-image: url(images/sprites/invisibleman/tunic1.png); }
-.invisibleman .tunic.active-2 { background-image: url(images/sprites/invisibleman/tunic2.png); }
-.invisibleman .tunic.active-3 { background-image: url(images/sprites/invisibleman/tunic3.png); }
-.invisibleman .tunic.active-1.bunny { background-image: url(images/sprites/invisibleman/tunicbunny1.png); }
-.invisibleman .tunic.active-2.bunny { background-image: url(images/sprites/invisibleman/tunicbunny2.png); }
-.invisibleman .tunic.active-3.bunny { background-image: url(images/sprites/invisibleman/tunicbunny3.png); }
-
-.jogurt .tunic.active-1 { background-image: url(images/sprites/jogurt/tunic1.png); }
-.jogurt .tunic.active-2 { background-image: url(images/sprites/jogurt/tunic2.png); }
-.jogurt .tunic.active-3 { background-image: url(images/sprites/jogurt/tunic3.png); }
-.jogurt .tunic.active-1.bunny { background-image: url(images/sprites/jogurt/tunicbunny1.png); }
-.jogurt .tunic.active-2.bunny { background-image: url(images/sprites/jogurt/tunicbunny2.png); }
-.jogurt .tunic.active-3.bunny { background-image: url(images/sprites/jogurt/tunicbunny3.png); }
-
-.kecleon .tunic.active-1 { background-image: url(images/sprites/kecleon/tunic1.png); }
-.kecleon .tunic.active-2 { background-image: url(images/sprites/kecleon/tunic2.png); }
-.kecleon .tunic.active-3 { background-image: url(images/sprites/kecleon/tunic3.png); }
-.kecleon .tunic.active-1.bunny { background-image: url(images/sprites/kecleon/tunicbunny1.png); }
-.kecleon .tunic.active-2.bunny { background-image: url(images/sprites/kecleon/tunicbunny2.png); }
-.kecleon .tunic.active-3.bunny { background-image: url(images/sprites/kecleon/tunicbunny3.png); }
-
-.kholdstare .tunic.active-1 { background-image: url(images/sprites/kholdstare/tunic1.png); }
-.kholdstare .tunic.active-2 { background-image: url(images/sprites/kholdstare/tunic2.png); }
-.kholdstare .tunic.active-3 { background-image: url(images/sprites/kholdstare/tunic3.png); }
-.kholdstare .tunic.active-1.bunny { background-image: url(images/sprites/kholdstare/tunicbunny1.png); }
-.kholdstare .tunic.active-2.bunny { background-image: url(images/sprites/kholdstare/tunicbunny2.png); }
-.kholdstare .tunic.active-3.bunny { background-image: url(images/sprites/kholdstare/tunicbunny3.png); }
-
-.kirby-meta .tunic.active-1 { background-image: url(images/sprites/kirby-meta/tunic1.png); }
-.kirby-meta .tunic.active-2 { background-image: url(images/sprites/kirby-meta/tunic2.png); }
-.kirby-meta .tunic.active-3 { background-image: url(images/sprites/kirby-meta/tunic3.png); }
-.kirby-meta .tunic.active-1.bunny { background-image: url(images/sprites/kirby-meta/tunicbunny1.png); }
-.kirby-meta .tunic.active-2.bunny { background-image: url(images/sprites/kirby-meta/tunicbunny2.png); }
-.kirby-meta .tunic.active-3.bunny { background-image: url(images/sprites/kirby-meta/tunicbunny3.png); }
-
-.kore8 .tunic.active-1 { background-image: url(images/sprites/kore8/tunic1.png); }
-.kore8 .tunic.active-2 { background-image: url(images/sprites/kore8/tunic2.png); }
-.kore8 .tunic.active-3 { background-image: url(images/sprites/kore8/tunic3.png); }
-.kore8 .tunic.active-1.bunny { background-image: url(images/sprites/kore8/tunicbunny1.png); }
-.kore8 .tunic.active-2.bunny { background-image: url(images/sprites/kore8/tunicbunny2.png); }
-.kore8 .tunic.active-3.bunny { background-image: url(images/sprites/kore8/tunicbunny3.png); }
-
-.lakitu .tunic.active-1 { background-image: url(images/sprites/lakitu/tunic1.png); }
-.lakitu .tunic.active-2 { background-image: url(images/sprites/lakitu/tunic2.png); }
-.lakitu .tunic.active-3 { background-image: url(images/sprites/lakitu/tunic3.png); }
-.lakitu .tunic.active-1.bunny { background-image: url(images/sprites/lakitu/tunicbunny1.png); }
-.lakitu .tunic.active-2.bunny { background-image: url(images/sprites/lakitu/tunicbunny2.png); }
-.lakitu .tunic.active-3.bunny { background-image: url(images/sprites/lakitu/tunicbunny3.png); }
-
-.linkhatcolor .tunic.active-1 { background-image: url(images/sprites/linkhatcolor/tunic1.png); }
-.linkhatcolor .tunic.active-2 { background-image: url(images/sprites/linkhatcolor/tunic2.png); }
-.linkhatcolor .tunic.active-3 { background-image: url(images/sprites/linkhatcolor/tunic3.png); }
-.linkhatcolor .tunic.active-1.bunny { background-image: url(images/sprites/linkhatcolor/tunicbunny1.png); }
-.linkhatcolor .tunic.active-2.bunny { background-image: url(images/sprites/linkhatcolor/tunicbunny2.png); }
-.linkhatcolor .tunic.active-3.bunny { background-image: url(images/sprites/linkhatcolor/tunicbunny3.png); }
-
-.linktuniccolor .tunic.active-1 { background-image: url(images/sprites/linktuniccolor/tunic1.png); }
-.linktuniccolor .tunic.active-2 { background-image: url(images/sprites/linktuniccolor/tunic2.png); }
-.linktuniccolor .tunic.active-3 { background-image: url(images/sprites/linktuniccolor/tunic3.png); }
-.linktuniccolor .tunic.active-1.bunny { background-image: url(images/sprites/linktuniccolor/tunicbunny1.png); }
-.linktuniccolor .tunic.active-2.bunny { background-image: url(images/sprites/linktuniccolor/tunicbunny2.png); }
-.linktuniccolor .tunic.active-3.bunny { background-image: url(images/sprites/linktuniccolor/tunicbunny3.png); }
-
-.littlepony .tunic.active-1 { background-image: url(images/sprites/littlepony/tunic1.png); }
-.littlepony .tunic.active-2 { background-image: url(images/sprites/littlepony/tunic2.png); }
-.littlepony .tunic.active-3 { background-image: url(images/sprites/littlepony/tunic3.png); }
-.littlepony .tunic.active-1.bunny { background-image: url(images/sprites/littlepony/tunicbunny1.png); }
-.littlepony .tunic.active-2.bunny { background-image: url(images/sprites/littlepony/tunicbunny2.png); }
-.littlepony .tunic.active-3.bunny { background-image: url(images/sprites/littlepony/tunicbunny3.png); }
-
-.luigi .tunic.active-1 { background-image: url(images/sprites/luigi/tunic1.png); }
-.luigi .tunic.active-2 { background-image: url(images/sprites/luigi/tunic2.png); }
-.luigi .tunic.active-3 { background-image: url(images/sprites/luigi/tunic3.png); }
-.luigi .tunic.active-1.bunny { background-image: url(images/sprites/luigi/tunicbunny1.png); }
-.luigi .tunic.active-2.bunny { background-image: url(images/sprites/luigi/tunicbunny2.png); }
-.luigi .tunic.active-3.bunny { background-image: url(images/sprites/luigi/tunicbunny3.png); }
-
-.magus .tunic.active-1 { background-image: url(images/sprites/magus/tunic1.png); }
-.magus .tunic.active-2 { background-image: url(images/sprites/magus/tunic2.png); }
-.magus .tunic.active-3 { background-image: url(images/sprites/magus/tunic3.png); }
-.magus .tunic.active-1.bunny { background-image: url(images/sprites/magus/tunicbunny1.png); }
-.magus .tunic.active-2.bunny { background-image: url(images/sprites/magus/tunicbunny2.png); }
-.magus .tunic.active-3.bunny { background-image: url(images/sprites/magus/tunicbunny3.png); }
-
-.maiden .tunic.active-1 { background-image: url(images/sprites/maiden/tunic1.png); }
-.maiden .tunic.active-2 { background-image: url(images/sprites/maiden/tunic2.png); }
-.maiden .tunic.active-3 { background-image: url(images/sprites/maiden/tunic3.png); }
-.maiden .tunic.active-1.bunny { background-image: url(images/sprites/maiden/tunicbunny1.png); }
-.maiden .tunic.active-2.bunny { background-image: url(images/sprites/maiden/tunicbunny2.png); }
-.maiden .tunic.active-3.bunny { background-image: url(images/sprites/maiden/tunicbunny3.png); }
-
-.mangalink .tunic.active-1 { background-image: url(images/sprites/mangalink/tunic1.png); }
-.mangalink .tunic.active-2 { background-image: url(images/sprites/mangalink/tunic2.png); }
-.mangalink .tunic.active-3 { background-image: url(images/sprites/mangalink/tunic3.png); }
-.mangalink .tunic.active-1.bunny { background-image: url(images/sprites/mangalink/tunicbunny1.png); }
-.mangalink .tunic.active-2.bunny { background-image: url(images/sprites/mangalink/tunicbunny2.png); }
-.mangalink .tunic.active-3.bunny { background-image: url(images/sprites/mangalink/tunicbunny3.png); }
-
-.maplequeen .tunic.active-1 { background-image: url(images/sprites/maplequeen/tunic1.png); }
-.maplequeen .tunic.active-2 { background-image: url(images/sprites/maplequeen/tunic2.png); }
-.maplequeen .tunic.active-3 { background-image: url(images/sprites/maplequeen/tunic3.png); }
-.maplequeen .tunic.active-1.bunny { background-image: url(images/sprites/maplequeen/tunicbunny1.png); }
-.maplequeen .tunic.active-2.bunny { background-image: url(images/sprites/maplequeen/tunicbunny2.png); }
-.maplequeen .tunic.active-3.bunny { background-image: url(images/sprites/maplequeen/tunicbunny3.png); }
-
-.mario-classic .tunic.active-1 { background-image: url(images/sprites/mario-classic/tunic1.png); }
-.mario-classic .tunic.active-2 { background-image: url(images/sprites/mario-classic/tunic2.png); }
-.mario-classic .tunic.active-3 { background-image: url(images/sprites/mario-classic/tunic3.png); }
-.mario-classic .tunic.active-1.bunny { background-image: url(images/sprites/mario-classic/tunicbunny1.png); }
-.mario-classic .tunic.active-2.bunny { background-image: url(images/sprites/mario-classic/tunicbunny2.png); }
-.mario-classic .tunic.active-3.bunny { background-image: url(images/sprites/mario-classic/tunicbunny3.png); }
-
-.mariocappy .tunic.active-1 { background-image: url(images/sprites/mariocappy/tunic1.png); }
-.mariocappy .tunic.active-2 { background-image: url(images/sprites/mariocappy/tunic2.png); }
-.mariocappy .tunic.active-3 { background-image: url(images/sprites/mariocappy/tunic3.png); }
-.mariocappy .tunic.active-1.bunny { background-image: url(images/sprites/mariocappy/tunicbunny1.png); }
-.mariocappy .tunic.active-2.bunny { background-image: url(images/sprites/mariocappy/tunicbunny2.png); }
-.mariocappy .tunic.active-3.bunny { background-image: url(images/sprites/mariocappy/tunicbunny3.png); }
-
-.marisa .tunic.active-1 { background-image: url(images/sprites/marisa/tunic1.png); }
-.marisa .tunic.active-2 { background-image: url(images/sprites/marisa/tunic2.png); }
-.marisa .tunic.active-3 { background-image: url(images/sprites/marisa/tunic3.png); }
-.marisa .tunic.active-1.bunny { background-image: url(images/sprites/marisa/tunicbunny1.png); }
-.marisa .tunic.active-2.bunny { background-image: url(images/sprites/marisa/tunicbunny2.png); }
-.marisa .tunic.active-3.bunny { background-image: url(images/sprites/marisa/tunicbunny3.png); }
-
-.meatwad .tunic.active-1 { background-image: url(images/sprites/meatwad/tunic1.png); }
-.meatwad .tunic.active-2 { background-image: url(images/sprites/meatwad/tunic2.png); }
-.meatwad .tunic.active-3 { background-image: url(images/sprites/meatwad/tunic3.png); }
-.meatwad .tunic.active-1.bunny { background-image: url(images/sprites/meatwad/tunicbunny1.png); }
-.meatwad .tunic.active-2.bunny { background-image: url(images/sprites/meatwad/tunicbunny2.png); }
-.meatwad .tunic.active-3.bunny { background-image: url(images/sprites/meatwad/tunicbunny3.png); }
-
-.megaman-x .tunic.active-1 { background-image: url(images/sprites/megaman-x/tunic1.png); }
-.megaman-x .tunic.active-2 { background-image: url(images/sprites/megaman-x/tunic2.png); }
-.megaman-x .tunic.active-3 { background-image: url(images/sprites/megaman-x/tunic3.png); }
-.megaman-x .tunic.active-1.bunny { background-image: url(images/sprites/megaman-x/tunicbunny1.png); }
-.megaman-x .tunic.active-2.bunny { background-image: url(images/sprites/megaman-x/tunicbunny2.png); }
-.megaman-x .tunic.active-3.bunny { background-image: url(images/sprites/megaman-x/tunicbunny3.png); }
-
-.mike-jones .tunic.active-1 { background-image: url(images/sprites/mike-jones/tunic1.png); }
-.mike-jones .tunic.active-2 { background-image: url(images/sprites/mike-jones/tunic2.png); }
-.mike-jones .tunic.active-3 { background-image: url(images/sprites/mike-jones/tunic3.png); }
-.mike-jones .tunic.active-1.bunny { background-image: url(images/sprites/mike-jones/tunicbunny1.png); }
-.mike-jones .tunic.active-2.bunny { background-image: url(images/sprites/mike-jones/tunicbunny2.png); }
-.mike-jones .tunic.active-3.bunny { background-image: url(images/sprites/mike-jones/tunicbunny3.png); }
-
-.minishcaplink .tunic.active-1 { background-image: url(images/sprites/minishcaplink/tunic1.png); }
-.minishcaplink .tunic.active-2 { background-image: url(images/sprites/minishcaplink/tunic2.png); }
-.minishcaplink .tunic.active-3 { background-image: url(images/sprites/minishcaplink/tunic3.png); }
-.minishcaplink .tunic.active-1.bunny { background-image: url(images/sprites/minishcaplink/tunicbunny1.png); }
-.minishcaplink .tunic.active-2.bunny { background-image: url(images/sprites/minishcaplink/tunicbunny2.png); }
-.minishcaplink .tunic.active-3.bunny { background-image: url(images/sprites/minishcaplink/tunicbunny3.png); }
-
-.missingno .tunic.active-1 { background-image: url(images/sprites/missingno/tunic1.png); }
-.missingno .tunic.active-2 { background-image: url(images/sprites/missingno/tunic2.png); }
-.missingno .tunic.active-3 { background-image: url(images/sprites/missingno/tunic3.png); }
-.missingno .tunic.active-1.bunny { background-image: url(images/sprites/missingno/tunicbunny1.png); }
-.missingno .tunic.active-2.bunny { background-image: url(images/sprites/missingno/tunicbunny2.png); }
-.missingno .tunic.active-3.bunny { background-image: url(images/sprites/missingno/tunicbunny3.png); }
-
-.modernlink .tunic.active-1 { background-image: url(images/sprites/modernlink/tunic1.png); }
-.modernlink .tunic.active-2 { background-image: url(images/sprites/modernlink/tunic2.png); }
-.modernlink .tunic.active-3 { background-image: url(images/sprites/modernlink/tunic3.png); }
-.modernlink .tunic.active-1.bunny { background-image: url(images/sprites/modernlink/tunicbunny1.png); }
-.modernlink .tunic.active-2.bunny { background-image: url(images/sprites/modernlink/tunicbunny2.png); }
-.modernlink .tunic.active-3.bunny { background-image: url(images/sprites/modernlink/tunicbunny3.png); }
-
-.mog .tunic.active-1 { background-image: url(images/sprites/mog/tunic1.png); }
-.mog .tunic.active-2 { background-image: url(images/sprites/mog/tunic2.png); }
-.mog .tunic.active-3 { background-image: url(images/sprites/mog/tunic3.png); }
-.mog .tunic.active-1.bunny { background-image: url(images/sprites/mog/tunicbunny1.png); }
-.mog .tunic.active-2.bunny { background-image: url(images/sprites/mog/tunicbunny2.png); }
-.mog .tunic.active-3.bunny { background-image: url(images/sprites/mog/tunicbunny3.png); }
-
-.mouse .tunic.active-1 { background-image: url(images/sprites/mouse/tunic1.png); }
-.mouse .tunic.active-2 { background-image: url(images/sprites/mouse/tunic2.png); }
-.mouse .tunic.active-3 { background-image: url(images/sprites/mouse/tunic3.png); }
-.mouse .tunic.active-1.bunny { background-image: url(images/sprites/mouse/tunicbunny1.png); }
-.mouse .tunic.active-2.bunny { background-image: url(images/sprites/mouse/tunicbunny2.png); }
-.mouse .tunic.active-3.bunny { background-image: url(images/sprites/mouse/tunicbunny3.png); }
-
-.mushy .tunic.active-1 { background-image: url(images/sprites/mushy/tunic1.png); }
-.mushy .tunic.active-2 { background-image: url(images/sprites/mushy/tunic2.png); }
-.mushy .tunic.active-3 { background-image: url(images/sprites/mushy/tunic3.png); }
-.mushy .tunic.active-1.bunny { background-image: url(images/sprites/mushy/tunicbunny1.png); }
-.mushy .tunic.active-2.bunny { background-image: url(images/sprites/mushy/tunicbunny2.png); }
-.mushy .tunic.active-3.bunny { background-image: url(images/sprites/mushy/tunicbunny3.png); }
-
-.naturelink .tunic.active-1 { background-image: url(images/sprites/naturelink/tunic1.png); }
-.naturelink .tunic.active-2 { background-image: url(images/sprites/naturelink/tunic2.png); }
-.naturelink .tunic.active-3 { background-image: url(images/sprites/naturelink/tunic3.png); }
-.naturelink .tunic.active-1.bunny { background-image: url(images/sprites/naturelink/tunicbunny1.png); }
-.naturelink .tunic.active-2.bunny { background-image: url(images/sprites/naturelink/tunicbunny2.png); }
-.naturelink .tunic.active-3.bunny { background-image: url(images/sprites/naturelink/tunicbunny3.png); }
-
-.navi .tunic.active-1 { background-image: url(images/sprites/navi/tunic1.png); }
-.navi .tunic.active-2 { background-image: url(images/sprites/navi/tunic2.png); }
-.navi .tunic.active-3 { background-image: url(images/sprites/navi/tunic3.png); }
-.navi .tunic.active-1.bunny { background-image: url(images/sprites/navi/tunicbunny1.png); }
-.navi .tunic.active-2.bunny { background-image: url(images/sprites/navi/tunicbunny2.png); }
-.navi .tunic.active-3.bunny { background-image: url(images/sprites/navi/tunicbunny3.png); }
-
-.negativelink .tunic.active-1 { background-image: url(images/sprites/negativelink/tunic1.png); }
-.negativelink .tunic.active-2 { background-image: url(images/sprites/negativelink/tunic2.png); }
-.negativelink .tunic.active-3 { background-image: url(images/sprites/negativelink/tunic3.png); }
-.negativelink .tunic.active-1.bunny { background-image: url(images/sprites/negativelink/tunicbunny1.png); }
-.negativelink .tunic.active-2.bunny { background-image: url(images/sprites/negativelink/tunicbunny2.png); }
-.negativelink .tunic.active-3.bunny { background-image: url(images/sprites/negativelink/tunicbunny3.png); }
-
-.neslink .tunic.active-1 { background-image: url(images/sprites/neslink/tunic1.png); }
-.neslink .tunic.active-2 { background-image: url(images/sprites/neslink/tunic2.png); }
-.neslink .tunic.active-3 { background-image: url(images/sprites/neslink/tunic3.png); }
-.neslink .tunic.active-1.bunny { background-image: url(images/sprites/neslink/tunicbunny1.png); }
-.neslink .tunic.active-2.bunny { background-image: url(images/sprites/neslink/tunicbunny2.png); }
-.neslink .tunic.active-3.bunny { background-image: url(images/sprites/neslink/tunicbunny3.png); }
-
-.ness .tunic.active-1 { background-image: url(images/sprites/ness/tunic1.png); }
-.ness .tunic.active-2 { background-image: url(images/sprites/ness/tunic2.png); }
-.ness .tunic.active-3 { background-image: url(images/sprites/ness/tunic3.png); }
-.ness .tunic.active-1.bunny { background-image: url(images/sprites/ness/tunicbunny1.png); }
-.ness .tunic.active-2.bunny { background-image: url(images/sprites/ness/tunicbunny2.png); }
-.ness .tunic.active-3.bunny { background-image: url(images/sprites/ness/tunicbunny3.png); }
-
-.oldman .tunic.active-1 { background-image: url(images/sprites/oldman/tunic1.png); }
-.oldman .tunic.active-2 { background-image: url(images/sprites/oldman/tunic2.png); }
-.oldman .tunic.active-3 { background-image: url(images/sprites/oldman/tunic3.png); }
-.oldman .tunic.active-1.bunny { background-image: url(images/sprites/oldman/tunicbunny1.png); }
-.oldman .tunic.active-2.bunny { background-image: url(images/sprites/oldman/tunicbunny2.png); }
-.oldman .tunic.active-3.bunny { background-image: url(images/sprites/oldman/tunicbunny3.png); }
-
-.ori .tunic.active-1 { background-image: url(images/sprites/ori/tunic1.png); }
-.ori .tunic.active-2 { background-image: url(images/sprites/ori/tunic2.png); }
-.ori .tunic.active-3 { background-image: url(images/sprites/ori/tunic3.png); }
-.ori .tunic.active-1.bunny { background-image: url(images/sprites/ori/tunicbunny1.png); }
-.ori .tunic.active-2.bunny { background-image: url(images/sprites/ori/tunicbunny2.png); }
-.ori .tunic.active-3.bunny { background-image: url(images/sprites/ori/tunicbunny3.png); }
-
-.outlinelink .tunic.active-1 { background-image: url(images/sprites/outlinelink/tunic1.png); }
-.outlinelink .tunic.active-2 { background-image: url(images/sprites/outlinelink/tunic2.png); }
-.outlinelink .tunic.active-3 { background-image: url(images/sprites/outlinelink/tunic3.png); }
-.outlinelink .tunic.active-1.bunny { background-image: url(images/sprites/outlinelink/tunicbunny1.png); }
-.outlinelink .tunic.active-2.bunny { background-image: url(images/sprites/outlinelink/tunicbunny2.png); }
-.outlinelink .tunic.active-3.bunny { background-image: url(images/sprites/outlinelink/tunicbunny3.png); }
-
-.parallelworldslink .tunic.active-1 { background-image: url(images/sprites/parallelworldslink/tunic1.png); }
-.parallelworldslink .tunic.active-2 { background-image: url(images/sprites/parallelworldslink/tunic2.png); }
-.parallelworldslink .tunic.active-3 { background-image: url(images/sprites/parallelworldslink/tunic3.png); }
-.parallelworldslink .tunic.active-1.bunny { background-image: url(images/sprites/parallelworldslink/tunicbunny1.png); }
-.parallelworldslink .tunic.active-2.bunny { background-image: url(images/sprites/parallelworldslink/tunicbunny2.png); }
-.parallelworldslink .tunic.active-3.bunny { background-image: url(images/sprites/parallelworldslink/tunicbunny3.png); }
-
-.penguinlink .tunic.active-1 { background-image: url(images/sprites/penguinlink/tunic1.png); }
-.penguinlink .tunic.active-2 { background-image: url(images/sprites/penguinlink/tunic2.png); }
-.penguinlink .tunic.active-3 { background-image: url(images/sprites/penguinlink/tunic3.png); }
-.penguinlink .tunic.active-1.bunny { background-image: url(images/sprites/penguinlink/tunicbunny1.png); }
-.penguinlink .tunic.active-2.bunny { background-image: url(images/sprites/penguinlink/tunicbunny2.png); }
-.penguinlink .tunic.active-3.bunny { background-image: url(images/sprites/penguinlink/tunicbunny3.png); }
-
-.phoenix-wright .tunic.active-1 { background-image: url(images/sprites/phoenix-wright/tunic1.png); }
-.phoenix-wright .tunic.active-2 { background-image: url(images/sprites/phoenix-wright/tunic2.png); }
-.phoenix-wright .tunic.active-3 { background-image: url(images/sprites/phoenix-wright/tunic3.png); }
-.phoenix-wright .tunic.active-1.bunny { background-image: url(images/sprites/phoenix-wright/tunicbunny1.png); }
-.phoenix-wright .tunic.active-2.bunny { background-image: url(images/sprites/phoenix-wright/tunicbunny2.png); }
-.phoenix-wright .tunic.active-3.bunny { background-image: url(images/sprites/phoenix-wright/tunicbunny3.png); }
-
-.pikachu .tunic.active-1 { background-image: url(images/sprites/pikachu/tunic1.png); }
-.pikachu .tunic.active-2 { background-image: url(images/sprites/pikachu/tunic2.png); }
-.pikachu .tunic.active-3 { background-image: url(images/sprites/pikachu/tunic3.png); }
-.pikachu .tunic.active-1.bunny { background-image: url(images/sprites/pikachu/tunicbunny1.png); }
-.pikachu .tunic.active-2.bunny { background-image: url(images/sprites/pikachu/tunicbunny2.png); }
-.pikachu .tunic.active-3.bunny { background-image: url(images/sprites/pikachu/tunicbunny3.png); }
-
-.pinkribbonlink .tunic.active-1 { background-image: url(images/sprites/pinkribbonlink/tunic1.png); }
-.pinkribbonlink .tunic.active-2 { background-image: url(images/sprites/pinkribbonlink/tunic2.png); }
-.pinkribbonlink .tunic.active-3 { background-image: url(images/sprites/pinkribbonlink/tunic3.png); }
-.pinkribbonlink .tunic.active-1.bunny { background-image: url(images/sprites/pinkribbonlink/tunicbunny1.png); }
-.pinkribbonlink .tunic.active-2.bunny { background-image: url(images/sprites/pinkribbonlink/tunicbunny2.png); }
-.pinkribbonlink .tunic.active-3.bunny { background-image: url(images/sprites/pinkribbonlink/tunicbunny3.png); }
-
-.plagueknight .tunic.active-1 { background-image: url(images/sprites/plagueknight/tunic1.png); }
-.plagueknight .tunic.active-2 { background-image: url(images/sprites/plagueknight/tunic2.png); }
-.plagueknight .tunic.active-3 { background-image: url(images/sprites/plagueknight/tunic3.png); }
-.plagueknight .tunic.active-1.bunny { background-image: url(images/sprites/plagueknight/tunicbunny1.png); }
-.plagueknight .tunic.active-2.bunny { background-image: url(images/sprites/plagueknight/tunicbunny2.png); }
-.plagueknight .tunic.active-3.bunny { background-image: url(images/sprites/plagueknight/tunicbunny3.png); }
-
-.pokey .tunic.active-1 { background-image: url(images/sprites/pokey/tunic1.png); }
-.pokey .tunic.active-2 { background-image: url(images/sprites/pokey/tunic2.png); }
-.pokey .tunic.active-3 { background-image: url(images/sprites/pokey/tunic3.png); }
-.pokey .tunic.active-1.bunny { background-image: url(images/sprites/pokey/tunicbunny1.png); }
-.pokey .tunic.active-2.bunny { background-image: url(images/sprites/pokey/tunicbunny2.png); }
-.pokey .tunic.active-3.bunny { background-image: url(images/sprites/pokey/tunicbunny3.png); }
-
-.popoi .tunic.active-1 { background-image: url(images/sprites/popoi/tunic1.png); }
-.popoi .tunic.active-2 { background-image: url(images/sprites/popoi/tunic2.png); }
-.popoi .tunic.active-3 { background-image: url(images/sprites/popoi/tunic3.png); }
-.popoi .tunic.active-1.bunny { background-image: url(images/sprites/popoi/tunicbunny1.png); }
-.popoi .tunic.active-2.bunny { background-image: url(images/sprites/popoi/tunicbunny2.png); }
-.popoi .tunic.active-3.bunny { background-image: url(images/sprites/popoi/tunicbunny3.png); }
-
-.pridelink .tunic.active-1 { background-image: url(images/sprites/pridelink/tunic1.png); }
-.pridelink .tunic.active-2 { background-image: url(images/sprites/pridelink/tunic2.png); }
-.pridelink .tunic.active-3 { background-image: url(images/sprites/pridelink/tunic3.png); }
-.pridelink .tunic.active-1.bunny { background-image: url(images/sprites/pridelink/tunicbunny1.png); }
-.pridelink .tunic.active-2.bunny { background-image: url(images/sprites/pridelink/tunicbunny2.png); }
-.pridelink .tunic.active-3.bunny { background-image: url(images/sprites/pridelink/tunicbunny3.png); }
-
-.psyduck .tunic.active-1 { background-image: url(images/sprites/psyduck/tunic1.png); }
-.psyduck .tunic.active-2 { background-image: url(images/sprites/psyduck/tunic2.png); }
-.psyduck .tunic.active-3 { background-image: url(images/sprites/psyduck/tunic3.png); }
-.psyduck .tunic.active-1.bunny { background-image: url(images/sprites/psyduck/tunicbunny1.png); }
-.psyduck .tunic.active-2.bunny { background-image: url(images/sprites/psyduck/tunicbunny2.png); }
-.psyduck .tunic.active-3.bunny { background-image: url(images/sprites/psyduck/tunicbunny3.png); }
-
-.pug .tunic.active-1 { background-image: url(images/sprites/pug/tunic1.png); }
-.pug .tunic.active-2 { background-image: url(images/sprites/pug/tunic2.png); }
-.pug .tunic.active-3 { background-image: url(images/sprites/pug/tunic3.png); }
-.pug .tunic.active-1.bunny { background-image: url(images/sprites/pug/tunicbunny1.png); }
-.pug .tunic.active-2.bunny { background-image: url(images/sprites/pug/tunicbunny2.png); }
-.pug .tunic.active-3.bunny { background-image: url(images/sprites/pug/tunicbunny3.png); }
-
-.purplechest-bottle .tunic.active-1 { background-image: url(images/sprites/purplechest-bottle/tunic1.png); }
-.purplechest-bottle .tunic.active-2 { background-image: url(images/sprites/purplechest-bottle/tunic2.png); }
-.purplechest-bottle .tunic.active-3 { background-image: url(images/sprites/purplechest-bottle/tunic3.png); }
-.purplechest-bottle .tunic.active-1.bunny { background-image: url(images/sprites/purplechest-bottle/tunicbunny1.png); }
-.purplechest-bottle .tunic.active-2.bunny { background-image: url(images/sprites/purplechest-bottle/tunicbunny2.png); }
-.purplechest-bottle .tunic.active-3.bunny { background-image: url(images/sprites/purplechest-bottle/tunicbunny3.png); }
-
-.rainbowlink .tunic.active-1 { background-image: url(images/sprites/rainbowlink/tunic1.png); }
-.rainbowlink .tunic.active-2 { background-image: url(images/sprites/rainbowlink/tunic2.png); }
-.rainbowlink .tunic.active-3 { background-image: url(images/sprites/rainbowlink/tunic3.png); }
-.rainbowlink .tunic.active-1.bunny { background-image: url(images/sprites/rainbowlink/tunicbunny1.png); }
-.rainbowlink .tunic.active-2.bunny { background-image: url(images/sprites/rainbowlink/tunicbunny2.png); }
-.rainbowlink .tunic.active-3.bunny { background-image: url(images/sprites/rainbowlink/tunicbunny3.png); }
-
-.robotlink .tunic.active-1 { background-image: url(images/sprites/robotlink/tunic1.png); }
-.robotlink .tunic.active-2 { background-image: url(images/sprites/robotlink/tunic2.png); }
-.robotlink .tunic.active-3 { background-image: url(images/sprites/robotlink/tunic3.png); }
-.robotlink .tunic.active-1.bunny { background-image: url(images/sprites/robotlink/tunicbunny1.png); }
-.robotlink .tunic.active-2.bunny { background-image: url(images/sprites/robotlink/tunicbunny2.png); }
-.robotlink .tunic.active-3.bunny { background-image: url(images/sprites/robotlink/tunicbunny3.png); }
-
-.roykoopa .tunic.active-1 { background-image: url(images/sprites/roykoopa/tunic1.png); }
-.roykoopa .tunic.active-2 { background-image: url(images/sprites/roykoopa/tunic2.png); }
-.roykoopa .tunic.active-3 { background-image: url(images/sprites/roykoopa/tunic3.png); }
-.roykoopa .tunic.active-1.bunny { background-image: url(images/sprites/roykoopa/tunicbunny1.png); }
-.roykoopa .tunic.active-2.bunny { background-image: url(images/sprites/roykoopa/tunicbunny2.png); }
-.roykoopa .tunic.active-3.bunny { background-image: url(images/sprites/roykoopa/tunicbunny3.png); }
-
-.rumia .tunic.active-1 { background-image: url(images/sprites/rumia/tunic1.png); }
-.rumia .tunic.active-2 { background-image: url(images/sprites/rumia/tunic2.png); }
-.rumia .tunic.active-3 { background-image: url(images/sprites/rumia/tunic3.png); }
-.rumia .tunic.active-1.bunny { background-image: url(images/sprites/rumia/tunicbunny1.png); }
-.rumia .tunic.active-2.bunny { background-image: url(images/sprites/rumia/tunicbunny2.png); }
-.rumia .tunic.active-3.bunny { background-image: url(images/sprites/rumia/tunicbunny3.png); }
-
-.ryu .tunic.active-1 { background-image: url(images/sprites/ryu/tunic1.png); }
-.ryu .tunic.active-2 { background-image: url(images/sprites/ryu/tunic2.png); }
-.ryu .tunic.active-3 { background-image: url(images/sprites/ryu/tunic3.png); }
-.ryu .tunic.active-1.bunny { background-image: url(images/sprites/ryu/tunicbunny1.png); }
-.ryu .tunic.active-2.bunny { background-image: url(images/sprites/ryu/tunicbunny2.png); }
-.ryu .tunic.active-3.bunny { background-image: url(images/sprites/ryu/tunicbunny3.png); }
-
-.sailormoon .tunic.active-1 { background-image: url(images/sprites/sailormoon/tunic1.png); }
-.sailormoon .tunic.active-2 { background-image: url(images/sprites/sailormoon/tunic2.png); }
-.sailormoon .tunic.active-3 { background-image: url(images/sprites/sailormoon/tunic3.png); }
-.sailormoon .tunic.active-1.bunny { background-image: url(images/sprites/sailormoon/tunicbunny1.png); }
-.sailormoon .tunic.active-2.bunny { background-image: url(images/sprites/sailormoon/tunicbunny2.png); }
-.sailormoon .tunic.active-3.bunny { background-image: url(images/sprites/sailormoon/tunicbunny3.png); }
-
-.samus .tunic.active-1 { background-image: url(images/sprites/samus/tunic1.png); }
-.samus .tunic.active-2 { background-image: url(images/sprites/samus/tunic2.png); }
-.samus .tunic.active-3 { background-image: url(images/sprites/samus/tunic3.png); }
-.samus .tunic.active-1.bunny { background-image: url(images/sprites/samus/tunicbunny1.png); }
-.samus .tunic.active-2.bunny { background-image: url(images/sprites/samus/tunicbunny2.png); }
-.samus .tunic.active-3.bunny { background-image: url(images/sprites/samus/tunicbunny3.png); }
-
-.santalink .tunic.active-1 { background-image: url(images/sprites/santalink/tunic1.png); }
-.santalink .tunic.active-2 { background-image: url(images/sprites/santalink/tunic2.png); }
-.santalink .tunic.active-3 { background-image: url(images/sprites/santalink/tunic3.png); }
-.santalink .tunic.active-1.bunny { background-image: url(images/sprites/santalink/tunicbunny1.png); }
-.santalink .tunic.active-2.bunny { background-image: url(images/sprites/santalink/tunicbunny2.png); }
-.santalink .tunic.active-3.bunny { background-image: url(images/sprites/santalink/tunicbunny3.png); }
-
-.scholar .tunic.active-1 { background-image: url(images/sprites/scholar/tunic1.png); }
-.scholar .tunic.active-2 { background-image: url(images/sprites/scholar/tunic2.png); }
-.scholar .tunic.active-3 { background-image: url(images/sprites/scholar/tunic3.png); }
-.scholar .tunic.active-1.bunny { background-image: url(images/sprites/scholar/tunicbunny1.png); }
-.scholar .tunic.active-2.bunny { background-image: url(images/sprites/scholar/tunicbunny2.png); }
-.scholar .tunic.active-3.bunny { background-image: url(images/sprites/scholar/tunicbunny3.png); }
-
-.shadowsaku .tunic.active-1 { background-image: url(images/sprites/shadowsaku/tunic1.png); }
-.shadowsaku .tunic.active-2 { background-image: url(images/sprites/shadowsaku/tunic2.png); }
-.shadowsaku .tunic.active-3 { background-image: url(images/sprites/shadowsaku/tunic3.png); }
-.shadowsaku .tunic.active-1.bunny { background-image: url(images/sprites/shadowsaku/tunicbunny1.png); }
-.shadowsaku .tunic.active-2.bunny { background-image: url(images/sprites/shadowsaku/tunicbunny2.png); }
-.shadowsaku .tunic.active-3.bunny { background-image: url(images/sprites/shadowsaku/tunicbunny3.png); }
-
-.shantae .tunic.active-1 { background-image: url(images/sprites/shantae/tunic1.png); }
-.shantae .tunic.active-2 { background-image: url(images/sprites/shantae/tunic2.png); }
-.shantae .tunic.active-3 { background-image: url(images/sprites/shantae/tunic3.png); }
-.shantae .tunic.active-1.bunny { background-image: url(images/sprites/shantae/tunicbunny1.png); }
-.shantae .tunic.active-2.bunny { background-image: url(images/sprites/shantae/tunicbunny2.png); }
-.shantae .tunic.active-3.bunny { background-image: url(images/sprites/shantae/tunicbunny3.png); }
-
-.shuppet .tunic.active-1 { background-image: url(images/sprites/shuppet/tunic1.png); }
-.shuppet .tunic.active-2 { background-image: url(images/sprites/shuppet/tunic2.png); }
-.shuppet .tunic.active-3 { background-image: url(images/sprites/shuppet/tunic3.png); }
-.shuppet .tunic.active-1.bunny { background-image: url(images/sprites/shuppet/tunicbunny1.png); }
-.shuppet .tunic.active-2.bunny { background-image: url(images/sprites/shuppet/tunicbunny2.png); }
-.shuppet .tunic.active-3.bunny { background-image: url(images/sprites/shuppet/tunicbunny3.png); }
-
-.shy-guy .tunic.active-1 { background-image: url(images/sprites/shy-guy/tunic1.png); }
-.shy-guy .tunic.active-2 { background-image: url(images/sprites/shy-guy/tunic2.png); }
-.shy-guy .tunic.active-3 { background-image: url(images/sprites/shy-guy/tunic3.png); }
-.shy-guy .tunic.active-1.bunny { background-image: url(images/sprites/shy-guy/tunicbunny1.png); }
-.shy-guy .tunic.active-2.bunny { background-image: url(images/sprites/shy-guy/tunicbunny2.png); }
-.shy-guy .tunic.active-3.bunny { background-image: url(images/sprites/shy-guy/tunicbunny3.png); }
-
-.snes-controller .tunic.active-1 { background-image: url(images/sprites/snes-controller/tunic1.png); }
-.snes-controller .tunic.active-2 { background-image: url(images/sprites/snes-controller/tunic2.png); }
-.snes-controller .tunic.active-3 { background-image: url(images/sprites/snes-controller/tunic3.png); }
-.snes-controller .tunic.active-1.bunny { background-image: url(images/sprites/snes-controller/tunicbunny1.png); }
-.snes-controller .tunic.active-2.bunny { background-image: url(images/sprites/snes-controller/tunicbunny2.png); }
-.snes-controller .tunic.active-3.bunny { background-image: url(images/sprites/snes-controller/tunicbunny3.png); }
-
-.sodacan .tunic.active-1 { background-image: url(images/sprites/sodacan/tunic1.png); }
-.sodacan .tunic.active-2 { background-image: url(images/sprites/sodacan/tunic2.png); }
-.sodacan .tunic.active-3 { background-image: url(images/sprites/sodacan/tunic3.png); }
-.sodacan .tunic.active-1.bunny { background-image: url(images/sprites/sodacan/tunicbunny1.png); }
-.sodacan .tunic.active-2.bunny { background-image: url(images/sprites/sodacan/tunicbunny2.png); }
-.sodacan .tunic.active-3.bunny { background-image: url(images/sprites/sodacan/tunicbunny3.png); }
-
-.soldiersprite .tunic.active-1 { background-image: url(images/sprites/soldiersprite/tunic1.png); }
-.soldiersprite .tunic.active-2 { background-image: url(images/sprites/soldiersprite/tunic2.png); }
-.soldiersprite .tunic.active-3 { background-image: url(images/sprites/soldiersprite/tunic3.png); }
-.soldiersprite .tunic.active-1.bunny { background-image: url(images/sprites/soldiersprite/tunicbunny1.png); }
-.soldiersprite .tunic.active-2.bunny { background-image: url(images/sprites/soldiersprite/tunicbunny2.png); }
-.soldiersprite .tunic.active-3.bunny { background-image: url(images/sprites/soldiersprite/tunicbunny3.png); }
-
-.sonic .tunic.active-1 { background-image: url(images/sprites/sonic/tunic1.png); }
-.sonic .tunic.active-2 { background-image: url(images/sprites/sonic/tunic2.png); }
-.sonic .tunic.active-3 { background-image: url(images/sprites/sonic/tunic3.png); }
-.sonic .tunic.active-1.bunny { background-image: url(images/sprites/sonic/tunicbunny1.png); }
-.sonic .tunic.active-2.bunny { background-image: url(images/sprites/sonic/tunicbunny2.png); }
-.sonic .tunic.active-3.bunny { background-image: url(images/sprites/sonic/tunicbunny3.png); }
-
-.sora .tunic.active-1 { background-image: url(images/sprites/sora/tunic1.png); }
-.sora .tunic.active-2 { background-image: url(images/sprites/sora/tunic2.png); }
-.sora .tunic.active-3 { background-image: url(images/sprites/sora/tunic3.png); }
-.sora .tunic.active-1.bunny { background-image: url(images/sprites/sora/tunicbunny1.png); }
-.sora .tunic.active-2.bunny { background-image: url(images/sprites/sora/tunicbunny2.png); }
-.sora .tunic.active-3.bunny { background-image: url(images/sprites/sora/tunicbunny3.png); }
-
-.squirtle .tunic.active-1 { background-image: url(images/sprites/squirtle/tunic1.png); }
-.squirtle .tunic.active-2 { background-image: url(images/sprites/squirtle/tunic2.png); }
-.squirtle .tunic.active-3 { background-image: url(images/sprites/squirtle/tunic3.png); }
-.squirtle .tunic.active-1.bunny { background-image: url(images/sprites/squirtle/tunicbunny1.png); }
-.squirtle .tunic.active-2.bunny { background-image: url(images/sprites/squirtle/tunicbunny2.png); }
-.squirtle .tunic.active-3.bunny { background-image: url(images/sprites/squirtle/tunicbunny3.png); }
-
-.staticlink .tunic.active-1 { background-image: url(images/sprites/staticlink/tunic1.png); }
-.staticlink .tunic.active-2 { background-image: url(images/sprites/staticlink/tunic2.png); }
-.staticlink .tunic.active-3 { background-image: url(images/sprites/staticlink/tunic3.png); }
-.staticlink .tunic.active-1.bunny { background-image: url(images/sprites/staticlink/tunicbunny1.png); }
-.staticlink .tunic.active-2.bunny { background-image: url(images/sprites/staticlink/tunicbunny2.png); }
-.staticlink .tunic.active-3.bunny { background-image: url(images/sprites/staticlink/tunicbunny3.png); }
-
-.superbunny .tunic.active-1 { background-image: url(images/sprites/superbunny/tunic1.png); }
-.superbunny .tunic.active-2 { background-image: url(images/sprites/superbunny/tunic2.png); }
-.superbunny .tunic.active-3 { background-image: url(images/sprites/superbunny/tunic3.png); }
-.superbunny .tunic.active-1.bunny { background-image: url(images/sprites/superbunny/tunicbunny1.png); }
-.superbunny .tunic.active-2.bunny { background-image: url(images/sprites/superbunny/tunicbunny2.png); }
-.superbunny .tunic.active-3.bunny { background-image: url(images/sprites/superbunny/tunicbunny3.png); }
-
-.supermeatboy .tunic.active-1 { background-image: url(images/sprites/supermeatboy/tunic1.png); }
-.supermeatboy .tunic.active-2 { background-image: url(images/sprites/supermeatboy/tunic2.png); }
-.supermeatboy .tunic.active-3 { background-image: url(images/sprites/supermeatboy/tunic3.png); }
-.supermeatboy .tunic.active-1.bunny { background-image: url(images/sprites/supermeatboy/tunicbunny1.png); }
-.supermeatboy .tunic.active-2.bunny { background-image: url(images/sprites/supermeatboy/tunicbunny2.png); }
-.supermeatboy .tunic.active-3.bunny { background-image: url(images/sprites/supermeatboy/tunicbunny3.png); }
-
-.swatchy .tunic.active-1 { background-image: url(images/sprites/swatchy/tunic1.png); }
-.swatchy .tunic.active-2 { background-image: url(images/sprites/swatchy/tunic2.png); }
-.swatchy .tunic.active-3 { background-image: url(images/sprites/swatchy/tunic3.png); }
-.swatchy .tunic.active-1.bunny { background-image: url(images/sprites/swatchy/tunicbunny1.png); }
-.swatchy .tunic.active-2.bunny { background-image: url(images/sprites/swatchy/tunicbunny2.png); }
-.swatchy .tunic.active-3.bunny { background-image: url(images/sprites/swatchy/tunicbunny3.png); }
-
-.teatime .tunic.active-1 { background-image: url(images/sprites/teatime/tunic1.png); }
-.teatime .tunic.active-2 { background-image: url(images/sprites/teatime/tunic2.png); }
-.teatime .tunic.active-3 { background-image: url(images/sprites/teatime/tunic3.png); }
-.teatime .tunic.active-1.bunny { background-image: url(images/sprites/teatime/tunicbunny1.png); }
-.teatime .tunic.active-2.bunny { background-image: url(images/sprites/teatime/tunicbunny2.png); }
-.teatime .tunic.active-3.bunny { background-image: url(images/sprites/teatime/tunicbunny3.png); }
-
-.terra .tunic.active-1 { background-image: url(images/sprites/terra/tunic1.png); }
-.terra .tunic.active-2 { background-image: url(images/sprites/terra/tunic2.png); }
-.terra .tunic.active-3 { background-image: url(images/sprites/terra/tunic3.png); }
-.terra .tunic.active-1.bunny { background-image: url(images/sprites/terra/tunicbunny1.png); }
-.terra .tunic.active-2.bunny { background-image: url(images/sprites/terra/tunicbunny2.png); }
-.terra .tunic.active-3.bunny { background-image: url(images/sprites/terra/tunicbunny3.png); }
-
-.thief .tunic.active-1 { background-image: url(images/sprites/thief/tunic1.png); }
-.thief .tunic.active-2 { background-image: url(images/sprites/thief/tunic2.png); }
-.thief .tunic.active-3 { background-image: url(images/sprites/thief/tunic3.png); }
-.thief .tunic.active-1.bunny { background-image: url(images/sprites/thief/tunicbunny1.png); }
-.thief .tunic.active-2.bunny { background-image: url(images/sprites/thief/tunicbunny2.png); }
-.thief .tunic.active-3.bunny { background-image: url(images/sprites/thief/tunicbunny3.png); }
-
-.tile .tunic.active-1 { background-image: url(images/sprites/tile/tunic1.png); }
-.tile .tunic.active-2 { background-image: url(images/sprites/tile/tunic2.png); }
-.tile .tunic.active-3 { background-image: url(images/sprites/tile/tunic3.png); }
-.tile .tunic.active-1.bunny { background-image: url(images/sprites/tile/tunicbunny1.png); }
-.tile .tunic.active-2.bunny { background-image: url(images/sprites/tile/tunicbunny2.png); }
-.tile .tunic.active-3.bunny { background-image: url(images/sprites/tile/tunicbunny3.png); }
-
-.tingle .tunic.active-1 { background-image: url(images/sprites/tingle/tunic1.png); }
-.tingle .tunic.active-2 { background-image: url(images/sprites/tingle/tunic2.png); }
-.tingle .tunic.active-3 { background-image: url(images/sprites/tingle/tunic3.png); }
-.tingle .tunic.active-1.bunny { background-image: url(images/sprites/tingle/tunicbunny1.png); }
-.tingle .tunic.active-2.bunny { background-image: url(images/sprites/tingle/tunicbunny2.png); }
-.tingle .tunic.active-3.bunny { background-image: url(images/sprites/tingle/tunicbunny3.png); }
-
-.tmnt .tunic.active-1 { background-image: url(images/sprites/tmnt/tunic1.png); }
-.tmnt .tunic.active-2 { background-image: url(images/sprites/tmnt/tunic2.png); }
-.tmnt .tunic.active-3 { background-image: url(images/sprites/tmnt/tunic3.png); }
-.tmnt .tunic.active-1.bunny { background-image: url(images/sprites/tmnt/tunicbunny1.png); }
-.tmnt .tunic.active-2.bunny { background-image: url(images/sprites/tmnt/tunicbunny2.png); }
-.tmnt .tunic.active-3.bunny { background-image: url(images/sprites/tmnt/tunicbunny3.png); }
-
-.toad .tunic.active-1 { background-image: url(images/sprites/toad/tunic1.png); }
-.toad .tunic.active-2 { background-image: url(images/sprites/toad/tunic2.png); }
-.toad .tunic.active-3 { background-image: url(images/sprites/toad/tunic3.png); }
-.toad .tunic.active-1.bunny { background-image: url(images/sprites/toad/tunicbunny1.png); }
-.toad .tunic.active-2.bunny { background-image: url(images/sprites/toad/tunicbunny2.png); }
-.toad .tunic.active-3.bunny { background-image: url(images/sprites/toad/tunicbunny3.png); }
-
-.toadette .tunic.active-1 { background-image: url(images/sprites/toadette/tunic1.png); }
-.toadette .tunic.active-2 { background-image: url(images/sprites/toadette/tunic2.png); }
-.toadette .tunic.active-3 { background-image: url(images/sprites/toadette/tunic3.png); }
-.toadette .tunic.active-1.bunny { background-image: url(images/sprites/toadette/tunicbunny1.png); }
-.toadette .tunic.active-2.bunny { background-image: url(images/sprites/toadette/tunicbunny2.png); }
-.toadette .tunic.active-3.bunny { background-image: url(images/sprites/toadette/tunicbunny3.png); }
-
-.totem-links .tunic.active-1 { background-image: url(images/sprites/totem-links/tunic1.png); }
-.totem-links .tunic.active-2 { background-image: url(images/sprites/totem-links/tunic2.png); }
-.totem-links .tunic.active-3 { background-image: url(images/sprites/totem-links/tunic3.png); }
-.totem-links .tunic.active-1.bunny { background-image: url(images/sprites/totem-links/tunicbunny1.png); }
-.totem-links .tunic.active-2.bunny { background-image: url(images/sprites/totem-links/tunicbunny2.png); }
-.totem-links .tunic.active-3.bunny { background-image: url(images/sprites/totem-links/tunicbunny3.png); }
-
-.trogdor .tunic.active-1 { background-image: url(images/sprites/trogdor/tunic1.png); }
-.trogdor .tunic.active-2 { background-image: url(images/sprites/trogdor/tunic2.png); }
-.trogdor .tunic.active-3 { background-image: url(images/sprites/trogdor/tunic3.png); }
-.trogdor .tunic.active-1.bunny { background-image: url(images/sprites/trogdor/tunicbunny1.png); }
-.trogdor .tunic.active-2.bunny { background-image: url(images/sprites/trogdor/tunicbunny2.png); }
-.trogdor .tunic.active-3.bunny { background-image: url(images/sprites/trogdor/tunicbunny3.png); }
-
-.twilightprincesszelda .tunic.active-1 { background-image: url(images/sprites/twilightprincesszelda/tunic1.png); }
-.twilightprincesszelda .tunic.active-2 { background-image: url(images/sprites/twilightprincesszelda/tunic2.png); }
-.twilightprincesszelda .tunic.active-3 { background-image: url(images/sprites/twilightprincesszelda/tunic3.png); }
-.twilightprincesszelda .tunic.active-1.bunny { background-image: url(images/sprites/twilightprincesszelda/tunicbunny1.png); }
-.twilightprincesszelda .tunic.active-2.bunny { background-image: url(images/sprites/twilightprincesszelda/tunicbunny2.png); }
-.twilightprincesszelda .tunic.active-3.bunny { background-image: url(images/sprites/twilightprincesszelda/tunicbunny3.png); }
-
-.ultros .tunic.active-1 { background-image: url(images/sprites/ultros/tunic1.png); }
-.ultros .tunic.active-2 { background-image: url(images/sprites/ultros/tunic2.png); }
-.ultros .tunic.active-3 { background-image: url(images/sprites/ultros/tunic3.png); }
-.ultros .tunic.active-1.bunny { background-image: url(images/sprites/ultros/tunicbunny1.png); }
-.ultros .tunic.active-2.bunny { background-image: url(images/sprites/ultros/tunicbunny2.png); }
-.ultros .tunic.active-3.bunny { background-image: url(images/sprites/ultros/tunicbunny3.png); }
-
-.valeera .tunic.active-1 { background-image: url(images/sprites/valeera/tunic1.png); }
-.valeera .tunic.active-2 { background-image: url(images/sprites/valeera/tunic2.png); }
-.valeera .tunic.active-3 { background-image: url(images/sprites/valeera/tunic3.png); }
-.valeera .tunic.active-1.bunny { background-image: url(images/sprites/valeera/tunicbunny1.png); }
-.valeera .tunic.active-2.bunny { background-image: url(images/sprites/valeera/tunicbunny2.png); }
-.valeera .tunic.active-3.bunny { background-image: url(images/sprites/valeera/tunicbunny3.png); }
-
-.vanillalink .tunic.active-1 { background-image: url(images/sprites/vanillalink/tunic1.png); }
-.vanillalink .tunic.active-2 { background-image: url(images/sprites/vanillalink/tunic2.png); }
-.vanillalink .tunic.active-3 { background-image: url(images/sprites/vanillalink/tunic3.png); }
-.vanillalink .tunic.active-1.bunny { background-image: url(images/sprites/vanillalink/tunicbunny1.png); }
-.vanillalink .tunic.active-2.bunny { background-image: url(images/sprites/vanillalink/tunicbunny2.png); }
-.vanillalink .tunic.active-3.bunny { background-image: url(images/sprites/vanillalink/tunicbunny3.png); }
-
-.vitreous .tunic.active-1 { background-image: url(images/sprites/vitreous/tunic1.png); }
-.vitreous .tunic.active-2 { background-image: url(images/sprites/vitreous/tunic2.png); }
-.vitreous .tunic.active-3 { background-image: url(images/sprites/vitreous/tunic3.png); }
-.vitreous .tunic.active-1.bunny { background-image: url(images/sprites/vitreous/tunicbunny1.png); }
-.vitreous .tunic.active-2.bunny { background-image: url(images/sprites/vitreous/tunicbunny2.png); }
-.vitreous .tunic.active-3.bunny { background-image: url(images/sprites/vitreous/tunicbunny3.png); }
-
-.vivi .tunic.active-1 { background-image: url(images/sprites/vivi/tunic1.png); }
-.vivi .tunic.active-2 { background-image: url(images/sprites/vivi/tunic2.png); }
-.vivi .tunic.active-3 { background-image: url(images/sprites/vivi/tunic3.png); }
-.vivi .tunic.active-1.bunny { background-image: url(images/sprites/vivi/tunicbunny1.png); }
-.vivi .tunic.active-2.bunny { background-image: url(images/sprites/vivi/tunicbunny2.png); }
-.vivi .tunic.active-3.bunny { background-image: url(images/sprites/vivi/tunicbunny3.png); }
-
-.vivian .tunic.active-1 { background-image: url(images/sprites/vivian/tunic1.png); }
-.vivian .tunic.active-2 { background-image: url(images/sprites/vivian/tunic2.png); }
-.vivian .tunic.active-3 { background-image: url(images/sprites/vivian/tunic3.png); }
-.vivian .tunic.active-1.bunny { background-image: url(images/sprites/vivian/tunicbunny1.png); }
-.vivian .tunic.active-2.bunny { background-image: url(images/sprites/vivian/tunicbunny2.png); }
-.vivian .tunic.active-3.bunny { background-image: url(images/sprites/vivian/tunicbunny3.png); }
-
-.will .tunic.active-1 { background-image: url(images/sprites/will/tunic1.png); }
-.will .tunic.active-2 { background-image: url(images/sprites/will/tunic2.png); }
-.will .tunic.active-3 { background-image: url(images/sprites/will/tunic3.png); }
-.will .tunic.active-1.bunny { background-image: url(images/sprites/will/tunicbunny1.png); }
-.will .tunic.active-2.bunny { background-image: url(images/sprites/will/tunicbunny2.png); }
-.will .tunic.active-3.bunny { background-image: url(images/sprites/will/tunicbunny3.png); }
-
-.wixb .tunic.active-1 { background-image: url(images/sprites/wixb/tunic1.png); }
-.wixb .tunic.active-2 { background-image: url(images/sprites/wixb/tunic2.png); }
-.wixb .tunic.active-3 { background-image: url(images/sprites/wixb/tunic3.png); }
-.wixb .tunic.active-1.bunny { background-image: url(images/sprites/wixb/tunicbunny1.png); }
-.wixb .tunic.active-2.bunny { background-image: url(images/sprites/wixb/tunicbunny2.png); }
-.wixb .tunic.active-3.bunny { background-image: url(images/sprites/wixb/tunicbunny3.png); }
-
-.wizzrobe .tunic.active-1 { background-image: url(images/sprites/wizzrobe/tunic1.png); }
-.wizzrobe .tunic.active-2 { background-image: url(images/sprites/wizzrobe/tunic2.png); }
-.wizzrobe .tunic.active-3 { background-image: url(images/sprites/wizzrobe/tunic3.png); }
-.wizzrobe .tunic.active-1.bunny { background-image: url(images/sprites/wizzrobe/tunicbunny1.png); }
-.wizzrobe .tunic.active-2.bunny { background-image: url(images/sprites/wizzrobe/tunicbunny2.png); }
-.wizzrobe .tunic.active-3.bunny { background-image: url(images/sprites/wizzrobe/tunicbunny3.png); }
-
-.yunica .tunic.active-1 { background-image: url(images/sprites/yunica/tunic1.png); }
-.yunica .tunic.active-2 { background-image: url(images/sprites/yunica/tunic2.png); }
-.yunica .tunic.active-3 { background-image: url(images/sprites/yunica/tunic3.png); }
-.yunica .tunic.active-1.bunny { background-image: url(images/sprites/yunica/tunicbunny1.png); }
-.yunica .tunic.active-2.bunny { background-image: url(images/sprites/yunica/tunicbunny2.png); }
-.yunica .tunic.active-3.bunny { background-image: url(images/sprites/yunica/tunicbunny3.png); }
-
-.zandra .tunic.active-1 { background-image: url(images/sprites/zandra/tunic1.png); }
-.zandra .tunic.active-2 { background-image: url(images/sprites/zandra/tunic2.png); }
-.zandra .tunic.active-3 { background-image: url(images/sprites/zandra/tunic3.png); }
-.zandra .tunic.active-1.bunny { background-image: url(images/sprites/zandra/tunicbunny1.png); }
-.zandra .tunic.active-2.bunny { background-image: url(images/sprites/zandra/tunicbunny2.png); }
-.zandra .tunic.active-3.bunny { background-image: url(images/sprites/zandra/tunicbunny3.png); }
-
-.zelda .tunic.active-1 { background-image: url(images/sprites/zelda/tunic1.png); }
-.zelda .tunic.active-2 { background-image: url(images/sprites/zelda/tunic2.png); }
-.zelda .tunic.active-3 { background-image: url(images/sprites/zelda/tunic3.png); }
-.zelda .tunic.active-1.bunny { background-image: url(images/sprites/zelda/tunicbunny1.png); }
-.zelda .tunic.active-2.bunny { background-image: url(images/sprites/zelda/tunicbunny2.png); }
-.zelda .tunic.active-3.bunny { background-image: url(images/sprites/zelda/tunicbunny3.png); }
-
-.zerosuitsamus .tunic.active-1 { background-image: url(images/sprites/zerosuitsamus/tunic1.png); }
-.zerosuitsamus .tunic.active-2 { background-image: url(images/sprites/zerosuitsamus/tunic2.png); }
-.zerosuitsamus .tunic.active-3 { background-image: url(images/sprites/zerosuitsamus/tunic3.png); }
-.zerosuitsamus .tunic.active-1.bunny { background-image: url(images/sprites/zerosuitsamus/tunicbunny1.png); }
-.zerosuitsamus .tunic.active-2.bunny { background-image: url(images/sprites/zerosuitsamus/tunicbunny2.png); }
-.zerosuitsamus .tunic.active-3.bunny { background-image: url(images/sprites/zerosuitsamus/tunicbunny3.png); }
-
-.zora .tunic.active-1 { background-image: url(images/sprites/zora/tunic1.png); }
-.zora .tunic.active-2 { background-image: url(images/sprites/zora/tunic2.png); }
-.zora .tunic.active-3 { background-image: url(images/sprites/zora/tunic3.png); }
-.zora .tunic.active-1.bunny { background-image: url(images/sprites/zora/tunicbunny1.png); }
-.zora .tunic.active-2.bunny { background-image: url(images/sprites/zora/tunicbunny2.png); }
-.zora .tunic.active-3.bunny { background-image: url(images/sprites/zora/tunicbunny3.png); }
+.four-swords-link .tunic--active-1 { background-image: url(images/sprites/four_swords_link/tunic1.png); }
+.four-swords-link .tunic--active-2 { background-image: url(images/sprites/four_swords_link/tunic2.png); }
+.four-swords-link .tunic--active-3 { background-image: url(images/sprites/four_swords_link/tunic3.png); }
+.four-swords-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/four_swords_link/tunicbunny1.png); }
+.four-swords-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/four_swords_link/tunicbunny2.png); }
+.four-swords-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/four_swords_link/tunicbunny3.png); }
+
+.boo .tunic--active-1 { background-image: url(images/sprites/boo/tunic1.png); }
+.boo .tunic--active-2 { background-image: url(images/sprites/boo/tunic2.png); }
+.boo .tunic--active-3 { background-image: url(images/sprites/boo/tunic3.png); }
+.boo .tunic--active-1.tunic--bunny { background-image: url(images/sprites/boo/tunicbunny1.png); }
+.boo .tunic--active-2.tunic--bunny { background-image: url(images/sprites/boo/tunicbunny2.png); }
+.boo .tunic--active-3.tunic--bunny { background-image: url(images/sprites/boo/tunicbunny3.png); }
+
+.boy .tunic--active-1 { background-image: url(images/sprites/boy/tunic1.png); }
+.boy .tunic--active-2 { background-image: url(images/sprites/boy/tunic2.png); }
+.boy .tunic--active-3 { background-image: url(images/sprites/boy/tunic3.png); }
+.boy .tunic--active-1.tunic--bunny { background-image: url(images/sprites/boy/tunicbunny1.png); }
+.boy .tunic--active-2.tunic--bunny { background-image: url(images/sprites/boy/tunicbunny2.png); }
+.boy .tunic--active-3.tunic--bunny { background-image: url(images/sprites/boy/tunicbunny3.png); }
+
+.cactuar .tunic--active-1 { background-image: url(images/sprites/cactuar/tunic1.png); }
+.cactuar .tunic--active-2 { background-image: url(images/sprites/cactuar/tunic2.png); }
+.cactuar .tunic--active-3 { background-image: url(images/sprites/cactuar/tunic3.png); }
+.cactuar .tunic--active-1.tunic--bunny { background-image: url(images/sprites/cactuar/tunicbunny1.png); }
+.cactuar .tunic--active-2.tunic--bunny { background-image: url(images/sprites/cactuar/tunicbunny2.png); }
+.cactuar .tunic--active-3.tunic--bunny { background-image: url(images/sprites/cactuar/tunicbunny3.png); }
+
+.cat .tunic--active-1 { background-image: url(images/sprites/cat/tunic1.png); }
+.cat .tunic--active-2 { background-image: url(images/sprites/cat/tunic2.png); }
+.cat .tunic--active-3 { background-image: url(images/sprites/cat/tunic3.png); }
+.cat .tunic--active-1.tunic--bunny { background-image: url(images/sprites/cat/tunicbunny1.png); }
+.cat .tunic--active-2.tunic--bunny { background-image: url(images/sprites/cat/tunicbunny2.png); }
+.cat .tunic--active-3.tunic--bunny { background-image: url(images/sprites/cat/tunicbunny3.png); }
+
+.cat-boo .tunic--active-1 { background-image: url(images/sprites/cat_boo/tunic1.png); }
+.cat-boo .tunic--active-2 { background-image: url(images/sprites/cat_boo/tunic2.png); }
+.cat-boo .tunic--active-3 { background-image: url(images/sprites/cat_boo/tunic3.png); }
+.cat-boo .tunic--active-1.tunic--bunny { background-image: url(images/sprites/cat_boo/tunicbunny1.png); }
+.cat-boo .tunic--active-2.tunic--bunny { background-image: url(images/sprites/cat_boo/tunicbunny2.png); }
+.cat-boo .tunic--active-3.tunic--bunny { background-image: url(images/sprites/cat_boo/tunicbunny3.png); }
+
+.cirno .tunic--active-1 { background-image: url(images/sprites/cirno/tunic1.png); }
+.cirno .tunic--active-2 { background-image: url(images/sprites/cirno/tunic2.png); }
+.cirno .tunic--active-3 { background-image: url(images/sprites/cirno/tunic3.png); }
+.cirno .tunic--active-1.tunic--bunny { background-image: url(images/sprites/cirno/tunicbunny1.png); }
+.cirno .tunic--active-2.tunic--bunny { background-image: url(images/sprites/cirno/tunicbunny2.png); }
+.cirno .tunic--active-3.tunic--bunny { background-image: url(images/sprites/cirno/tunicbunny3.png); }
+
+.dark-boy .tunic--active-1 { background-image: url(images/sprites/dark_boy/tunic1.png); }
+.dark-boy .tunic--active-2 { background-image: url(images/sprites/dark_boy/tunic2.png); }
+.dark-boy .tunic--active-3 { background-image: url(images/sprites/dark_boy/tunic3.png); }
+.dark-boy .tunic--active-1.tunic--bunny { background-image: url(images/sprites/dark_boy/tunicbunny1.png); }
+.dark-boy .tunic--active-2.tunic--bunny { background-image: url(images/sprites/dark_boy/tunicbunny2.png); }
+.dark-boy .tunic--active-3.tunic--bunny { background-image: url(images/sprites/dark_boy/tunicbunny3.png); }
+
+.dark-girl .tunic--active-1 { background-image: url(images/sprites/dark_girl/tunic1.png); }
+.dark-girl .tunic--active-2 { background-image: url(images/sprites/dark_girl/tunic2.png); }
+.dark-girl .tunic--active-3 { background-image: url(images/sprites/dark_girl/tunic3.png); }
+.dark-girl .tunic--active-1.tunic--bunny { background-image: url(images/sprites/dark_girl/tunicbunny1.png); }
+.dark-girl .tunic--active-2.tunic--bunny { background-image: url(images/sprites/dark_girl/tunicbunny2.png); }
+.dark-girl .tunic--active-3.tunic--bunny { background-image: url(images/sprites/dark_girl/tunicbunny3.png); }
+
+.dark-link .tunic--active-1 { background-image: url(images/sprites/dark_link/tunic1.png); }
+.dark-link .tunic--active-2 { background-image: url(images/sprites/dark_link/tunic2.png); }
+.dark-link .tunic--active-3 { background-image: url(images/sprites/dark_link/tunic3.png); }
+.dark-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/dark_link/tunicbunny1.png); }
+.dark-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/dark_link/tunicbunny2.png); }
+.dark-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/dark_link/tunicbunny3.png); }
+
+.dark-swatchy .tunic--active-1 { background-image: url(images/sprites/dark_swatchy/tunic1.png); }
+.dark-swatchy .tunic--active-2 { background-image: url(images/sprites/dark_swatchy/tunic2.png); }
+.dark-swatchy .tunic--active-3 { background-image: url(images/sprites/dark_swatchy/tunic3.png); }
+.dark-swatchy .tunic--active-1.tunic--bunny { background-image: url(images/sprites/dark_swatchy/tunicbunny1.png); }
+.dark-swatchy .tunic--active-2.tunic--bunny { background-image: url(images/sprites/dark_swatchy/tunicbunny2.png); }
+.dark-swatchy .tunic--active-3.tunic--bunny { background-image: url(images/sprites/dark_swatchy/tunicbunny3.png); }
+
+.dark-zelda .tunic--active-1 { background-image: url(images/sprites/dark_zelda/tunic1.png); }
+.dark-zelda .tunic--active-2 { background-image: url(images/sprites/dark_zelda/tunic2.png); }
+.dark-zelda .tunic--active-3 { background-image: url(images/sprites/dark_zelda/tunic3.png); }
+.dark-zelda .tunic--active-1.tunic--bunny { background-image: url(images/sprites/dark_zelda/tunicbunny1.png); }
+.dark-zelda .tunic--active-2.tunic--bunny { background-image: url(images/sprites/dark_zelda/tunicbunny2.png); }
+.dark-zelda .tunic--active-3.tunic--bunny { background-image: url(images/sprites/dark_zelda/tunicbunny3.png); }
+
+.dark-zora .tunic--active-1 { background-image: url(images/sprites/dark_zora/tunic1.png); }
+.dark-zora .tunic--active-2 { background-image: url(images/sprites/dark_zora/tunic2.png); }
+.dark-zora .tunic--active-3 { background-image: url(images/sprites/dark_zora/tunic3.png); }
+.dark-zora .tunic--active-1.tunic--bunny { background-image: url(images/sprites/dark_zora/tunicbunny1.png); }
+.dark-zora .tunic--active-2.tunic--bunny { background-image: url(images/sprites/dark_zora/tunicbunny2.png); }
+.dark-zora .tunic--active-3.tunic--bunny { background-image: url(images/sprites/dark_zora/tunicbunny3.png); }
+
+.decidueye .tunic--active-1 { background-image: url(images/sprites/decidueye/tunic1.png); }
+.decidueye .tunic--active-2 { background-image: url(images/sprites/decidueye/tunic2.png); }
+.decidueye .tunic--active-3 { background-image: url(images/sprites/decidueye/tunic3.png); }
+.decidueye .tunic--active-1.tunic--bunny { background-image: url(images/sprites/decidueye/tunicbunny1.png); }
+.decidueye .tunic--active-2.tunic--bunny { background-image: url(images/sprites/decidueye/tunicbunny2.png); }
+.decidueye .tunic--active-3.tunic--bunny { background-image: url(images/sprites/decidueye/tunicbunny3.png); }
+
+.demon-link .tunic--active-1 { background-image: url(images/sprites/demon_link/tunic1.png); }
+.demon-link .tunic--active-2 { background-image: url(images/sprites/demon_link/tunic2.png); }
+.demon-link .tunic--active-3 { background-image: url(images/sprites/demon_link/tunic3.png); }
+.demon-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/demon_link/tunicbunny1.png); }
+.demon-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/demon_link/tunicbunny2.png); }
+.demon-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/demon_link/tunicbunny3.png); }
+
+.frog-link .tunic--active-1 { background-image: url(images/sprites/frog_link/tunic1.png); }
+.frog-link .tunic--active-2 { background-image: url(images/sprites/frog_link/tunic2.png); }
+.frog-link .tunic--active-3 { background-image: url(images/sprites/frog_link/tunic3.png); }
+.frog-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/frog_link/tunicbunny1.png); }
+.frog-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/frog_link/tunicbunny2.png); }
+.frog-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/frog_link/tunicbunny3.png); }
+
+.ganondorf .tunic--active-1 { background-image: url(images/sprites/ganondorf/tunic1.png); }
+.ganondorf .tunic--active-2 { background-image: url(images/sprites/ganondorf/tunic2.png); }
+.ganondorf .tunic--active-3 { background-image: url(images/sprites/ganondorf/tunic3.png); }
+.ganondorf .tunic--active-1.tunic--bunny { background-image: url(images/sprites/ganondorf/tunicbunny1.png); }
+.ganondorf .tunic--active-2.tunic--bunny { background-image: url(images/sprites/ganondorf/tunicbunny2.png); }
+.ganondorf .tunic--active-3.tunic--bunny { background-image: url(images/sprites/ganondorf/tunicbunny3.png); }
+
+.garfield .tunic--active-1 { background-image: url(images/sprites/garfield/tunic1.png); }
+.garfield .tunic--active-2 { background-image: url(images/sprites/garfield/tunic2.png); }
+.garfield .tunic--active-3 { background-image: url(images/sprites/garfield/tunic3.png); }
+.garfield .tunic--active-1.tunic--bunny { background-image: url(images/sprites/garfield/tunicbunny1.png); }
+.garfield .tunic--active-2.tunic--bunny { background-image: url(images/sprites/garfield/tunicbunny2.png); }
+.garfield .tunic--active-3.tunic--bunny { background-image: url(images/sprites/garfield/tunicbunny3.png); }
+
+.girl .tunic--active-1 { background-image: url(images/sprites/girl/tunic1.png); }
+.girl .tunic--active-2 { background-image: url(images/sprites/girl/tunic2.png); }
+.girl .tunic--active-3 { background-image: url(images/sprites/girl/tunic3.png); }
+.girl .tunic--active-1.tunic--bunny { background-image: url(images/sprites/girl/tunicbunny1.png); }
+.girl .tunic--active-2.tunic--bunny { background-image: url(images/sprites/girl/tunicbunny2.png); }
+.girl .tunic--active-3.tunic--bunny { background-image: url(images/sprites/girl/tunicbunny3.png); }
+
+.headless-link .tunic--active-1 { background-image: url(images/sprites/headless_link/tunic1.png); }
+.headless-link .tunic--active-2 { background-image: url(images/sprites/headless_link/tunic2.png); }
+.headless-link .tunic--active-3 { background-image: url(images/sprites/headless_link/tunic3.png); }
+.headless-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/headless_link/tunicbunny1.png); }
+.headless-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/headless_link/tunicbunny2.png); }
+.headless-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/headless_link/tunicbunny3.png); }
+
+.inkling .tunic--active-1 { background-image: url(images/sprites/inkling/tunic1.png); }
+.inkling .tunic--active-2 { background-image: url(images/sprites/inkling/tunic2.png); }
+.inkling .tunic--active-3 { background-image: url(images/sprites/inkling/tunic3.png); }
+.inkling .tunic--active-1.tunic--bunny { background-image: url(images/sprites/inkling/tunicbunny1.png); }
+.inkling .tunic--active-2.tunic--bunny { background-image: url(images/sprites/inkling/tunicbunny2.png); }
+.inkling .tunic--active-3.tunic--bunny { background-image: url(images/sprites/inkling/tunicbunny3.png); }
+
+.invisible-man .tunic--active-1 { background-image: url(images/sprites/invisible_man/tunic1.png); }
+.invisible-man .tunic--active-2 { background-image: url(images/sprites/invisible_man/tunic2.png); }
+.invisible-man .tunic--active-3 { background-image: url(images/sprites/invisible_man/tunic3.png); }
+.invisible-man .tunic--active-1.tunic--bunny { background-image: url(images/sprites/invisible_man/tunicbunny1.png); }
+.invisible-man .tunic--active-2.tunic--bunny { background-image: url(images/sprites/invisible_man/tunicbunny2.png); }
+.invisible-man .tunic--active-3.tunic--bunny { background-image: url(images/sprites/invisible_man/tunicbunny3.png); }
+
+.kirby .tunic--active-1 { background-image: url(images/sprites/kirby/tunic1.png); }
+.kirby .tunic--active-2 { background-image: url(images/sprites/kirby/tunic2.png); }
+.kirby .tunic--active-3 { background-image: url(images/sprites/kirby/tunic3.png); }
+.kirby .tunic--active-1.tunic--bunny { background-image: url(images/sprites/kirby/tunicbunny1.png); }
+.kirby .tunic--active-2.tunic--bunny { background-image: url(images/sprites/kirby/tunicbunny2.png); }
+.kirby .tunic--active-3.tunic--bunny { background-image: url(images/sprites/kirby/tunicbunny3.png); }
+
+.kore8 .tunic--active-1 { background-image: url(images/sprites/kore8/tunic1.png); }
+.kore8 .tunic--active-2 { background-image: url(images/sprites/kore8/tunic2.png); }
+.kore8 .tunic--active-3 { background-image: url(images/sprites/kore8/tunic3.png); }
+.kore8 .tunic--active-1.tunic--bunny { background-image: url(images/sprites/kore8/tunicbunny1.png); }
+.kore8 .tunic--active-2.tunic--bunny { background-image: url(images/sprites/kore8/tunicbunny2.png); }
+.kore8 .tunic--active-3.tunic--bunny { background-image: url(images/sprites/kore8/tunicbunny3.png); }
+
+.luigi .tunic--active-1 { background-image: url(images/sprites/luigi/tunic1.png); }
+.luigi .tunic--active-2 { background-image: url(images/sprites/luigi/tunic2.png); }
+.luigi .tunic--active-3 { background-image: url(images/sprites/luigi/tunic3.png); }
+.luigi .tunic--active-1.tunic--bunny { background-image: url(images/sprites/luigi/tunicbunny1.png); }
+.luigi .tunic--active-2.tunic--bunny { background-image: url(images/sprites/luigi/tunicbunny2.png); }
+.luigi .tunic--active-3.tunic--bunny { background-image: url(images/sprites/luigi/tunicbunny3.png); }
+
+.maiden .tunic--active-1 { background-image: url(images/sprites/maiden/tunic1.png); }
+.maiden .tunic--active-2 { background-image: url(images/sprites/maiden/tunic2.png); }
+.maiden .tunic--active-3 { background-image: url(images/sprites/maiden/tunic3.png); }
+.maiden .tunic--active-1.tunic--bunny { background-image: url(images/sprites/maiden/tunicbunny1.png); }
+.maiden .tunic--active-2.tunic--bunny { background-image: url(images/sprites/maiden/tunicbunny2.png); }
+.maiden .tunic--active-3.tunic--bunny { background-image: url(images/sprites/maiden/tunicbunny3.png); }
+
+.maple-queen .tunic--active-1 { background-image: url(images/sprites/maple_queen/tunic1.png); }
+.maple-queen .tunic--active-2 { background-image: url(images/sprites/maple_queen/tunic2.png); }
+.maple-queen .tunic--active-3 { background-image: url(images/sprites/maple_queen/tunic3.png); }
+.maple-queen .tunic--active-1.tunic--bunny { background-image: url(images/sprites/maple_queen/tunicbunny1.png); }
+.maple-queen .tunic--active-2.tunic--bunny { background-image: url(images/sprites/maple_queen/tunicbunny2.png); }
+.maple-queen .tunic--active-3.tunic--bunny { background-image: url(images/sprites/maple_queen/tunicbunny3.png); }
+
+.mario .tunic--active-1 { background-image: url(images/sprites/mario/tunic1.png); }
+.mario .tunic--active-2 { background-image: url(images/sprites/mario/tunic2.png); }
+.mario .tunic--active-3 { background-image: url(images/sprites/mario/tunic3.png); }
+.mario .tunic--active-1.tunic--bunny { background-image: url(images/sprites/mario/tunicbunny1.png); }
+.mario .tunic--active-2.tunic--bunny { background-image: url(images/sprites/mario/tunicbunny2.png); }
+.mario .tunic--active-3.tunic--bunny { background-image: url(images/sprites/mario/tunicbunny3.png); }
+
+.marisa .tunic--active-1 { background-image: url(images/sprites/marisa/tunic1.png); }
+.marisa .tunic--active-2 { background-image: url(images/sprites/marisa/tunic2.png); }
+.marisa .tunic--active-3 { background-image: url(images/sprites/marisa/tunic3.png); }
+.marisa .tunic--active-1.tunic--bunny { background-image: url(images/sprites/marisa/tunicbunny1.png); }
+.marisa .tunic--active-2.tunic--bunny { background-image: url(images/sprites/marisa/tunicbunny2.png); }
+.marisa .tunic--active-3.tunic--bunny { background-image: url(images/sprites/marisa/tunicbunny3.png); }
+
+.minish-cap-link .tunic--active-1 { background-image: url(images/sprites/minish_cap_link/tunic1.png); }
+.minish-cap-link .tunic--active-2 { background-image: url(images/sprites/minish_cap_link/tunic2.png); }
+.minish-cap-link .tunic--active-3 { background-image: url(images/sprites/minish_cap_link/tunic3.png); }
+.minish-cap-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/minish_cap_link/tunicbunny1.png); }
+.minish-cap-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/minish_cap_link/tunicbunny2.png); }
+.minish-cap-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/minish_cap_link/tunicbunny3.png); }
+
+.modern-link .tunic--active-1 { background-image: url(images/sprites/modern_link/tunic1.png); }
+.modern-link .tunic--active-2 { background-image: url(images/sprites/modern_link/tunic2.png); }
+.modern-link .tunic--active-3 { background-image: url(images/sprites/modern_link/tunic3.png); }
+.modern-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/modern_link/tunicbunny1.png); }
+.modern-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/modern_link/tunicbunny2.png); }
+.modern-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/modern_link/tunicbunny3.png); }
+
+.mog .tunic--active-1 { background-image: url(images/sprites/mog/tunic1.png); }
+.mog .tunic--active-2 { background-image: url(images/sprites/mog/tunic2.png); }
+.mog .tunic--active-3 { background-image: url(images/sprites/mog/tunic3.png); }
+.mog .tunic--active-1.tunic--bunny { background-image: url(images/sprites/mog/tunicbunny1.png); }
+.mog .tunic--active-2.tunic--bunny { background-image: url(images/sprites/mog/tunicbunny2.png); }
+.mog .tunic--active-3.tunic--bunny { background-image: url(images/sprites/mog/tunicbunny3.png); }
+
+.mouse .tunic--active-1 { background-image: url(images/sprites/mouse/tunic1.png); }
+.mouse .tunic--active-2 { background-image: url(images/sprites/mouse/tunic2.png); }
+.mouse .tunic--active-3 { background-image: url(images/sprites/mouse/tunic3.png); }
+.mouse .tunic--active-1.tunic--bunny { background-image: url(images/sprites/mouse/tunicbunny1.png); }
+.mouse .tunic--active-2.tunic--bunny { background-image: url(images/sprites/mouse/tunicbunny2.png); }
+.mouse .tunic--active-3.tunic--bunny { background-image: url(images/sprites/mouse/tunicbunny3.png); }
+
+.nature-link .tunic--active-1 { background-image: url(images/sprites/nature_link/tunic1.png); }
+.nature-link .tunic--active-2 { background-image: url(images/sprites/nature_link/tunic2.png); }
+.nature-link .tunic--active-3 { background-image: url(images/sprites/nature_link/tunic3.png); }
+.nature-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/nature_link/tunicbunny1.png); }
+.nature-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/nature_link/tunicbunny2.png); }
+.nature-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/nature_link/tunicbunny3.png); }
+
+.negative-link .tunic--active-1 { background-image: url(images/sprites/negative_link/tunic1.png); }
+.negative-link .tunic--active-2 { background-image: url(images/sprites/negative_link/tunic2.png); }
+.negative-link .tunic--active-3 { background-image: url(images/sprites/negative_link/tunic3.png); }
+.negative-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/negative_link/tunicbunny1.png); }
+.negative-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/negative_link/tunicbunny2.png); }
+.negative-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/negative_link/tunicbunny3.png); }
+
+.neon-link .tunic--active-1 { background-image: url(images/sprites/neon_link/tunic1.png); }
+.neon-link .tunic--active-2 { background-image: url(images/sprites/neon_link/tunic2.png); }
+.neon-link .tunic--active-3 { background-image: url(images/sprites/neon_link/tunic3.png); }
+.neon-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/neon_link/tunicbunny1.png); }
+.neon-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/neon_link/tunicbunny2.png); }
+.neon-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/neon_link/tunicbunny3.png); }
+
+.old-man .tunic--active-1 { background-image: url(images/sprites/old_man/tunic1.png); }
+.old-man .tunic--active-2 { background-image: url(images/sprites/old_man/tunic2.png); }
+.old-man .tunic--active-3 { background-image: url(images/sprites/old_man/tunic3.png); }
+.old-man .tunic--active-1.tunic--bunny { background-image: url(images/sprites/old_man/tunicbunny1.png); }
+.old-man .tunic--active-2.tunic--bunny { background-image: url(images/sprites/old_man/tunicbunny2.png); }
+.old-man .tunic--active-3.tunic--bunny { background-image: url(images/sprites/old_man/tunicbunny3.png); }
+
+.pink-ribbon-link .tunic--active-1 { background-image: url(images/sprites/pink_ribbon_link/tunic1.png); }
+.pink-ribbon-link .tunic--active-2 { background-image: url(images/sprites/pink_ribbon_link/tunic2.png); }
+.pink-ribbon-link .tunic--active-3 { background-image: url(images/sprites/pink_ribbon_link/tunic3.png); }
+.pink-ribbon-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/pink_ribbon_link/tunicbunny1.png); }
+.pink-ribbon-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/pink_ribbon_link/tunicbunny2.png); }
+.pink-ribbon-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/pink_ribbon_link/tunicbunny3.png); }
+
+.pony .tunic--active-1 { background-image: url(images/sprites/pony/tunic1.png); }
+.pony .tunic--active-2 { background-image: url(images/sprites/pony/tunic2.png); }
+.pony .tunic--active-3 { background-image: url(images/sprites/pony/tunic3.png); }
+.pony .tunic--active-1.tunic--bunny { background-image: url(images/sprites/pony/tunicbunny1.png); }
+.pony .tunic--active-2.tunic--bunny { background-image: url(images/sprites/pony/tunicbunny2.png); }
+.pony .tunic--active-3.tunic--bunny { background-image: url(images/sprites/pony/tunicbunny3.png); }
+
+.popoi .tunic--active-1 { background-image: url(images/sprites/popoi/tunic1.png); }
+.popoi .tunic--active-2 { background-image: url(images/sprites/popoi/tunic2.png); }
+.popoi .tunic--active-3 { background-image: url(images/sprites/popoi/tunic3.png); }
+.popoi .tunic--active-1.tunic--bunny { background-image: url(images/sprites/popoi/tunicbunny1.png); }
+.popoi .tunic--active-2.tunic--bunny { background-image: url(images/sprites/popoi/tunicbunny2.png); }
+.popoi .tunic--active-3.tunic--bunny { background-image: url(images/sprites/popoi/tunicbunny3.png); }
+
+.pug .tunic--active-1 { background-image: url(images/sprites/pug/tunic1.png); }
+.pug .tunic--active-2 { background-image: url(images/sprites/pug/tunic2.png); }
+.pug .tunic--active-3 { background-image: url(images/sprites/pug/tunic3.png); }
+.pug .tunic--active-1.tunic--bunny { background-image: url(images/sprites/pug/tunicbunny1.png); }
+.pug .tunic--active-2.tunic--bunny { background-image: url(images/sprites/pug/tunicbunny2.png); }
+.pug .tunic--active-3.tunic--bunny { background-image: url(images/sprites/pug/tunicbunny3.png); }
+
+.purple-chest .tunic--active-1 { background-image: url(images/sprites/purple_chest/tunic1.png); }
+.purple-chest .tunic--active-2 { background-image: url(images/sprites/purple_chest/tunic2.png); }
+.purple-chest .tunic--active-3 { background-image: url(images/sprites/purple_chest/tunic3.png); }
+.purple-chest .tunic--active-1.tunic--bunny { background-image: url(images/sprites/purple_chest/tunicbunny1.png); }
+.purple-chest .tunic--active-2.tunic--bunny { background-image: url(images/sprites/purple_chest/tunicbunny2.png); }
+.purple-chest .tunic--active-3.tunic--bunny { background-image: url(images/sprites/purple_chest/tunicbunny3.png); }
+
+.roy-koopa .tunic--active-1 { background-image: url(images/sprites/roy_koopa/tunic1.png); }
+.roy-koopa .tunic--active-2 { background-image: url(images/sprites/roy_koopa/tunic2.png); }
+.roy-koopa .tunic--active-3 { background-image: url(images/sprites/roy_koopa/tunic3.png); }
+.roy-koopa .tunic--active-1.tunic--bunny { background-image: url(images/sprites/roy_koopa/tunicbunny1.png); }
+.roy-koopa .tunic--active-2.tunic--bunny { background-image: url(images/sprites/roy_koopa/tunicbunny2.png); }
+.roy-koopa .tunic--active-3.tunic--bunny { background-image: url(images/sprites/roy_koopa/tunicbunny3.png); }
+
+.rumia .tunic--active-1 { background-image: url(images/sprites/rumia/tunic1.png); }
+.rumia .tunic--active-2 { background-image: url(images/sprites/rumia/tunic2.png); }
+.rumia .tunic--active-3 { background-image: url(images/sprites/rumia/tunic3.png); }
+.rumia .tunic--active-1.tunic--bunny { background-image: url(images/sprites/rumia/tunicbunny1.png); }
+.rumia .tunic--active-2.tunic--bunny { background-image: url(images/sprites/rumia/tunicbunny2.png); }
+.rumia .tunic--active-3.tunic--bunny { background-image: url(images/sprites/rumia/tunicbunny3.png); }
+
+.samus .tunic--active-1 { background-image: url(images/sprites/samus/tunic1.png); }
+.samus .tunic--active-2 { background-image: url(images/sprites/samus/tunic2.png); }
+.samus .tunic--active-3 { background-image: url(images/sprites/samus/tunic3.png); }
+.samus .tunic--active-1.tunic--bunny { background-image: url(images/sprites/samus/tunicbunny1.png); }
+.samus .tunic--active-2.tunic--bunny { background-image: url(images/sprites/samus/tunicbunny2.png); }
+.samus .tunic--active-3.tunic--bunny { background-image: url(images/sprites/samus/tunicbunny3.png); }
+
+.santa-link .tunic--active-1 { background-image: url(images/sprites/santa_link/tunic1.png); }
+.santa-link .tunic--active-2 { background-image: url(images/sprites/santa_link/tunic2.png); }
+.santa-link .tunic--active-3 { background-image: url(images/sprites/santa_link/tunic3.png); }
+.santa-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/santa_link/tunicbunny1.png); }
+.santa-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/santa_link/tunicbunny2.png); }
+.santa-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/santa_link/tunicbunny3.png); }
+
+.shadow-saku .tunic--active-1 { background-image: url(images/sprites/shadow_saku/tunic1.png); }
+.shadow-saku .tunic--active-2 { background-image: url(images/sprites/shadow_saku/tunic2.png); }
+.shadow-saku .tunic--active-3 { background-image: url(images/sprites/shadow_saku/tunic3.png); }
+.shadow-saku .tunic--active-1.tunic--bunny { background-image: url(images/sprites/shadow_saku/tunicbunny1.png); }
+.shadow-saku .tunic--active-2.tunic--bunny { background-image: url(images/sprites/shadow_saku/tunicbunny2.png); }
+.shadow-saku .tunic--active-3.tunic--bunny { background-image: url(images/sprites/shadow_saku/tunicbunny3.png); }
+
+.soda-can .tunic--active-1 { background-image: url(images/sprites/soda_can/tunic1.png); }
+.soda-can .tunic--active-2 { background-image: url(images/sprites/soda_can/tunic2.png); }
+.soda-can .tunic--active-3 { background-image: url(images/sprites/soda_can/tunic3.png); }
+.soda-can .tunic--active-1.tunic--bunny { background-image: url(images/sprites/soda_can/tunicbunny1.png); }
+.soda-can .tunic--active-2.tunic--bunny { background-image: url(images/sprites/soda_can/tunicbunny2.png); }
+.soda-can .tunic--active-3.tunic--bunny { background-image: url(images/sprites/soda_can/tunicbunny3.png); }
+
+.static-link .tunic--active-1 { background-image: url(images/sprites/static_link/tunic1.png); }
+.static-link .tunic--active-2 { background-image: url(images/sprites/static_link/tunic2.png); }
+.static-link .tunic--active-3 { background-image: url(images/sprites/static_link/tunic3.png); }
+.static-link .tunic--active-1.tunic--bunny { background-image: url(images/sprites/static_link/tunicbunny1.png); }
+.static-link .tunic--active-2.tunic--bunny { background-image: url(images/sprites/static_link/tunicbunny2.png); }
+.static-link .tunic--active-3.tunic--bunny { background-image: url(images/sprites/static_link/tunicbunny3.png); }
+
+.super-bunny .tunic--active-1 { background-image: url(images/sprites/super_bunny/tunic1.png); }
+.super-bunny .tunic--active-2 { background-image: url(images/sprites/super_bunny/tunic2.png); }
+.super-bunny .tunic--active-3 { background-image: url(images/sprites/super_bunny/tunic3.png); }
+.super-bunny .tunic--active-1.tunic--bunny { background-image: url(images/sprites/super_bunny/tunicbunny1.png); }
+.super-bunny .tunic--active-2.tunic--bunny { background-image: url(images/sprites/super_bunny/tunicbunny2.png); }
+.super-bunny .tunic--active-3.tunic--bunny { background-image: url(images/sprites/super_bunny/tunicbunny3.png); }
+
+.swatchy .tunic--active-1 { background-image: url(images/sprites/swatchy/tunic1.png); }
+.swatchy .tunic--active-2 { background-image: url(images/sprites/swatchy/tunic2.png); }
+.swatchy .tunic--active-3 { background-image: url(images/sprites/swatchy/tunic3.png); }
+.swatchy .tunic--active-1.tunic--bunny { background-image: url(images/sprites/swatchy/tunicbunny1.png); }
+.swatchy .tunic--active-2.tunic--bunny { background-image: url(images/sprites/swatchy/tunicbunny2.png); }
+.swatchy .tunic--active-3.tunic--bunny { background-image: url(images/sprites/swatchy/tunicbunny3.png); }
+
+.tingle .tunic--active-1 { background-image: url(images/sprites/tingle/tunic1.png); }
+.tingle .tunic--active-2 { background-image: url(images/sprites/tingle/tunic2.png); }
+.tingle .tunic--active-3 { background-image: url(images/sprites/tingle/tunic3.png); }
+.tingle .tunic--active-1.tunic--bunny { background-image: url(images/sprites/tingle/tunicbunny1.png); }
+.tingle .tunic--active-2.tunic--bunny { background-image: url(images/sprites/tingle/tunicbunny2.png); }
+.tingle .tunic--active-3.tunic--bunny { background-image: url(images/sprites/tingle/tunicbunny3.png); }
+
+.toad .tunic--active-1 { background-image: url(images/sprites/toad/tunic1.png); }
+.toad .tunic--active-2 { background-image: url(images/sprites/toad/tunic2.png); }
+.toad .tunic--active-3 { background-image: url(images/sprites/toad/tunic3.png); }
+.toad .tunic--active-1.tunic--bunny { background-image: url(images/sprites/toad/tunicbunny1.png); }
+.toad .tunic--active-2.tunic--bunny { background-image: url(images/sprites/toad/tunicbunny2.png); }
+.toad .tunic--active-3.tunic--bunny { background-image: url(images/sprites/toad/tunicbunny3.png); }
+
+.valeera .tunic--active-1 { background-image: url(images/sprites/valeera/tunic1.png); }
+.valeera .tunic--active-2 { background-image: url(images/sprites/valeera/tunic2.png); }
+.valeera .tunic--active-3 { background-image: url(images/sprites/valeera/tunic3.png); }
+.valeera .tunic--active-1.tunic--bunny { background-image: url(images/sprites/valeera/tunicbunny1.png); }
+.valeera .tunic--active-2.tunic--bunny { background-image: url(images/sprites/valeera/tunicbunny2.png); }
+.valeera .tunic--active-3.tunic--bunny { background-image: url(images/sprites/valeera/tunicbunny3.png); }
+
+.vitreous .tunic--active-1 { background-image: url(images/sprites/vitreous/tunic1.png); }
+.vitreous .tunic--active-2 { background-image: url(images/sprites/vitreous/tunic2.png); }
+.vitreous .tunic--active-3 { background-image: url(images/sprites/vitreous/tunic3.png); }
+.vitreous .tunic--active-1.tunic--bunny { background-image: url(images/sprites/vitreous/tunicbunny1.png); }
+.vitreous .tunic--active-2.tunic--bunny { background-image: url(images/sprites/vitreous/tunicbunny2.png); }
+.vitreous .tunic--active-3.tunic--bunny { background-image: url(images/sprites/vitreous/tunicbunny3.png); }
+
+.vivi .tunic--active-1 { background-image: url(images/sprites/vivi/tunic1.png); }
+.vivi .tunic--active-2 { background-image: url(images/sprites/vivi/tunic2.png); }
+.vivi .tunic--active-3 { background-image: url(images/sprites/vivi/tunic3.png); }
+.vivi .tunic--active-1.tunic--bunny { background-image: url(images/sprites/vivi/tunicbunny1.png); }
+.vivi .tunic--active-2.tunic--bunny { background-image: url(images/sprites/vivi/tunicbunny2.png); }
+.vivi .tunic--active-3.tunic--bunny { background-image: url(images/sprites/vivi/tunicbunny3.png); }
+
+.will .tunic--active-1 { background-image: url(images/sprites/will/tunic1.png); }
+.will .tunic--active-2 { background-image: url(images/sprites/will/tunic2.png); }
+.will .tunic--active-3 { background-image: url(images/sprites/will/tunic3.png); }
+.will .tunic--active-1.tunic--bunny { background-image: url(images/sprites/will/tunicbunny1.png); }
+.will .tunic--active-2.tunic--bunny { background-image: url(images/sprites/will/tunicbunny2.png); }
+.will .tunic--active-3.tunic--bunny { background-image: url(images/sprites/will/tunicbunny3.png); }
+
+.wizzrobe .tunic--active-1 { background-image: url(images/sprites/wizzrobe/tunic1.png); }
+.wizzrobe .tunic--active-2 { background-image: url(images/sprites/wizzrobe/tunic2.png); }
+.wizzrobe .tunic--active-3 { background-image: url(images/sprites/wizzrobe/tunic3.png); }
+.wizzrobe .tunic--active-1.tunic--bunny { background-image: url(images/sprites/wizzrobe/tunicbunny1.png); }
+.wizzrobe .tunic--active-2.tunic--bunny { background-image: url(images/sprites/wizzrobe/tunicbunny2.png); }
+.wizzrobe .tunic--active-3.tunic--bunny { background-image: url(images/sprites/wizzrobe/tunicbunny3.png); }
+
+.yunica .tunic--active-1 { background-image: url(images/sprites/yunica/tunic1.png); }
+.yunica .tunic--active-2 { background-image: url(images/sprites/yunica/tunic2.png); }
+.yunica .tunic--active-3 { background-image: url(images/sprites/yunica/tunic3.png); }
+.yunica .tunic--active-1.tunic--bunny { background-image: url(images/sprites/yunica/tunicbunny1.png); }
+.yunica .tunic--active-2.tunic--bunny { background-image: url(images/sprites/yunica/tunicbunny2.png); }
+.yunica .tunic--active-3.tunic--bunny { background-image: url(images/sprites/yunica/tunicbunny3.png); }
+
+.zelda .tunic--active-1 { background-image: url(images/sprites/zelda/tunic1.png); }
+.zelda .tunic--active-2 { background-image: url(images/sprites/zelda/tunic2.png); }
+.zelda .tunic--active-3 { background-image: url(images/sprites/zelda/tunic3.png); }
+.zelda .tunic--active-1.tunic--bunny { background-image: url(images/sprites/zelda/tunicbunny1.png); }
+.zelda .tunic--active-2.tunic--bunny { background-image: url(images/sprites/zelda/tunicbunny2.png); }
+.zelda .tunic--active-3.tunic--bunny { background-image: url(images/sprites/zelda/tunicbunny3.png); }
+
+.zero-suit-samus .tunic--active-1 { background-image: url(images/sprites/zero_suit_samus/tunic1.png); }
+.zero-suit-samus .tunic--active-2 { background-image: url(images/sprites/zero_suit_samus/tunic2.png); }
+.zero-suit-samus .tunic--active-3 { background-image: url(images/sprites/zero_suit_samus/tunic3.png); }
+.zero-suit-samus .tunic--active-1.tunic--bunny { background-image: url(images/sprites/zero_suit_samus/tunicbunny1.png); }
+.zero-suit-samus .tunic--active-2.tunic--bunny { background-image: url(images/sprites/zero_suit_samus/tunicbunny2.png); }
+.zero-suit-samus .tunic--active-3.tunic--bunny { background-image: url(images/sprites/zero_suit_samus/tunicbunny3.png); }
+
+.zora .tunic--active-1 { background-image: url(images/sprites/zora/tunic1.png); }
+.zora .tunic--active-2 { background-image: url(images/sprites/zora/tunic2.png); }
+.zora .tunic--active-3 { background-image: url(images/sprites/zora/tunic3.png); }
+.zora .tunic--active-1.tunic--bunny { background-image: url(images/sprites/zora/tunicbunny1.png); }
+.zora .tunic--active-2.tunic--bunny { background-image: url(images/sprites/zora/tunicbunny2.png); }
+.zora .tunic--active-3.tunic--bunny { background-image: url(images/sprites/zora/tunicbunny3.png); }
