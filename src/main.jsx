@@ -56,34 +56,6 @@
 
     const DungeonWithMedallion = WithMedallion(Dungeon);
 
-    const Keys = (props) => {
-        const source = props.value;
-        return !source.key_limit ?
-            <div className="keys"><span>{'\u2014'}</span></div> :
-            <div className="keys"
-              onClick={() => props.onClick(props.name)}>
-                <span>{`${source.keys}/${source.key_limit}`}</span>
-            </div>;
-    };
-
-    const BigKey = (props) => {
-        const source = props.value;
-        return <div className={classNames('big-key', { collected: source.big_key })}
-          onClick={() => props.onClick(props.name)} />;
-    };
-
-    const WithBigKey = (Wrapped) =>
-        (props) => {
-            const { onBigKeyClick, ...pass_props } = props;
-            return <React.Fragment>
-                <Wrapped {...pass_props} />
-                <BigKey name={props.name} value={props.dungeon} onClick={onBigKeyClick} />
-            </React.Fragment>;
-        };
-
-    const DungeonWithBigkey = WithBigKey(Dungeon);
-    const DungeonWithMedallionWithBigkey = WithBigKey(DungeonWithMedallion);
-
     const Chests = (props) =>
       <Slot className={`chest-${props.dungeon.chests}`}
         onClick={() => props.onLevel(props.name)} />;
@@ -104,13 +76,13 @@
     const ChestText = styled(OutlinedText)`
       font-size: 20px;
     `;
-    const SubSlot = styled.div`
+    const SubTextSlot = styled.div`
       width: 32px;
       height: 32px;
       position: absolute;
-    `;
-    const StyledKeysanityChest = styled(SubSlot)`
       display: table;
+    `;
+    const StyledKeysanityChest = styled(SubTextSlot)`
       .dungeon & { bottom: 0; left: 16px }
       .ganon-tower & { top: 0; right: 0; }
     `;
@@ -120,6 +92,41 @@
         onClick={() => props.onLevel(props.name)}>
         <ChestText>{`${props.source.chests}`}</ChestText>
       </StyledKeysanityChest>;
+
+    const StyledKeys = styled(SubTextSlot)`
+      .dungeon & { left: 16px; }
+      .ganon-tower & { top: 32px; right: 0; }
+      .agahnim-keys &:first-child { top: 0; right: 0; }
+      .agahnim-keys &:last-child { bottom: 0; right: 0; }
+    `;
+
+    const Keys = (props) => {
+        const { keys, key_limit } = props.source;
+        return !key_limit ?
+            <StyledKeys className="key"><OutlinedText>{'\u2014'}</OutlinedText></StyledKeys> :
+            <StyledKeys className="key"
+              onClick={() => props.onLevel(props.name)}>
+              <OutlinedText>{`${keys}/${key_limit}`}</OutlinedText>
+            </StyledKeys>;
+    };
+
+    const BigKey = (props) => {
+        const source = props.value;
+        return <div className={classNames('big-key', { collected: source.big_key })}
+          onClick={() => props.onClick(props.name)} />;
+    };
+
+    const WithBigKey = (Wrapped) =>
+        (props) => {
+            const { onBigKeyClick, ...pass_props } = props;
+            return <React.Fragment>
+                <Wrapped {...pass_props} />
+                <BigKey name={props.name} value={props.dungeon} onClick={onBigKeyClick} />
+            </React.Fragment>;
+        };
+
+    const DungeonWithBigkey = WithBigKey(Dungeon);
+    const DungeonWithMedallionWithBigkey = WithBigKey(DungeonWithMedallion);
 
     class BaseTracker extends React.Component {
         render() {
@@ -253,7 +260,7 @@
               </KeysanityAvatar>
               <div className="ganon-tower">
                 <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
-                <Keys name="ganon_tower" value={source} onClick={name => this.props.key_click('regions', name)} />
+                <Keys name="ganon_tower" source={source} onLevel={name => this.props.key_click('regions', name)} />
                 <BigKey name="ganon_tower" value={source} onClick={name => this.props.big_key_click('regions', name)} />
               </div>
             </React.Fragment>;
@@ -280,8 +287,8 @@
               <Item name="agahnim" value={model.encounters.agahnim.completed}
                 onToggle={name => this.props.completion_click('encounters', name)} />
               <div className="agahnim-keys">
-                <Keys name="castle_tower" value={model.regions.castle_tower} onClick={name => this.props.key_click('regions', name)} />
-                <Keys name="escape" value={model.regions.escape} onClick={name => this.props.key_click('regions', name)} />
+                <Keys name="castle_tower" source={model.regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
+                <Keys name="escape" source={model.regions.escape} onLevel={name => this.props.key_click('regions', name)} />
               </div>
             </React.Fragment>;
         }
@@ -289,7 +296,7 @@
         dungeon(name) {
             const dungeon = this.props.model.dungeons[name];
             return <div className="dungeon">
-              <Keys name={name} value={dungeon} onClick={name => this.props.key_click('dungeons', name)} />
+              <Keys name={name} source={dungeon} onLevel={name => this.props.key_click('dungeons', name)} />
               <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
             </div>;
         }
