@@ -29,10 +29,6 @@ body {
   right: 0;
 }
 
-.prize { width: 32px; height: 32px; position: absolute; }
-
-.prize { bottom: 0; right: 0; }
-
 #map { width: 448px; height: 448px; position: relative; }
 #map .first,
 #map .second { width: 442px; height: 442px; position: relative; background-size: 100% 100%; }

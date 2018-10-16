@@ -34,22 +34,26 @@
         className={classNames(`tunic--active-${props.tunic}`, { 'tunic--bunny': !props.moonpearl })}
         onClick={() => props.onLevel('tunic')} />;
 
+    const SubSlot = styled.div`
+      width: 32px;
+      height: 32px;
+      position: absolute;
+    `;
+    const Prize = styled(SubSlot)`
+      bottom: 0; right: 0;
+    `;
+
     const Dungeon = (props) =>
       <React.Fragment>
         <ActiveItem
           className={classNames('boss', props.name)}
           active={props.dungeon.completed}
           onClick={() => props.onCompletionClick(props.name)} />
-        <div
-          className={`prize prize-${props.dungeon.prize}`}
+        <Prize
+          className={`prize-${props.dungeon.prize}`}
           onClick={() => props.onPrizeClick(props.name)} />
       </React.Fragment>;
 
-    const SubSlot = styled.div`
-      width: 32px;
-      height: 32px;
-      position: absolute;
-    `;
     const StyledMedallion = styled(SubSlot)`
       bottom: 0;
       .keysanity & { top: 0; right: 0; }
