@@ -36,8 +36,9 @@
 
     const Dungeon = (props) =>
       <React.Fragment>
-        <div
-          className={classNames('boss', props.name, { defeated: props.dungeon.completed })}
+        <ActiveItem
+          className={classNames('boss', props.name)}
+          active={props.dungeon.completed}
           onClick={() => props.onCompletionClick(props.name)} />
         <div
           className={`prize prize-${props.dungeon.prize}`}
@@ -302,10 +303,10 @@
 
         dungeon(name) {
             const dungeon = this.props.model.dungeons[name];
-            return <div className="dungeon">
+            return <Slot className="dungeon">
               <Keys name={name} source={dungeon} onLevel={name => this.props.key_click('dungeons', name)} />
               <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
-            </div>;
+            </Slot>;
         }
     }
 

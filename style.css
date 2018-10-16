@@ -19,9 +19,6 @@ body {
 #page.hmap { width: 1340px; }
 #page.vmap { transform: scale(.6, .6) translate(-33%, -33%); }
 
-#tracker .boss,
-#tracker .dungeon { width: 64px; height: 64px; }
-
 #tracker .sword { position: absolute; top: 0; right: 0; }
 #tracker .shield { position: absolute; bottom: 0; left: 0; }
 #tracker .moonpearl {
@@ -31,9 +28,6 @@ body {
   bottom: 0;
   right: 0;
 }
-
-#tracker .boss { filter: contrast(80%) brightness(30%); }
-#tracker .boss.defeated { filter: contrast(100%) brightness(100%); }
 
 .prize,
 #tracker .medallion { width: 32px; height: 32px; position: absolute; }
