@@ -45,13 +45,23 @@
           onClick={() => props.onPrizeClick(props.name)} />
       </React.Fragment>;
 
+    const SubSlot = styled.div`
+      width: 32px;
+      height: 32px;
+      position: absolute;
+    `;
+    const StyledMedallion = styled(SubSlot)`
+      bottom: 0;
+      .keysanity & { top: 0; right: 0; }
+    `;
+
     const WithMedallion = (Wrapped) =>
       (props) => {
           const { onMedallionClick, ...pass_props } = props;
           return <React.Fragment>
-              <Wrapped {...pass_props} />
-              <div className={`medallion medallion-${props.dungeon.medallion}`}
-                onClick={() => onMedallionClick(props.name)} />
+            <Wrapped {...pass_props} />
+            <StyledMedallion className={`medallion-${props.dungeon.medallion}`}
+              onClick={() => onMedallionClick(props.name)} />
           </React.Fragment>;
       };
 
@@ -76,11 +86,6 @@
     `;
     const ChestText = styled(OutlinedText)`
       font-size: 20px;
-    `;
-    const SubSlot = styled.div`
-      width: 32px;
-      height: 32px;
-      position: absolute;
     `;
     const StyledKeysanityChest = styled(SubSlot)`
       display: table;

@@ -29,12 +29,9 @@ body {
   right: 0;
 }
 
-.prize,
-#tracker .medallion { width: 32px; height: 32px; position: absolute; }
+.prize { width: 32px; height: 32px; position: absolute; }
 
 .prize { bottom: 0; right: 0; }
-#tracker .medallion { bottom: 0; }
-.keysanity #tracker .medallion { top: 0; right: 0; }
 
 #map { width: 448px; height: 448px; position: relative; }
 #map .first,
