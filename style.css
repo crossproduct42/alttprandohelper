@@ -32,21 +32,15 @@ body {
   right: 0;
 }
 
-#tracker .boss,
-#tracker .big-key { filter: contrast(80%) brightness(30%); }
-#tracker .boss.defeated,
-#tracker .big-key.collected { filter: contrast(100%) brightness(100%); }
+#tracker .boss { filter: contrast(80%) brightness(30%); }
+#tracker .boss.defeated { filter: contrast(100%) brightness(100%); }
 
 .prize,
-#tracker .medallion,
-#tracker .big-key { width: 32px; height: 32px; position: absolute; }
-
-.ganon-tower .big-key { top: 64px; right: 0; }
+#tracker .medallion { width: 32px; height: 32px; position: absolute; }
 
 .prize { bottom: 0; right: 0; }
 #tracker .medallion { bottom: 0; }
 .keysanity #tracker .medallion { top: 0; right: 0; }
-#tracker .big-key { bottom: 0; }
 
 #map { width: 448px; height: 448px; position: relative; }
 #map .first,
@@ -204,6 +198,7 @@ body {
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
 .key { background-image: url(images/dungeons/key.png); }
+.tracker---big-key { background-image: url(images/dungeons/big_key.png); }
 
 .bomb { background-image: url(images/overlay/bomb.png); }
 .crystal { background-image: url(images/overlay/crystal.png); }

@@ -76,13 +76,13 @@
     const ChestText = styled(OutlinedText)`
       font-size: 20px;
     `;
-    const SubTextSlot = styled.div`
+    const SubSlot = styled.div`
       width: 32px;
       height: 32px;
       position: absolute;
-      display: table;
     `;
-    const StyledKeysanityChest = styled(SubTextSlot)`
+    const StyledKeysanityChest = styled(SubSlot)`
+      display: table;
       .dungeon & { bottom: 0; left: 16px }
       .ganon-tower & { top: 0; right: 0; }
     `;
@@ -93,7 +93,8 @@
         <ChestText>{`${props.source.chests}`}</ChestText>
       </StyledKeysanityChest>;
 
-    const StyledKeys = styled(SubTextSlot)`
+    const StyledKeys = styled(SubSlot)`
+      display: table;
       .dungeon & { left: 16px; }
       .ganon-tower & { top: 32px; right: 0; }
       .agahnim-keys &:first-child { top: 0; right: 0; }
@@ -110,18 +111,24 @@
             </StyledKeys>;
     };
 
-    const BigKey = (props) => {
-        const source = props.value;
-        return <div className={classNames('big-key', { collected: source.big_key })}
-          onClick={() => props.onClick(props.name)} />;
-    };
+    const StyledBigKey = styled(SubSlot)`
+      filter: contrast(${props => props.active ? 100 : 80}%)
+              brightness(${props => props.active ? 100 : 30}%);
+      bottom: 0;
+      .ganon-tower & { top: 64px; right: 0; }
+    `;
+
+    const BigKey = (props) =>
+      <StyledBigKey className="tracker---big-key"
+        active={props.source.big_key}
+        onClick={() => props.onToggle(props.name)} />;
 
     const WithBigKey = (Wrapped) =>
         (props) => {
             const { onBigKeyClick, ...pass_props } = props;
             return <React.Fragment>
                 <Wrapped {...pass_props} />
-                <BigKey name={props.name} value={props.dungeon} onClick={onBigKeyClick} />
+                <BigKey name={props.name} source={props.dungeon} onToggle={onBigKeyClick} />
             </React.Fragment>;
         };
 
@@ -261,7 +268,7 @@
               <div className="ganon-tower">
                 <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
                 <Keys name="ganon_tower" source={source} onLevel={name => this.props.key_click('regions', name)} />
-                <BigKey name="ganon_tower" value={source} onClick={name => this.props.big_key_click('regions', name)} />
+                <BigKey name="ganon_tower" source={source} onToggle={name => this.props.big_key_click('regions', name)} />
               </div>
             </React.Fragment>;
         }
