@@ -147,6 +147,8 @@
 
     class BaseTracker extends React.Component {
         render() {
+            const items = this.props.model.items;
+            const { onToggle, onLevel } = this.props;
             return <div id="tracker" className={classNames({ cell: this.props.horizontal })}>
               {grid([
                   grid([
@@ -162,34 +164,34 @@
                       this.dungeon('hera')
                   ]),
                   grid([
-                      this.leveled_item('bow'),
-                      this.leveled_item('boomerang'),
-                      this.item('hookshot'),
-                      this.item('mushroom'),
-                      this.item('powder')
+                      <LeveledItem name="bow" value={items.bow} onLevel={onLevel} />,
+                      <LeveledItem name="boomerang" value={items.boomerang} onLevel={onLevel} />,
+                      <Item name="hookshot" value={items.hookshot} onToggle={onToggle} />,
+                      <Item name="mushroom" value={items.mushroom} onToggle={onToggle} />,
+                      <Item name="powder" value={items.powder} onToggle={onToggle} />
                   ], [
-                      this.item('firerod'),
-                      this.item('icerod'),
-                      this.item('bombos'),
-                      this.item('ether'),
-                      this.item('quake')
+                      <Item name="firerod" value={items.firerod} onToggle={onToggle} />,
+                      <Item name="icerod" value={items.icerod} onToggle={onToggle} />,
+                      <Item name="bombos" value={items.bombos} onToggle={onToggle} />,
+                      <Item name="ether" value={items.ether} onToggle={onToggle} />,
+                      <Item name="quake" value={items.quake} onToggle={onToggle} />
                   ], [
-                      this.item('lantern'),
-                      this.item('hammer'),
-                      this.item('shovel'),
-                      this.item('net'),
-                      this.item('book')
+                      <Item name="lantern" value={items.lantern} onToggle={onToggle} />,
+                      <Item name="hammer" value={items.hammer} onToggle={onToggle} />,
+                      <Item name="shovel" value={items.shovel} onToggle={onToggle} />,
+                      <Item name="net" value={items.net} onToggle={onToggle} />,
+                      <Item name="book" value={items.book} onToggle={onToggle} />
                   ], [
-                      this.leveled_item('bottle'),
-                      this.item('somaria'),
-                      this.item('byrna'),
-                      this.item('cape'),
-                      this.item('mirror')
+                      <LeveledItem name="bottle" value={items.bottle} onLevel={onLevel} />,
+                      <Item name="somaria" value={items.somaria} onToggle={onToggle} />,
+                      <Item name="byrna" value={items.byrna} onToggle={onToggle} />,
+                      <Item name="cape" value={items.cape} onToggle={onToggle} />,
+                      <Item name="mirror" value={items.mirror} onToggle={onToggle} />
                   ], [
-                      this.item('boots'),
-                      this.leveled_item('glove'),
-                      this.item('flippers'),
-                      this.item('flute'),
+                      <Item name="boots" value={items.boots} onToggle={onToggle} />,
+                      <LeveledItem name="glove" value={items.glove} onLevel={onLevel} />,
+                      <Item name="flippers" value={items.flippers} onToggle={onToggle} />,
+                      <Item name="flute" value={items.flute} onToggle={onToggle} />,
                       this.agahnim()
                   ])
               ], [
@@ -213,25 +215,14 @@
         }
 
         corner() {
-            return <React.Fragment>
-              {this.tunic()}
-              {this.leveled_item('sword')}
-              {this.leveled_item('shield')}
-              {this.item('moonpearl')}
-            </React.Fragment>;
-        }
-
-        item(name) {
-            return <Item name={name} value={this.props.model.items[name]} onToggle={this.props.item_click} />;
-        }
-
-        leveled_item(name) {
-            return <LeveledItem name={name} value={this.props.model.items[name]} onLevel={this.props.item_click} />;
-        }
-
-        tunic() {
             const items = this.props.model.items;
-            return <TunicItem tunic={items.tunic} moonpearl={items.moonpearl} onLevel={this.props.item_click} />;
+            const { onToggle, onLevel } = this.props;
+            return <React.Fragment>
+              <TunicItem tunic={items.tunic} moonpearl={items.moonpearl} onLevel={onLevel} />
+              <LeveledItem name="sword" value={items.sword} onLevel={onLevel} />
+              <LeveledItem name="shield" value={items.shield} onLevel={onLevel} />
+              <Item name="moonpearl" value={items.moonpearl} onToggle={onToggle} />
+            </React.Fragment>;
         }
     }
 
@@ -267,13 +258,15 @@
 
     class KeysanityTracker extends BaseTracker {
         corner() {
+            const items = this.props.model.items;
             const source = this.props.model.regions.ganon_tower;
+            const { onToggle, onLevel } = this.props;
             return <React.Fragment>
               <KeysanityAvatar>
-                {this.tunic()}
-                {this.leveled_item('sword')}
-                {this.leveled_item('shield')}
-                {this.item('moonpearl')}
+                <TunicItem tunic={items.tunic} moonpearl={items.moonpearl} onLevel={onLevel} />
+                <LeveledItem name="sword" value={items.sword} onLevel={onLevel} />
+                <LeveledItem name="shield" value={items.shield} onLevel={onLevel} />
+                <Item name="moonpearl" value={items.moonpearl} onToggle={onToggle} />
               </KeysanityAvatar>
               <div className="ganon-tower">
                 <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
