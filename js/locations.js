@@ -4,18 +4,19 @@
     function always() { return 'available'; }
 
     var dungeons = {
-        eastern: {
-            caption: 'Eastern Palace {lantern}',
-            chest_limit: 3,
+        hera: {
+            caption: 'Tower of Hera',
+            chest_limit: 2,
             is_completable: function(items) {
-                return items.has_bow() ?
-                    items.lantern ? 'available' : 'dark' :
-                    'unavailable';
+                if (!items.has_melee()) return 'unavailable';
+                return this.is_progressable(items);
             },
             is_progressable: function(items) {
-                return this.chests <= 2 && !items.lantern ||
-                    this.chests === 1 && !items.has_bow() ?
-                    'possible' : 'available';
+                if (!items.flute && !items.glove) return 'unavailable';
+                if (!items.mirror && !(items.hookshot && items.hammer)) return 'unavailable';
+                return items.firerod || items.lantern ?
+                    items.flute || items.lantern ? 'available' : 'dark' :
+                    'possible';
             }
         },
         desert: {
@@ -33,56 +34,18 @@
                 return this.chests > 1 && items.boots ? 'available' : 'possible';
             }
         },
-        hera: {
-            caption: 'Tower of Hera',
-            chest_limit: 2,
+        eastern: {
+            caption: 'Eastern Palace {lantern}',
+            chest_limit: 3,
             is_completable: function(items) {
-                if (!items.has_melee()) return 'unavailable';
-                return this.is_progressable(items);
+                return items.has_bow() ?
+                    items.lantern ? 'available' : 'dark' :
+                    'unavailable';
             },
             is_progressable: function(items) {
-                if (!items.flute && !items.glove) return 'unavailable';
-                if (!items.mirror && !(items.hookshot && items.hammer)) return 'unavailable';
-                return items.firerod || items.lantern ?
-                    items.flute || items.lantern ? 'available' : 'dark' :
-                    'possible';
-            }
-        },
-        darkness: {
-            caption: 'Palace of Darkness {lantern}',
-            darkworld: true,
-            chest_limit: 5,
-            is_completable: function(items) {
-                if (!items.moonpearl || !items.has_bow() || !items.hammer) return 'unavailable';
-                if (!items.agahnim && !items.glove) return 'unavailable';
-                return items.lantern ? 'available' : 'dark';
-            },
-            is_progressable: function(items) {
-                if (!items.moonpearl) return 'unavailable';
-                if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
-                return !(items.has_bow() && items.lantern) ||
-                    this.chests === 1 && !items.hammer ?
+                return this.chests <= 2 && !items.lantern ||
+                    this.chests === 1 && !items.has_bow() ?
                     'possible' : 'available';
-            }
-        },
-        swamp: {
-            caption: 'Swamp Palace {mirror}',
-            darkworld: true,
-            chest_limit: 6,
-            is_completable: function(items) {
-                if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
-                if (!items.hammer || !items.hookshot) return 'unavailable';
-                if (!items.glove && !items.agahnim) return 'unavailable';
-                return 'available';
-            },
-            is_progressable: function(items) {
-                if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
-                if (!items.can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
-
-                if (this.chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
-                if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
-                if (this.chests <= 5) return !items.hammer ? 'unavailable' : 'available';
-                return !items.hammer ? 'possible' : 'available';
             }
         },
         skull: {
@@ -111,21 +74,6 @@
                 return this.chests === 1 && !items.hammer ? 'possible' : 'available';
             }
         },
-        ice: {
-            caption: 'Ice Palace (yellow=must bomb jump)',
-            darkworld: true,
-            chest_limit: 3,
-            is_completable: function(items) {
-                if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
-                if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
-                return items.hookshot || items.somaria ? 'available' : 'possible';
-            },
-            is_progressable: function(items) {
-                if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
-                if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
-                return items.hammer ? 'available' : 'possible';
-            }
-        },
         mire: {
             caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
             darkworld: true,
@@ -151,6 +99,58 @@
                     items.lantern || items.firerod :
                     items.lantern && items.somaria) ?
                     'available' : 'possible';
+            }
+        },
+        swamp: {
+            caption: 'Swamp Palace {mirror}',
+            darkworld: true,
+            chest_limit: 6,
+            is_completable: function(items) {
+                if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
+                if (!items.hammer || !items.hookshot) return 'unavailable';
+                if (!items.glove && !items.agahnim) return 'unavailable';
+                return 'available';
+            },
+            is_progressable: function(items) {
+                if (!items.moonpearl || !items.mirror || !items.flippers) return 'unavailable';
+                if (!items.can_reach_outcast() && !(items.agahnim && items.hammer)) return 'unavailable';
+
+                if (this.chests <= 2) return !items.hammer || !items.hookshot ? 'unavailable' : 'available';
+                if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
+                if (this.chests <= 5) return !items.hammer ? 'unavailable' : 'available';
+                return !items.hammer ? 'possible' : 'available';
+            }
+        },
+        ice: {
+            caption: 'Ice Palace (yellow=must bomb jump)',
+            darkworld: true,
+            chest_limit: 3,
+            is_completable: function(items) {
+                if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
+                if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
+                return items.hookshot || items.somaria ? 'available' : 'possible';
+            },
+            is_progressable: function(items) {
+                if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
+                if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
+                return items.hammer ? 'available' : 'possible';
+            }
+        },
+        darkness: {
+            caption: 'Palace of Darkness {lantern}',
+            darkworld: true,
+            chest_limit: 5,
+            is_completable: function(items) {
+                if (!items.moonpearl || !items.has_bow() || !items.hammer) return 'unavailable';
+                if (!items.agahnim && !items.glove) return 'unavailable';
+                return items.lantern ? 'available' : 'dark';
+            },
+            is_progressable: function(items) {
+                if (!items.moonpearl) return 'unavailable';
+                if (!items.agahnim && !(items.hammer && items.glove) && !(items.glove === 2 && items.flippers)) return 'unavailable';
+                return !(items.has_bow() && items.lantern) ||
+                    this.chests === 1 && !items.hammer ?
+                    'possible' : 'available';
             }
         },
         turtle: {
@@ -662,16 +662,16 @@
 
     function finalize_dungeons(dungeons, apply) {
         return update(map_values(dungeons, function(d) { return create(d); }), {
-            eastern:  { $apply: apply, $merge: { completed: false, prize: 0 } },
-            desert:   { $apply: apply, $merge: { completed: false, prize: 0 } },
-            hera:     { $apply: apply, $merge: { completed: false, prize: 0 } },
-            darkness: { $apply: apply, $merge: { completed: false, prize: 0 } },
-            swamp:    { $apply: apply, $merge: { completed: false, prize: 0 } },
-            skull:    { $apply: apply, $merge: { completed: false, prize: 0 } },
-            thieves:  { $apply: apply, $merge: { completed: false, prize: 0 } },
-            ice:      { $apply: apply, $merge: { completed: false, prize: 0 } },
-            mire:     { $apply: apply, $merge: { completed: false, prize: 0, medallion: 0 } },
-            turtle:   { $apply: apply, $merge: { completed: false, prize: 0, medallion: 0 } },
+            eastern:  { $apply: apply, $merge: { completed: false, prize: 3 } },
+            desert:   { $apply: apply, $merge: { completed: false, prize: 3 } },
+            hera:     { $apply: apply, $merge: { completed: false, prize: 3 } },
+            darkness: { $apply: apply, $merge: { completed: false, prize: 3 } },
+            swamp:    { $apply: apply, $merge: { completed: false, prize: 3 } },
+            skull:    { $apply: apply, $merge: { completed: false, prize: 3 } },
+            thieves:  { $apply: apply, $merge: { completed: false, prize: 3 } },
+            ice:      { $apply: apply, $merge: { completed: false, prize: 3 } },
+            mire:     { $apply: apply, $merge: { completed: false, prize: 3, medallion: 0 } },
+            turtle:   { $apply: apply, $merge: { completed: false, prize: 3, medallion: 0 } },
         });
     }
 

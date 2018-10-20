@@ -1,6 +1,6 @@
 (function(window) {
     'use strict';
-
+    var query = uri_query();
     var items = {
         has_melee: function() { return this.sword || this.hammer; },
         has_bow: function() { return this.bow > 1; },
@@ -87,7 +87,7 @@
         agahnim: false
     });
 
-    var standard_items = update(open_items, { sword: { $set: 1 } });
+    var standard_items = update(open_items, { sword: { $set: query.sword == "standard" ? 1 : 0 } });
 
     window.item_model = function(mode) {
         return { items: { standard: standard_items, open: open_items }[mode] };

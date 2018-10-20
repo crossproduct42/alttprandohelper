@@ -16,23 +16,29 @@
 <body>
 
   <div>
+    <label>Standard v29</label>
+    <button type="button" class="launch" data-mode="standard" data-map="no" data-sword="randomized">Tracker only</button>
+    <button type="button" class="launch" data-mode="standard" data-map="hmap" data-sword="randomized">Horizontal map</button>
+    <button type="button" class="launch" data-mode="standard" data-map="vmap" data-sword="randomized">Vertical map</button>
+  </div>
+
+  <div>
     <label>Standard</label>
-    <button type="button" class="launch" data-mode="standard" data-map="no">Tracker only</button>
-    <button type="button" class="launch" data-mode="standard" data-map="hmap">Horizontal map</button>
-    <button type="button" class="launch" data-mode="standard" data-map="vmap">Vertical map</button>
+    <button type="button" class="launch" data-mode="standard" data-map="no" data-sword="standard">Tracker only</button>
+    <button type="button" class="launch" data-mode="standard" data-map="hmap" data-sword="standard">Horizontal map</button>
+    <button type="button" class="launch" data-mode="standard" data-map="vmap" data-sword="standard">Vertical map</button>
   </div>
 
   <div>
     <label>Open</label>
-    <button type="button" class="launch" data-mode="open" data-map="no">Tracker only</button>
-    <button type="button" class="launch" data-mode="open" data-map="hmap">Horizontal map</button>
-    <button type="button" class="launch" data-mode="open" data-map="vmap">Vertical map</button>
+    <button type="button" class="launch" data-mode="open" data-map="no" data-sword="standard">Tracker only</button>
+    <button type="button" class="launch" data-mode="open" data-map="hmap" data-sword="standard">Horizontal map</button>
+    <button type="button" class="launch" data-mode="open" data-map="vmap" data-sword="standard">Vertical map</button>
   </div>
 
   <div>
     <label>Sprite</label>
     <select id="sprite">
-      <option value="" selected>Default</option>
       <option value="four-swords-link">Four Swords Link</option>
       <option value="boo">Boo</option>
       <option value="boy">Boy</option>
@@ -73,7 +79,7 @@
       <option value="old-man">Old Man</option>
       <option value="pink-ribbon-link">Pink Ribbon Link</option>
       <option value="popoi">Popoi</option>
-      <option value="pug">Pug</option>
+      <option value="pug" selected>Pug</option>
       <option value="purple-chest">Purple Chest</option>
       <option value="roy-koopa">Roy Koopa</option>
       <option value="rumia">Rumia</option>
@@ -103,8 +109,8 @@
     <select id="scale">
       <option value="">Unscaled 100%</option>
       <option value="90">Scaled 90%</option>
-      <option value="80">Scaled 80%</option>
-      <option value="70">Scaled 70%</option>
+      <option value="80" selected>Scaled 80%</option>
+      <option value="70" >Scaled 70%</option>
       <option value="60">Scaled 60%</option>
     </select>
   </div>

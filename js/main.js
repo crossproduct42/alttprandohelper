@@ -71,8 +71,9 @@
     };
 
     var Tracker = createReactClass({
+
         render: function() {
-            return div('#tracker', { className: classNames({ cell: this.props.horizontal })},
+            return div('#tracker', { className: classNames({ cell: this.props.horizontal  })},
                 grid([
                     grid([[
                         this.tunic(),
@@ -80,14 +81,14 @@
                         this.item('shield'),
                         this.item('moonpearl'),
                     ]], [
-                        this.dungeon('eastern'),
-                        this.chest('eastern')
+                        this.dungeon('hera'),
+                        this.chest('hera')
                     ], [
                         this.dungeon('desert'),
                         this.chest('desert')
                     ], [
-                        this.dungeon('hera'),
-                        this.chest('hera')
+                        this.dungeon('eastern'),
+                        this.chest('eastern')
                     ]),
                     grid([
                         this.item('bow'),
@@ -104,7 +105,8 @@
                     ], [
                         this.item('lantern'),
                         this.item('hammer'),
-                        this.item('shovel'),
+                        this.item('flute'),
+
                         this.item('net'),
                         this.item('book')
                     ], [
@@ -117,24 +119,24 @@
                         this.item('boots'),
                         this.item('glove'),
                         this.item('flippers'),
-                        this.item('flute'),
+                        this.item('shovel'),
                         this.item('agahnim')
                     ])
                 ], [
-                    this.dungeon('darkness'),
-                    this.dungeon('swamp'),
                     this.dungeon('skull'),
                     this.dungeon('thieves'),
-                    this.dungeon('ice'),
                     this.medallion_dungeon('mire'),
+                    this.dungeon('swamp'),
+                    this.dungeon('ice'),
+                    this.dungeon('darkness'),
                     this.medallion_dungeon('turtle')
                 ], [
-                    this.chest('darkness'),
-                    this.chest('swamp'),
                     this.chest('skull'),
                     this.chest('thieves'),
-                    this.chest('ice'),
                     this.chest('mire'),
+                    this.chest('swamp'),
+                    this.chest('ice'),
+                    this.chest('darkness'),
                     this.chest('turtle')
                 ]));
         },
@@ -320,8 +322,8 @@
                     div('.world-dark', locations[1].map(property('tag')))
                 ];
 
-            return div('#map', { className: classNames({ cell: this.props.horizontal }), onContextMenu: function(e) { e.preventDefault() }, },
-                this.props.horizontal ? grid.call(null, worlds) : worlds,
+            return div('#map', { className: classNames({ cell: this.props.horizontal  }), onContextMenu: function(e) { e.preventDefault() }, },
+                this.props.horizontal ? grid.call(null, worlds) : worlds ,
                 t(Caption, { text: this.state.caption })
             );
         },
@@ -343,6 +345,7 @@
     var App = createReactClass({
         getInitialState: function() {
             var mode = this.props.query.mode;
+            var sword = this.props.query.sword;
             return Object.assign(item_model(mode), location_model(mode));
         },
 
@@ -368,9 +371,10 @@
                     medallion_click_back: this.medallion_click_back,
                     chest_click: this.chest_click,
                     chest_click_back: this.chest_click_back,
-                    horizontal: query.hmap
+                    horizontal: query.hmap,
+                    vertical: query.vmap
                 }, this.state)),
-                (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap }, this.state)));
+                (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap, vertical: query.vmap }, this.state)));
         },
 
         item_click: function(name) {

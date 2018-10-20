@@ -13,6 +13,7 @@
     function launch_tracker() {
         var params = {
                 mode: this.getAttribute('data-mode'),
+                sword: this.getAttribute('data-sword'),
                 hmap: this.getAttribute('data-map') === 'hmap',
                 vmap: this.getAttribute('data-map') === 'vmap',
                 sprite: document.getElementById('sprite').value,
@@ -46,6 +47,7 @@
     function query(params) {
         return compact([
             'mode='+params.mode,
+            'sword='+params.sword,
             params.hmap && 'hmap',
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,
