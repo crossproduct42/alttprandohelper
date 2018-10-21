@@ -96,8 +96,6 @@
     const StyledKeys = styled(SubSlot)`
       display: table;
       .dungeon & { left: 16px; }
-      .agahnim-keys &:first-child { top: 0; right: 0; }
-      .agahnim-keys &:last-child { bottom: 0; right: 0; }
     `;
 
     const Keys = (props) => {
@@ -265,8 +263,7 @@
         }
 
         agahnim() {
-            return <Item name="agahnim"
-              value={this.props.model.encounters.agahnim.completed}
+            return <Item name="agahnim" value={this.props.model.encounters.agahnim.completed}
               onToggle={name => this.props.completion_click('encounters', name)} />;
         }
 
@@ -284,6 +281,16 @@
       grid-template-rows: repeat(4, 1fr);
       & > :first-child { grid-row: 1 / 4; }
       & ${SubSlot} { position: static; }
+    `;
+    const KeysanityAgahnim = styled(Slot)`
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      & ${SubSlot} {
+        position: static;
+        z-index: 1;
+      }
+      & .agahnim { position: absolute; }
     `;
 
     class KeysanityTracker extends BaseTracker {
@@ -316,14 +323,12 @@
 
         agahnim() {
             const model = this.props.model;
-            return <React.Fragment>
+            return <KeysanityAgahnim>
               <Item name="agahnim" value={model.encounters.agahnim.completed}
                 onToggle={name => this.props.completion_click('encounters', name)} />
-              <div className="agahnim-keys">
-                <Keys name="castle_tower" source={model.regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
-                <Keys name="escape" source={model.regions.escape} onLevel={name => this.props.key_click('regions', name)} />
-              </div>
-            </React.Fragment>;
+              <Keys name="castle_tower" source={model.regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
+              <Keys name="escape" source={model.regions.escape} onLevel={name => this.props.key_click('regions', name)} />
+            </KeysanityAgahnim>;
         }
 
         dungeon(name) {
