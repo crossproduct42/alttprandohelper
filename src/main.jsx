@@ -2,6 +2,7 @@
     'use strict';
 
     const styled = window.styled.default;
+    const css = window.styled.css;
 
     const Slot = styled.div`
       width: 64px;
@@ -23,16 +24,6 @@
         className={classNames(props.name, props.value && `${props.name}--active-${props.value}`)}
         active={props.value > 0}
         onClick={() => props.onLevel(props.name)} />
-
-    const StyledTunicItem = styled.div`
-      width: 128px;
-      height: 128px;
-    `;
-
-    const TunicItem = (props) =>
-      <StyledTunicItem
-        className={classNames(`tunic--active-${props.tunic}`, { 'tunic--bunny': !props.moonpearl })}
-        onClick={() => props.onLevel('tunic')} />;
 
     const SubSlot = styled.div`
       width: 32px;
@@ -94,7 +85,6 @@
     const StyledKeysanityChest = styled(SubSlot)`
       display: table;
       .dungeon & { bottom: 0; left: 16px }
-      .ganon-tower & { top: 0; right: 0; }
     `;
 
     const KeysanityChest = (props) =>
@@ -106,7 +96,6 @@
     const StyledKeys = styled(SubSlot)`
       display: table;
       .dungeon & { left: 16px; }
-      .ganon-tower & { top: 32px; right: 0; }
       .agahnim-keys &:first-child { top: 0; right: 0; }
       .agahnim-keys &:last-child { bottom: 0; right: 0; }
     `;
@@ -125,7 +114,6 @@
       filter: contrast(${props => props.active ? 100 : 80}%)
               brightness(${props => props.active ? 100 : 30}%);
       bottom: 0;
-      .ganon-tower & { top: 64px; right: 0; }
     `;
 
     const BigKey = (props) =>
@@ -144,6 +132,47 @@
 
     const DungeonWithBigkey = WithBigKey(Dungeon);
     const DungeonWithMedallionWithBigkey = WithBigKey(DungeonWithMedallion);
+
+    const Sprite = styled.div`
+      width: ${props => props.keysanity ? 96 : 128}px;
+      height: ${props => props.keysanity ? 96 : 128}px;
+      background-size: 100%;
+      display: grid;
+      grid-template-areas:
+        ".  sw"
+        "sh mp";
+      & .sword { grid-area: sw }
+      & .shield { grid-area: sh }
+      & .moonpearl { grid-area: mp }
+      ${props => props.keysanity && css`
+        & .sword,
+        & .shield {
+          width: 48px;
+          height: 48px;
+          background-size: 100%;
+        }
+      `}
+      & .moonpearl {
+        margin-top: ${props => props.keysanity ? 12 : 16}px;
+        margin-left: ${props => props.keysanity ? 12 : 16}px;
+        width: ${props => props.keysanity ? 36 : 48}px;
+        height: ${props => props.keysanity ? 36 : 48}px;
+        background-size: 100%;
+      }
+    `;
+
+    const Portrait = (props) => {
+      const { items, keysanity } = props;
+      const { onToggle, onLevel } = props;
+      return <Sprite
+        className={classNames(`tunic--active-${items.tunic}`, { 'tunic--bunny': !items.moonpearl })}
+        keysanity={keysanity}
+        onClick={(e) => e.target === e.currentTarget && onLevel('tunic')}>
+        <LeveledItem name="sword" value={items.sword} onLevel={onLevel} />
+        <LeveledItem name="shield" value={items.shield} onLevel={onLevel} />
+        <Item name="moonpearl" value={items.moonpearl} onToggle={onToggle} />
+      </Sprite>;
+    };
 
     class BaseTracker extends React.Component {
         render() {
@@ -217,12 +246,7 @@
         corner() {
             const items = this.props.model.items;
             const { onToggle, onLevel } = this.props;
-            return <React.Fragment>
-              <TunicItem tunic={items.tunic} moonpearl={items.moonpearl} onLevel={onLevel} />
-              <LeveledItem name="sword" value={items.sword} onLevel={onLevel} />
-              <LeveledItem name="shield" value={items.shield} onLevel={onLevel} />
-              <Item name="moonpearl" value={items.moonpearl} onToggle={onToggle} />
-            </React.Fragment>;
+            return <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />;
         }
     }
 
@@ -252,8 +276,14 @@
         }
     }
 
-    const KeysanityAvatar = styled.div`
-      transform: scale(.75) translate(-25%, -25%);
+    const KeysanityPortrait = styled.div`
+      width: 128px;
+      height: 128px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      & > :first-child { grid-row: 1 / 4; }
+      & ${SubSlot} { position: static; }
     `;
 
     class KeysanityTracker extends BaseTracker {
@@ -261,19 +291,12 @@
             const items = this.props.model.items;
             const source = this.props.model.regions.ganon_tower;
             const { onToggle, onLevel } = this.props;
-            return <React.Fragment>
-              <KeysanityAvatar>
-                <TunicItem tunic={items.tunic} moonpearl={items.moonpearl} onLevel={onLevel} />
-                <LeveledItem name="sword" value={items.sword} onLevel={onLevel} />
-                <LeveledItem name="shield" value={items.shield} onLevel={onLevel} />
-                <Item name="moonpearl" value={items.moonpearl} onToggle={onToggle} />
-              </KeysanityAvatar>
-              <div className="ganon-tower">
-                <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
-                <Keys name="ganon_tower" source={source} onLevel={name => this.props.key_click('regions', name)} />
-                <BigKey name="ganon_tower" source={source} onToggle={name => this.props.big_key_click('regions', name)} />
-              </div>
-            </React.Fragment>;
+            return <KeysanityPortrait>
+              <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
+              <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
+              <Keys name="ganon_tower" source={source} onLevel={name => this.props.key_click('regions', name)} />
+              <BigKey name="ganon_tower" source={source} onToggle={name => this.props.big_key_click('regions', name)} />
+            </KeysanityPortrait>;
         }
 
         dungeon_boss(name) {
@@ -589,7 +612,8 @@
               }, query.sprite)}
               style={query.bg && { 'background-color': query.bg }}>
               <ItemTracker
-                item_click={this.item_click}
+                onToggle={this.item_click}
+                onLevel={this.item_click}
                 completion_click={this.completion_click}
                 prize_click={this.prize_click}
                 medallion_click={this.medallion_click}

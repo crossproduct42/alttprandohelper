@@ -19,16 +19,6 @@ body {
 #page.hmap { width: 1340px; }
 #page.vmap { transform: scale(.6, .6) translate(-33%, -33%); }
 
-#tracker .sword { position: absolute; top: 0; right: 0; }
-#tracker .shield { position: absolute; bottom: 0; left: 0; }
-#tracker .moonpearl {
-  width: 48px;
-  height: 48px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
 #map { width: 448px; height: 448px; position: relative; }
 #map .first,
 #map .second { width: 442px; height: 442px; position: relative; background-size: 100% 100%; }
