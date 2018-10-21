@@ -84,7 +84,6 @@
     `;
     const StyledKeysanityChest = styled(SubSlot)`
       display: table;
-      .dungeon & { bottom: 0; left: 16px }
     `;
 
     const KeysanityChest = (props) =>
@@ -95,7 +94,6 @@
 
     const StyledKeys = styled(SubSlot)`
       display: table;
-      .dungeon & { left: 16px; }
     `;
 
     const Keys = (props) => {
@@ -292,6 +290,12 @@
       }
       & .agahnim { position: absolute; }
     `;
+    const KeysanityDungeon = styled(Slot)`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & ${SubSlot} { position: static; }
+    `;
 
     class KeysanityTracker extends BaseTracker {
         corner() {
@@ -333,10 +337,10 @@
 
         dungeon(name) {
             const dungeon = this.props.model.dungeons[name];
-            return <Slot className="dungeon">
+            return <KeysanityDungeon>
               <Keys name={name} source={dungeon} onLevel={name => this.props.key_click('dungeons', name)} />
               <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
-            </Slot>;
+            </KeysanityDungeon>;
         }
     }
 
