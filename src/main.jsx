@@ -79,6 +79,9 @@
     const ChestText = styled(OutlinedText)`
       font-size: 20px;
     `;
+    const KeyText = styled(OutlinedText)`
+      font-size: 14px;
+    `;
     const TextSubSlot = styled(SubSlot)`
       display: flex;
       justify-content: center;
@@ -94,10 +97,10 @@
     const Keys = (props) => {
         const { keys, key_limit } = props.source;
         return !key_limit ?
-            <TextSubSlot className="key"><OutlinedText>{'\u2014'}</OutlinedText></TextSubSlot> :
+            <TextSubSlot className="key"><KeyText>{'\u2014'}</KeyText></TextSubSlot> :
             <TextSubSlot className="key"
               onClick={() => props.onLevel(props.name)}>
-              <OutlinedText>{`${keys}/${key_limit}`}</OutlinedText>
+              <KeyText>{`${keys}/${key_limit}`}</KeyText>
             </TextSubSlot>;
     };
 
