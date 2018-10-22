@@ -28,7 +28,6 @@
     const SubSlot = styled.div`
       width: 32px;
       height: 32px;
-      position: absolute;
     `;
     const ActiveSubItem = styled(SubSlot)`
       filter: contrast(${props => props.active ? 100 : 80}%)
@@ -56,10 +55,7 @@
       & .prize { grid-area: pz; }
       & .tracker---big-key { grid-area: bk; }
       & .boss { position: absolute; }
-      & ${SubSlot} {
-        position: static;
-        z-index: 1;
-      }
+      & ${SubSlot} { z-index: 1; }
     `;
 
     const Dungeon = (props) =>
@@ -270,24 +266,19 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: repeat(4, 1fr);
-      & > :first-child { grid-row: 1 / 4; }
-      & ${SubSlot} { position: static; }
+      & ${Sprite} { grid-row: 1 / 4; }
     `;
     const KeysanityAgahnim = styled(Slot)`
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      & ${SubSlot} {
-        position: static;
-        z-index: 1;
-      }
       & .agahnim { position: absolute; }
+      & ${SubSlot} { z-index: 1; }
     `;
     const KeysanityDungeon = styled(Slot)`
       display: flex;
       flex-direction: column;
       align-items: center;
-      & ${SubSlot} { position: static; }
     `;
 
     class KeysanityTracker extends BaseTracker {
