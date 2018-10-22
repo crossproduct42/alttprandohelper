@@ -30,37 +30,54 @@
       height: 32px;
       position: absolute;
     `;
-    const Prize = styled(SubSlot)`
-      bottom: 0; right: 0;
+    const ActiveSubItem = styled(SubSlot)`
+      filter: contrast(${props => props.active ? 100 : 80}%)
+              brightness(${props => props.active ? 100 : 30}%);
+    `;
+
+    const BigKey = (props) =>
+      <ActiveSubItem className="tracker---big-key"
+        active={props.source.big_key}
+        onClick={() => props.onToggle(props.name)} />;
+
+    const StyledDungeon = styled(Slot)`
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas:
+      ${props => props.keysanity ? `
+        ".  mn"
+        "bk pz"
+      ` : `
+        ".  ."
+        "mn pz"
+      `};
+      & .medallion { grid-area: mn; }
+      & .prize { grid-area: pz; }
+      & .tracker---big-key { grid-area: bk; }
+      & .boss { position: absolute; }
+      & ${SubSlot} {
+        position: static;
+        z-index: 1;
+      }
     `;
 
     const Dungeon = (props) =>
-      <React.Fragment>
+      <StyledDungeon keysanity={props.keysanity}>
         <ActiveItem
           className={classNames('boss', props.name)}
           active={props.dungeon.completed}
-          onClick={() => props.onCompletionClick(props.name)} />
-        <Prize
-          className={`prize-${props.dungeon.prize}`}
-          onClick={() => props.onPrizeClick(props.name)} />
-      </React.Fragment>;
-
-    const StyledMedallion = styled(SubSlot)`
-      bottom: 0;
-      .keysanity & { top: 0; right: 0; }
-    `;
-
-    const WithMedallion = (Wrapped) =>
-      (props) => {
-          const { onMedallionClick, ...pass_props } = props;
-          return <React.Fragment>
-            <Wrapped {...pass_props} />
-            <StyledMedallion className={`medallion-${props.dungeon.medallion}`}
-              onClick={() => onMedallionClick(props.name)} />
-          </React.Fragment>;
-      };
-
-    const DungeonWithMedallion = WithMedallion(Dungeon);
+          onClick={() => props.onCompletion(props.name)} />
+        {props.medallion &&
+        <SubSlot
+          className={`medallion medallion-${props.dungeon.medallion}`}
+          onClick={() => props.onMedallionClick(props.name)} />}
+        {props.keysanity &&
+        <BigKey name={props.name} source={props.dungeon} onToggle={props.onBigKeyClick} />}
+        <SubSlot
+          className={`prize prize-${props.dungeon.prize}`}
+          onClick={() => props.onPrize(props.name)} />
+      </StyledDungeon>;
 
     const Chests = (props) =>
       <Slot className={`chest-${props.dungeon.chests}`}
@@ -103,29 +120,6 @@
               <KeyText>{`${keys}/${key_limit}`}</KeyText>
             </TextSubSlot>;
     };
-
-    const StyledBigKey = styled(SubSlot)`
-      filter: contrast(${props => props.active ? 100 : 80}%)
-              brightness(${props => props.active ? 100 : 30}%);
-      bottom: 0;
-    `;
-
-    const BigKey = (props) =>
-      <StyledBigKey className="tracker---big-key"
-        active={props.source.big_key}
-        onClick={() => props.onToggle(props.name)} />;
-
-    const WithBigKey = (Wrapped) =>
-        (props) => {
-            const { onBigKeyClick, ...pass_props } = props;
-            return <React.Fragment>
-                <Wrapped {...pass_props} />
-                <BigKey name={props.name} source={props.dungeon} onToggle={onBigKeyClick} />
-            </React.Fragment>;
-        };
-
-    const DungeonWithBigkey = WithBigKey(Dungeon);
-    const DungeonWithMedallionWithBigkey = WithBigKey(DungeonWithMedallion);
 
     const Sprite = styled.div`
       width: ${props => props.keysanity ? 96 : 128}px;
@@ -247,14 +241,15 @@
     class Tracker extends BaseTracker {
         dungeon_boss(name) {
             return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
-              onCompletionClick={name => this.props.completion_click('dungeons', name)}
-              onPrizeClick={this.props.prize_click} />;
+              onCompletion={name => this.props.completion_click('dungeons', name)}
+              onPrize={this.props.prize_click} />;
         }
 
         medallion_dungeon_boss(name) {
-            return <DungeonWithMedallion name={name} dungeon={this.props.model.dungeons[name]}
-              onCompletionClick={name => this.props.completion_click('dungeons', name)}
-              onPrizeClick={this.props.prize_click}
+            return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
+              medallion={true}
+              onCompletion={name => this.props.completion_click('dungeons', name)}
+              onPrize={this.props.prize_click}
               onMedallionClick={this.props.medallion_click} />;
         }
 
@@ -309,18 +304,21 @@
         }
 
         dungeon_boss(name) {
-            return <DungeonWithBigkey name={name} dungeon={this.props.model.dungeons[name]}
-              onCompletionClick={name => this.props.completion_click('dungeons', name)}
-              onPrizeClick={this.props.prize_click}
+            return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
+              keysanity={true}
+              onCompletion={name => this.props.completion_click('dungeons', name)}
+              onPrize={this.props.prize_click}
               onBigKeyClick={name => this.props.big_key_click('dungeons', name)} />;
         }
 
         medallion_dungeon_boss(name) {
-            return <DungeonWithMedallionWithBigkey name={name} dungeon={this.props.model.dungeons[name]}
-                onCompletionClick={name => this.props.completion_click('dungeons', name)}
-                onPrizeClick={this.props.prize_click}
-                onMedallionClick={this.props.medallion_click}
-                onBigKeyClick={name => this.props.big_key_click('dungeons', name)} />;
+            return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
+              keysanity={true}
+              medallion={true}
+              onCompletion={name => this.props.completion_click('dungeons', name)}
+              onPrize={this.props.prize_click}
+              onMedallionClick={this.props.medallion_click}
+              onBigKeyClick={name => this.props.big_key_click('dungeons', name)} />;
         }
 
         agahnim() {
