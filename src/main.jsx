@@ -67,9 +67,6 @@
         onClick={() => props.onLevel(props.name)} />;
 
     const OutlinedText = styled.span`
-      display: table-cell;
-      text-align: center;
-      vertical-align: middle;
       color: white;
       font-weight: bold;
       text-shadow:
@@ -82,28 +79,26 @@
     const ChestText = styled(OutlinedText)`
       font-size: 20px;
     `;
-    const StyledKeysanityChest = styled(SubSlot)`
-      display: table;
+    const TextSubSlot = styled(SubSlot)`
+      display: flex;
+      justify-content: center;
+      align-items: center;
     `;
 
     const KeysanityChest = (props) =>
-      <StyledKeysanityChest className={classNames('chest', { 'chest--empty': !props.source.chests })}
+      <TextSubSlot className={classNames('chest', { 'chest--empty': !props.source.chests })}
         onClick={() => props.onLevel(props.name)}>
         <ChestText>{`${props.source.chests}`}</ChestText>
-      </StyledKeysanityChest>;
-
-    const StyledKeys = styled(SubSlot)`
-      display: table;
-    `;
+      </TextSubSlot>;
 
     const Keys = (props) => {
         const { keys, key_limit } = props.source;
         return !key_limit ?
-            <StyledKeys className="key"><OutlinedText>{'\u2014'}</OutlinedText></StyledKeys> :
-            <StyledKeys className="key"
+            <TextSubSlot className="key"><OutlinedText>{'\u2014'}</OutlinedText></TextSubSlot> :
+            <TextSubSlot className="key"
               onClick={() => props.onLevel(props.name)}>
               <OutlinedText>{`${keys}/${key_limit}`}</OutlinedText>
-            </StyledKeys>;
+            </TextSubSlot>;
     };
 
     const StyledBigKey = styled(SubSlot)`
