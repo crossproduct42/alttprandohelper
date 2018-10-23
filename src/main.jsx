@@ -158,6 +158,31 @@
       </Sprite>;
     };
 
+    const TrackerItemGrid = styled.div`
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+    `;
+    const TrackerLwGrid = styled.div`
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      grid-auto-flow: column;
+    `;
+    const TrackerDwGrid = styled.div`
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: 1fr 1fr;
+    `;
+    const TrackerGrid = styled.div`
+      display: grid;
+      grid-template-areas:
+        "p i"
+        "l i"
+        "d d";
+      & ${TrackerItemGrid} { grid-area: i; }
+      & ${TrackerDwGrid} { grid-area: d; }
+    `;
     const KeysanityPortrait = styled.div`
       width: 128px;
       height: 128px;
@@ -185,80 +210,73 @@
             const { items, regions, encounters } = model;
             const { onToggle, onLevel } = this.props;
             return <div id="tracker" className={classNames({ cell: this.props.horizontal })}>
-              {grid([
-                  grid([
-                      keysanity ?
-                          <KeysanityPortrait>
-                            <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
-                            <KeysanityChest name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.chest_click('regions', name)} />
-                            <Keys name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.key_click('regions', name)} />
-                            <BigKey name="ganon_tower" source={regions.ganon_tower} onToggle={name => this.props.big_key_click('regions', name)} />
-                          </KeysanityPortrait> :
-                          <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />
-                  ], [
-                      this.dungeon('eastern'),
-                      this.inner_dungeon('eastern')
-                  ], [
-                      this.dungeon('desert'),
-                      this.inner_dungeon('desert')
-                  ], [
-                      this.dungeon('hera'),
-                      this.inner_dungeon('hera')
-                  ]),
-                  grid([
-                      <LeveledItem name="bow" value={items.bow} onLevel={onLevel} />,
-                      <LeveledItem name="boomerang" value={items.boomerang} onLevel={onLevel} />,
-                      <Item name="hookshot" value={items.hookshot} onToggle={onToggle} />,
-                      <Item name="mushroom" value={items.mushroom} onToggle={onToggle} />,
-                      <Item name="powder" value={items.powder} onToggle={onToggle} />
-                  ], [
-                      <Item name="firerod" value={items.firerod} onToggle={onToggle} />,
-                      <Item name="icerod" value={items.icerod} onToggle={onToggle} />,
-                      <Item name="bombos" value={items.bombos} onToggle={onToggle} />,
-                      <Item name="ether" value={items.ether} onToggle={onToggle} />,
-                      <Item name="quake" value={items.quake} onToggle={onToggle} />
-                  ], [
-                      <Item name="lantern" value={items.lantern} onToggle={onToggle} />,
-                      <Item name="hammer" value={items.hammer} onToggle={onToggle} />,
-                      <Item name="shovel" value={items.shovel} onToggle={onToggle} />,
-                      <Item name="net" value={items.net} onToggle={onToggle} />,
-                      <Item name="book" value={items.book} onToggle={onToggle} />
-                  ], [
-                      <LeveledItem name="bottle" value={items.bottle} onLevel={onLevel} />,
-                      <Item name="somaria" value={items.somaria} onToggle={onToggle} />,
-                      <Item name="byrna" value={items.byrna} onToggle={onToggle} />,
-                      <Item name="cape" value={items.cape} onToggle={onToggle} />,
-                      <Item name="mirror" value={items.mirror} onToggle={onToggle} />
-                  ], [
-                      <Item name="boots" value={items.boots} onToggle={onToggle} />,
-                      <LeveledItem name="glove" value={items.glove} onLevel={onLevel} />,
-                      <Item name="flippers" value={items.flippers} onToggle={onToggle} />,
-                      <Item name="flute" value={items.flute} onToggle={onToggle} />,
-                      keysanity ?
-                        <KeysanityAgahnim>
-                          <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />
-                          <Keys name="castle_tower" source={regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
-                          <Keys name="escape" source={regions.escape} onLevel={name => this.props.key_click('regions', name)} />
-                        </KeysanityAgahnim> :
-                        <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />
-                  ])
-              ], [
-                  this.dungeon('darkness'),
-                  this.dungeon('swamp'),
-                  this.dungeon('skull'),
-                  this.dungeon('thieves'),
-                  this.dungeon('ice'),
-                  this.dungeon('mire', { medallion: true }),
-                  this.dungeon('turtle', { medallion: true })
-              ], [
-                  this.inner_dungeon('darkness'),
-                  this.inner_dungeon('swamp'),
-                  this.inner_dungeon('skull'),
-                  this.inner_dungeon('thieves'),
-                  this.inner_dungeon('ice'),
-                  this.inner_dungeon('mire'),
-                  this.inner_dungeon('turtle')
-              ])}
+              <TrackerGrid>
+                {keysanity ?
+                <KeysanityPortrait>
+                  <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
+                  <KeysanityChest name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.chest_click('regions', name)} />
+                  <Keys name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.key_click('regions', name)} />
+                  <BigKey name="ganon_tower" source={regions.ganon_tower} onToggle={name => this.props.big_key_click('regions', name)} />
+                </KeysanityPortrait> :
+                <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />}
+                <TrackerItemGrid>
+                  <LeveledItem name="bow" value={items.bow} onLevel={onLevel} />
+                  <LeveledItem name="boomerang" value={items.boomerang} onLevel={onLevel} />
+                  <Item name="hookshot" value={items.hookshot} onToggle={onToggle} />
+                  <Item name="mushroom" value={items.mushroom} onToggle={onToggle} />
+                  <Item name="powder" value={items.powder} onToggle={onToggle} />
+                  <Item name="firerod" value={items.firerod} onToggle={onToggle} />
+                  <Item name="icerod" value={items.icerod} onToggle={onToggle} />
+                  <Item name="bombos" value={items.bombos} onToggle={onToggle} />
+                  <Item name="ether" value={items.ether} onToggle={onToggle} />
+                  <Item name="quake" value={items.quake} onToggle={onToggle} />
+                  <Item name="lantern" value={items.lantern} onToggle={onToggle} />
+                  <Item name="hammer" value={items.hammer} onToggle={onToggle} />
+                  <Item name="shovel" value={items.shovel} onToggle={onToggle} />
+                  <Item name="net" value={items.net} onToggle={onToggle} />
+                  <Item name="book" value={items.book} onToggle={onToggle} />
+                  <LeveledItem name="bottle" value={items.bottle} onLevel={onLevel} />
+                  <Item name="somaria" value={items.somaria} onToggle={onToggle} />
+                  <Item name="byrna" value={items.byrna} onToggle={onToggle} />
+                  <Item name="cape" value={items.cape} onToggle={onToggle} />
+                  <Item name="mirror" value={items.mirror} onToggle={onToggle} />
+                  <Item name="boots" value={items.boots} onToggle={onToggle} />
+                  <LeveledItem name="glove" value={items.glove} onLevel={onLevel} />
+                  <Item name="flippers" value={items.flippers} onToggle={onToggle} />
+                  <Item name="flute" value={items.flute} onToggle={onToggle} />
+                  {keysanity ?
+                  <KeysanityAgahnim>
+                    <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />
+                    <Keys name="castle_tower" source={regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
+                    <Keys name="escape" source={regions.escape} onLevel={name => this.props.key_click('regions', name)} />
+                  </KeysanityAgahnim> :
+                  <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />}
+                </TrackerItemGrid>
+                <TrackerLwGrid>
+                  {this.dungeon('eastern')}
+                  {this.dungeon('desert')}
+                  {this.dungeon('hera')}
+                  {this.inner_dungeon('eastern')}
+                  {this.inner_dungeon('desert')}
+                  {this.inner_dungeon('hera')}
+                </TrackerLwGrid>
+                <TrackerDwGrid>
+                  {this.dungeon('darkness')}
+                  {this.dungeon('swamp')}
+                  {this.dungeon('skull')}
+                  {this.dungeon('thieves')}
+                  {this.dungeon('ice')}
+                  {this.dungeon('mire', { medallion: true })}
+                  {this.dungeon('turtle', { medallion: true })}
+                  {this.inner_dungeon('darkness')}
+                  {this.inner_dungeon('swamp')}
+                  {this.inner_dungeon('skull')}
+                  {this.inner_dungeon('thieves')}
+                  {this.inner_dungeon('ice')}
+                  {this.inner_dungeon('mire')}
+                  {this.inner_dungeon('turtle')}
+                </TrackerDwGrid>
+              </TrackerGrid>
             </div>;
         }
 
