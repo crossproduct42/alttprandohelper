@@ -67,9 +67,9 @@
         {props.medallion &&
         <SubSlot
           className={`medallion medallion-${props.dungeon.medallion}`}
-          onClick={() => props.onMedallionClick(props.name)} />}
+          onClick={() => props.onMedallion(props.name)} />}
         {props.keysanity &&
-        <BigKey name={props.name} source={props.dungeon} onToggle={props.onBigKeyClick} />}
+        <BigKey name={props.name} source={props.dungeon} onToggle={props.onBigKey} />}
         <SubSlot
           className={`prize prize-${props.dungeon.prize}`}
           onClick={() => props.onPrize(props.name)} />
@@ -158,23 +158,52 @@
       </Sprite>;
     };
 
-    class BaseTracker extends React.Component {
+    const KeysanityPortrait = styled.div`
+      width: 128px;
+      height: 128px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      & ${Sprite} { grid-row: 1 / 4; }
+    `;
+    const KeysanityAgahnim = styled(Slot)`
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      & .agahnim { position: absolute; }
+      & ${SubSlot} { z-index: 1; }
+    `;
+    const KeysanityDungeon = styled(Slot)`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    `;
+
+    class Tracker extends React.Component {
         render() {
-            const items = this.props.model.items;
+            const { keysanity, model } = this.props;
+            const { items, regions, encounters } = model;
             const { onToggle, onLevel } = this.props;
             return <div id="tracker" className={classNames({ cell: this.props.horizontal })}>
               {grid([
                   grid([
-                      this.corner()
+                      keysanity ?
+                          <KeysanityPortrait>
+                            <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
+                            <KeysanityChest name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.chest_click('regions', name)} />
+                            <Keys name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.key_click('regions', name)} />
+                            <BigKey name="ganon_tower" source={regions.ganon_tower} onToggle={name => this.props.big_key_click('regions', name)} />
+                          </KeysanityPortrait> :
+                          <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />
                   ], [
-                      this.dungeon_boss('eastern'),
-                      this.dungeon('eastern')
+                      this.dungeon('eastern'),
+                      this.inner_dungeon('eastern')
                   ], [
-                      this.dungeon_boss('desert'),
-                      this.dungeon('desert')
+                      this.dungeon('desert'),
+                      this.inner_dungeon('desert')
                   ], [
-                      this.dungeon_boss('hera'),
-                      this.dungeon('hera')
+                      this.dungeon('hera'),
+                      this.inner_dungeon('hera')
                   ]),
                   grid([
                       <LeveledItem name="bow" value={items.bow} onLevel={onLevel} />,
@@ -205,129 +234,52 @@
                       <LeveledItem name="glove" value={items.glove} onLevel={onLevel} />,
                       <Item name="flippers" value={items.flippers} onToggle={onToggle} />,
                       <Item name="flute" value={items.flute} onToggle={onToggle} />,
-                      this.agahnim()
+                      keysanity ?
+                        <KeysanityAgahnim>
+                          <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />
+                          <Keys name="castle_tower" source={regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
+                          <Keys name="escape" source={regions.escape} onLevel={name => this.props.key_click('regions', name)} />
+                        </KeysanityAgahnim> :
+                        <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />
                   ])
-              ], [
-                  this.dungeon_boss('darkness'),
-                  this.dungeon_boss('swamp'),
-                  this.dungeon_boss('skull'),
-                  this.dungeon_boss('thieves'),
-                  this.dungeon_boss('ice'),
-                  this.medallion_dungeon_boss('mire'),
-                  this.medallion_dungeon_boss('turtle')
               ], [
                   this.dungeon('darkness'),
                   this.dungeon('swamp'),
                   this.dungeon('skull'),
                   this.dungeon('thieves'),
                   this.dungeon('ice'),
-                  this.dungeon('mire'),
-                  this.dungeon('turtle')
+                  this.dungeon('mire', { medallion: true }),
+                  this.dungeon('turtle', { medallion: true })
+              ], [
+                  this.inner_dungeon('darkness'),
+                  this.inner_dungeon('swamp'),
+                  this.inner_dungeon('skull'),
+                  this.inner_dungeon('thieves'),
+                  this.inner_dungeon('ice'),
+                  this.inner_dungeon('mire'),
+                  this.inner_dungeon('turtle')
               ])}
             </div>;
         }
 
-        corner() {
-            const items = this.props.model.items;
-            const { onToggle, onLevel } = this.props;
-            return <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />;
-        }
-    }
-
-    class Tracker extends BaseTracker {
-        dungeon_boss(name) {
+        dungeon(name, medallion = { medallion: false }) {
             return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
-              onCompletion={name => this.props.completion_click('dungeons', name)}
-              onPrize={this.props.prize_click} />;
-        }
-
-        medallion_dungeon_boss(name) {
-            return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
-              medallion={true}
+              {...medallion}
+              keysanity={this.props.keysanity}
               onCompletion={name => this.props.completion_click('dungeons', name)}
               onPrize={this.props.prize_click}
-              onMedallionClick={this.props.medallion_click} />;
+              onMedallion={this.props.medallion_click}
+              onBigKey={name => this.props.big_key_click('dungeons', name)} />;
         }
 
-        agahnim() {
-            return <Item name="agahnim" value={this.props.model.encounters.agahnim.completed}
-              onToggle={name => this.props.completion_click('encounters', name)} />;
-        }
-
-        dungeon(name) {
-            return <Chests name={name} dungeon={this.props.model.dungeons[name]}
-              onLevel={name => this.props.chest_click('dungeons', name)} />;
-        }
-    }
-
-    const KeysanityPortrait = styled.div`
-      width: 128px;
-      height: 128px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(4, 1fr);
-      & ${Sprite} { grid-row: 1 / 4; }
-    `;
-    const KeysanityAgahnim = styled(Slot)`
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      & .agahnim { position: absolute; }
-      & ${SubSlot} { z-index: 1; }
-    `;
-    const KeysanityDungeon = styled(Slot)`
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    `;
-
-    class KeysanityTracker extends BaseTracker {
-        corner() {
-            const items = this.props.model.items;
-            const source = this.props.model.regions.ganon_tower;
-            const { onToggle, onLevel } = this.props;
-            return <KeysanityPortrait>
-              <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
-              <KeysanityChest name="ganon_tower" source={source} onLevel={name => this.props.chest_click('regions', name)} />
-              <Keys name="ganon_tower" source={source} onLevel={name => this.props.key_click('regions', name)} />
-              <BigKey name="ganon_tower" source={source} onToggle={name => this.props.big_key_click('regions', name)} />
-            </KeysanityPortrait>;
-        }
-
-        dungeon_boss(name) {
-            return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
-              keysanity={true}
-              onCompletion={name => this.props.completion_click('dungeons', name)}
-              onPrize={this.props.prize_click}
-              onBigKeyClick={name => this.props.big_key_click('dungeons', name)} />;
-        }
-
-        medallion_dungeon_boss(name) {
-            return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
-              keysanity={true}
-              medallion={true}
-              onCompletion={name => this.props.completion_click('dungeons', name)}
-              onPrize={this.props.prize_click}
-              onMedallionClick={this.props.medallion_click}
-              onBigKeyClick={name => this.props.big_key_click('dungeons', name)} />;
-        }
-
-        agahnim() {
-            const model = this.props.model;
-            return <KeysanityAgahnim>
-              <Item name="agahnim" value={model.encounters.agahnim.completed}
-                onToggle={name => this.props.completion_click('encounters', name)} />
-              <Keys name="castle_tower" source={model.regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
-              <Keys name="escape" source={model.regions.escape} onLevel={name => this.props.key_click('regions', name)} />
-            </KeysanityAgahnim>;
-        }
-
-        dungeon(name) {
+        inner_dungeon(name) {
             const dungeon = this.props.model.dungeons[name];
-            return <KeysanityDungeon>
-              <Keys name={name} source={dungeon} onLevel={name => this.props.key_click('dungeons', name)} />
-              <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
-            </KeysanityDungeon>;
+            return this.props.keysanity ?
+              <KeysanityDungeon>
+                <Keys name={name} source={dungeon} onLevel={name => this.props.key_click('dungeons', name)} />
+                <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
+              </KeysanityDungeon> :
+              <Chests name={name} dungeon={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />;
         }
     }
 
@@ -598,7 +550,6 @@
         render() {
             const query = this.props.query;
             const keysanity = query.mode === 'keysanity';
-            const ItemTracker = keysanity ? KeysanityTracker : Tracker;
 
             return <div id="page" className={classNames({
                   row: query.hmap,
@@ -607,19 +558,18 @@
                   keysanity: keysanity
               }, query.sprite)}
               style={query.bg && { 'background-color': query.bg }}>
-              <ItemTracker
+              <Tracker
+                horizontal={query.hmap}
+                model={this.state.model}
+                keysanity={keysanity}
                 onToggle={this.item_click}
                 onLevel={this.item_click}
                 completion_click={this.completion_click}
                 prize_click={this.prize_click}
                 medallion_click={this.medallion_click}
                 chest_click={this.chest_click}
-                horizontal={query.hmap}
-                model={this.state.model}
-                {...(keysanity ? {
-                  big_key_click: this.big_key_click,
-                  key_click: this.key_click
-                } : {})} />
+                big_key_click={this.big_key_click}
+                key_click={this.key_click} />
               {(query.hmap || query.vmap) && <Map
                 chest_click={this.map_chest_click}
                 horizontal={query.hmap}
