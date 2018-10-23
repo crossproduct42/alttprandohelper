@@ -208,15 +208,15 @@
         render() {
             const { keysanity, model } = this.props;
             const { items, regions, encounters } = model;
-            const { onToggle, onLevel } = this.props;
+            const { onToggle, onLevel, onKey, onChest, onCompletion, onBigKey } = this.props;
             return <div id="tracker" className={classNames({ cell: this.props.horizontal })}>
               <TrackerGrid>
                 {keysanity ?
                 <KeysanityPortrait>
                   <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
-                  <KeysanityChest name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.chest_click('regions', name)} />
-                  <Keys name="ganon_tower" source={regions.ganon_tower} onLevel={name => this.props.key_click('regions', name)} />
-                  <BigKey name="ganon_tower" source={regions.ganon_tower} onToggle={name => this.props.big_key_click('regions', name)} />
+                  <KeysanityChest name="ganon_tower" source={regions.ganon_tower} onLevel={name => onChest('regions', name)} />
+                  <Keys name="ganon_tower" source={regions.ganon_tower} onLevel={name => onKey('regions', name)} />
+                  <BigKey name="ganon_tower" source={regions.ganon_tower} onToggle={name => onBigKey('regions', name)} />
                 </KeysanityPortrait> :
                 <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />}
                 <TrackerItemGrid>
@@ -246,11 +246,11 @@
                   <Item name="flute" value={items.flute} onToggle={onToggle} />
                   {keysanity ?
                   <KeysanityAgahnim>
-                    <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />
-                    <Keys name="castle_tower" source={regions.castle_tower} onLevel={name => this.props.key_click('regions', name)} />
-                    <Keys name="escape" source={regions.escape} onLevel={name => this.props.key_click('regions', name)} />
+                    <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.onCompletion('encounters', name)} />
+                    <Keys name="castle_tower" source={regions.castle_tower} onLevel={name => this.props.onKey('regions', name)} />
+                    <Keys name="escape" source={regions.escape} onLevel={name => this.props.onKey('regions', name)} />
                   </KeysanityAgahnim> :
-                  <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.completion_click('encounters', name)} />}
+                  <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.onCompletion('encounters', name)} />}
                 </TrackerItemGrid>
                 <TrackerLwGrid>
                   {this.dungeon('eastern')}
@@ -281,23 +281,25 @@
         }
 
         dungeon(name, medallion = { medallion: false }) {
+            const { onCompletion, onPrize, onMedallion, onBigKey } = this.props;
             return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
               {...medallion}
               keysanity={this.props.keysanity}
-              onCompletion={name => this.props.completion_click('dungeons', name)}
-              onPrize={this.props.prize_click}
-              onMedallion={this.props.medallion_click}
-              onBigKey={name => this.props.big_key_click('dungeons', name)} />;
+              onCompletion={name => onCompletion('dungeons', name)}
+              onPrize={onPrize}
+              onMedallion={onMedallion}
+              onBigKey={name => onBigKey('dungeons', name)} />;
         }
 
         inner_dungeon(name) {
             const dungeon = this.props.model.dungeons[name];
+            const { onKey, onChest } = this.props;
             return this.props.keysanity ?
               <KeysanityDungeon>
-                <Keys name={name} source={dungeon} onLevel={name => this.props.key_click('dungeons', name)} />
-                <KeysanityChest name={name} source={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />
+                <Keys name={name} source={dungeon} onLevel={name => onKey('dungeons', name)} />
+                <KeysanityChest name={name} source={dungeon} onLevel={name => onChest('dungeons', name)} />
               </KeysanityDungeon> :
-              <Chests name={name} dungeon={dungeon} onLevel={name => this.props.chest_click('dungeons', name)} />;
+              <Chests name={name} dungeon={dungeon} onLevel={name => onChest('dungeons', name)} />;
         }
     }
 
@@ -580,14 +582,14 @@
                 horizontal={query.hmap}
                 model={this.state.model}
                 keysanity={keysanity}
-                onToggle={this.item_click}
-                onLevel={this.item_click}
-                completion_click={this.completion_click}
-                prize_click={this.prize_click}
-                medallion_click={this.medallion_click}
-                chest_click={this.chest_click}
-                big_key_click={this.big_key_click}
-                key_click={this.key_click} />
+                onToggle={this.toggle}
+                onLevel={this.level}
+                onCompletion={this.completion}
+                onPrize={this.prize}
+                onMedallion={this.medallion}
+                onBigKey={this.big_key}
+                onKey={this.key}
+                onChest={this.chest} />
               {(query.hmap || query.vmap) && <Map
                 chest_click={this.map_chest_click}
                 horizontal={query.hmap}
@@ -606,15 +608,17 @@
             this.setState({ dungeon: name });
         }
 
-        item_click = (name) => {
+        toggle = (name) => {
             const items = this.state.model.items;
-            const change = typeof items[name] === 'boolean' ?
-                update.toggle(name) :
-                { [name]: { $set: items.inc(name) } };
-            this.setState({ model: update(this.state.model, { items: change }) });
+            this.setState({ model: update(this.state.model, { items: update.toggle(name) }) });
         }
 
-        completion_click = (source, name) => {
+        level = (name) => {
+            const items = this.state.model.items;
+            this.setState({ model: update(this.state.model, { items: { [name]: { $set: items.inc(name) } } }) });
+        }
+
+        completion = (source, name) => {
             const model = this.state.model;
             const target = model[source][name];
             const completed = target.completed;
@@ -630,14 +634,30 @@
             }) });
         }
 
-        prize_click = (name) => {
+        prize = (name) => {
             const value = counter(this.state.model.dungeons[name].prize, 1, 4);
             this.setState({ model: update(this.state.model, { dungeons: { [name]: { prize: { $set: value } } } }) });
         }
 
-        medallion_click = (name) => {
+        medallion = (name) => {
             const value = counter(this.state.model.dungeons[name].medallion, 1, 3);
             this.setState({ model: update(this.state.model, { dungeons: { [name]: { medallion: { $set: value } } } }) });
+        }
+
+        big_key = (source, name) => {
+            this.setState({ model: update(this.state.model, { [source]: { [name]: update.toggle('big_key') } }) });
+        }
+
+        key = (source, name) => {
+            const target = this.state.model[source][name],
+                value = counter(target.keys, 1, target.key_limit);
+            this.setState({ model: update(this.state.model, { [source]: { [name]: { keys: { $set: value } } } }) });
+        }
+
+        chest = (source, name) => {
+            const target = this.state.model[source][name],
+                value = counter(target.chests, -1, target.chest_limit);
+            this.setState({ model: update(this.state.model, { [source]: { [name]: { chests: { $set: value } } } }) });
         }
 
         door_click = (dungeon, name) => {
@@ -655,22 +675,6 @@
                     chests: !target.is_deviating() && (x => x - (!marked ? 1 : -1))
                 } }
             }) });
-        }
-
-        big_key_click = (source, name) => {
-            this.setState({ model: update(this.state.model, { [source]: { [name]: update.toggle('big_key') } }) });
-        }
-
-        key_click = (source, name) => {
-            const target = this.state.model[source][name],
-                value = counter(target.keys, 1, target.key_limit);
-            this.setState({ model: update(this.state.model, { [source]: { [name]: { keys: { $set: value } } } }) });
-        }
-
-        chest_click = (source, name) => {
-            const target = this.state.model[source][name],
-                value = counter(target.chests, -1, target.chest_limit);
-            this.setState({ model: update(this.state.model, { [source]: { [name]: { chests: { $set: value } } } }) });
         }
 
         map_chest_click = (name) => {
