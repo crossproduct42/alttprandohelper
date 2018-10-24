@@ -61,7 +61,7 @@
     const Dungeon = (props) =>
       <StyledDungeon keysanity={props.keysanity}>
         <ActiveItem
-          className={classNames('boss', props.name)}
+          className={`boss boss---${props.name}`}
           active={props.dungeon.completed}
           onClick={() => props.onCompletion(props.name)} />
         {props.medallion &&
@@ -380,35 +380,50 @@
 
     EncounterLocation.source = (props) => props.model.encounters[props.name];
 
-    const MapDungeon = (props) => {
-        const { name, model, deviated } = props;
+    const MajorPoi = styled(Poi)`
+      width: 48px;
+      height: 48px;
+      margin-left: -24px;
+      margin-top: -24px;
+      position: absolute;
+      border-width: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `;
+    const DungeonBoss = styled.div`
+      width: 24px;
+      height: 24px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 18px;
+    `;
+
+    const DungeonLocation = (props) => {
+        const { name, model, deviated, highlighted } = props;
         const dungeon = model.dungeons[name];
-        return <React.Fragment>
-            <div className={classNames('boss', as_location(name),
-                !deviated && !dungeon.completed && dungeon.can_complete(model.items, model), {
-                    marked: dungeon.completed,
-                    possible: deviated && !dungeon.completed,
-              })}
-              onClick={() => props.onClick(name)}
-              onMouseOver={() => props.onHighlight(true)}
-              onMouseOut={() => props.onHighlight(false)} />
-            <div className={classNames('dungeon', as_location(name),
-                !deviated && dungeon.chests !== 0 && dungeon.can_progress(model.items, model), {
-                    marked: dungeon.chests === 0,
-                    possible: deviated && dungeon.chests !== 0,
-                    highlight: props.highlighted
-              })}
-              onClick={() => props.onClick(name)}
-              onMouseOver={() => props.onHighlight(true)}
-              onMouseOut={() => props.onHighlight(false)} />
-        </React.Fragment>;
+        return <MajorPoi className={classNames(`map---${as_location(name)}`,
+            !deviated && dungeon.chests !== 0 && dungeon.can_progress(model.items, model), {
+                marked: dungeon.chests === 0,
+                possible: deviated && dungeon.chests !== 0
+          })}
+          highlight={highlighted}
+          onClick={() => props.onDungeon(name)}
+          onMouseOver={() => props.onHighlight(true)}
+          onMouseOut={() => props.onHighlight(false)}>
+          <DungeonBoss className={classNames(`boss---${as_location(name)}`,
+              !deviated && !dungeon.completed && dungeon.can_complete(model.items, model), {
+                  marked: dungeon.completed,
+                  possible: deviated && !dungeon.completed,
+            })} />
+        </MajorPoi>;
     };
 
-    MapDungeon.source = (props) => _.get(props.model, ['dungeons', props.name]);
+    DungeonLocation.source = (props) => props.model.dungeons[props.name];
 
     const OverworldLocationWithHighlight = WithHighlight(OverworldLocation);
     const EncounterLocationWithHighlight = WithHighlight(EncounterLocation);
-    const MapDungeonWithHighlight = WithHighlight(MapDungeon);
+    const DungeonLocationWithHighlight = WithHighlight(DungeonLocation);
 
     const MiniMapDoor = (props) => {
         const { name, dungeon: dungeon_name, model } = props;
@@ -443,7 +458,7 @@
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)}>
           {name === 'big_chest' && <div className="image" />}
-          {name === 'boss' && <div className={`image boss ${props.dungeon}`} />}
+          {name === 'boss' && <div className={`image boss---${props.dungeon}`} />}
         </div>;
     };
 
@@ -501,7 +516,7 @@
         state = { caption: null }
 
         render() {
-            const { horizontal, dungeon, dungeon_click } = this.props;
+            const { horizontal, dungeon, onDungeon } = this.props;
             const locations = _.partition(dungeon ? this.dungeon_locations() : this.world_locations(), x => x.second);
             const maps = [
                 <div className={`first ${dungeon || 'world'}`}>{locations[1].map(x => x.tag)}</div>,
@@ -510,7 +525,7 @@
 
             return <div id="map" className={classNames({ cell: this.props.horizontal })}>
                 {this.props.horizontal ? grid(maps) : maps}
-                {dungeon && <Close onClick={() => dungeon_click(null)} >{'\u00d7'}</Close>}
+                {dungeon && <Close onClick={() => onDungeon(null)} >{'\u00d7'}</Close>}
                 <Caption text={this.state.caption} />
             </div>;
         }
@@ -518,22 +533,20 @@
         world_locations() {
             const { model, keysanity } = this.props;
             const { onOverworldMark } = this.props;
-            const dungeon_click = this.dungeon_click;
-            const change_caption = this.change_caption;
 
             return _.flatten([
                 _.map(model.chests, (chest, name) => ({
                     second: chest.darkworld,
-                      tag: <OverworldLocationWithHighlight name={name} model={model} onMark={onOverworldMark} change_caption={change_caption} />
+                      tag: <OverworldLocationWithHighlight name={name} model={model} onMark={onOverworldMark} change_caption={this.change_caption} />
                 })),
                 _.map(model.encounters, (encounter, name) => ({
                     second: encounter.darkworld,
-                    tag: <EncounterLocationWithHighlight name={name} model={model} change_caption={change_caption} />
+                    tag: <EncounterLocationWithHighlight name={name} model={model} change_caption={this.change_caption} />
                 })),
                 _.map(model.dungeons, (dungeon, name) => ({
                     second: dungeon.darkworld,
-                    tag: <MapDungeonWithHighlight name={name} model={model} deviated={keysanity && dungeon.is_deviating()}
-                      onClick={dungeon_click} change_caption={change_caption} />
+                    tag: <DungeonLocationWithHighlight name={name} model={model} deviated={keysanity && dungeon.is_deviating()}
+                      onDungeon={this.dungeon} change_caption={this.change_caption} />
                 }))
             ]);
         }
@@ -561,9 +574,9 @@
             ]);
         }
 
-        dungeon_click = (name) => {
-            if (this.props.dungeon_click) {
-                this.props.dungeon_click(name);
+        dungeon = (name) => {
+            if (this.props.onDungeon) {
+                this.props.onDungeon(name);
                 this.change_caption(null);
             }
         }
@@ -617,8 +630,8 @@
                 horizontal={query.hmap}
                 model={this.state.model}
                 onOverworldMark={this.overworld_mark}
+                onDungeon={this.dungeon_map}
                 {...(keysanity ? {
-                  dungeon_click: this.map_dungeon_click,
                   door_click: this.door_click,
                   location_click: this.location_click,
                   dungeon: this.state.dungeon,
@@ -627,7 +640,7 @@
             </div>;
         }
 
-        map_dungeon_click = (name) => {
+        dungeon_map = (name) => {
             this.setState({ dungeon: name });
         }
 
