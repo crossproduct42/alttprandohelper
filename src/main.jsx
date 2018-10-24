@@ -324,20 +324,29 @@
             }
         };
 
-    const MapChest = (props) => {
-        const { name, model } = props;
+    const MinorPoi = styled(Poi)`
+      width: 24px;
+      height: 24px;
+      margin-left: -12px;
+      margin-top: -12px;
+      position: absolute;
+      border: 3px solid hsl(${props => props.highlight ? '55 100% 50%' : '0 0% 10%'});
+    `;
+
+    const OverworldLocation = (props) => {
+        const { name, model, highlighted } = props;
         const chest = model.chests[name];
-        return <div className={classNames('chest', as_location(name),
-            chest.marked || chest.is_available(model.items, model), {
-                marked: chest.marked,
-                highlight: props.highlighted
-          })}
-          onClick={() => props.onClick(name)}
+        return <MinorPoi className={classNames(`map---${as_location(name)}`,
+            chest.marked || chest.is_available(model.items, model),
+            { marked: chest.marked }
+          )}
+          highlight={highlighted}
+          onClick={() => props.onMark(name)}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    MapChest.source = (props) => _.get(props.model, ['chests', props.name]);
+    OverworldLocation.source = (props) => props.model.chests[props.name];
 
     const MapEncounter = (props) => {
         const { name, model } = props;
@@ -384,7 +393,7 @@
 
     MapDungeon.source = (props) => _.get(props.model, ['dungeons', props.name]);
 
-    const MapChestWithHighlight = WithHighlight(MapChest);
+    const OverworldLocationWithHighlight = WithHighlight(OverworldLocation);
     const MapEncounterWithHighlight = WithHighlight(MapEncounter);
     const MapDungeonWithHighlight = WithHighlight(MapDungeon);
 
@@ -494,14 +503,15 @@
         }
 
         world_locations() {
-            const { model, keysanity, chest_click } = this.props;
+            const { model, keysanity } = this.props;
+            const { onOverworldMark } = this.props;
             const dungeon_click = this.dungeon_click;
             const change_caption = this.change_caption;
 
             return _.flatten([
                 _.map(model.chests, (chest, name) => ({
                     second: chest.darkworld,
-                      tag: <MapChestWithHighlight name={name} model={model} onClick={chest_click} change_caption={change_caption} />
+                      tag: <OverworldLocationWithHighlight name={name} model={model} onMark={onOverworldMark} change_caption={change_caption} />
                 })),
                 _.map(model.encounters, (encounter, name) => ({
                     second: encounter.darkworld,
@@ -591,9 +601,9 @@
                 onKey={this.key}
                 onChest={this.chest} />
               {(query.hmap || query.vmap) && <Map
-                chest_click={this.map_chest_click}
                 horizontal={query.hmap}
                 model={this.state.model}
+                onOverworldMark={this.overworld_mark}
                 {...(keysanity ? {
                   dungeon_click: this.map_dungeon_click,
                   door_click: this.door_click,
@@ -660,6 +670,10 @@
             this.setState({ model: update(this.state.model, { [source]: { [name]: { chests: { $set: value } } } }) });
         }
 
+        overworld_mark = (name) => {
+            this.setState({ model: update(this.state.model, { chests: { [name]: update.toggle('marked') } }) });
+        }
+
         door_click = (dungeon, name) => {
             this.setState({ model: update(this.state.model, { dungeons: { [dungeon]: { doors: { [name]: update.toggle('opened') } } } }) });
         }
@@ -675,10 +689,6 @@
                     chests: !target.is_deviating() && (x => x - (!marked ? 1 : -1))
                 } }
             }) });
-        }
-
-        map_chest_click = (name) => {
-            this.setState({ model: update(this.state.model, { chests: { [name]: update.toggle('marked') } }) });
         }
     }
 
