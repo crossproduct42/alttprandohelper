@@ -27,35 +27,6 @@ body {
 .vmap #map .first { margin: 0 auto; }
 .vmap #map .second { margin: 4px auto 0; }
 
-#map .location {
-  width: 24px;
-  height: 24px;
-  margin-left: -12px;
-  margin-top: -12px;
-  position: absolute;
-  background-size: 100% 100%;
-}
-
-#map .location.big-chest,
-#map .location.boss {
-  width: 36px;
-  height: 36px;
-  margin-left: -18px;
-  margin-top: -18px;
-  position: absolute;
-  background-size: 100% 100%;
-}
-
-#map .location .image {
-  width: 24px;
-  height: 24px;
-  margin: 6px;
-  background-size: 100% 100%;
-}
-
-#map .location { background-image: url(images/overlay/poi.png); }
-#map .location.highlight { background-image: url(images/overlay/highlighted.png); }
-
 .marked { background-color: #7f7f7f; }
 .unavailable { background-color: red; }
 .available { background-color: lime; }
@@ -148,6 +119,8 @@ body {
 .darkness---door--open { background-image: url(images/overlay/door_darkness_opened.png); }
 .turtle---door { background-image: url(images/overlay/door_turtle_closed.png); }
 .turtle---door--open { background-image: url(images/overlay/door_turtle_opened.png); }
+.big-chest { background-image: url(images/overlay/big_chest.png); }
+.big-chest--open { background-image: url(images/overlay/big_chest_empty.png); }
 
 .bomb { background-image: url(images/overlay/bomb.png); }
 .crystal { background-image: url(images/overlay/crystal.png); }

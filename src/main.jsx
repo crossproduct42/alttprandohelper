@@ -425,7 +425,7 @@
     const EncounterLocationWithHighlight = WithHighlight(EncounterLocation);
     const DungeonLocationWithHighlight = WithHighlight(DungeonLocation);
 
-    const DoorPoi = styled(MedialPoi)`
+    const MedialDungeonPoi = styled(MedialPoi)`
       background-repeat: no-repeat;
       background-position: center;
       background-size: 24px;
@@ -435,7 +435,7 @@
         const { name, dungeon: dungeon_name, model, highlighted } = props;
         const dungeon = model.dungeons[dungeon_name];
         const door = dungeon.doors[name];
-        return <DoorPoi className={classNames(
+        return <MedialDungeonPoi className={classNames(
             `${dungeon_name}---door---${as_location(name)}`,
             `${dungeon_name}---door`,
             door.opened && `${dungeon_name}---door--open`,
@@ -451,28 +451,30 @@
 
     DungeonMapDoor.source = (props) => props.model.dungeons[props.dungeon].doors[props.name];
 
-    const MiniMapLocation = function(props) {
-        const { name, dungeon: dungeon_name, model } = props;
+    const DungeonMapLocation = function(props) {
+        const { name, dungeon: dungeon_name, model, highlighted } = props;
         const dungeon = model.dungeons[dungeon_name];
         const location = dungeon.locations[name];
-        return <div className={classNames('location', as_location(name),
+        const Poi = _.includes(['big_chest', 'boss'], name) ? MedialDungeonPoi : MinorPoi;
+        return <Poi className={classNames(
+            `${dungeon_name}---${as_location(name)}`,
             !props.deviated && !location.marked && location.can_reach.call(dungeon, model.items, model), {
                 marked: location.marked,
                 possible: props.deviated && !location.marked,
-                highlight: props.highlighted
+                'big-chest': name === 'big_chest',
+                'big-chest--open': name === 'big_chest' && location.marked,
+                [`boss---${dungeon_name}`]: name === 'boss'
           })}
+          highlight={highlighted}
           onClick={() => props.onClick(dungeon_name, name)}
           onMouseOver={() => props.onHighlight(true)}
-          onMouseOut={() => props.onHighlight(false)}>
-          {name === 'big_chest' && <div className="image" />}
-          {name === 'boss' && <div className={`image boss---${props.dungeon}`} />}
-        </div>;
+          onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    MiniMapLocation.source = (props) => _.get(props.model, ['dungeons', props.dungeon, 'locations', props.name]);
+    DungeonMapLocation.source = (props) => props.model.dungeons[props.dungeon].locations[props.name];
 
     const DungeonMapDoorWithHighlight = WithHighlight(DungeonMapDoor);
-    const MiniMapLocationWithHighlight = WithHighlight(MiniMapLocation);
+    const DungeonMapLocationWithHighlight = WithHighlight(DungeonMapLocation);
 
     const Close = styled.span`
       margin: 10px;
@@ -574,7 +576,7 @@
                 })),
                 _.map(dungeon.locations, (location, name) => ({
                     second: location.second_map,
-                    tag: <MiniMapLocationWithHighlight
+                    tag: <DungeonMapLocationWithHighlight
                         name={name} dungeon={dungeon_name} model={model} deviated={deviated}
                         onClick={location_click} change_caption={change_caption} />
                 }))
