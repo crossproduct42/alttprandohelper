@@ -425,24 +425,31 @@
     const EncounterLocationWithHighlight = WithHighlight(EncounterLocation);
     const DungeonLocationWithHighlight = WithHighlight(DungeonLocation);
 
-    const MiniMapDoor = (props) => {
-        const { name, dungeon: dungeon_name, model } = props;
+    const DoorPoi = styled(MedialPoi)`
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 24px;
+    `;
+
+    const DungeonMapDoor = (props) => {
+        const { name, dungeon: dungeon_name, model, highlighted } = props;
         const dungeon = model.dungeons[dungeon_name];
         const door = dungeon.doors[name];
-        return <div className={classNames('door', as_location(name), props.dungeon,
+        return <DoorPoi className={classNames(
+            `${dungeon_name}---door---${as_location(name)}`,
+            `${dungeon_name}---door`,
+            door.opened && `${dungeon_name}---door--open`,
             !props.deviated && !door.opened && door.can_reach.call(dungeon, model.items, model), {
                 marked: door.opened,
                 possible: props.deviated && !door.opened,
-                highlight: props.highlighted
           })}
+          highlight={highlighted}
           onClick={() => props.onClick(dungeon_name, name)}
           onMouseOver={() => props.onHighlight(true)}
-          onMouseOut={() => props.onHighlight(false)}>
-          <div className="image" />
-        </div>;
+          onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    MiniMapDoor.source = (props) => _.get(props.model, ['dungeons', props.dungeon, 'doors', props.name]);
+    DungeonMapDoor.source = (props) => props.model.dungeons[props.dungeon].doors[props.name];
 
     const MiniMapLocation = function(props) {
         const { name, dungeon: dungeon_name, model } = props;
@@ -464,7 +471,7 @@
 
     MiniMapLocation.source = (props) => _.get(props.model, ['dungeons', props.dungeon, 'locations', props.name]);
 
-    const MiniMapDoorWithHighlight = WithHighlight(MiniMapDoor);
+    const DungeonMapDoorWithHighlight = WithHighlight(DungeonMapDoor);
     const MiniMapLocationWithHighlight = WithHighlight(MiniMapLocation);
 
     const Close = styled.span`
@@ -561,7 +568,7 @@
             return _.flatten([
                 _.map(dungeon.doors, (door, name) => ({
                     second: door.second_map,
-                    tag: <MiniMapDoorWithHighlight
+                    tag: <DungeonMapDoorWithHighlight
                         name={name} dungeon={dungeon_name} model={model} deviated={deviated}
                         onClick={door_click} change_caption={change_caption} />
                 })),
