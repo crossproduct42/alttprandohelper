@@ -112,7 +112,7 @@ body {
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
 .key { background-image: url(images/dungeons/key.png); }
-.tracker---big-key { background-image: url(images/dungeons/big_key.png); }
+.big-key { background-image: url(images/dungeons/big_key.png); }
 .desert---door { background-image: url(images/overlay/door_desert_closed.png); }
 .desert---door--open { background-image: url(images/overlay/door_desert_opened.png); }
 .darkness---door { background-image: url(images/overlay/door_darkness_closed.png); }

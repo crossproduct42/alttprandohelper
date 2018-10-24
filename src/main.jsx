@@ -35,7 +35,7 @@
     `;
 
     const BigKey = (props) =>
-      <ActiveSubItem className="tracker---big-key"
+      <ActiveSubItem className="big-key"
         active={props.source.big_key}
         onClick={() => props.onToggle(props.name)} />;
 
@@ -53,7 +53,7 @@
       `};
       & .medallion { grid-area: mn; }
       & .prize { grid-area: pz; }
-      & .tracker---big-key { grid-area: bk; }
+      & .big-key { grid-area: bk; }
       & .boss { position: absolute; }
       & ${SubSlot} { z-index: 1; }
     `;
