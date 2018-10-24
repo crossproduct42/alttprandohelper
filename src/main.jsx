@@ -324,13 +324,16 @@
             }
         };
 
+    const Poi = styled.div`
+      border: solid hsl(${props => props.highlight ? '55 100% 50%' : '0 0% 10%'});
+    `;
     const MinorPoi = styled(Poi)`
       width: 24px;
       height: 24px;
       margin-left: -12px;
       margin-top: -12px;
       position: absolute;
-      border: 3px solid hsl(${props => props.highlight ? '55 100% 50%' : '0 0% 10%'});
+      border-width: 3px;
     `;
 
     const OverworldLocation = (props) => {
@@ -348,24 +351,34 @@
 
     OverworldLocation.source = (props) => props.model.chests[props.name];
 
-    const MapEncounter = (props) => {
-        const { name, model } = props;
+    const MedialPoi = styled(Poi)`
+      width: 36px;
+      height: 36px;
+      margin-left: -18px;
+      margin-top: -18px;
+      position: absolute;
+      border-width: 4px;
+    `;
+    const EncounterPoi = styled(MedialPoi)`
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 18px;
+    `;
+
+    const EncounterLocation = (props) => {
+        const { name, model, highlighted } = props;
         const encounter = model.encounters[name];
-        return <React.Fragment>
-          <div className={`boss ${as_location(name)}`}
-            onMouseOver={() => props.onHighlight(true)}
-            onMouseOut={() => props.onHighlight(false)} />
-          <div className={classNames('encounter', as_location(name),
-              encounter.completed || encounter.can_complete(model.items, model), {
-                  marked: encounter.completed,
-                  highlight: props.highlighted
-            })}
-            onMouseOver={() => props.onHighlight(true)}
-            onMouseOut={() => props.onHighlight(false)} />
-        </React.Fragment>;
+        const location = as_location(name);
+        return <EncounterPoi className={classNames(`map---${location} ${location}`,
+            encounter.completed || encounter.can_complete(model.items, model),
+            { marked: encounter.completed }
+          )}
+          highlight={highlighted}
+          onMouseOver={() => props.onHighlight(true)}
+          onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    MapEncounter.source = (props) => _.get(props.model, ['encounters', props.name]);
+    EncounterLocation.source = (props) => props.model.encounters[props.name];
 
     const MapDungeon = (props) => {
         const { name, model, deviated } = props;
@@ -394,7 +407,7 @@
     MapDungeon.source = (props) => _.get(props.model, ['dungeons', props.name]);
 
     const OverworldLocationWithHighlight = WithHighlight(OverworldLocation);
-    const MapEncounterWithHighlight = WithHighlight(MapEncounter);
+    const EncounterLocationWithHighlight = WithHighlight(EncounterLocation);
     const MapDungeonWithHighlight = WithHighlight(MapDungeon);
 
     const MiniMapDoor = (props) => {
@@ -515,7 +528,7 @@
                 })),
                 _.map(model.encounters, (encounter, name) => ({
                     second: encounter.darkworld,
-                    tag: <MapEncounterWithHighlight name={name} model={model} change_caption={change_caption} />
+                    tag: <EncounterLocationWithHighlight name={name} model={model} change_caption={change_caption} />
                 })),
                 _.map(model.dungeons, (dungeon, name) => ({
                     second: dungeon.darkworld,

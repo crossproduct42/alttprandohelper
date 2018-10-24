@@ -48,7 +48,6 @@ body {
   z-index: 2;
 }
 
-.encounter,
 #map .door,
 #map .location.big-chest,
 #map .location.boss {
@@ -77,11 +76,9 @@ body {
   background-size: 100% 100%;
 }
 
-#map .encounter,
 #map .dungeon,
 #map .door,
 #map .location { background-image: url(images/overlay/poi.png); }
-#map .encounter.highlight,
 #map .dungeon.highlight,
 #map .door.highlight,
 #map .location.highlight { background-image: url(images/overlay/highlighted.png); }
@@ -194,7 +191,7 @@ body {
 #map .world .mire     { left: 11.6%; top: 82.9%; }
 #map .world .turtle   { left: 93.8%; top: 7.0%; }
 
-#map .agahnim { left: 50.0%; top: 52.6%; }
+.map---agahnim        { left: 50.0%; top: 52.6%; }
 
 .map---altar          { left: 5.0%;  top: 3.2%; }
 .map---mushroom       { left: 12.4%; top: 8.6%; }
