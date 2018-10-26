@@ -1,6 +1,17 @@
 (function(window) {
     'use strict';
 
+    _.mixin({
+        matchAll(text, pattern) {
+            const result = [];
+            let match;
+            while ((match = pattern.exec(text))) {
+                result.push(match);
+            }
+            return result;
+        }
+    });
+
     window.compact = function(array) {
         if (array == null) return [];
         return array.reduce(function(acc, value) {

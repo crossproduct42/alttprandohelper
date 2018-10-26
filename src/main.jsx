@@ -503,23 +503,21 @@
       background-size: 100%;
     `;
 
-    class Caption extends React.Component {
-        render() {
-            const each_part = /[^{]+|\{[\w]+\}/g;
-            const text = this.props.text;
-            return <StyledCaption>{!text ? '\u00a0' : text.match(each_part).map(this.parse)}</StyledCaption>;
-        }
-
-        parse = (part) => {
-            const dm = part.match(/^\{(medallion|pendant)(\d+)\}/);
-            const pm = part.match(/^\{(\w+?)(\d+)?\}/);
-            const m = dm || pm;
-            return !m ? part : <CaptionIcon className={classNames(
-              dm ? `${m[1]}-${m[2]}` : m[1],
-              !dm && m[2] && `${m[1]}--active-${m[2]}`
-            )} />;
-        }
-    }
+    const Caption = (props) => {
+        const parts = /\{([\w-]+)\}|[^{]+/g;
+        return <StyledCaption>
+          {!props.text ? '\u00a0' :
+            _.matchAll(props.text, parts).map(([text, icon]) =>
+              !icon ? text :
+              <CaptionIcon className={{
+                  fightersword: 'sword--active-1',
+                  mastersword: 'sword--active-2',
+                  mitts: 'glove--active-2'
+                }[icon] || icon
+              } />
+            )}
+        </StyledCaption>;
+    };
 
     class Map extends React.Component {
         state = { caption: null }

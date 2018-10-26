@@ -197,7 +197,7 @@
 
     const encounters = {
         agahnim: {
-            caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
+            caption: 'Agahnim {mastersword}/ ({cape}{fightersword}){lantern}',
             can_complete(items) {
                 return items.sword >= 2 || items.cape && items.sword ?
                     items.lantern ? 'available' : 'dark' :
@@ -208,7 +208,7 @@
 
     const chests = {
         altar: {
-            caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
+            caption: 'Master Sword Pedestal {pendant-0}{pendant-1}{pendant-2} (can check with {book})',
             is_available(items, model) {
                 const pendant_count = Object.keys(model.dungeons).reduce((s, name) => {
                     const dungeon = model.dungeons[name];
@@ -260,7 +260,7 @@
             }
         },
         ether: {
-            caption: 'Ether Tablet {sword2}{book}',
+            caption: 'Ether Tablet {mastersword}{book}',
             is_available(items) {
                 return items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
                     items.sword >= 2 ?
@@ -320,7 +320,7 @@
             }
         },
         graveyard_e: {
-            caption: 'King\'s Tomb {boots} + {glove2}/{mirror}',
+            caption: 'King\'s Tomb {boots} + {mitts}/{mirror}',
             is_available(items, model) {
                 return items.boots && (items.glove === 2 || items.can_reach_outcast(model.agahnim()) && items.mirror) ? 'available' : 'unavailable';
             }
@@ -394,7 +394,7 @@
             is_available: always
         },
         sahasrahla: {
-            caption: 'Sahasrahla {pendant0}',
+            caption: 'Sahasrahla {pendant-0}',
             is_available(items, model) {
                 return Object.keys(model.dungeons).reduce((state, name) => {
                     const dungeon = model.dungeons[name];
@@ -435,7 +435,7 @@
             is_available: always
         },
         bombos: {
-            caption: 'Bombos Tablet {mirror}{sword2}{book}',
+            caption: 'Bombos Tablet {mirror}{mastersword}{book}',
             is_available(items, model) {
                 return items.book && items.mirror && (items.can_reach_outcast(model.agahnim()) || model.agahnim() && items.moonpearl && items.hammer) ?
                     items.sword >= 2 ? 'available' : 'possible' :
@@ -660,7 +660,7 @@
     }
 
     function medallion_caption(caption, name) {
-        return (model) => caption.replace('{medallion}', `{medallion${model.dungeons[name].medallion}}`);
+        return (model) => caption.replace('{medallion}', `{medallion-${model.dungeons[name].medallion}}`);
     }
 
     window.location_model = (mode, opts) => {
