@@ -339,7 +339,7 @@
     const OverworldLocation = (props) => {
         const { name, model, highlighted } = props;
         const chest = model.chests[name];
-        return <MinorPoi className={classNames(`map---${as_location(name)}`,
+        return <MinorPoi className={classNames(`map---${_.kebabCase(name)}`,
             chest.marked || chest.is_available(model.items, model),
             { marked: chest.marked }
           )}
@@ -368,7 +368,7 @@
     const EncounterLocation = (props) => {
         const { name, model, highlighted } = props;
         const encounter = model.encounters[name];
-        const location = as_location(name);
+        const location = _.kebabCase(name);
         return <EncounterPoi className={classNames(`map---${location} ${location}`,
             encounter.completed || encounter.can_complete(model.items, model),
             { marked: encounter.completed }
@@ -402,7 +402,7 @@
     const DungeonLocation = (props) => {
         const { name, model, deviated, highlighted } = props;
         const dungeon = model.dungeons[name];
-        return <MajorPoi className={classNames(`map---${as_location(name)}`,
+        return <MajorPoi className={classNames(`map---${_.kebabCase(name)}`,
             !deviated && dungeon.chests !== 0 && dungeon.can_progress(model.items, model), {
                 marked: dungeon.chests === 0,
                 possible: deviated && dungeon.chests !== 0
@@ -411,7 +411,7 @@
           onClick={() => props.onDungeon(name)}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)}>
-          <DungeonBoss className={classNames(`boss---${as_location(name)}`,
+          <DungeonBoss className={classNames(`boss---${_.kebabCase(name)}`,
               !deviated && !dungeon.completed && dungeon.can_complete(model.items, model), {
                   marked: dungeon.completed,
                   possible: deviated && !dungeon.completed,
@@ -436,7 +436,7 @@
         const dungeon = model.dungeons[dungeon_name];
         const door = dungeon.doors[name];
         return <MedialDungeonPoi className={classNames(
-            `${dungeon_name}---door---${as_location(name)}`,
+            `${dungeon_name}---door---${_.kebabCase(name)}`,
             `${dungeon_name}---door`,
             door.opened && `${dungeon_name}---door--open`,
             !props.deviated && !door.opened && door.can_reach.call(dungeon, model.items, model), {
@@ -457,7 +457,7 @@
         const location = dungeon.locations[name];
         const Poi = _.includes(['big_chest', 'boss'], name) ? MedialDungeonPoi : MinorPoi;
         return <Poi className={classNames(
-            `${dungeon_name}---${as_location(name)}`,
+            `${dungeon_name}---${_.kebabCase(name)}`,
             !props.deviated && !location.marked && location.can_reach.call(dungeon, model.items, model), {
                 marked: location.marked,
                 possible: props.deviated && !location.marked,
@@ -727,9 +727,5 @@
 
     window.start = () => {
         ReactDOM.render(<App query={uri_query()} />, document.getElementById('app'));
-    }
-
-    function as_location(s) {
-        return s.replace(/_/, '-');
     }
 }(window));
