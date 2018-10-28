@@ -524,11 +524,7 @@
 
         render() {
             const { horizontal, dungeon_name, onDungeon } = this.props;
-            const locations = _.partition(dungeon_name ? this.dungeon_locations() : this.world_locations(), x => x.second);
-            const maps = [
-                <div className={`first ${dungeon_name || 'world'}`}>{locations[1].map(x => x.tag)}</div>,
-                <div className={`second ${dungeon_name || 'world'}`}>{locations[0].map(x => x.tag)}</div>
-            ];
+            const maps = dungeon_name ? this.dungeon_maps() : this.world_maps();
 
             return <div id="map" className={classNames({ cell: horizontal })}>
                 {horizontal ? grid(maps) : maps}
@@ -537,47 +533,54 @@
             </div>;
         }
 
-        world_locations() {
+        world_maps() {
             const { model, keysanity } = this.props;
             const { onOverworldMark } = this.props;
-
-            return _.flatten([
-                _.map(model.chests, (chest, name) => ({
+            const locations = _.partition([
+                ..._.map(model.chests, (chest, name) => ({
                     second: chest.darkworld,
                       tag: <OverworldLocationWithHighlight name={name} model={model} onMark={onOverworldMark} change_caption={this.change_caption} />
                 })),
-                _.map(model.encounters, (encounter, name) => ({
+                ..._.map(model.encounters, (encounter, name) => ({
                     second: encounter.darkworld,
                     tag: <EncounterLocationWithHighlight name={name} model={model} change_caption={this.change_caption} />
                 })),
-                _.map(model.dungeons, (dungeon, name) => ({
+                ..._.map(model.dungeons, (dungeon, name) => ({
                     second: dungeon.darkworld,
                     tag: <DungeonLocationWithHighlight name={name} model={model} deviated={keysanity && dungeon.is_deviating()}
                       onDungeon={this.dungeon} change_caption={this.change_caption} />
                 }))
-            ]);
+            ], x => x.second);
+            return [
+                <div className="first lightworld">{_.map(locations[1], 'tag')}</div>,
+                <div className="second darkworld">{_.map(locations[0], 'tag')}</div>
+            ];
         }
 
-        dungeon_locations() {
+        dungeon_maps() {
             const { model, dungeon_name } = this.props;
             const dungeon = model.dungeons[dungeon_name];
             const deviated = dungeon.is_deviating();
             const { onDoorMark, onLocationMark } = this.props;
 
-            return _.flatten([
-                _.map(dungeon.doors, (door, name) => ({
+            const locations = _.partition([
+                ..._.map(dungeon.doors, (door, name) => ({
                     second: door.second_map,
                     tag: <DungeonMapDoorWithHighlight
                         name={name} dungeon_name={dungeon_name} model={model} deviated={deviated}
                         onMark={onDoorMark} change_caption={this.change_caption} />
                 })),
-                _.map(dungeon.locations, (location, name) => ({
+                ..._.map(dungeon.locations, (location, name) => ({
                     second: location.second_map,
                     tag: <DungeonMapLocationWithHighlight
                         name={name} dungeon_name={dungeon_name} model={model} deviated={deviated}
                         onMark={onLocationMark} change_caption={this.change_caption} />
                 }))
-            ]);
+            ], x => x.second);
+            return [
+                <div className={`first ${dungeon_name}---first`}>{_.map(locations[1], 'tag')}</div>,
+                <div className={`second ${dungeon_name}---second`}>{_.map(locations[0], 'tag')}</div>
+            ];
         }
 
         dungeon = (name) => {
