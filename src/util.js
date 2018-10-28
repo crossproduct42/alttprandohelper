@@ -12,13 +12,6 @@
         }
     });
 
-    window.compact = function(array) {
-        if (array == null) return [];
-        return array.reduce(function(acc, value) {
-            return value ? acc.concat(value) : acc;
-        }, []);
-    };
-
     window.counter = function(value, delta, max, min) {
         min = min || 0;
         value += delta;

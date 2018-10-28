@@ -37,7 +37,7 @@
     }
 
     function query(params) {
-        return compact([
+        return _.compact([
             'mode='+params.mode,
             params.hmap && 'hmap',
             params.vmap && 'vmap',
