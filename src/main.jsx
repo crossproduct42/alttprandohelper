@@ -432,46 +432,46 @@
     `;
 
     const DungeonMapDoor = (props) => {
-        const { name, dungeon: dungeon_name, model, highlighted } = props;
+        const { model, name, dungeon_name, deviated, highlighted } = props;
         const dungeon = model.dungeons[dungeon_name];
         const door = dungeon.doors[name];
         return <MedialDungeonPoi className={classNames(
             `${dungeon_name}---door---${_.kebabCase(name)}`,
             `${dungeon_name}---door`,
             door.opened && `${dungeon_name}---door--open`,
-            !props.deviated && !door.opened && door.can_reach.call(dungeon, model.items, model), {
+            !deviated && !door.opened && door.can_reach.call(dungeon, model.items, model), {
                 marked: door.opened,
-                possible: props.deviated && !door.opened,
+                possible: deviated && !door.opened,
           })}
           highlight={highlighted}
-          onClick={() => props.onClick(dungeon_name, name)}
+          onClick={() => props.onMark(dungeon_name, name)}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    DungeonMapDoor.source = (props) => props.model.dungeons[props.dungeon].doors[props.name];
+    DungeonMapDoor.source = (props) => props.model.dungeons[props.dungeon_name].doors[props.name];
 
     const DungeonMapLocation = function(props) {
-        const { name, dungeon: dungeon_name, model, highlighted } = props;
+        const { model, name, dungeon_name, deviated, highlighted } = props;
         const dungeon = model.dungeons[dungeon_name];
         const location = dungeon.locations[name];
         const Poi = _.includes(['big_chest', 'boss'], name) ? MedialDungeonPoi : MinorPoi;
         return <Poi className={classNames(
             `${dungeon_name}---${_.kebabCase(name)}`,
-            !props.deviated && !location.marked && location.can_reach.call(dungeon, model.items, model), {
+            !deviated && !location.marked && location.can_reach.call(dungeon, model.items, model), {
                 marked: location.marked,
-                possible: props.deviated && !location.marked,
+                possible: deviated && !location.marked,
                 'big-chest': name === 'big_chest',
                 'big-chest--open': name === 'big_chest' && location.marked,
                 [`boss---${dungeon_name}`]: name === 'boss'
           })}
           highlight={highlighted}
-          onClick={() => props.onClick(dungeon_name, name)}
+          onClick={() => props.onMark(dungeon_name, name)}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    DungeonMapLocation.source = (props) => props.model.dungeons[props.dungeon].locations[props.name];
+    DungeonMapLocation.source = (props) => props.model.dungeons[props.dungeon_name].locations[props.name];
 
     const DungeonMapDoorWithHighlight = WithHighlight(DungeonMapDoor);
     const DungeonMapLocationWithHighlight = WithHighlight(DungeonMapLocation);
@@ -523,16 +523,16 @@
         state = { caption: null }
 
         render() {
-            const { horizontal, dungeon, onDungeon } = this.props;
-            const locations = _.partition(dungeon ? this.dungeon_locations() : this.world_locations(), x => x.second);
+            const { horizontal, dungeon_name, onDungeon } = this.props;
+            const locations = _.partition(dungeon_name ? this.dungeon_locations() : this.world_locations(), x => x.second);
             const maps = [
-                <div className={`first ${dungeon || 'world'}`}>{locations[1].map(x => x.tag)}</div>,
-                <div className={`second ${dungeon || 'world'}`}>{locations[0].map(x => x.tag)}</div>
+                <div className={`first ${dungeon_name || 'world'}`}>{locations[1].map(x => x.tag)}</div>,
+                <div className={`second ${dungeon_name || 'world'}`}>{locations[0].map(x => x.tag)}</div>
             ];
 
-            return <div id="map" className={classNames({ cell: this.props.horizontal })}>
-                {this.props.horizontal ? grid(maps) : maps}
-                {dungeon && <Close onClick={() => onDungeon(null)} >{'\u00d7'}</Close>}
+            return <div id="map" className={classNames({ cell: horizontal })}>
+                {horizontal ? grid(maps) : maps}
+                {dungeon_name && <Close onClick={() => onDungeon(null)} >{'\u00d7'}</Close>}
                 <Caption text={this.state.caption} />
             </div>;
         }
@@ -559,30 +559,29 @@
         }
 
         dungeon_locations() {
-            const { model, dungeon: dungeon_name } = this.props;
+            const { model, dungeon_name } = this.props;
             const dungeon = model.dungeons[dungeon_name];
             const deviated = dungeon.is_deviating();
-            const { door_click, location_click } = this.props;
-            const change_caption = this.change_caption;
+            const { onDoorMark, onLocationMark } = this.props;
 
             return _.flatten([
                 _.map(dungeon.doors, (door, name) => ({
                     second: door.second_map,
                     tag: <DungeonMapDoorWithHighlight
-                        name={name} dungeon={dungeon_name} model={model} deviated={deviated}
-                        onClick={door_click} change_caption={change_caption} />
+                        name={name} dungeon_name={dungeon_name} model={model} deviated={deviated}
+                        onMark={onDoorMark} change_caption={this.change_caption} />
                 })),
                 _.map(dungeon.locations, (location, name) => ({
                     second: location.second_map,
                     tag: <DungeonMapLocationWithHighlight
-                        name={name} dungeon={dungeon_name} model={model} deviated={deviated}
-                        onClick={location_click} change_caption={change_caption} />
+                        name={name} dungeon_name={dungeon_name} model={model} deviated={deviated}
+                        onMark={onLocationMark} change_caption={this.change_caption} />
                 }))
             ]);
         }
 
         dungeon = (name) => {
-            if (this.props.onDungeon) {
+            if (this.props.keysanity) {
                 this.props.onDungeon(name);
                 this.change_caption(null);
             }
@@ -636,19 +635,17 @@
               {(query.hmap || query.vmap) && <Map
                 horizontal={query.hmap}
                 model={this.state.model}
+                keysanity={keysanity}
+                dungeon_name={keysanity && this.state.dungeon_name}
                 onOverworldMark={this.overworld_mark}
-                onDungeon={this.dungeon_map}
-                {...(keysanity ? {
-                  door_click: this.door_click,
-                  location_click: this.location_click,
-                  dungeon: this.state.dungeon,
-                  keysanity: true
-                } : {})} />}
+                onDungeon={this.dungeon}
+                onDoorMark={this.door_mark}
+                onLocationMark={this.location_mark} />}
             </div>;
         }
 
-        dungeon_map = (name) => {
-            this.setState({ dungeon: name });
+        dungeon = (name) => {
+            this.setState({ dungeon_name: name });
         }
 
         toggle = (name) => {
@@ -707,11 +704,11 @@
             this.setState({ model: update(this.state.model, { chests: { [name]: update.toggle('marked') } }) });
         }
 
-        door_click = (dungeon, name) => {
+        door_mark = (dungeon, name) => {
             this.setState({ model: update(this.state.model, { dungeons: { [dungeon]: { doors: { [name]: update.toggle('opened') } } } }) });
         }
 
-        location_click = (dungeon, name) => {
+        location_mark = (dungeon, name) => {
             const model = this.state.model;
             const target = model.dungeons[dungeon];
             const marked = target.locations[name].marked;
