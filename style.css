@@ -88,23 +88,23 @@ body {
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
 .key { background-image: url(images/dungeons/key.png); }
 .big-key { background-image: url(images/dungeons/big_key.png); }
-.desert---door { background-image: url(images/overlay/door_desert_closed.png); }
-.desert---door--open { background-image: url(images/overlay/door_desert_opened.png); }
-.darkness---door { background-image: url(images/overlay/door_darkness_closed.png); }
-.darkness---door--open { background-image: url(images/overlay/door_darkness_opened.png); }
-.turtle---door { background-image: url(images/overlay/door_turtle_closed.png); }
-.turtle---door--open { background-image: url(images/overlay/door_turtle_opened.png); }
-.big-chest { background-image: url(images/overlay/big_chest.png); }
-.big-chest--open { background-image: url(images/overlay/big_chest_empty.png); }
+.desert---door { background-image: url(images/dungeons/door_desert_closed.png); }
+.desert---door--open { background-image: url(images/dungeons/door_desert_opened.png); }
+.darkness---door { background-image: url(images/dungeons/door_darkness_closed.png); }
+.darkness---door--open { background-image: url(images/dungeons/door_darkness_opened.png); }
+.turtle---door { background-image: url(images/dungeons/door_turtle_closed.png); }
+.turtle---door--open { background-image: url(images/dungeons/door_turtle_opened.png); }
+.big-chest { background-image: url(images/dungeons/big_chest.png); }
+.big-chest--open { background-image: url(images/dungeons/big_chest_empty.png); }
 
-.bomb { background-image: url(images/overlay/bomb.png); }
-.crystal { background-image: url(images/overlay/crystal.png); }
-.pendant-0 { background-image: url(images/overlay/pendant0.png); }
-.pendant-1 { background-image: url(images/overlay/pendant1.png); }
-.pendant-2 { background-image: url(images/overlay/pendant2.png); }
+.bomb { background-image: url(images/caption/bomb.png); }
+.red-crystal { background-image: url(images/caption/red_crystal.png); }
+.pendant-courage { background-image: url(images/caption/pendant_courage.png); }
+.pendant-power { background-image: url(images/caption/pendant_power.png); }
+.pendant-wisdom { background-image: url(images/caption/pendant_wisdom.png); }
 
-.world---light { background-image: url(images/overlay/map_lw.png); }
-.world---dark { background-image: url(images/overlay/map_dw.png); }
+.world---light { background-image: url(images/maps/lightworld.png); }
+.world---dark { background-image: url(images/maps/darkworld.png); }
 
 .world---eastern              { left: 93.6%; top: 38.8%; }
 .world---desert               { left: 7.6%;  top: 78.4%; }
@@ -188,8 +188,8 @@ body {
 .world---swamp-ne             { left: 60.0%; top: 77.1%; }
 .world---mire-w               { left: 3.4%;  top: 79.5%; }
 
-.eastern---first { background-image: url(images/overlay/map_eastern1.png); }
-.eastern---second { background-image: url(images/overlay/map_eastern2.png); }
+.eastern---first { background-image: url(images/maps/eastern1.png); }
+.eastern---second { background-image: url(images/maps/eastern2.png); }
 .eastern---compass            { top: 40.0%; left: 13.3%; }
 .eastern---cannonball         { top: 80.6%; left: 59.0%; }
 .eastern---map                { top: 57.0%; left: 89.0%; }
@@ -197,8 +197,8 @@ body {
 .eastern---big-key            { top: 72.0%; left: 29.0%; }
 .eastern---boss               { top: 20.1%; left: 28.8%; }
 
-.desert---first { background-image: url(images/overlay/map_desert1.png); }
-.desert---second { background-image: url(images/overlay/map_desert2.png); }
+.desert---first { background-image: url(images/maps/desert1.png); }
+.desert---second { background-image: url(images/maps/desert2.png); }
 .desert---door---north        { top: 58.0%; left: 35.8%; }
 .desert---door---south        { top: 57.0%; left: 78.7%; }
 .desert---boss                { top: 21.8%; left: 50.0%; }
@@ -208,8 +208,8 @@ body {
 .desert---big-key             { top: 26.0%; left: 85.8%; }
 .desert---compass             { top: 54.8%; left: 85.8%; }
 
-.hera---first { background-image: url(images/overlay/map_hera1.png); }
-.hera---second { background-image: url(images/overlay/map_hera2.png); }
+.hera---first { background-image: url(images/maps/hera1.png); }
+.hera---second { background-image: url(images/maps/hera2.png); }
 .hera---compass               { top: 73.2%; left: 70.0%; }
 .hera---big-chest             { top: 57.0%; left: 70.0%; }
 .hera---boss                  { top: 29.9%; left: 50.0%; }
@@ -217,8 +217,8 @@ body {
 .hera---map                   { top: 60.0%; left: 50.0%; }
 .hera---big-key               { top: 43.5%; left: 40.0%; }
 
-.darkness---first { background-image: url(images/overlay/map_darkness1.png); }
-.darkness---second { background-image: url(images/overlay/map_darkness2.png); }
+.darkness---first { background-image: url(images/maps/darkness1.png); }
+.darkness---second { background-image: url(images/maps/darkness2.png); }
 .darkness---door---arena      { top: 69.5%; left: 38.8%; }
 .darkness---door---maze       { top: 47.8%; left: 32.2%; }
 .darkness---door---hellway    { top: 56.5%; left: 51.1%; }
@@ -240,8 +240,8 @@ body {
 .darkness---stalfos           { top: 24.0%; left: 43.7%; }
 .darkness---big-key           { top: 42.0%; left: 43.7%; }
 
-.swamp---first { background-image: url(images/overlay/map_swamp1.png); }
-.swamp---second { background-image: url(images/overlay/map_swamp2.png); }
+.swamp---first { background-image: url(images/maps/swamp1.png); }
+.swamp---second { background-image: url(images/maps/swamp2.png); }
 .swamp---toilet-left          { top: 67.0%; left: 64.0%; }
 .swamp---toilet-right         { top: 67.0%; left: 69.5%; }
 .swamp---waterfall            { top: 47.8%; left: 63.2%; }
@@ -253,8 +253,8 @@ body {
 .swamp---compass              { top: 77.0%; left: 24.0%; }
 .swamp---big-chest            { top: 61.0%; left: 29.3%; }
 
-.skull---first { background-image: url(images/overlay/map_skull1.png); }
-.skull---second { background-image: url(images/overlay/map_skull2.png); }
+.skull---first { background-image: url(images/maps/skull1.png); }
+.skull---second { background-image: url(images/maps/skull2.png); }
 .skull---bridge               { top: 78.0%; left: 40.0%; }
 .skull---boss                 { top: 22.8%; left: 65.1%; }
 .skull---big-key              { top: 14.1%; left: 55.7%; }
@@ -263,8 +263,8 @@ body {
 .skull---pot-prison           { top: 55.0%; left: 38.0%; }
 .skull---big-chest            { top: 57.0%; left: 55.6%; }
 
-.thieves---first { background-image: url(images/overlay/map_thieves1.png); }
-.thieves---second { background-image: url(images/overlay/map_thieves2.png); }
+.thieves---first { background-image: url(images/maps/thieves1.png); }
+.thieves---second { background-image: url(images/maps/thieves2.png); }
 .thieves---cell               { top: 66.5%; left: 77.3%; }
 .thieves---big-chest          { top: 84.7%; left: 26.0%; }
 .thieves---boss               { top: 16.5%; left: 74.0%; }
@@ -274,8 +274,8 @@ body {
 .thieves---ambush             { top: 47.0%; left: 30.0%; }
 .thieves---attic              { top: 12.2%; left: 69.4%; }
 
-.ice---first { background-image: url(images/overlay/map_ice1.png); }
-.ice---second { background-image: url(images/overlay/map_ice2.png); }
+.ice---first { background-image: url(images/maps/ice1.png); }
+.ice---second { background-image: url(images/maps/ice2.png); }
 .ice---spike                  { top: 37.9%; left: 67.0%; }
 .ice---freezor                { top: 65.4%; left: 13.0%; }
 .ice---iced-t                 { top: 82.0%; left: 70.4%; }
@@ -285,8 +285,8 @@ body {
 .ice---map                    { top: 83.2%; left: 69.8%; }
 .ice---boss                   { top: 60.3%; left: 20.0%; }
 
-.mire---first { background-image: url(images/overlay/map_mire1.png); }
-.mire---second { background-image: url(images/overlay/map_mire2.png); }
+.mire---first { background-image: url(images/maps/mire1.png); }
+.mire---second { background-image: url(images/maps/mire2.png); }
 .mire---main                  { top: 52.0%; left: 51.9%; }
 .mire---compass               { top: 53.2%; left: 23.0%; }
 .mire---bridge                { top: 11.6%; left: 55.4%; }
@@ -296,8 +296,8 @@ body {
 .mire---big-key               { top: 86.9%; left: 33.8%; }
 .mire---boss                  { top: 19.3%; left: 28.4%; }
 
-.turtle---first { background-image: url(images/overlay/map_turtle1.png); }
-.turtle---second { background-image: url(images/overlay/map_turtle2.png); }
+.turtle---first { background-image: url(images/maps/turtle1.png); }
+.turtle---second { background-image: url(images/maps/turtle2.png); }
 .turtle---door---boss         { top: 55.0%; left: 10.0%; }
 .turtle---door---crystaroller { top: 12.0%; left: 45.0%; }
 .turtle---big-key             { top: 48.6%; left: 50.0%; }

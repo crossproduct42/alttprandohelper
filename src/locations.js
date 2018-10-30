@@ -208,7 +208,7 @@
 
     const chests = {
         altar: {
-            caption: 'Master Sword Pedestal {pendant-0}{pendant-1}{pendant-2} (can check with {book})',
+            caption: 'Master Sword Pedestal {pendant-courage}{pendant-power}{pendant-wisdom} (can check with {book})',
             is_available(items, model) {
                 const pendant_count = Object.keys(model.dungeons).reduce((s, name) => {
                     const dungeon = model.dungeons[name];
@@ -394,7 +394,7 @@
             is_available: always
         },
         sahasrahla: {
-            caption: 'Sahasrahla {pendant-0}',
+            caption: 'Sahasrahla {pendant-courage}',
             is_available(items, model) {
                 return Object.keys(model.dungeons).reduce((state, name) => {
                     const dungeon = model.dungeons[name];
@@ -591,7 +591,7 @@
             }
         },
         fairy_dw: {
-            caption: 'Pyramid Faerie: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
+            caption: 'Pyramid Faerie: Buy OJ bomb from Dark Link\'s House after {red-crystal}5 {red-crystal}6 (2 items)',
             darkworld: true,
             is_available(items, model) {
                 const crystal_count = Object.keys(model.dungeons).reduce((s, name) => {
