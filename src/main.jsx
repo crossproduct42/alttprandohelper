@@ -323,7 +323,16 @@
             }
         };
 
-    const Poi = styled.div`
+    const Availability = styled.div`
+      background-color: ${props => ({
+        marked: 'hsl(0 0% 50%)',
+        available: 'lime',
+        possible: 'yellow',
+        dark: 'blue',
+        'unavailable': 'red'
+      }[props.state] || 'unset')}
+    `;
+    const Poi = styled(Availability)`
       border: solid hsl(${props => props.highlight ? '55 100% 50%' : '0 0% 10%'});
     `;
     const MinorPoi = styled(Poi)`
@@ -338,10 +347,11 @@
     const OverworldLocation = (props) => {
         const { name, model, highlighted } = props;
         const chest = model.chests[name];
-        return <MinorPoi className={classNames(`map---${_.kebabCase(name)}`,
-            chest.marked || chest.is_available(model.items, model),
-            { marked: chest.marked }
-          )}
+        return <MinorPoi className={`map---${_.kebabCase(name)}`}
+          state={
+            chest.marked ? 'marked' :
+            chest.is_available(model.items, model)
+          }
           highlight={highlighted}
           onClick={() => props.onMark(name)}
           onMouseOver={() => props.onHighlight(true)}
@@ -368,10 +378,11 @@
         const { name, model, highlighted } = props;
         const encounter = model.encounters[name];
         const location = _.kebabCase(name);
-        return <EncounterPoi className={classNames(`map---${location} ${location}`,
-            encounter.completed || encounter.can_complete(model.items, model),
-            { marked: encounter.completed }
-          )}
+        return <EncounterPoi className={`map---${location} ${location}`}
+          state={
+            encounter.completed ? 'marked' :
+            encounter.can_complete(model.items, model)
+          }
           highlight={highlighted}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)} />;
@@ -390,7 +401,7 @@
       justify-content: center;
       align-items: center;
     `;
-    const DungeonBoss = styled.div`
+    const DungeonBoss = styled(Availability)`
       width: 24px;
       height: 24px;
       background-repeat: no-repeat;
@@ -401,20 +412,22 @@
     const DungeonLocation = (props) => {
         const { name, model, deviated, highlighted } = props;
         const dungeon = model.dungeons[name];
-        return <MajorPoi className={classNames(`map---${_.kebabCase(name)}`,
-            !deviated && dungeon.chests !== 0 && dungeon.can_progress(model.items, model), {
-                marked: dungeon.chests === 0,
-                possible: deviated && dungeon.chests !== 0
-          })}
+        return <MajorPoi className={`map---${_.kebabCase(name)}`}
+          state={
+            dungeon.chests === 0 ? 'marked' :
+            deviated ? 'possible' :
+            dungeon.can_progress(model.items, model)
+          }
           highlight={highlighted}
           onClick={() => props.onDungeon(name)}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)}>
-          <DungeonBoss className={classNames(`boss---${_.kebabCase(name)}`,
-              !deviated && !dungeon.completed && dungeon.can_complete(model.items, model), {
-                  marked: dungeon.completed,
-                  possible: deviated && !dungeon.completed,
-            })} />
+          <DungeonBoss className={`boss---${_.kebabCase(name)}`}
+            state={
+              dungeon.completed ? 'marked' :
+              deviated ? 'possible' :
+              dungeon.can_complete(model.items, model)
+            } />
         </MajorPoi>;
     };
 
@@ -437,11 +450,13 @@
         return <MedialDungeonPoi className={classNames(
             `${dungeon_name}---door---${_.kebabCase(name)}`,
             `${dungeon_name}---door`,
-            door.opened && `${dungeon_name}---door--open`,
-            !deviated && !door.opened && door.can_reach.call(dungeon, model.items, model), {
-                marked: door.opened,
-                possible: deviated && !door.opened,
-          })}
+            door.opened && `${dungeon_name}---door--open`
+          )}
+          state={
+            door.opened ? 'marked' :
+            deviated ? 'possible' :
+            door.can_reach.call(dungeon, model.items, model)
+          }
           highlight={highlighted}
           onClick={() => props.onMark(dungeon_name, name)}
           onMouseOver={() => props.onHighlight(true)}
@@ -456,14 +471,16 @@
         const location = dungeon.locations[name];
         const Poi = _.includes(['big_chest', 'boss'], name) ? MedialDungeonPoi : MinorPoi;
         return <Poi className={classNames(
-            `${dungeon_name}---${_.kebabCase(name)}`,
-            !deviated && !location.marked && location.can_reach.call(dungeon, model.items, model), {
-                marked: location.marked,
-                possible: deviated && !location.marked,
-                'big-chest': name === 'big_chest',
-                'big-chest--open': name === 'big_chest' && location.marked,
-                [`boss---${dungeon_name}`]: name === 'boss'
+            `${dungeon_name}---${_.kebabCase(name)}`, {
+              'big-chest': name === 'big_chest',
+              'big-chest--open': name === 'big_chest' && location.marked,
+              [`boss---${dungeon_name}`]: name === 'boss'
           })}
+          state={
+            location.marked ? 'marked' :
+            deviated ? 'possible' :
+            location.can_reach.call(dungeon, model.items, model)
+          }
           highlight={highlighted}
           onClick={() => props.onMark(dungeon_name, name)}
           onMouseOver={() => props.onHighlight(true)}

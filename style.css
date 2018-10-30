@@ -10,12 +10,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.marked { background-color: #7f7f7f; }
-.unavailable { background-color: red; }
-.available { background-color: lime; }
-.possible { background-color: yellow; }
-.dark { background-color: blue; }
-
 .tunic--active-1 { background-image: url(images/items/tunic1.png); }
 .tunic--active-2 { background-image: url(images/items/tunic2.png); }
 .tunic--active-3 { background-image: url(images/items/tunic3.png); }
