@@ -347,7 +347,7 @@
     const OverworldLocation = (props) => {
         const { name, model, highlighted } = props;
         const chest = model.chests[name];
-        return <MinorPoi className={`map---${_.kebabCase(name)}`}
+        return <MinorPoi className={`world---${_.kebabCase(name)}`}
           state={
             chest.marked ? 'marked' :
             chest.is_available(model.items, model)
@@ -378,7 +378,7 @@
         const { name, model, highlighted } = props;
         const encounter = model.encounters[name];
         const location = _.kebabCase(name);
-        return <EncounterPoi className={`map---${location} ${location}`}
+        return <EncounterPoi className={`world---${location} ${location}`}
           state={
             encounter.completed ? 'marked' :
             encounter.can_complete(model.items, model)
@@ -412,7 +412,7 @@
     const DungeonLocation = (props) => {
         const { name, model, deviated, highlighted } = props;
         const dungeon = model.dungeons[name];
-        return <MajorPoi className={`map---${_.kebabCase(name)}`}
+        return <MajorPoi className={`world---${_.kebabCase(name)}`}
           state={
             dungeon.chests === 0 ? 'marked' :
             deviated ? 'possible' :
@@ -582,8 +582,8 @@
                 }))
             ], x => x.second);
             return [
-                <StyledMap className="lightworld">{_.map(locations[1], 'tag')}</StyledMap>,
-                <StyledMap className="darkworld">{_.map(locations[0], 'tag')}</StyledMap>
+                <StyledMap className="world---light">{_.map(locations[1], 'tag')}</StyledMap>,
+                <StyledMap className="world---dark">{_.map(locations[0], 'tag')}</StyledMap>
             ];
         }
 
