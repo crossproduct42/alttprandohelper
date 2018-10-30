@@ -67,7 +67,7 @@
           onClick={() => props.onCompletion(props.name)} />
         {props.medallion &&
         <SubSlot
-          className={`medallion medallion-${props.dungeon.medallion}`}
+          className={`medallion medallion--${props.dungeon.medallion}`}
           onClick={() => props.onMedallion(props.name)} />}
         {props.keysanity &&
         <BigKey name={props.name} source={props.dungeon} onToggle={props.onBigKey} />}
@@ -712,7 +712,11 @@
         }
 
         medallion = (name) => {
-            const value = counter(this.state.model.dungeons[name].medallion, 1, 3);
+            const medallion_order = ['unknown', 'bombos', 'ether', 'quake'];
+            const medallion = this.state.model.dungeons[name].medallion;
+            const index = medallion_order.indexOf(medallion);
+            const modulo = medallion_order.length;
+            const value = medallion_order[(index + 1) % modulo];
             this.setState({ model: update(this.state.model, { dungeons: { [name]: { medallion: { $set: value } } } }) });
         }
 

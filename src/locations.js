@@ -660,7 +660,7 @@
     }
 
     function medallion_caption(caption, name) {
-        return (model) => caption.replace('{medallion}', `{medallion-${model.dungeons[name].medallion}}`);
+        return (model) => caption.replace('{medallion}', `{medallion--${model.dungeons[name].medallion}}`);
     }
 
     window.location_model = (mode, opts) => {
@@ -688,8 +688,8 @@
         dungeons(dungeons) {
             return update(_.mapValues(dungeons, (dungeon) =>
                 _.create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 })), {
-                mire:   { $merge: { medallion: 0 } },
-                turtle: { $merge: { medallion: 0 } }
+                mire:   { $merge: { medallion: 'unknown' } },
+                turtle: { $merge: { medallion: 'unknown' } }
             });
         },
 

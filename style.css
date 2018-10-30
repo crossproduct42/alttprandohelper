@@ -73,10 +73,10 @@ body {
 .prize-2 { background-image: url(images/dungeons/prize2.png); }
 .prize-3 { background-image: url(images/dungeons/prize3.png); }
 .prize-4 { background-image: url(images/dungeons/prize4.png); }
-.medallion-0 { background-image: url(images/dungeons/medallion0.png); }
-.medallion-1 { background-image: url(images/dungeons/medallion1.png); }
-.medallion-2 { background-image: url(images/dungeons/medallion2.png); }
-.medallion-3 { background-image: url(images/dungeons/medallion3.png); }
+.medallion--unknown { background-image: url(images/dungeons/medallion_unknown.png); }
+.medallion--bombos { background-image: url(images/dungeons/medallion_bombos.png); }
+.medallion--ether { background-image: url(images/dungeons/medallion_ether.png); }
+.medallion--quake { background-image: url(images/dungeons/medallion_quake.png); }
 .chest { background-image: url(images/dungeons/chest_single.png); }
 .chest--empty { background-image: url(images/dungeons/chest_empty.png); }
 .chest-0 { background-image: url(images/dungeons/chest0.png); }

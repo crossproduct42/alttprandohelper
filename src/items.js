@@ -17,10 +17,10 @@
 
         medallion_check(medallion) {
             if (!this.sword || !this.bombos && !this.ether && !this.quake) return 'unavailable';
-            if (medallion === 1 && !this.bombos ||
-                medallion === 2 && !this.ether ||
-                medallion === 3 && !this.quake) return 'unavailable';
-            if (medallion === 0 && !(this.bombos && this.ether && this.quake)) return 'possible';
+            if (medallion === 'bombos' && !this.bombos ||
+                medallion === 'ether' && !this.ether ||
+                medallion === 'quake' && !this.quake) return 'unavailable';
+            if (medallion === 'unknown' && !(this.bombos && this.ether && this.quake)) return 'possible';
         },
 
         inc: counters(1, {
