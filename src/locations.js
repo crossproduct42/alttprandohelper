@@ -210,12 +210,9 @@
         altar: {
             caption: 'Master Sword Pedestal {pendant-courage}{pendant-power}{pendant-wisdom} (can check with {book})',
             is_available(items, model) {
-                const pendant_count = Object.keys(model.dungeons).reduce((s, name) => {
-                    const dungeon = model.dungeons[name];
-                    return [1,2].includes(dungeon.prize) && dungeon.completed ? s + 1 : s;
-                }, 0);
-
-                return pendant_count >= 3 ? 'available' :
+                const pendants = _.reduce(model.dungeons,
+                    (s, dungeon) => dungeon.completed && _.includes(['pendant', 'pendant-green'], dungeon.prize) ? s + 1 : s, 0);
+                return pendants >= 3 ? 'available' :
                     items.book ? 'possible' : 'unavailable';
             }
         },
@@ -396,10 +393,7 @@
         sahasrahla: {
             caption: 'Sahasrahla {pendant-courage}',
             is_available(items, model) {
-                return Object.keys(model.dungeons).reduce((state, name) => {
-                    const dungeon = model.dungeons[name];
-                    return dungeon.prize === 1 && dungeon.completed ? 'available' : state;
-                }, 'unavailable');
+                return _.some(model.dungeons, dungeon => dungeon.completed && dungeon.prize === 'pendant-green') ? 'available' : 'unavailable';
             }
         },
         maze: {
@@ -594,14 +588,12 @@
             caption: 'Pyramid Faerie: Buy OJ bomb from Dark Link\'s House after {red-crystal}5 {red-crystal}6 (2 items)',
             darkworld: true,
             is_available(items, model) {
-                const crystal_count = Object.keys(model.dungeons).reduce((s, name) => {
-                    const dungeon = model.dungeons[name];
-                    return dungeon.prize === 4 && dungeon.completed ? s + 1 : s;
-                }, 0);
-
-                if (crystal_count < 2 || !items.moonpearl) return 'unavailable';
-                return items.hammer && (model.agahnim() || items.glove) ||
-                    model.agahnim() && items.mirror && items.can_reach_outcast(model.agahnim()) ? 'available' : 'unavailable';
+                const crystals = _.reduce(model.dungeons,
+                    (s, dungeon) => dungeon.completed && dungeon.prize === 'crystal-red' ? s + 1 : s, 0);
+                return crystals >= 2 && items.moonpearl && (
+                    items.hammer && (model.agahnim() || items.glove) ||
+                    model.agahnim() && items.mirror && items.can_reach_outcast(model.agahnim())
+                ) ? 'available' : 'unavailable';
             }
         },
         pyramid: {
@@ -687,7 +679,7 @@
     const build = {
         dungeons(dungeons) {
             return update(_.mapValues(dungeons, (dungeon) =>
-                _.create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 0 })), {
+                _.create(dungeon, { chests: dungeon.chest_limit, completed: false, prize: 'unknown' })), {
                 mire:   { $merge: { medallion: 'unknown' } },
                 turtle: { $merge: { medallion: 'unknown' } }
             });

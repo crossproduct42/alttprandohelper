@@ -68,11 +68,11 @@ body {
 .boss---ice { background-image: url(images/dungeons/boss7.png); }
 .boss---mire { background-image: url(images/dungeons/boss8.png); }
 .boss---turtle { background-image: url(images/dungeons/boss9.png); }
-.prize-0 { background-image: url(images/dungeons/prize0.png); }
-.prize-1 { background-image: url(images/dungeons/prize1.png); }
-.prize-2 { background-image: url(images/dungeons/prize2.png); }
-.prize-3 { background-image: url(images/dungeons/prize3.png); }
-.prize-4 { background-image: url(images/dungeons/prize4.png); }
+.prize--unknown { background-image: url(images/dungeons/prize_unknown.png); }
+.prize--pendant-green { background-image: url(images/dungeons/prize_pendant_green.png); }
+.prize--pendant { background-image: url(images/dungeons/prize_pendant.png); }
+.prize--crystal { background-image: url(images/dungeons/prize_crystal.png); }
+.prize--crystal-red { background-image: url(images/dungeons/prize_crystal_red.png); }
 .medallion--unknown { background-image: url(images/dungeons/medallion_unknown.png); }
 .medallion--bombos { background-image: url(images/dungeons/medallion_bombos.png); }
 .medallion--ether { background-image: url(images/dungeons/medallion_ether.png); }

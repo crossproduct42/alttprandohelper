@@ -72,7 +72,7 @@
         {props.keysanity &&
         <BigKey name={props.name} source={props.dungeon} onToggle={props.onBigKey} />}
         <SubSlot
-          className={`prize prize-${props.dungeon.prize}`}
+          className={`prize prize--${props.dungeon.prize}`}
           onClick={() => props.onPrize(props.name)} />
       </StyledDungeon>;
 
@@ -707,7 +707,11 @@
         }
 
         prize = (name) => {
-            const value = counter(this.state.model.dungeons[name].prize, 1, 4);
+            const prize_order = ['unknown', 'pendant-green', 'pendant', 'crystal', 'crystal-red'];
+            const prize = this.state.model.dungeons[name].prize;
+            const index = prize_order.indexOf(prize);
+            const modulo = prize_order.length;
+            const value = prize_order[(index + 1) % modulo];
             this.setState({ model: update(this.state.model, { dungeons: { [name]: { prize: { $set: value } } } }) });
         }
 
