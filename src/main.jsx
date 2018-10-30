@@ -608,15 +608,6 @@
         }
     }
 
-    function grid() {
-        const [...rows] = arguments;
-        return rows.map(row =>
-            <div className="row">
-              {row.map(cell => <div className="cell">{cell}</div>)}
-            </div>
-        );
-    }
-
     const StyledApp = styled.div`
       display: grid;
       ${props => props.horizontal &&

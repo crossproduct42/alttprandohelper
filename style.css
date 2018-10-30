@@ -8,11 +8,6 @@ body {
 
 * { box-sizing: border-box; }
 
-.row:before,
-.row:after { content: " "; display: table; }
-.row:after { clear: both; }
-.cell { position: relative; float: left; }
-
 .marked { background-color: #7f7f7f; }
 .unavailable { background-color: red; }
 .available { background-color: lime; }
