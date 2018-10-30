@@ -40,6 +40,7 @@
         onClick={() => props.onToggle(props.name)} />;
 
     const StyledDungeon = styled(Slot)`
+      position: relative;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
@@ -209,8 +210,7 @@
             const { keysanity, model } = this.props;
             const { items, regions, encounters } = model;
             const { onToggle, onLevel, onKey, onChest, onCompletion, onBigKey } = this.props;
-            return <div id="tracker" className={classNames({ cell: this.props.horizontal })}>
-              <TrackerGrid>
+            return <TrackerGrid>
                 {keysanity ?
                 <KeysanityPortrait>
                   <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
@@ -276,8 +276,7 @@
                   {this.inner_dungeon('mire')}
                   {this.inner_dungeon('turtle')}
                 </TrackerDwGrid>
-              </TrackerGrid>
-            </div>;
+            </TrackerGrid>;
         }
 
         dungeon(name, medallion = { medallion: false }) {
@@ -519,6 +518,20 @@
         </StyledCaption>;
     };
 
+    const StyledMap = styled.div`
+      width: 442px;
+      height: 442px;
+      position: relative;
+    `;
+    const MapGrid = styled.div`
+      position: relative;
+      display: grid;
+      ${props => props.horizontal &&
+      'grid-template-columns: 1fr 1fr;'}
+      gap: 4px;
+      & > ${StyledMap} { margin: 0 auto; }
+    `;
+
     class Map extends React.Component {
         state = { caption: null }
 
@@ -526,11 +539,11 @@
             const { horizontal, dungeon_name, onDungeon } = this.props;
             const maps = dungeon_name ? this.dungeon_maps() : this.world_maps();
 
-            return <div id="map" className={classNames({ cell: horizontal })}>
-                {horizontal ? grid(maps) : maps}
+            return <MapGrid horizontal={horizontal}>
+                {maps}
                 {dungeon_name && <Close onClick={() => onDungeon(null)} >{'\u00d7'}</Close>}
                 <Caption text={this.state.caption} />
-            </div>;
+            </MapGrid>;
         }
 
         world_maps() {
@@ -552,8 +565,8 @@
                 }))
             ], x => x.second);
             return [
-                <div className="first lightworld">{_.map(locations[1], 'tag')}</div>,
-                <div className="second darkworld">{_.map(locations[0], 'tag')}</div>
+                <StyledMap className="lightworld">{_.map(locations[1], 'tag')}</StyledMap>,
+                <StyledMap className="darkworld">{_.map(locations[0], 'tag')}</StyledMap>
             ];
         }
 
@@ -578,8 +591,8 @@
                 }))
             ], x => x.second);
             return [
-                <div className={`first ${dungeon_name}---first`}>{_.map(locations[1], 'tag')}</div>,
-                <div className={`second ${dungeon_name}---second`}>{_.map(locations[0], 'tag')}</div>
+                <StyledMap className={`${dungeon_name}---first`}>{_.map(locations[1], 'tag')}</StyledMap>,
+                <StyledMap className={`${dungeon_name}---second`}>{_.map(locations[0], 'tag')}</StyledMap>
             ];
         }
 
@@ -604,6 +617,17 @@
         );
     }
 
+    const StyledApp = styled.div`
+      display: grid;
+      ${props => props.horizontal &&
+      `grid-template-columns: 1fr 1fr;`}
+      gap: 4px;
+      ${props => props.vertical && `
+        height: 0px;
+        transform: scale(.6, .6) translate(-33%, -33%);
+      `}
+    `;
+
     class App extends React.Component {
         constructor(props) {
             super(props);
@@ -616,12 +640,9 @@
             const query = this.props.query;
             const keysanity = query.mode === 'keysanity';
 
-            return <div id="page" className={classNames({
-                  row: query.hmap,
-                  hmap: query.hmap,
-                  vmap: query.vmap,
-                  keysanity: keysanity
-              }, query.sprite)}
+            return <StyledApp className={query.sprite}
+              horizontal={query.hmap}
+              vertical={query.vmap}
               style={query.bg && { 'background-color': query.bg }}>
               <Tracker
                 horizontal={query.hmap}
@@ -644,7 +665,7 @@
                 onDungeon={this.dungeon}
                 onDoorMark={this.door_mark}
                 onLocationMark={this.location_mark} />}
-            </div>;
+            </StyledApp>;
         }
 
         dungeon = (name) => {
