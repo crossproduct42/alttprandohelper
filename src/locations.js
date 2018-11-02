@@ -5,15 +5,15 @@
 
     const dungeons = {
         eastern: {
-            caption: 'Eastern Palace {lantern}',
+            caption: 'Eastern Palace {lamp}',
             chest_limit: 3,
             can_complete(items) {
                 return items.has_bow ?
-                    items.lantern ? 'available' : 'dark' :
+                    items.lamp ? 'available' : 'dark' :
                     'unavailable';
             },
             can_progress(items) {
-                return (this.chests > 2 || items.lantern) &&
+                return (this.chests > 2 || items.lamp) &&
                     (this.chests > 1 || items.has_bow) ?
                     'available' : 'possible';
             }
@@ -48,13 +48,13 @@
             can_progress(items) {
                 return this.can_enter(items) ?
                     items.has_fire ?
-                        items.flute || items.lantern ? 'available' : 'dark' :
+                        items.flute || items.lamp ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
             }
         },
         darkness: {
-            caption: 'Palace of Darkness {lantern}',
+            caption: 'Palace of Darkness {lamp}',
             darkworld: true,
             chest_limit: 5,
             can_enter(items, model) {
@@ -62,12 +62,12 @@
             },
             can_complete(items, model) {
                 return this.can_enter(items, model) && items.has_bow && items.hammer ?
-                    items.lantern ? 'available' : 'dark' :
+                    items.lamp ? 'available' : 'dark' :
                     'unavailable';
             },
             can_progress(items, model) {
                 return this.can_enter(items, model) ?
-                    items.has_bow && items.lantern &&
+                    items.has_bow && items.lamp &&
                         (this.chests > 1 || items.hammer) ?
                         'available' : 'possible' :
                     'unavailable';
@@ -144,7 +144,7 @@
             }
         },
         mire: {
-            caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
+            caption: medallion_caption('Misery Mire {medallion}{lamp}', 'mire'),
             darkworld: true,
             chest_limit: 2,
             can_enter(items) {
@@ -153,7 +153,7 @@
             can_complete(items) {
                 return this.can_enter(items) && items.somaria ?
                     items.medallion_check(this.medallion) || (items.has_fire ?
-                        items.lantern ? 'available' : 'dark' :
+                        items.lamp ? 'available' : 'dark' :
                         'possible') :
                     'unavailable';
             },
@@ -162,13 +162,13 @@
                     items.medallion_check(this.medallion) || (
                         (this.chests > 1 ?
                             items.has_fire :
-                            items.lantern && items.somaria) ?
+                            items.lamp && items.somaria) ?
                         'available' : 'possible') :
                     'unavailable';
             }
         },
         turtle: {
-            caption: medallion_caption('Turtle Rock {medallion}{lantern}', 'turtle'),
+            caption: medallion_caption('Turtle Rock {medallion}{lamp}', 'turtle'),
             darkworld: true,
             chest_limit: 5,
             can_enter(items) {
@@ -177,7 +177,7 @@
             can_complete(items) {
                 return this.can_enter(items) && items.icerod && items.firerod ?
                     items.medallion_check(this.medallion) || (items.byrna || items.cape || items.shield === 3 ?
-                        items.lantern ? 'available' : 'dark' :
+                        items.lamp ? 'available' : 'dark' :
                         'possible') :
                 'unavailable';
             },
@@ -186,21 +186,21 @@
                 if (state) return state;
 
                 const laser_safety = items.byrna || items.cape || items.shield === 3;
-                const dark_room = items.lantern ? 'available' : 'dark';
+                const dark_room = items.lamp ? 'available' : 'dark';
                 if (this.chests <= 1) return !laser_safety ? 'unavailable' : items.firerod && items.icerod ? dark_room : 'possible';
                 if (this.chests <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
-                if (this.chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
-                return items.firerod && items.lantern ? 'available' : 'possible';
+                if (this.chests <= 4) return laser_safety && items.firerod && items.lamp ? 'available' : 'possible';
+                return items.firerod && items.lamp ? 'available' : 'possible';
             }
         }
     };
 
     const encounters = {
         agahnim: {
-            caption: 'Agahnim {mastersword}/ ({cape}{fightersword}){lantern}',
+            caption: 'Agahnim {mastersword}/ ({cape}{fightersword}){lamp}',
             can_complete(items) {
                 return items.sword >= 2 || items.cape && items.sword ?
-                    items.lantern ? 'available' : 'dark' :
+                    items.lamp ? 'available' : 'dark' :
                     'unavailable';
             }
         }
@@ -231,10 +231,10 @@
             }
         },
         lost_man: {
-            caption: 'Lost Old Man {lantern}',
+            caption: 'Lost Old Man {lamp}',
             is_available(items) {
                 return items.glove || items.flute ?
-                    items.lantern ? 'available' : 'dark' :
+                    items.lamp ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -242,7 +242,7 @@
             caption: 'Spectacle Rock Cave',
             is_available(items) {
                 return items.glove || items.flute ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -251,7 +251,7 @@
             is_available(items) {
                 return items.glove || items.flute ?
                     items.mirror ?
-                        items.lantern || items.flute ? 'available' : 'dark' :
+                        items.lamp || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
             }
@@ -261,7 +261,7 @@
             is_available(items) {
                 return items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
                     items.sword >= 2 ?
-                        items.lantern || items.flute ? 'available' : 'dark' :
+                        items.lamp || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
             }
@@ -270,7 +270,7 @@
             caption: 'Death Mountain East (5 + 2 {bomb})',
             is_available(items) {
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -278,7 +278,7 @@
             caption: 'Spiral Cave',
             is_available(items) {
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -287,7 +287,7 @@
             is_available(items) {
                 return (items.glove || items.flute) && (items.hookshot || items.hammer && items.mirror) ?
                     items.mirror && items.moonpearl && items.glove === 2 ?
-                        items.lantern || items.flute ? 'available' : 'dark' :
+                        items.lamp || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
             }
@@ -300,7 +300,7 @@
                 if (state) return state;
 
                 return items.firerod ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'possible';
             }
         },
@@ -480,16 +480,16 @@
             is_available: always
         },
         escape_dark: {
-            caption: 'Escape Sewer Dark Room {lantern}',
+            caption: 'Escape Sewer Dark Room {lamp}',
             is_available(items) {
-                return items.lantern ? 'available' : 'dark';
+                return items.lamp ? 'available' : 'dark';
             }
         },
         escape_side: {
             caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
             is_available(items) {
                 return items.glove ? 'available' :
-                    items.lantern ? 'possible' : 'dark';
+                    items.lamp ? 'possible' : 'dark';
             }
         },
         sanctuary: {
@@ -510,7 +510,7 @@
             darkworld: true,
             is_available(items) {
                 return items.moonpearl && items.glove && items.hammer && (items.byrna || items.cape) ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -519,7 +519,7 @@
             darkworld: true,
             is_available(items) {
                 return items.moonpearl && items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -528,7 +528,7 @@
             darkworld: true,
             is_available(items) {
                 return items.moonpearl && items.glove === 2 && items.hookshot ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },
@@ -537,7 +537,7 @@
             darkworld: true,
             is_available(items) {
                 return items.moonpearl && items.glove === 2 && (items.hookshot || (items.mirror && items.hammer && items.boots)) ?
-                    items.lantern || items.flute ? 'available' : 'dark' :
+                    items.lamp || items.flute ? 'available' : 'dark' :
                     'unavailable';
             }
         },

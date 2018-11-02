@@ -7,7 +7,7 @@
         get has_melee_bow() { return this.has_melee || this.has_bow; },
         get has_cane() { return this.somaria || this.byrna; },
         get has_rod() { return this.firerod || this.icerod; },
-        get has_fire() { return this.lantern || this.firerod; },
+        get has_fire() { return this.lamp || this.firerod; },
 
         can_reach_outcast(agahnim) {
             return this.moonpearl && (
@@ -60,7 +60,7 @@
         ether: false,
         quake: false,
 
-        lantern: false,
+        lamp: false,
         hammer: false,
         shovel: false,
         net: false,

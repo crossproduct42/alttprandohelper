@@ -230,7 +230,7 @@
                   <Item name="bombos" value={items.bombos} onToggle={onToggle} />
                   <Item name="ether" value={items.ether} onToggle={onToggle} />
                   <Item name="quake" value={items.quake} onToggle={onToggle} />
-                  <Item name="lantern" value={items.lantern} onToggle={onToggle} />
+                <Item name="lamp" value={items.lamp} onToggle={onToggle} />
                   <Item name="hammer" value={items.hammer} onToggle={onToggle} />
                   <Item name="shovel" value={items.shovel} onToggle={onToggle} />
                   <Item name="net" value={items.net} onToggle={onToggle} />

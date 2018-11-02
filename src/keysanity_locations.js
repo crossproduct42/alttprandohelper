@@ -16,8 +16,8 @@
         };
     const has_keys = function() { return this.keys; };
     const has_big_key = function() { return this.big_key; };
-    const available_or_dark = (items) => items.lantern ? 'available' : 'dark';
-    const medallion_or_dark = (items) => items.medallion_check(this.medallion) || (items.lantern ? 'available' : 'dark');
+    const available_or_dark = (items) => items.lamp ? 'available' : 'dark';
+    const medallion_or_dark = (items) => items.medallion_check(this.medallion) || (items.lamp ? 'available' : 'dark');
 
     function update_keysanity_dungeons(dungeons, opts) {
         dungeons = update(dungeons, {
@@ -128,7 +128,7 @@
                 // Todo: verify
                 can_enter_state(items) {
                     return this.can_enter(items) ?
-                        items.flute || items.lantern ? 'available' : 'dark' :
+                        items.flute || items.lamp ? 'available' : 'dark' :
                         'unavailable';
                 },
                 locations: {
@@ -219,7 +219,7 @@
                 })(),
                 locations: (() => {
                     const reach_arena = function(items) { return this.doors.front.opened || this.keys_left() || items.has_bow && items.hammer; };
-                    const hammery_or_dark = function(items) { return this.hammery_jump || items.lantern ? 'available' : 'dark'; };
+                    const hammery_or_dark = function(items) { return this.hammery_jump || items.lamp ? 'available' : 'dark'; };
 
                     return {
                         shooter: {
@@ -594,7 +594,7 @@
                 // Todo: verify
                 can_enter_state(items) {
                     return this.can_enter(items) ?
-                        items.medallion_check(this.medallion) || (items.flute || items.lantern ? 'available' : 'dark') :
+                        items.medallion_check(this.medallion) || (items.flute || items.lamp ? 'available' : 'dark') :
                         'unavailable';
                 },
                 keys_left() {
@@ -740,7 +740,7 @@
             escape_side: { $merge: {
                 is_available(items, model) {
                     return items.glove || model.regions.escape.keys ?
-                        items.glove || items.lantern ? 'available' : 'dark' :
+                        items.glove || items.lamp ? 'available' : 'dark' :
                         'unavailable';
                 }
             } },
@@ -755,7 +755,7 @@
                     caption: 'Castle Tower Dark Maze',
                     is_available(items, model) {
                         return model.regions.castle_tower.keys && (items.sword >= 2 || items.cape) ?
-                            items.lantern ? 'available' : 'dark' :
+                            items.lamp ? 'available' : 'dark' :
                             'unavailable';
                     }
                 }
