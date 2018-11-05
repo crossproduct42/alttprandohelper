@@ -641,7 +641,7 @@
             super(props);
             const { mode, ipbj, podbj } = props.query;
             const opts = { ipbj: !!ipbj, podbj: !!podbj };
-            this.state = { model: { ...item_model(mode), ...location_model(mode, opts) } };
+            this.state = { model: { ...item_model(), ...location_model(mode, opts) } };
         }
 
         render() {

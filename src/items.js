@@ -1,7 +1,7 @@
 (function(window) {
     'use strict';
 
-    const items = {
+    const items_base = {
         get has_melee() { return this.sword || this.hammer; },
         get has_bow() { return this.bow > 1; },
         get has_melee_bow() { return this.has_melee || this.has_bow; },
@@ -42,7 +42,7 @@
         };
     };
 
-    const open_items = _.create(items, {
+    const items = _.create(items_base, {
         tunic: 1,
         sword: 0,
         shield: 0,
@@ -78,9 +78,7 @@
         flute: false
     });
 
-    const standard_items = update(open_items, { sword: { $set: 1 } });
-
-    window.item_model = function(mode) {
-        return { items: { standard: standard_items }[mode] || open_items };
+    window.item_model = function() {
+        return { items: items };
     };
 }(window));
