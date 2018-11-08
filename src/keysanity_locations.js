@@ -712,7 +712,7 @@
         return update(encounters, {
             agahnim: { $merge: {
                 can_complete(items, model) {
-                    return model.regions.castle_tower.keys === 2 ?
+                    return model.castle_tower.keys === 2 ?
                         encounters.agahnim.can_complete.call(this, items) :
                         'unavailable';
                 }
@@ -721,54 +721,45 @@
     }
 
     const keysanity_regions = {
-        escape: { key_limit: 1 },
-        castle_tower: { key_limit: 2 },
         ganon_tower: { key_limit: 4, chest_limit: 27 }
     };
 
+    const keys_region = {
+        build() {
+            return update(this, {
+                $merge: { keys: 0 },
+                locations: x => _.mapValues(x, o => _.create(o, { marked: false }))
+            });
+        }
+    }
+
     // Todo: verify
-    function update_keysanity_chests(chests) {
-        return update(chests, {
-            mimic: { $merge: {
-                is_available(items, model) {
-                    return items.moonpearl && items.hammer && items.glove === 2 && items.somaria && items.mirror ?
-                        items.medallion_check(model.dungeons.turtle.medallion) ||
-                            (model.dungeons.turtle.keys > 1 ? 'available' : 'unavailable') :
-                        'unavailable';
+    const castle_tower = { ...keys_region,
+        key_limit: 2,
+        locations: {
+            castle_foyer: {
+                caption: 'Castle Tower Foyer',
+                can_access({ items, mode }) {
+                    return items.cape || items.mastersword /*|| mode.swordless && items.hammer*/;
                 }
-            } },
-            escape_side: { $merge: {
-                is_available(items, model) {
-                    return items.glove || model.regions.escape.keys ?
-                        items.glove || items.lamp ? 'available' : 'dark' :
-                        'unavailable';
-                }
-            } },
-            $merge: {
-                castle_foyer: {
-                    caption: 'Castle Tower Foyer',
-                    is_available(items) {
-                        return items.sword >= 2 || items.cape ? 'available' : 'unavailable';
-                    }
-                },
-                castle_maze: {
-                    caption: 'Castle Tower Dark Maze',
-                    is_available(items, model) {
-                        return model.regions.castle_tower.keys && (items.sword >= 2 || items.cape) ?
-                            items.lamp ? 'available' : 'dark' :
-                            'unavailable';
-                    }
+            },
+            castle_maze: {
+                caption: 'Castle Tower Dark Maze',
+                can_access({ items, model, mode }) {
+                    return (items.cape || items.mastersword /*|| mode.swordless && items.hammer*/) &&
+                        model.castle_tower.keys >= 1 && (items.lamp || 'dark');
                 }
             }
-        });
-    }
+        }
+    };
 
     window.keysanity = function(location, build, opts) {
         return {
             dungeons: build_keysanity_dungeons(build.dungeons(update_keysanity_dungeons(location.dungeons, opts))),
             encounters: build.encounters(update_keysanity_encounters(location.encounters)),
             regions: build_regions(keysanity_regions),
-            chests: build.chests(update_keysanity_chests(location.chests))
+            ..._.mapValues(location.world, x => x.build()),
+            castle_tower: castle_tower.build()
         };
     };
 
@@ -780,12 +771,10 @@
                 locations: locations => _.mapValues(locations, location => _.create(location, { marked: false }))
             })
         );
-                }
+    }
 
     function build_regions(regions) {
         return update(_.mapValues(regions, region => _.create(region)), {
-            escape: { $merge: { keys: 0 } },
-            castle_tower: { $merge: { keys: 0 } },
             ganon_tower: {
                 $merge: { keys: 0, big_key: false },
                 $apply: x => update(x, { $merge: { chests: x.chest_limit } })

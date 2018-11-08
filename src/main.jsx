@@ -207,9 +207,9 @@
 
     class Tracker extends React.Component {
         render() {
-            const { keysanity, model } = this.props;
-            const { items, regions, encounters } = model;
-            const { onToggle, onLevel, onKey, onChest, onCompletion, onBigKey } = this.props;
+            const { model, mode: { keysanity } } = this.props;
+            const { items, regions, encounters, castle_escape, castle_tower } = model;
+            const { onToggle, onLevel, onKey, onRegionKey, onChest, onCompletion, onBigKey } = this.props;
             return <TrackerGrid>
                 {keysanity ?
                 <KeysanityPortrait>
@@ -247,8 +247,8 @@
                   {keysanity ?
                   <KeysanityAgahnim>
                     <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.onCompletion('encounters', name)} />
-                    <Keys name="castle_tower" source={regions.castle_tower} onLevel={name => this.props.onKey('regions', name)} />
-                    <Keys name="escape" source={regions.escape} onLevel={name => this.props.onKey('regions', name)} />
+                  <Keys name="castle_tower" source={castle_tower} onLevel={onRegionKey} />
+                  <Keys name="castle_escape" source={castle_escape} onLevel={onRegionKey} />
                   </KeysanityAgahnim> :
                   <Item name="agahnim" value={encounters.agahnim.completed} onToggle={name => this.props.onCompletion('encounters', name)} />}
                 </TrackerItemGrid>
@@ -283,7 +283,7 @@
             const { onCompletion, onPrize, onMedallion, onBigKey } = this.props;
             return <Dungeon name={name} dungeon={this.props.model.dungeons[name]}
               {...medallion}
-              keysanity={this.props.keysanity}
+              keysanity={this.props.mode.keysanity}
               onCompletion={name => onCompletion('dungeons', name)}
               onPrize={onPrize}
               onMedallion={onMedallion}
@@ -293,7 +293,7 @@
         inner_dungeon(name) {
             const dungeon = this.props.model.dungeons[name];
             const { onKey, onChest } = this.props;
-            return this.props.keysanity ?
+            return this.props.mode.keysanity ?
               <KeysanityDungeon>
                 <Keys name={name} source={dungeon} onLevel={name => onKey('dungeons', name)} />
                 <KeysanityChest name={name} source={dungeon} onLevel={name => onChest('dungeons', name)} />
@@ -314,27 +314,38 @@
             }
 
             onHighlight = (highlighted) => {
-                const model = this.props.model;
+                const { model, mode } = this.props;
                 const location = Wrapped.source(this.props);
                 this.props.change_caption(highlighted ?
-                    typeof location.caption === 'function' ? location.caption(model) : location.caption :
+                    typeof location.caption === 'function' ? location.caption({ model, mode }) : location.caption :
                     null);
                 this.setState({ highlighted });
             }
         };
 
     const Availability = styled.div`
-      background-color: ${props => ({
-        marked: 'hsl(0 0% 50%)',
-        available: 'lime',
-        possible: 'yellow',
-        dark: 'blue',
-        'unavailable': 'red'
-      }[props.state] || 'unset')}
+      background-color: ${({ state }) =>
+        state === 'marked' ? 'hsl(0 0% 50%)':
+        state === 'dark' ? 'blue' :
+        _.includes(['possible', 'viewable'], state) ? 'yellow' :
+        _.includes(['available', true], state) ? 'lime' :
+        _.includes(['unavailable', false], state) ? 'red' :
+        'unset'}
     `;
     const Poi = styled(Availability)`
       border: solid hsl(${props => props.highlight ? '55 100% 50%' : '0 0% 10%'});
     `;
+
+    const region_state = (region, args) =>
+        !region.can_enter || region.can_enter(args) ||
+        !!region.can_enter_dark && region.can_enter_dark(args) && 'dark';
+
+    // respects dark higher, but possible/viewable highest
+    const derive_state = (region, location) =>
+        region === true ? location :
+        location === true ? region :
+        location;
+
     const MinorPoi = styled(Poi)`
       width: 24px;
       height: 24px;
@@ -345,20 +356,25 @@
     `;
 
     const OverworldLocation = (props) => {
-        const { name, model, highlighted } = props;
-        const chest = model.chests[name];
+        const { model, mode, region: region_name, name, highlighted } = props;
+        const { items } = model;
+        const region = model[region_name];
+        const location = region.locations[name];
+        const args = { items, region, model, mode };
+        let state;
         return <MinorPoi className={`world---${_.kebabCase(name)}`}
           state={
-            chest.marked ? 'marked' :
-            chest.is_available(model.items, model)
+              location.marked ? 'marked' :
+              (state = region_state(region, args)) &&
+              derive_state(state, !location.can_access || location.can_access(args))
           }
           highlight={highlighted}
-          onClick={() => props.onMark(name)}
+          onClick={() => props.onMark(region_name, name)}
           onMouseOver={() => props.onHighlight(true)}
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    OverworldLocation.source = (props) => props.model.chests[props.name];
+    OverworldLocation.source = (props) => props.model[props.region].locations[props.name];
 
     const MedialPoi = styled(Poi)`
       width: 36px;
@@ -564,13 +580,31 @@
         }
 
         world_maps() {
-            const { model, keysanity } = this.props;
+            const { model, mode } = this.props;
+            const { keysanity } = mode;
             const { onOverworldMark } = this.props;
+            const create_overworld = _.rest((world, regions) =>
+                _.flatMap(_.pick(world, regions), (x, region) =>
+                    (keysanity || region !== 'castle_tower') && _.map(x.locations, (x, name) =>
+                        <OverworldLocationWithHighlight model={model} mode={mode} region={region} name={name}
+                            onMark={onOverworldMark} change_caption={this.change_caption} />)));
+            const lightworld = create_overworld(model,
+                'lightworld_deathmountain_west',
+                'lightworld_deathmountain_east',
+                'lightworld_northwest',
+                'lightworld_northeast',
+                'lightworld_south',
+                'castle_escape',
+                'castle_tower');
+            const darkworld = create_overworld(model,
+                'darkworld_deathmountain_west',
+                'darkworld_deathmountain_east',
+                'darkworld_northwest',
+                'darkworld_northeast',
+                'darkworld_south',
+                'darkworld_mire');
+
             const locations = _.partition([
-                ..._.map(model.chests, (chest, name) => ({
-                    second: chest.darkworld,
-                      tag: <OverworldLocationWithHighlight name={name} model={model} onMark={onOverworldMark} change_caption={this.change_caption} />
-                })),
                 ..._.map(model.encounters, (encounter, name) => ({
                     second: encounter.darkworld,
                     tag: <EncounterLocationWithHighlight name={name} model={model} change_caption={this.change_caption} />
@@ -582,8 +616,14 @@
                 }))
             ], x => x.second);
             return [
-                <StyledMap className="world---light">{_.map(locations[1], 'tag')}</StyledMap>,
-                <StyledMap className="world---dark">{_.map(locations[0], 'tag')}</StyledMap>
+                <StyledMap className="world---light">
+                  {lightworld}
+                  {_.map(locations[1], 'tag')}
+                </StyledMap>,
+                <StyledMap className="world---dark">
+                  {darkworld}
+                  {_.map(locations[0], 'tag')}
+                </StyledMap>
             ];
         }
 
@@ -614,7 +654,7 @@
         }
 
         dungeon = (name) => {
-            if (this.props.keysanity) {
+            if (this.props.mode.keysanity) {
                 this.props.onDungeon(name);
                 this.change_caption(null);
             }
@@ -639,14 +679,19 @@
     class App extends React.Component {
         constructor(props) {
             super(props);
-            const { mode, ipbj, podbj } = props.query;
+            const { mode: mode_name, ipbj, podbj } = props.query;
+            const mode = {
+                standard: mode_name === 'standard',
+                open: mode_name === 'open' || mode_name === 'keysanity',
+                keysanity: mode_name === 'keysanity'
+            };
             const opts = { ipbj: !!ipbj, podbj: !!podbj };
-            this.state = { model: { ...item_model(), ...location_model(mode, opts) } };
+            this.state = { model: { ...item_model(), ...location_model(mode_name, opts) }, mode };
         }
 
         render() {
             const query = this.props.query;
-            const keysanity = query.mode === 'keysanity';
+            const { model, mode } = this.state;
 
             return <StyledApp className={query.sprite}
               horizontal={query.hmap}
@@ -654,8 +699,8 @@
               style={query.bg && { 'background-color': query.bg }}>
               <Tracker
                 horizontal={query.hmap}
-                model={this.state.model}
-                keysanity={keysanity}
+                model={model}
+                mode={mode}
                 onToggle={this.toggle}
                 onLevel={this.level}
                 onCompletion={this.completion}
@@ -663,12 +708,13 @@
                 onMedallion={this.medallion}
                 onBigKey={this.big_key}
                 onKey={this.key}
+                onRegionKey={this.region_key}
                 onChest={this.chest} />
               {(query.hmap || query.vmap) && <Map
                 horizontal={query.hmap}
-                model={this.state.model}
-                keysanity={keysanity}
-                dungeon_name={keysanity && this.state.dungeon_name}
+                model={model}
+                mode={mode}
+                dungeon_name={mode.keysanity && this.state.dungeon_name}
                 onOverworldMark={this.overworld_mark}
                 onDungeon={this.dungeon}
                 onDoorMark={this.door_mark}
@@ -694,7 +740,7 @@
             const model = this.state.model;
             const target = model[source][name];
             const completed = target.completed;
-            const update_keysanity = this.props.query.mode === 'keysanity' && source === 'dungeons';
+            const update_keysanity = this.state.mode.keysanity && source === 'dungeons';
 
             this.setState({ model: update(model, { [source]: { [name]: {
                     completed: { $set: !completed },
@@ -734,14 +780,20 @@
             this.setState({ model: update(this.state.model, { [source]: { [name]: { keys: { $set: value } } } }) });
         }
 
+        region_key = (name) => {
+            const region = this.state.model[name];
+            const value = counter(region.keys, 1, region.key_limit);
+            this.setState({ model: update(this.state.model, { [name]: { keys: { $set: value } } }) });
+        }
+
         chest = (source, name) => {
             const target = this.state.model[source][name],
                 value = counter(target.chests, -1, target.chest_limit);
             this.setState({ model: update(this.state.model, { [source]: { [name]: { chests: { $set: value } } } }) });
         }
 
-        overworld_mark = (name) => {
-            this.setState({ model: update(this.state.model, { chests: { [name]: update.toggle('marked') } }) });
+        overworld_mark = (region, name) => {
+            this.setState({ model: update(this.state.model, { [region]: { locations: { [name]: update.toggle('marked') } } }) });
         }
 
         door_mark = (dungeon, name) => {

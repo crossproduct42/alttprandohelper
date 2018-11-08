@@ -2,6 +2,12 @@
     'use strict';
 
     const items_base = {
+        get can_lift_light() { return this.glove >= 1; },
+        get can_lift_heavy() { return this.glove >= 2; },
+        get can_flute() { return this.flute; },
+        get mastersword() { return this.sword >= 2; },
+        get has_bottle() { return this.bottle >= 1; },
+
         get has_melee() { return this.sword || this.hammer; },
         get has_bow() { return this.bow > 1; },
         get has_melee_bow() { return this.has_melee || this.has_bow; },
