@@ -708,58 +708,15 @@
         return this.chests !== _.filter(this.locations, x => !x.marked).length;
     }
 
-    function update_keysanity_encounters(encounters) {
-        return update(encounters, {
-            agahnim: { $merge: {
-                can_complete(items, model) {
-                    return model.castle_tower.keys === 2 ?
-                        encounters.agahnim.can_complete.call(this, items) :
-                        'unavailable';
-                }
-            } }
-        });
-    }
-
     const keysanity_regions = {
         ganon_tower: { key_limit: 4, chest_limit: 27 }
-    };
-
-    const keys_region = {
-        build() {
-            return update(this, {
-                $merge: { keys: 0 },
-                locations: x => _.mapValues(x, o => _.create(o, { marked: false }))
-            });
-        }
-    }
-
-    // Todo: verify
-    const castle_tower = { ...keys_region,
-        key_limit: 2,
-        locations: {
-            castle_foyer: {
-                caption: 'Castle Tower Foyer',
-                can_access({ items, mode }) {
-                    return items.cape || items.mastersword /*|| mode.swordless && items.hammer*/;
-                }
-            },
-            castle_maze: {
-                caption: 'Castle Tower Dark Maze',
-                can_access({ items, model, mode }) {
-                    return (items.cape || items.mastersword /*|| mode.swordless && items.hammer*/) &&
-                        model.castle_tower.keys >= 1 && (items.lamp || 'dark');
-                }
-            }
-        }
     };
 
     window.keysanity = function(location, build, opts) {
         return {
             dungeons: build_keysanity_dungeons(build.dungeons(update_keysanity_dungeons(location.dungeons, opts))),
-            encounters: build.encounters(update_keysanity_encounters(location.encounters)),
             regions: build_regions(keysanity_regions),
-            ..._.mapValues(location.world, x => x.build()),
-            castle_tower: castle_tower.build()
+            ..._.mapValues(location.world, x => x.build())
         };
     };
 

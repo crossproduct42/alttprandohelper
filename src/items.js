@@ -6,6 +6,7 @@
         get can_lift_heavy() { return this.glove >= 2; },
         get can_flute() { return this.flute; },
         get mastersword() { return this.sword >= 2; },
+        get fightersword() { return this.sword >= 1; },
         get has_bottle() { return this.bottle >= 1; },
 
         get has_melee() { return this.sword || this.hammer; },

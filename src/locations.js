@@ -195,13 +195,34 @@
         }
     };
 
-    const encounters = {
-        agahnim: {
-            caption: 'Agahnim {mastersword}/ ({cape}{fightersword}){lamp}',
-            can_complete(items) {
-                return items.sword >= 2 || items.cape && items.sword ?
-                    items.lamp ? 'available' : 'dark' :
-                    'unavailable';
+    const encounter_with_keys_region = {
+        build() {
+            return update(
+                _.create(this, { completed: false, keys: 0 }), {
+                locations: x => _.mapValues(x, o => _.create(o, { marked: false }))
+            });
+        }
+    };
+
+    const castle_tower = { ...encounter_with_keys_region,
+        caption: 'Agahnim {mastersword}/ ({cape}{fightersword}){lamp}',
+        key_limit: 2,
+        can_enter({ items }) {
+            return items.cape || items.mastersword /*|| mode.swordless && items.hammer*/;
+        },
+        can_complete({ items, region, mode }) {
+            return (!mode.keysanity || region.keys >= 2) &&
+                (items.fightersword /*|| mode.swordless && (items.hammer || items.net)*/) &&
+                (items.lamp || 'dark');
+        },
+        locations: {
+            castle_foyer: {
+                caption: 'Castle Tower Foyer'
+            },
+            castle_maze: {
+                caption: 'Castle Tower Dark Maze',
+                can_access({ items, region }) {
+                    return region.keys >= 1 && (items.lamp || 'dark');
             }
         }
     };
@@ -257,8 +278,8 @@
         locations: {
             island_dm: {
                 caption: 'Floating Island {mirror}',
-                    can_access({ items }) {
-                        return items.mirror && items.moonpearl && items.can_lift_heavy || 'viewable';
+                can_access({ items }) {
+                    return items.mirror && items.moonpearl && items.can_lift_heavy || 'viewable';
                 }
             },
             spiral: {
@@ -308,8 +329,8 @@
             },
             graveyard_w: {
                 caption: 'West of Sanctuary {boots}',
-                    can_access({ items }) {
-                        return items.boots;
+                can_access({ items }) {
+                    return items.boots;
                 }
             },
             graveyard_n: {
@@ -320,8 +341,8 @@
             },
             graveyard_e: {
                 caption: 'King\'s Tomb {boots} + {mitts}/{mirror}',
-                    can_access({ items, model }) {
-                        return items.boots && (items.can_lift_heavy || items.mirror && model.darkworld_northwest.can_enter(...arguments));
+                can_access({ items, model }) {
+                    return items.boots && (items.can_lift_heavy || items.mirror && model.darkworld_northwest.can_enter(...arguments));
                 }
             },
             well: {
@@ -388,7 +409,7 @@
                 }
             },
             sahasrahla_hut: {
-                    caption: 'Sahasrahla\'s Hut (3) {bomb}/{boots}'
+                caption: 'Sahasrahla\'s Hut (3) {bomb}/{boots}'
             },
             sahasrahla: {
                 caption: 'Sahasrahla {pendant-courage}',
@@ -403,7 +424,7 @@
     const lightworld_south = { ...overworld_region,
         locations: {
             maze: {
-                    caption: 'Race Minigame {bomb}/{boots}'
+                caption: 'Race Minigame {bomb}/{boots}'
             },
             library: {
                 caption: 'Library {boots}',
@@ -494,8 +515,8 @@
         locations: {
             spike: {
                 caption: 'Byrna Spike Cave',
-                    can_access({ items }) {
-                        return items.moonpearl && items.hammer && items.can_lift_light && (items.cape || items.byrna);
+                can_access({ items }) {
+                    return items.moonpearl && items.hammer && items.can_lift_light && (items.cape || items.byrna);
                 }
             }
         }
@@ -511,14 +532,14 @@
         locations: {
             rock_hook: {
                 caption: 'Cave Under Rock (3 top chests) {hookshot}',
-                    can_access({ items }) {
-                        return items.moonpearl && items.hookshot;
+                can_access({ items }) {
+                    return items.moonpearl && items.hookshot;
                 }
             },
             rock_boots: {
                 caption: 'Cave Under Rock (bottom chest) {hookshot}/{boots}',
-                    can_access({ items }) {
-                        return items.moonpearl && (items.hookshot || items.boots);
+                can_access({ items }) {
+                    return items.moonpearl && (items.hookshot || items.boots);
                 }
             },
             bunny: {
@@ -707,7 +728,6 @@
     window.location_model = (mode, opts) => {
         const location = {
             dungeons: dungeons,
-            encounters: encounters,
             world: {
                 lightworld_deathmountain_west,
                 lightworld_deathmountain_east,
@@ -720,20 +740,21 @@
                 darkworld_northeast,
                 darkworld_south,
                 darkworld_mire,
-                castle_escape: castle_escape_open
+                castle_escape: castle_escape_open,
+                castle_tower
             }
         };
         const model = { open: open, standard: standard, keysanity: keysanity };
         return {
             ...model[mode](location, build, opts),
-            agahnim() { return this.encounters.agahnim.completed; }
+            agahnim() { return this.castle_tower.completed; }
+        };
         };
     };
 
     function open(location, build) {
         return {
             dungeons: build.dungeons(location.dungeons),
-            encounters: build.encounters(location.encounters),
             ..._.mapValues(location.world, x => x.build())
         };
     }
@@ -753,11 +774,6 @@
                 mire:   { $merge: { medallion: 'unknown' } },
                 turtle: { $merge: { medallion: 'unknown' } }
             });
-        },
-
-        encounters(encounters) {
-            return _.mapValues(encounters, (encounter) =>
-                _.create(encounter, { completed: false }));
         }
     };
 }(window));
