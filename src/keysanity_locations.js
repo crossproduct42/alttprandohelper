@@ -708,15 +708,19 @@
         return this.chests !== _.filter(this.locations, x => !x.marked).length;
     }
 
-    const keysanity_regions = {
-        ganon_tower: { key_limit: 4, chest_limit: 27 }
+    const ganon_tower = {
+        key_limit: 4,
+        chest_limit: 27,
+        build() {
+            return _.create(this, { keys: 0, big_key: false, chests: this.chest_limit });
+        }
     };
 
     window.keysanity = function(location, build, opts) {
         return {
             dungeons: build_keysanity_dungeons(build.dungeons(update_keysanity_dungeons(location.dungeons, opts))),
-            regions: build_regions(keysanity_regions),
-            ..._.mapValues(location.world, x => x.build())
+            ..._.mapValues(location.world, x => x.build()),
+            ganon_tower: ganon_tower.build()
         };
     };
 
@@ -728,14 +732,5 @@
                 locations: locations => _.mapValues(locations, location => _.create(location, { marked: false }))
             })
         );
-    }
-
-    function build_regions(regions) {
-        return update(_.mapValues(regions, region => _.create(region)), {
-            ganon_tower: {
-                $merge: { keys: 0, big_key: false },
-                $apply: x => update(x, { $merge: { chests: x.chest_limit } })
-            }
-        });
     }
 }(window));

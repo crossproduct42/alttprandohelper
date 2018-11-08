@@ -208,15 +208,15 @@
     class Tracker extends React.Component {
         render() {
             const { model, mode: { keysanity } } = this.props;
-            const { items, regions, castle_escape, castle_tower } = model;
-            const { onToggle, onLevel, onKey, onRegionKey, onChest, onRegionCompletion, onBigKey } = this.props;
+            const { items, ganon_tower, castle_escape, castle_tower } = model;
+            const { onToggle, onLevel, onRegionKey, onRegionChest, onRegionCompletion, onRegionBigKey } = this.props;
             return <TrackerGrid>
               {keysanity ?
               <KeysanityPortrait>
                 <Portrait keysanity={true} items={items} onToggle={onToggle} onLevel={onLevel} />
-                <KeysanityChest name="ganon_tower" source={regions.ganon_tower} onLevel={name => onChest('regions', name)} />
-                <Keys name="ganon_tower" source={regions.ganon_tower} onLevel={name => onKey('regions', name)} />
-                <BigKey name="ganon_tower" source={regions.ganon_tower} onToggle={name => onBigKey('regions', name)} />
+                <KeysanityChest name="ganon_tower" source={ganon_tower} onLevel={onRegionChest} />
+                <Keys name="ganon_tower" source={ganon_tower} onLevel={onRegionKey} />
+                <BigKey name="ganon_tower" source={ganon_tower} onToggle={onRegionBigKey} />
               </KeysanityPortrait> :
               <Portrait items={items} onToggle={onToggle} onLevel={onLevel} />}
               <TrackerItemGrid>
@@ -710,9 +710,11 @@
                 onPrize={this.prize}
                 onMedallion={this.medallion}
                 onBigKey={this.big_key}
+                onRegionBigKey={this.region_big_key}
                 onKey={this.key}
                 onRegionKey={this.region_key}
-                onChest={this.chest} />
+                onChest={this.chest}
+                onRegionChest={this.region_chest} />
               {(query.hmap || query.vmap) && <Map
                 horizontal={query.hmap}
                 model={model}
@@ -782,6 +784,10 @@
             this.setState({ model: update(this.state.model, { [source]: { [name]: update.toggle('big_key') } }) });
         }
 
+        region_big_key = (name) => {
+            this.setState({ model: update(this.state.model, { [name]: update.toggle('big_key') }) });
+        }
+
         key = (source, name) => {
             const target = this.state.model[source][name],
                 value = counter(target.keys, 1, target.key_limit);
@@ -798,6 +804,12 @@
             const target = this.state.model[source][name],
                 value = counter(target.chests, -1, target.chest_limit);
             this.setState({ model: update(this.state.model, { [source]: { [name]: { chests: { $set: value } } } }) });
+        }
+
+        region_chest = (name) => {
+            const region = this.state.model[name];
+            const value = counter(region.chests, -1, region.chest_limit);
+            this.setState({ model: update(this.state.model, { [name]: { chests: { $set: value } } }) });
         }
 
         overworld_mark = (region, name) => {
