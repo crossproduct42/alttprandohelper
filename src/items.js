@@ -2,32 +2,24 @@
     'use strict';
 
     const items_base = {
+        get fightersword() { return this.sword >= 1; },
+        get mastersword() { return this.sword >= 2; },
+        get can_shoot_bow() { return this.bow > 1; },
+        get has_cane() { return this.somaria || this.byrna; },
+        get has_rod() { return this.firerod || this.icerod; },
         get can_lift_light() { return this.glove >= 1; },
         get can_lift_heavy() { return this.glove >= 2; },
         get can_flute() { return this.flute; },
-        get mastersword() { return this.sword >= 2; },
-        get fightersword() { return this.sword >= 1; },
+        get can_light_torch() { return this.lamp || this.firerod; },
+        get can_melt() { return this.firerod || (/*mode.swordless ||*/ this.fightersword) && this.bombos },
+        get can_avoid_laser() { return this.cape || this.byrna || this.shield >= 3; },
         get has_bottle() { return this.bottle >= 1; },
 
-        get has_melee() { return this.sword || this.hammer; },
-        get has_bow() { return this.bow > 1; },
-        get has_melee_bow() { return this.has_melee || this.has_bow; },
-        get has_cane() { return this.somaria || this.byrna; },
-        get has_rod() { return this.firerod || this.icerod; },
-        get has_fire() { return this.lamp || this.firerod; },
-
-        can_reach_outcast(agahnim) {
-            return this.moonpearl && (
-                this.glove === 2 || this.glove && this.hammer ||
-                agahnim && this.hookshot && (this.hammer || this.glove || this.flippers));
+        has_medallion(medallion) {
+            return this.bombos && this.ether && this.quake || medallion !== 'unknown' && this[medallion];
         },
-
-        medallion_check(medallion) {
-            if (!this.sword || !this.bombos && !this.ether && !this.quake) return 'unavailable';
-            if (medallion === 'bombos' && !this.bombos ||
-                medallion === 'ether' && !this.ether ||
-                medallion === 'quake' && !this.quake) return 'unavailable';
-            if (medallion === 'unknown' && !(this.bombos && this.ether && this.quake)) return 'possible';
+        might_have_medallion(medallion) {
+            return medallion === 'unknown' && (this.bombos || this.ether || this.quake);
         },
 
         inc: counters(1, {
