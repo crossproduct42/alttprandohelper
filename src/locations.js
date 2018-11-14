@@ -640,15 +640,14 @@
         }
     });
 
-    const medallion_caption = (caption, region) =>
-        ({ model }) => caption.replace('{medallion}', `{medallion--${model[region].medallion}}`);
+    const medallion_caption = (region, caption) => caption.replace('{medallion}', `{medallion--${region.medallion}}`);
 
     const medallion_access = ({ items, region }, then = () => true) =>
         !items.has_medallion(region.medallion) ?
             items.might_have_medallion(region.medallion) && 'medallion' : then();
 
     const mire = { ...dungeon_medallion_region,
-        caption: medallion_caption('Misery Mire {medallion}{lamp}', 'mire'),
+        caption: ({ model }) => medallion_caption(model.mire, 'Misery Mire {medallion}{lamp}'),
         chest_limit: 2,
         can_enter({ items, model }) {
             return items.moonpearl && (items.boots || items.hookshot) && (/*mode.swordless ||*/ items.fightersword) &&
@@ -717,7 +716,7 @@
     });
 
     const turtle = { ...dungeon_medallion_region,
-        caption: medallion_caption('Turtle Rock {medallion}{lamp}', 'turtle'),
+        caption: ({ model }) => medallion_caption(model.turtle, 'Turtle Rock {medallion}{lamp}'),
         chest_limit: 5,
         can_enter({ items, model }) {
             return items.moonpearl && items.can_lift_heavy && items.hammer && items.somaria && (/*mode.swordless ||*/ items.fightersword) &&
@@ -934,8 +933,8 @@
                 caption: 'Death Mountain East (5 + 2 {bomb})'
             },
             mimic: {
-                // Todo: adjust caption for keysanity
-                caption: medallion_caption('Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion} unkown OR possible w/out {firerod})', 'turtle'),
+                caption: ({ model, mode }) => medallion_caption(model.turtle,
+                    `Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion} unknown${mode.keysanity ? '' : ' OR possible w/out {firerod}'})`),
                 can_access({ items, model: { turtle }, mode }) {
                     // turtle.can_enter_dark to check basic access,
                     // actual dark state from lightworld_deathmountain_east
