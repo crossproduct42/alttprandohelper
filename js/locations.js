@@ -463,10 +463,8 @@
         island_lake: {
             caption: 'Lake Hylia Island {mirror}',
             is_available: function(items, model) {
-                return items.flippers ?
-                    items.moonpearl && items.mirror && (model.agahnim() || items.glove === 2 || items.glove && items.hammer) ?
-                        'available' : 'possible' :
-                    'unavailable';
+                return items.flippers && items.moonpearl && items.mirror &&
+                    (model.agahnim() || items.glove === 2 || items.glove && items.hammer) ? 'available' : 'possible';
             }
         },
         hobo: {
