@@ -488,8 +488,10 @@
                     div('.second', { className: dungeon || 'world' }, points[0].map(property('tag')))
                 ];
 
+            var dungeon_click = this.props.dungeon_click;
             return div('#map', { className: classNames({ cell: this.props.horizontal }) },
                 this.props.horizontal ? grid.call(null, maps) : maps,
+                dungeon && span('.close', { onClick: function() { dungeon_click(null); } }, '\u00d7'),
                 t(Caption, { text: this.state.caption })
             );
         },
@@ -616,20 +618,8 @@
             );
         },
 
-        componentDidMount: function() {
-            document.addEventListener('keydown', this.escape_press);
-        },
-
-        componentWillUnmount: function() {
-            document.removeEventListener('keydown', this.escape_press);
-        },
-
         map_dungeon_click: function(name) {
             this.setState({ dungeon: name });
-        },
-
-        escape_press: function(event) {
-            event.key === 'Escape' && this.setState({ dungeon: null });
         },
 
         item_click: function(name) {

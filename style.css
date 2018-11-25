@@ -161,6 +161,17 @@ body {
 .possible { background-color: yellow; }
 .dark { background-color: blue; }
 
+.close {
+  margin: 10px;
+  position: absolute;
+  top: 0;
+  color: white;
+  line-height: 1;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 #caption {
   width: 100%;
   position: absolute;
