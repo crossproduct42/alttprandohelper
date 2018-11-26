@@ -38,17 +38,17 @@ http://vt.alttp.run/
 (:::[========> TRACKER INSTRUCTIONS <========]:::)
 --------------------------------------------------
 
-- Open index.html.
+- Open the launcher, index.html.
 - Click the button corresponding to the desired Mode and Mapfulness (Popup
   blocker no longer an issue).
-- Launcher works best with Internet Explorer, which can disable window resize
-  and title bar (enable scripts).
-- If you open tracker.html directly, it will default to Standard and Mapless,
-  and the window will not be the right size.
+- Opening the tracker, tracker.html, without url query parameters, will not
+  work. It will only show a black page.
+- The launcher and tracker is only tested for Chrome.
 
 -[--- Item Tracker ---]-
 
-- The left box is the Item Tracker. It shows you which items you have. Click to toggle!
+- The first box is the Item Tracker. It shows you which items you have.
+  Click to toggle!
 - The chests represent the "unique" chests of each dungeon.
 - Click the corresponding chest icon if you're in a dungeon and open a chest
   that IS NOT a Map, Compass, Key, or Big Key.
@@ -63,7 +63,7 @@ http://vt.alttp.run/
 
 -[--- Location Tracker ---]-
 
-The middle box is a map of the Light World, the right box is a map of the Dark World.
+The second box is a map of the Light World, the third box is a map of the Dark World.
 Mousing over a location square will give you a little bit of information.
 
 - Small squares are chests and Heart Piece locations strewn about the land of Hyrule!
@@ -110,16 +110,60 @@ Mousing over a location square will give you a little bit of information.
 	- Clicking the corresponding boss picture on the Item Tracker will
 	  toggle the inner square.
 
+-[--- Keysanity ---]-
+
+Currently the keysanity mode of the tracker correspond to open mode with the
+keysanity variation. Each of the 10 crystal/pendant Dungeons have associated
+dungeon maps that can be shown by clicking their overworld squares, and
+dismissed by clicking the close button in the top left of the dungeon map.
+
+- Item tracker
+	- Instead of a square with a group of chests they will share space with
+	  aquired vs total number of small keys. Click the small key to increase the
+	  number of aquired keys for that dungeon.
+	- Since keys, map, compass are not confined to their dungeon, all dungeon
+	  locations are tracked, resulting in higher chest counts which are shown by
+	  a number over a single chest.
+	- Clicking the chests will make the chest count mismatch with marked the
+	  locations on the dungeon map and will cause the dungeon to show in yellow
+	  until the counts match again. Clicking the boss still marks the location
+	  on the dungeon map since they correspond directly to each other.
+	- The big key for a dungeon is tracked on the boss square.
+	- Agahnim share space with two small key counts, with the upper representing
+	  Castle Tower keys, and the lower the Hyrule Castle key.
+	- Ganon's Tower item locations, small and big key are represented to the right
+	  of Link's sprite.
+
+- Location tracker
+	- The dungeon maps show the item locations in a similar way as the overworld
+	  item locations, but with bigger squares and an image for the big chest
+	  and boss.
+	- Desert Palace, Palace of Darkness, and Turtle Rock also show doors which
+	  aid in showing correct logic.
+	- The launcher provides two extra options for keysanity that can be toggled
+	  off if the player can not perform bomb jumps in Ice Palace, and the Palace
+	  of Darkness Hammeryump, respectively. Without Ice Palace bomb jumps some
+	  locations can show as yellow if they might possibly require a bomb jump to
+	  reach.
+	- There is also two additional overworld locations that represent the two
+	  chests on the way up Castle Tower since they can contain unique items in
+	  keysanity.
+
 
 --------------------------------------------
 (:::[========> FUTURE CHANGES <========]:::)
 --------------------------------------------
 
-- Go Mode indicator
-- Swordless Mode
+From highest priority:
+- Right Click to toggle items/dungeon prizes backwards
+- Scaling: x2 or x3 instead of the normal x4
+- Modes and settings
+	- Select mode and variations independently
+	- Inverted Mode
+	- Swordless
 - Sequence Breaks (orange?)
 - Colorblind support
-- Right Click to toggle items/dungeon prizes backwards
+- Go Mode indicator
 
 
 ------------------------------------------
