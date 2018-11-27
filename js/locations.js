@@ -126,7 +126,7 @@
             }
         },
         ice: {
-            caption: 'Ice Palace (yellow = must bomb jump)',
+            caption: 'Ice Palace (yellow = might need bomb jump)',
             darkworld: true,
             chest_limit: 3,
             can_enter: function(items) {
