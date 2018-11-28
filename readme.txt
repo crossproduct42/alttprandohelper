@@ -1,5 +1,5 @@
 Browser-based Item Tracker for A Link to the Past
-v 5.0.0
+v 5.1.0-rc
 by crossproduct (twitch.tv/crossproduct)
 and halfarebel (twitch.tv/halfarebel)
 
