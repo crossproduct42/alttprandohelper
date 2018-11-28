@@ -67,8 +67,8 @@
             },
             can_progress: function(items, model) {
                 return this.can_enter(items, model) ?
-                    items.has_bow() && items.lantern ||
-                        this.chests > 1 || items.hammer ?
+                    items.has_bow() && items.lantern &&
+                        (this.chests > 1 || items.hammer) ?
                         'available' : 'possible' :
                     'unavailable';
             }
