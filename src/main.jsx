@@ -526,16 +526,6 @@
     const DungeonMapDoorWithHighlight = WithHighlight(DungeonMapDoor);
     const DungeonMapLocationWithHighlight = WithHighlight(DungeonMapLocation);
 
-    const Close = styled.span`
-      margin: 10px;
-      position: absolute;
-      top: 0;
-      color: white;
-      line-height: 1;
-      font-size: 30px;
-      font-weight: bold;
-      cursor: pointer;
-    `;
     const StyledCaption = styled.div`
       width: 100%;
       position: absolute;
@@ -583,114 +573,95 @@
       & > ${StyledMap} { margin: 0 auto; }
     `;
 
-    class Map extends React.Component {
+    class OverworldMap extends React.Component {
         state = { caption: null }
 
         render() {
-            const { horizontal, dungeon_name, onDungeon } = this.props;
-            const maps = dungeon_name ? this.dungeon_maps() : this.world_maps();
-
-            return <MapGrid horizontal={horizontal}>
-                {maps}
-                {dungeon_name && <Close onClick={() => onDungeon(null)} >{'\u00d7'}</Close>}
-                <Caption text={this.state.caption} />
-            </MapGrid>;
-        }
-
-        world_maps() {
-            const { model, mode } = this.props;
+            const { model, mode, horizontal } = this.props;
             const { keysanity } = mode;
-            const { onOverworldMark } = this.props;
+            const { onOverworldMark, onDungeon } = this.props;
+            const change_caption = (caption) => this.setState({ caption: caption });
+
             const create_dungeons = _.rest((world, regions) =>
                 _.map(_.pick(world, regions), (dungeon, region) =>
                     <DungeonLocationWithHighlight model={model} mode={mode} region={region} deviated={keysanity && dungeon.has_deviating_counts()}
-                      onDungeon={this.dungeon} change_caption={this.change_caption} />));
+                      onDungeon={onDungeon} change_caption={change_caption} />));
             const create_overworld = _.rest((world, regions) =>
                 _.flatMap(_.pick(world, regions), (x, region) =>
                     (keysanity || region !== 'castle_tower') && _.map(x.locations, (x, name) =>
                         <OverworldLocationWithHighlight model={model} mode={mode} region={region} name={name}
-                            onMark={onOverworldMark} change_caption={this.change_caption} />)));
+                            onMark={onOverworldMark} change_caption={change_caption} />)));
 
-            const lightworld_dungeons = create_dungeons(model,
-                'eastern',
-                'desert',
-                'hera');
-            const darkworld_dungeons = create_dungeons(model,
-                'darkness',
-                'swamp',
-                'skull',
-                'thieves',
-                'ice',
-                'mire',
-                'turtle');
-            const lightworld = create_overworld(model,
-                'lightworld_deathmountain_west',
-                'lightworld_deathmountain_east',
-                'lightworld_northwest',
-                'lightworld_northeast',
-                'lightworld_south',
-                'castle_escape',
-                'castle_tower');
-            const darkworld = create_overworld(model,
-                'darkworld_deathmountain_west',
-                'darkworld_deathmountain_east',
-                'darkworld_northwest',
-                'darkworld_northeast',
-                'darkworld_south',
-                'darkworld_mire');
-            const castle_tower = <EncounterLocationWithHighlight model={model} mode={mode} region="castle_tower" change_caption={this.change_caption} />;
-
-            return [
-                <StyledMap className="world---light">
-                  {lightworld}
-                  {castle_tower}
-                  {lightworld_dungeons}
-                </StyledMap>,
-                <StyledMap className="world---dark">
-                  {darkworld}
-                  {darkworld_dungeons}
-                </StyledMap>
-            ];
+            return <MapGrid horizontal={horizontal}>
+              <StyledMap className="world---light">
+                {create_overworld(model,
+                  'lightworld_deathmountain_west',
+                  'lightworld_deathmountain_east',
+                  'lightworld_northwest',
+                  'lightworld_northeast',
+                  'lightworld_south',
+                  'castle_escape',
+                  'castle_tower')}
+                <EncounterLocationWithHighlight model={model} mode={mode} region="castle_tower" change_caption={change_caption} />
+                {create_dungeons(model, 'eastern', 'desert', 'hera')}
+              </StyledMap>
+              <StyledMap className="world---dark">
+                {create_overworld(model,
+                  'darkworld_deathmountain_west',
+                  'darkworld_deathmountain_east',
+                  'darkworld_northwest',
+                  'darkworld_northeast',
+                  'darkworld_south',
+                  'darkworld_mire')}
+                {create_dungeons(model, 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle')}
+              </StyledMap>
+              <Caption text={this.state.caption} />
+            </MapGrid>;
         }
+    }
 
-        dungeon_maps() {
-            const { model, mode, dungeon_name } = this.props;
+    const Close = styled.span`
+      margin: 10px;
+      position: absolute;
+      top: 0;
+      color: white;
+      line-height: 1;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    `;
+
+    class DungeonMap extends React.Component {
+        state = { caption: null }
+
+        render() {
+            const { model, mode, dungeon: dungeon_name } = this.props;
             const dungeon = model[dungeon_name];
             const deviating = dungeon.has_deviating_counts();
-            const { onDoorMark, onLocationMark } = this.props;
+            const { horizontal, onDoorMark, onLocationMark, onDismiss } = this.props;
+            const change_caption = (caption) => this.setState({ caption: caption });
+
             const create_door = (x, name) =>
                 <DungeonMapDoorWithHighlight
                   model={model} mode={mode} region={dungeon_name} name={name} deviated={deviating}
-                  onMark={onDoorMark} change_caption={this.change_caption} />;
+                  onMark={onDoorMark} change_caption={change_caption} />;
             const create_location = (x, name) =>
                 <DungeonMapLocationWithHighlight
                   model={model} mode={mode} region={dungeon_name} name={name} deviated={deviating}
-                  onMark={onLocationMark} change_caption={this.change_caption} />;
+                  onMark={onLocationMark} change_caption={change_caption} />;
 
-            const first = [
-                ..._.map(_.pickBy(dungeon.doors, x => !x.second_map), create_door),
-                ..._.map(_.pickBy(dungeon.locations, x => !x.second_map), create_location)
-            ];
-            const second = [
-                ..._.map(_.pickBy(dungeon.doors, x => x.second_map), create_door),
-                ..._.map(_.pickBy(dungeon.locations, x => x.second_map), create_location)
-            ];
-
-            return [
-                <StyledMap className={`${dungeon_name}---first`}>{first}</StyledMap>,
-                <StyledMap className={`${dungeon_name}---second`}>{second}</StyledMap>
-            ];
-        }
-
-        dungeon = (name) => {
-            if (this.props.mode.keysanity) {
-                this.props.onDungeon(name);
-                this.change_caption(null);
-            }
-        }
-
-        change_caption = (caption) => {
-            this.setState({ caption: caption });
+            return <MapGrid horizontal={horizontal}>
+                <StyledMap className={`${dungeon_name}---first`}>
+                  {_.map(_.pickBy(dungeon.doors, x => !x.second_map), create_door)}
+                  {_.map(_.pickBy(dungeon.locations, x => !x.second_map), create_location)}
+                </StyledMap>
+                <StyledMap className={`${dungeon_name}---second`}>
+                  {_.map(_.pickBy(dungeon.doors, x => x.second_map), create_door)}
+                  {_.map(_.pickBy(dungeon.locations, x => x.second_map), create_location)}
+                </StyledMap>
+                <Close onClick={onDismiss}>{'\u00d7'}</Close>
+                <Caption text={this.state.caption} />
+            </MapGrid>;
         }
     }
 
@@ -716,12 +687,17 @@
                 bomb_jump: !!props.query.ipbj,
                 hammery_jump: !!props.query.podbj
             };
-            this.state = { model: { ...item_model(), ...location_model(mode) }, mode };
+            this.state = {
+                model: { ...item_model(), ...location_model(mode) },
+                mode,
+                dungeon_map: null
+            };
         }
 
         render() {
             const query = this.props.query;
-            const { model, mode } = this.state;
+            const show_map = query.hmap || query.vmap;
+            const { model, mode, dungeon_map } = this.state;
 
             return <StyledApp className={query.sprite}
               horizontal={query.hmap}
@@ -739,20 +715,30 @@
                 onKey={this.key}
                 onBigKey={this.big_key}
                 onChest={this.chest} />
-              {(query.hmap || query.vmap) && <Map
+              {show_map && (!dungeon_map ?
+              <OverworldMap
                 horizontal={query.hmap}
                 model={model}
                 mode={mode}
-                dungeon_name={mode.keysanity && this.state.dungeon_name}
                 onOverworldMark={this.overworld_mark}
-                onDungeon={this.dungeon}
+                onDungeon={mode.keysanity ? this.show_dungeon_map : _.noop} /> :
+              <DungeonMap
+                horizontal={query.hmap}
+                model={model}
+                mode={mode}
+                dungeon={dungeon_map}
+                onDismiss={this.dismiss_dungeon_map}
                 onDoorMark={this.door_mark}
-                onLocationMark={this.location_mark} />}
+                onLocationMark={this.location_mark} />)}
             </StyledApp>;
         }
 
-        dungeon = (name) => {
-            this.setState({ dungeon_name: name });
+        show_dungeon_map = (dungeon) => {
+            this.setState({ dungeon_map: dungeon });
+        }
+
+        dismiss_dungeon_map = () => {
+            this.setState({ dungeon_map: null });
         }
 
         toggle = (name) => {
