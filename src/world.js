@@ -78,7 +78,6 @@
             },
             boss: {
                 caption: 'Armos Knights',
-                second_map: true,
                 can_access({ items, region }) {
                     return region.big_key && items.can_shoot_bow && (items.lamp || 'dark');
                 }
@@ -114,7 +113,6 @@
             },
             south: {
                 caption: 'South',
-                second_map: true,
                 can_access({ items, region }) {
                     return region.keys >= 1 || items.can_lift_light && !region.doors.north.opened;
                 }
@@ -122,31 +120,26 @@
         },
         locations: {
             map: {
-                caption: 'Map Chest',
-                second_map: true
+                caption: 'Map Chest'
             },
             torch: {
                 caption: 'Item on Torch',
-                second_map: true,
                 can_access({ items }) {
                     return items.boots;
                 }
             },
             big_key: {
                 caption: 'Big Key Chest',
-                second_map: true,
                 can_access({ items, region }) {
                     return region.keys >= 1 || region.doors.south.opened || !region.doors.north.opened && items.can_lift_light;
                 }
             },
             compass: {
                 caption: 'Compass Chest',
-                second_map: true,
                 can_access({ region }) { return region.locations.big_key.can_access(...arguments); }
             },
             big_chest: {
                 caption: 'Big Chest',
-                second_map: true,
                 can_access({ region }) {
                     return region.big_key;
                 }
@@ -186,12 +179,10 @@
         key_limit: 1,
         locations: {
             cage: {
-                caption: 'Basement Cage',
-                second_map: true
+                caption: 'Basement Cage'
             },
             map: {
-                caption: 'Map Chest',
-                second_map: true
+                caption: 'Map Chest'
             },
             compass: {
                 caption: 'Compass Chest',
@@ -205,7 +196,6 @@
             },
             big_key: {
                 caption: 'Big Key Chest',
-                second_map: true,
                 can_access({ items, region }) {
                     return region.keys >= 1 && items.can_light_torch;
                 }
@@ -242,7 +232,6 @@
                 doors: {
                     front: {
                         caption: 'Front',
-                        second_map: true,
                         can_access({ region }) {
                             return keys_left(region) >= 1;
                         }
@@ -256,7 +245,6 @@
                     },
                     big_key: {
                         caption: 'Big Key',
-                        second_map: true,
                         can_access({ region }) { return region.doors.arena.can_access(...arguments); }
                     },
                     hellway: {
@@ -281,8 +269,7 @@
                 },
                 locations: {
                     shooter: {
-                        caption: 'Shooter Room',
-                        second_map: true
+                        caption: 'Shooter Room'
                     },
                     arena_ledge: {
                         caption: 'Statler & Waldorf',
@@ -302,12 +289,10 @@
                     },
                     stalfos: {
                         caption: 'Southern Cross',
-                        second_map: true,
                         can_access({ region }) { return region.locations.arena_bridge.can_access(...arguments); }
                     },
                     big_key: {
                         caption: 'Big Key Chest',
-                        second_map: true,
                         can_access({ items, region}) {
                             return keys_left(region) >= 2
                                 - (region.doors.front.opened || items.can_shoot_bow && items.hammer)
@@ -403,36 +388,30 @@
         key_limit: 1,
         locations: {
             entrance: {
-                caption: 'Entrance',
-                second_map: true
+                caption: 'Entrance'
             },
             map: {
                 caption: 'Map Chest',
-                second_map: true,
                 can_access({ region }) {
                     return region.keys >= 1;
                 }
             },
             big_key: {
                 caption: 'Big Key Chest',
-                second_map: true,
                 can_access({ items, region }) {
                     return region.keys >= 1 && items.hammer;
                 }
             },
             west: {
                 caption: 'West Wing',
-                second_map: true,
                 can_access({ region }) { return region.locations.big_key.can_access(...arguments); }
             },
             compass: {
                 caption: 'Compass Chest',
-                second_map: true,
                 can_access({ region }) { return region.locations.big_key.can_access(...arguments); }
             },
             big_chest: {
                 caption: 'Big Chest',
-                second_map: true,
                 can_access({ items, region }) {
                     return region.keys >= 1 && items.hammer && region.big_key;
                 }
@@ -477,24 +456,19 @@
         key_limit: 2,
         locations: {
             big_key: {
-                caption: 'Big Key Chest',
-                second_map: true
+                caption: 'Big Key Chest'
             },
             compass: {
-                caption: 'Compass Chest',
-                second_map: true
+                caption: 'Compass Chest'
             },
             map: {
-                caption: 'Map Chest',
-                second_map: true
+                caption: 'Map Chest'
             },
             pot_prison: {
-                caption: 'Pot Prison',
-                second_map: true
+                caption: 'Pot Prison'
             },
             big_chest: {
                 caption: 'Big Chest',
-                second_map: true,
                 can_access({ region }) {
                     return region.big_key;
                 }
@@ -534,24 +508,19 @@
         key_limit: 1,
         locations: {
             big_key: {
-                caption: 'Big Key Chest',
-                second_map: true
+                caption: 'Big Key Chest'
             },
             map: {
-                caption: 'Map Chest',
-                second_map: true
+                caption: 'Map Chest'
             },
             compass: {
-                caption: 'Compass Chest',
-                second_map: true
+                caption: 'Compass Chest'
             },
             ambush: {
-                caption: 'Ambush Chest',
-                second_map: true
+                caption: 'Ambush Chest'
             },
             attic: {
                 caption: 'Attic',
-                second_map: true,
                 can_access({ region }) {
                     return region.big_key;
                 }
@@ -594,8 +563,7 @@
         key_limit: 2,
         locations: {
             compass: {
-                caption: 'Compass Chest',
-                second_map: true
+                caption: 'Compass Chest'
             },
             freezor: {
                 caption: 'Freezor Room'
@@ -617,19 +585,16 @@
             },
             map: {
                 caption: 'Map Chest',
-                second_map: true,
                 can_access({ items, region }) {
                     return items.hammer && region.locations.spike.can_access(...arguments);
                 }
             },
             big_key: {
                 caption: 'Big Key Chest',
-                second_map: true,
                 can_access({ region }) { return region.locations.map.can_access(...arguments); }
             },
             boss: {
                 caption: ({ mode }) => mode.bomb_jump ? 'Kholdstare' : 'Kholdstare (yellow = might need bomb jump for a small key)',
-                second_map: true,
                 can_access({ items, region, mode }) {
                     return items.hammer && (mode.bomb_jump ||
                         region.big_key && (region.keys >= 1 && items.somaria || region.keys >= 2) ||
@@ -705,7 +670,6 @@
             },
             boss: {
                 caption: 'Vitreous',
-                second_map: true,
                 can_access({ items, region }) {
                     return items.somaria && region.big_key &&
                         // (items.fightersword || items.hammer || items.can_shoot_bow) && // swordless checks
@@ -764,26 +728,22 @@
                 locations: {
                     compass: {
                         caption: 'Compass Chest',
-                        second_map: true,
                         can_access() {
                             return medallion_access(...arguments);
                         }
                     },
                     roller_left: {
                         caption: 'Roller Room - Left Chest',
-                        second_map: true,
                         can_access({ items }) {
                             return items.firerod && medallion_access(...arguments);
                         }
                     },
                     roller_right: {
                         caption: 'Roller Room - Right Chest',
-                        second_map: true,
                         can_access({ region }) { return region.locations.roller_left.can_access(...arguments); }
                     },
                     chain_chomps: {
                         caption: 'Chain Chomps',
-                        second_map: true,
                         can_access({ region }) {
                             return region.keys >= 1 && medallion_access(...arguments);
                         }
@@ -825,7 +785,6 @@
                     },
                     boss: {
                         caption: 'Trinexx',
-                        second_map: true,
                         can_access({ items, region }) {
                             return region.big_key && keys_left(region) >= 4
                                 - region.doors.crystaroller.opened

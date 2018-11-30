@@ -629,6 +629,8 @@
     `;
 
     class DungeonMap extends React.Component {
+        static layouts = dungeon_layouts()
+
         state = { caption: null }
 
         render() {
@@ -638,23 +640,26 @@
             const { horizontal, onDoorMark, onLocationMark, onDismiss } = this.props;
             const change_caption = (caption) => this.setState({ caption: caption });
 
-            const create_door = (x, name) =>
+            const create_door = (name) =>
                 <DungeonMapDoorWithHighlight
                   model={model} region={dungeon_name} name={name} deviated={deviating}
                   onMark={onDoorMark} change_caption={change_caption} />;
-            const create_location = (x, name) =>
+            const create_location = (name) =>
                 <DungeonMapLocationWithHighlight
                   model={model} region={dungeon_name} name={name} deviated={deviating}
                   onMark={onLocationMark} change_caption={change_caption} />;
 
+            const { first, second } = DungeonMap.layouts[dungeon_name];
+            const [first_locations, first_doors] = first;
+            const [second_locations, second_doors] = second;
             return <MapGrid horizontal={horizontal}>
                 <StyledMap className={`${dungeon_name}---first`}>
-                  {_.map(_.pickBy(dungeon.doors, x => !x.second_map), create_door)}
-                  {_.map(_.pickBy(dungeon.locations, x => !x.second_map), create_location)}
+                  {first_doors && _.map(first_doors, create_door)}
+                  {_.map(first_locations, create_location)}
                 </StyledMap>
                 <StyledMap className={`${dungeon_name}---second`}>
-                  {_.map(_.pickBy(dungeon.doors, x => x.second_map), create_door)}
-                  {_.map(_.pickBy(dungeon.locations, x => x.second_map), create_location)}
+                  {second_doors && _.map(second_doors, create_door)}
+                  {_.map(second_locations, create_location)}
                 </StyledMap>
                 <Close onClick={onDismiss}>{'\u00d7'}</Close>
                 <Caption text={this.state.caption} />
