@@ -165,13 +165,13 @@
     const hera = { ...dungeon_region,
         caption: 'Tower of Hera',
         chest_limit: 2,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             return (items.mirror || items.hookshot && items.hammer) &&
-                model.lightworld_deathmountain_west.can_enter(...arguments);
+                world.lightworld_deathmountain_west.can_enter(...arguments);
         },
-        can_enter_dark({ items, model }) {
+        can_enter_dark({ items, world }) {
             return (items.mirror || items.hookshot && items.hammer) &&
-                model.lightworld_deathmountain_west.can_enter_dark(...arguments);
+                world.lightworld_deathmountain_west.can_enter_dark(...arguments);
         },
         can_complete({ items }) {
             return (items.fightersword || items.hammer) && (items.can_light_torch || 'possible');
@@ -222,8 +222,8 @@
     const darkness = { ...dungeon_region,
         caption: 'Palace of Darkness {lamp}',
         chest_limit: 5,
-        can_enter({ items, model }) {
-            return items.moonpearl && model.darkworld_northeast.can_enter(...arguments);
+        can_enter({ items, world }) {
+            return items.moonpearl && world.darkworld_northeast.can_enter(...arguments);
         },
         can_complete({ items }) {
             return items.can_shoot_bow && items.hammer && (items.lamp || 'dark');
@@ -384,9 +384,9 @@
     const swamp = { ...dungeon_region,
         caption: 'Swamp Palace {mirror}',
         chest_limit: 6,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             return items.moonpearl && items.mirror && items.flippers &&
-                model.darkworld_south.can_enter(...arguments);
+                world.darkworld_south.can_enter(...arguments);
         },
         can_complete({ items }) {
             return items.hammer && items.hookshot;
@@ -461,8 +461,8 @@
     const skull = { ...dungeon_region,
         caption: 'Skull Woods',
         chest_limit: 2,
-        can_enter({ items, model }) {
-            return items.moonpearl && model.darkworld_northwest.can_enter(...arguments);
+        can_enter({ items, world }) {
+            return items.moonpearl && world.darkworld_northwest.can_enter(...arguments);
         },
         can_complete({ items }) {
             return items.firerod && (/*mode.swordless ||*/ items.fightersword);
@@ -517,8 +517,8 @@
     const thieves = { ...dungeon_region,
         caption: 'Thieves\' Town',
         chest_limit: 4,
-        can_enter({ items, model }) {
-            return items.moonpearl && model.darkworld_northwest.can_enter(...arguments);
+        can_enter({ items, world }) {
+            return items.moonpearl && world.darkworld_northwest.can_enter(...arguments);
         },
         can_complete({ items }) {
             return items.fightersword || items.hammer || items.has_cane;
@@ -647,11 +647,11 @@
             items.might_have_medallion(region.medallion) && 'medallion' : then();
 
     const mire = { ...dungeon_medallion_region,
-        caption: ({ model }) => medallion_caption(model.mire, 'Misery Mire {medallion}{lamp}'),
+        caption: ({ world }) => medallion_caption(world.mire, 'Misery Mire {medallion}{lamp}'),
         chest_limit: 2,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             return items.moonpearl && (items.boots || items.hookshot) && (/*mode.swordless ||*/ items.fightersword) &&
-                model.darkworld_mire.can_enter(...arguments);
+                world.darkworld_mire.can_enter(...arguments);
         },
         can_complete({ items }) {
             return items.somaria &&
@@ -716,15 +716,15 @@
     });
 
     const turtle = { ...dungeon_medallion_region,
-        caption: ({ model }) => medallion_caption(model.turtle, 'Turtle Rock {medallion}{lamp}'),
+        caption: ({ world }) => medallion_caption(world.turtle, 'Turtle Rock {medallion}{lamp}'),
         chest_limit: 5,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             return items.moonpearl && items.can_lift_heavy && items.hammer && items.somaria && (/*mode.swordless ||*/ items.fightersword) &&
-                model.lightworld_deathmountain_east.can_enter(...arguments);
+                world.lightworld_deathmountain_east.can_enter(...arguments);
         },
-        can_enter_dark({ items, model }) {
+        can_enter_dark({ items, world }) {
             return items.moonpearl && items.can_lift_heavy && items.hammer && items.somaria && (/*mode.swordless ||*/ items.fightersword) &&
-                model.lightworld_deathmountain_east.can_enter_dark(...arguments);
+                world.lightworld_deathmountain_east.can_enter_dark(...arguments);
         },
         can_complete({ items, region }) {
             return items.icerod && items.firerod &&
@@ -913,11 +913,11 @@
     };
 
     const lightworld_deathmountain_east = { ...overworld_region,
-        can_enter({ items, model }) {
-            return (items.hammer && items.mirror || items.hookshot) && model.lightworld_deathmountain_west.can_enter(...arguments);
+        can_enter({ items, world }) {
+            return (items.hammer && items.mirror || items.hookshot) && world.lightworld_deathmountain_west.can_enter(...arguments);
         },
-        can_enter_dark({ items, model }) {
-            return (items.hammer && items.mirror || items.hookshot) && model.lightworld_deathmountain_west.can_enter_dark(...arguments);
+        can_enter_dark({ items, world }) {
+            return (items.hammer && items.mirror || items.hookshot) && world.lightworld_deathmountain_west.can_enter_dark(...arguments);
         },
         locations: {
             island_dm: {
@@ -933,9 +933,9 @@
                 caption: 'Death Mountain East (5 + 2 {bomb})'
             },
             mimic: {
-                caption: ({ model, mode }) => medallion_caption(model.turtle,
+                caption: ({ world, mode }) => medallion_caption(world.turtle,
                     `Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion} unknown${mode.keysanity ? '' : ' OR possible w/out {firerod}'})`),
-                can_access({ items, model: { turtle }, mode }) {
+                can_access({ items, world: { turtle }, mode }) {
                     // turtle.can_enter_dark to check basic access,
                     // actual dark state from lightworld_deathmountain_east
                     return turtle.can_enter_dark(...arguments) && items.mirror && medallion_access({ items, region: turtle }, () =>
@@ -949,9 +949,9 @@
         locations: {
             altar: {
                 caption: 'Master Sword Pedestal {pendant-courage}{pendant-power}{pendant-wisdom} (can check with {book})',
-                can_access({ items, model }) {
+                can_access({ items, world }) {
                     // PendantOfPower && PendantOfWisdom && PendantOfCourage
-                    const pendants = _.reduce(model,
+                    const pendants = _.reduce(world,
                         (s, dungeon) => dungeon.completed && _.includes(['pendant', 'pendant-green'], dungeon.prize) ? s + 1 : s, 0);
                     return pendants >= 3 || items.book && 'viewable';
                 }
@@ -964,9 +964,9 @@
             },
             tree: {
                 caption: 'Lumberjack Tree {agahnim}{boots}',
-                can_access({ items, model }) {
+                can_access({ items, world }) {
                     // DefeatAgahnim && items.boots
-                    return model.agahnim() && items.boots || 'viewable';
+                    return world.agahnim() && items.boots || 'viewable';
                 }
             },
             graveyard_w: {
@@ -977,14 +977,14 @@
             },
             graveyard_n: {
                 caption: 'Graveyard Cliff Cave {mirror}',
-                can_access({ items, model }) {
-                    return items.mirror && model.darkworld_northwest.can_enter(...arguments);
+                can_access({ items, world }) {
+                    return items.mirror && world.darkworld_northwest.can_enter(...arguments);
                 }
             },
             graveyard_e: {
                 caption: 'King\'s Tomb {boots} + {mitts}/{mirror}',
-                can_access({ items, model }) {
-                    return items.boots && (items.can_lift_heavy || items.mirror && model.darkworld_northwest.can_enter(...arguments));
+                can_access({ items, world }) {
+                    return items.boots && (items.can_lift_heavy || items.mirror && world.darkworld_northwest.can_enter(...arguments));
                 }
             },
             well: {
@@ -1055,9 +1055,9 @@
             },
             sahasrahla: {
                 caption: 'Sahasrahla {pendant-courage}',
-                can_access({ model }) {
+                can_access({ world }) {
                     // PendantOfCourage
-                    return _.some(model, dungeon => dungeon.completed && dungeon.prize === 'pendant-green');
+                    return _.some(world, dungeon => dungeon.completed && dungeon.prize === 'pendant-green');
                 }
             }
         }
@@ -1082,8 +1082,8 @@
             },
             grove_s: {
                 caption: 'South of Grove {mirror}',
-                can_access({ items, model }) {
-                    return items.mirror && model.darkworld_south.can_enter(...arguments);
+                can_access({ items, world }) {
+                    return items.mirror && world.darkworld_south.can_enter(...arguments);
                 }
             },
             link_house: {
@@ -1091,14 +1091,14 @@
             },
             desert_w: {
                 caption: 'Desert West Ledge {book}/{mirror}',
-                can_access({ model }) {  
-                    return model.desert.can_enter(...arguments) || 'viewable';
+                can_access({ world }) {  
+                    return world.desert.can_enter(...arguments) || 'viewable';
                 }
             },
             desert_ne: {
                 caption: 'Checkerboard Cave {mirror}',
-                can_access({ items, model }) {
-                    return model.darkworld_mire.can_enter(...arguments) && items.mirror;
+                can_access({ items, world }) {
+                    return world.darkworld_mire.can_enter(...arguments) && items.mirror;
                 }
             },
             aginah: {
@@ -1106,8 +1106,8 @@
             },
             bombos: {
                 caption: 'Bombos Tablet {mirror}{mastersword}{book}',
-                can_access({ items, model, mode }) {
-                    return items.book && items.mirror && model.darkworld_south.can_enter(...arguments) &&
+                can_access({ items, world, mode }) {
+                    return items.book && items.mirror && world.darkworld_south.can_enter(...arguments) &&
                         (items.mastersword /*|| mode.swordless && items.hammer*/ || 'viewable');
                 }
             },
@@ -1119,10 +1119,10 @@
             },
             island_lake: {
                 caption: 'Lake Hylia Island {mirror}',
-                can_access({ items, model }) {
+                can_access({ items, world }) {
                     return items.flippers && items.moonpearl && items.mirror && (
-                        model.darkworld_south.can_enter(...arguments) ||
-                        model.darkworld_northwest.can_enter(...arguments)
+                        world.darkworld_south.can_enter(...arguments) ||
+                        world.darkworld_northwest.can_enter(...arguments)
                     ) || 'viewable';
                 }
             },
@@ -1147,11 +1147,11 @@
     });
 
     const darkworld_deathmountain_west = { ...overworld_region,
-        can_enter({ model }) {
-            return model.lightworld_deathmountain_west.can_enter(...arguments);
+        can_enter({ world }) {
+            return world.lightworld_deathmountain_west.can_enter(...arguments);
         },
-        can_enter_dark({ model }) {
-            return model.lightworld_deathmountain_west.can_enter_dark(...arguments);
+        can_enter_dark({ world }) {
+            return world.lightworld_deathmountain_west.can_enter_dark(...arguments);
         },
         locations: {
             spike: {
@@ -1164,11 +1164,11 @@
     };
 
     const darkworld_deathmountain_east = { ...overworld_region,
-        can_enter({ items, model }) {
-            return items.can_lift_heavy && model.lightworld_deathmountain_east.can_enter(...arguments);
+        can_enter({ items, world }) {
+            return items.can_lift_heavy && world.lightworld_deathmountain_east.can_enter(...arguments);
         },
-        can_enter_dark({ items, model }) {
-            return items.can_lift_heavy && model.lightworld_deathmountain_east.can_enter_dark(...arguments);
+        can_enter_dark({ items, world }) {
+            return items.can_lift_heavy && world.lightworld_deathmountain_east.can_enter_dark(...arguments);
         },
         locations: {
             rock_hook: {
@@ -1193,9 +1193,9 @@
     };
 
     const darkworld_northwest = { ...overworld_region,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             return items.moonpearl && (
-                model.darkworld_northeast.can_enter(...arguments) && items.hookshot && (items.flippers || items.can_lift_light || items.hammer) ||
+                world.darkworld_northeast.can_enter(...arguments) && items.hookshot && (items.flippers || items.can_lift_light || items.hammer) ||
                 items.can_lift_light && items.hammer ||
                 items.can_lift_heavy
             );
@@ -1232,9 +1232,9 @@
     };
 
     const darkworld_northeast = { ...overworld_region,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             // DefeatAgahnim
-            return model.agahnim() || items.moonpearl && (
+            return world.agahnim() || items.moonpearl && (
                 items.can_lift_light && items.hammer ||
                 items.can_lift_heavy && items.flippers
             );
@@ -1242,7 +1242,7 @@
         locations: {
             catfish: {
                 caption: 'Catfish',
-                can_access({ items, model }) {
+                can_access({ items }) {
                     return items.moonpearl && items.can_lift_light;
                 }
             },
@@ -1251,21 +1251,21 @@
             },
             fairy_dw: {
                 caption: 'Pyramid Faerie: Buy OJ bomb from Dark Link\'s House after {red-crystal}5 {red-crystal}6 (2 items)',
-                can_access({ items, model }) {
+                can_access({ items, world }) {
                     // Crystal5 && Crystal6
-                    const crystals = _.reduce(model,
+                    const crystals = _.reduce(world,
                         (s, dungeon) => dungeon.completed && dungeon.prize === 'crystal-red' ? s + 1 : s, 0);
-                    return crystals >= 2 && items.moonpearl && model.darkworld_south.can_enter(...arguments) &&
-                        (items.hammer || items.mirror && model.agahnim());
+                    return crystals >= 2 && items.moonpearl && world.darkworld_south.can_enter(...arguments) &&
+                        (items.hammer || items.mirror && world.agahnim());
                 }
             }
         }
     };
 
     const darkworld_south = { ...overworld_region,
-        can_enter({ items, model }) {
+        can_enter({ items, world }) {
             return items.moonpearl && (
-                model.darkworld_northeast.can_enter(...arguments) && (
+                world.darkworld_northeast.can_enter(...arguments) && (
                     items.hammer ||
                     items.hookshot && (items.can_lift_light || items.flippers)
                 ) ||
@@ -1370,8 +1370,8 @@
         }
     };
 
-    window.location_model = ({ standard, keysanity }) => {
-        return {
+    window.create_world = ({ standard, keysanity }) => ({
+        world: {
             ..._.mapValues(_.pickBy({
                 eastern: keysanity ? eastern_keysanity : eastern,
                 desert: keysanity ? desert_keysanity : desert,
@@ -1399,6 +1399,6 @@
                 ganon_tower: keysanity && ganon_tower,
             }), x => x.build()),
             agahnim() { return this.castle_tower.completed; }
-        };
-    };
+        }
+    });
 }(window));

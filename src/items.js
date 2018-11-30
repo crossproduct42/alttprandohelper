@@ -41,7 +41,7 @@
         };
     };
 
-    const items = _.create(items_base, {
+    const items = {
         tunic: 1,
         sword: 0,
         shield: 0,
@@ -75,9 +75,7 @@
         glove: 0,
         flippers: false,
         flute: false
-    });
-
-    window.item_model = function() {
-        return { items: items };
     };
+
+    window.create_items = () => ({ items: _.create(items_base, items) });
 }(window));

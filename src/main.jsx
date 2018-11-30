@@ -207,8 +207,8 @@
 
     class Tracker extends React.Component {
         render() {
-            const { model, mode: { keysanity } } = this.props;
-            const { items, ganon_tower, castle_escape, castle_tower } = model;
+            const { items, world, mode: { keysanity } } = this.props.model;
+            const { ganon_tower, castle_escape, castle_tower } = world;
             const { onToggle, onLevel, onChest, onCompletion, onKey, onBigKey } = this.props;
             return <TrackerGrid>
               {keysanity ?
@@ -280,10 +280,12 @@
         }
 
         dungeon(name, medallion = { medallion: false }) {
+            const dungeon = this.props.model.world[name];
+            const keysanity = this.props.model.mode.keysanity;
             const { onCompletion, onPrize, onMedallion, onBigKey } = this.props;
-            return <Dungeon name={name} dungeon={this.props.model[name]}
+            return <Dungeon name={name} dungeon={dungeon}
               {...medallion}
-              keysanity={this.props.mode.keysanity}
+              keysanity={keysanity}
               onCompletion={name => onCompletion(name, { dungeon: true })}
               onPrize={onPrize}
               onMedallion={onMedallion}
@@ -291,9 +293,10 @@
         }
 
         inner_dungeon(name) {
-            const dungeon = this.props.model[name];
+            const dungeon = this.props.model.world[name];
+            const keysanity = this.props.model.mode.keysanity;
             const { onKey, onChest } = this.props;
-            return this.props.mode.keysanity ?
+            return keysanity ?
               <KeysanityDungeon>
                 <Keys name={name} source={dungeon} onLevel={onKey} />
                 <KeysanityChest name={name} source={dungeon} onLevel={onChest} />
@@ -314,10 +317,9 @@
             }
 
             onHighlight = (highlighted) => {
-                const { model, mode } = this.props;
                 const location = Wrapped.source(this.props);
                 this.props.change_caption(highlighted ?
-                    typeof location.caption === 'function' ? location.caption({ model, mode }) : location.caption :
+                    typeof location.caption === 'function' ? location.caption(this.props.model) : location.caption :
                     null);
                 this.setState({ highlighted });
             }
@@ -356,11 +358,10 @@
     `;
 
     const OverworldLocation = (props) => {
-        const { model, mode, region: region_name, name, highlighted } = props;
-        const { items } = model;
-        const region = model[region_name];
+        const { model, region: region_name, name, highlighted } = props;
+        const region = model.world[region_name];
         const location = region.locations[name];
-        const args = { items, region, model, mode };
+        const args = { ...model, region };
         let state;
         return <MinorPoi className={`world---${_.kebabCase(name)}`}
           state={
@@ -374,7 +375,7 @@
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    OverworldLocation.source = (props) => props.model[props.region].locations[props.name];
+    OverworldLocation.source = (props) => props.model.world[props.region].locations[props.name];
 
     const MedialPoi = styled(Poi)`
       width: 36px;
@@ -391,11 +392,10 @@
     `;
 
     const EncounterLocation = (props) => {
-        const { model, mode, region: region_name, highlighted } = props;
-        const { items } = model;
-        const region = model[region_name];
+        const { model, region: region_name, highlighted } = props;
+        const region = model.world[region_name];
         const name = _.kebabCase(region_name);
-        const args = { items, region, model, mode };
+        const args = { ...model, region };
         let state;
         return <EncounterPoi className={`world---${name} boss---${name}`}
           state={
@@ -408,7 +408,7 @@
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    EncounterLocation.source = (props) => props.model[props.region];
+    EncounterLocation.source = (props) => props.model.world[props.region];
 
     const MajorPoi = styled(Poi)`
       width: 48px;
@@ -430,11 +430,10 @@
     `;
 
     const DungeonLocation = (props) => {
-        const { model, mode, region: region_name, deviated, highlighted } = props;
-        const { items } = model;
-        const region = model[region_name];
+        const { model, region: region_name, deviated, highlighted } = props;
+        const region = model.world[region_name];
         const name = _.kebabCase(region_name);
-        const args = { items, region, model, mode };
+        const args = { ...model, region };
         let state;
         return <MajorPoi className={`world---${name}`}
           state={
@@ -457,7 +456,7 @@
         </MajorPoi>;
     };
 
-    DungeonLocation.source = (props) => props.model[props.region];
+    DungeonLocation.source = (props) => props.model.world[props.region];
 
     const OverworldLocationWithHighlight = WithHighlight(OverworldLocation);
     const EncounterLocationWithHighlight = WithHighlight(EncounterLocation);
@@ -470,11 +469,10 @@
     `;
 
     const DungeonMapDoor = (props) => {
-        const { model, mode, region: region_name, name, deviated, highlighted } = props;
-        const { items } = model;
-        const region = model[region_name];
+        const { model, region: region_name, name, deviated, highlighted } = props;
+        const region = model.world[region_name];
         const door = region.doors[name];
-        const args = { items, region, model, mode };
+        const args = { ...model, region };
         let state;
         return <MedialDungeonPoi className={classNames(
             `${region_name}---door---${_.kebabCase(name)}`,
@@ -493,14 +491,13 @@
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    DungeonMapDoor.source = (props) => props.model[props.region].doors[props.name];
+    DungeonMapDoor.source = (props) => props.model.world[props.region].doors[props.name];
 
     const DungeonMapLocation = function(props) {
-        const { model, mode, region: region_name, name, deviated, highlighted } = props;
-        const { items } = model;
-        const region = model[region_name];
+        const { model, region: region_name, name, deviated, highlighted } = props;
+        const region = model.world[region_name];
         const location = region.locations[name];
-        const args = { items, region, model, mode };
+        const args = { ...model, region };
         let state;
         const Poi = _.includes(['big_chest', 'boss'], name) ? MedialDungeonPoi : MinorPoi;
         return <Poi className={classNames(
@@ -521,7 +518,7 @@
           onMouseOut={() => props.onHighlight(false)} />;
     };
 
-    DungeonMapLocation.source = (props) => props.model[props.region].locations[props.name];
+    DungeonMapLocation.source = (props) => props.model.world[props.region].locations[props.name];
 
     const DungeonMapDoorWithHighlight = WithHighlight(DungeonMapDoor);
     const DungeonMapLocationWithHighlight = WithHighlight(DungeonMapLocation);
@@ -577,24 +574,24 @@
         state = { caption: null }
 
         render() {
-            const { model, mode, horizontal } = this.props;
-            const { keysanity } = mode;
+            const { model, horizontal } = this.props;
+            const { world, mode } = model;
             const { onOverworldMark, onDungeon } = this.props;
             const change_caption = (caption) => this.setState({ caption: caption });
 
             const create_dungeons = _.rest((world, regions) =>
                 _.map(_.pick(world, regions), (dungeon, region) =>
-                    <DungeonLocationWithHighlight model={model} mode={mode} region={region} deviated={keysanity && dungeon.has_deviating_counts()}
+                    <DungeonLocationWithHighlight model={model} region={region} deviated={mode.keysanity && dungeon.has_deviating_counts()}
                       onDungeon={onDungeon} change_caption={change_caption} />));
             const create_overworld = _.rest((world, regions) =>
                 _.flatMap(_.pick(world, regions), (x, region) =>
-                    (keysanity || region !== 'castle_tower') && _.map(x.locations, (x, name) =>
-                        <OverworldLocationWithHighlight model={model} mode={mode} region={region} name={name}
+                    (mode.keysanity || region !== 'castle_tower') && _.map(x.locations, (x, name) =>
+                        <OverworldLocationWithHighlight model={model} region={region} name={name}
                             onMark={onOverworldMark} change_caption={change_caption} />)));
 
             return <MapGrid horizontal={horizontal}>
               <StyledMap className="world---light">
-                {create_overworld(model,
+                {create_overworld(world,
                   'lightworld_deathmountain_west',
                   'lightworld_deathmountain_east',
                   'lightworld_northwest',
@@ -602,18 +599,18 @@
                   'lightworld_south',
                   'castle_escape',
                   'castle_tower')}
-                <EncounterLocationWithHighlight model={model} mode={mode} region="castle_tower" change_caption={change_caption} />
-                {create_dungeons(model, 'eastern', 'desert', 'hera')}
+                <EncounterLocationWithHighlight model={model} region="castle_tower" change_caption={change_caption} />
+                {create_dungeons(world, 'eastern', 'desert', 'hera')}
               </StyledMap>
               <StyledMap className="world---dark">
-                {create_overworld(model,
+                {create_overworld(world,
                   'darkworld_deathmountain_west',
                   'darkworld_deathmountain_east',
                   'darkworld_northwest',
                   'darkworld_northeast',
                   'darkworld_south',
                   'darkworld_mire')}
-                {create_dungeons(model, 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle')}
+                {create_dungeons(world, 'darkness', 'swamp', 'skull', 'thieves', 'ice', 'mire', 'turtle')}
               </StyledMap>
               <Caption text={this.state.caption} />
             </MapGrid>;
@@ -635,19 +632,19 @@
         state = { caption: null }
 
         render() {
-            const { model, mode, dungeon: dungeon_name } = this.props;
-            const dungeon = model[dungeon_name];
+            const { model, dungeon: dungeon_name } = this.props;
+            const dungeon = model.world[dungeon_name];
             const deviating = dungeon.has_deviating_counts();
             const { horizontal, onDoorMark, onLocationMark, onDismiss } = this.props;
             const change_caption = (caption) => this.setState({ caption: caption });
 
             const create_door = (x, name) =>
                 <DungeonMapDoorWithHighlight
-                  model={model} mode={mode} region={dungeon_name} name={name} deviated={deviating}
+                  model={model} region={dungeon_name} name={name} deviated={deviating}
                   onMark={onDoorMark} change_caption={change_caption} />;
             const create_location = (x, name) =>
                 <DungeonMapLocationWithHighlight
-                  model={model} mode={mode} region={dungeon_name} name={name} deviated={deviating}
+                  model={model} region={dungeon_name} name={name} deviated={deviating}
                   onMark={onLocationMark} change_caption={change_caption} />;
 
             return <MapGrid horizontal={horizontal}>
@@ -679,7 +676,7 @@
     class App extends React.Component {
         constructor(props) {
             super(props);
-            const { mode: mode_name } = props.query;
+            const mode_name = props.query.mode;
             const mode = {
                 standard: mode_name === 'standard',
                 open: mode_name === 'open' || mode_name === 'keysanity',
@@ -688,16 +685,16 @@
                 hammery_jump: !!props.query.podbj
             };
             this.state = {
-                model: { ...item_model(), ...location_model(mode) },
-                mode,
-                dungeon_map: null
+                dungeon_map: null,
+                model: { ...create_items(), ...create_world(mode), mode }
             };
         }
 
         render() {
             const query = this.props.query;
             const show_map = query.hmap || query.vmap;
-            const { model, mode, dungeon_map } = this.state;
+            const { model, dungeon_map } = this.state;
+            const { keysanity } = model.mode;
 
             return <StyledApp className={query.sprite}
               horizontal={query.hmap}
@@ -706,7 +703,6 @@
               <Tracker
                 horizontal={query.hmap}
                 model={model}
-                mode={mode}
                 onToggle={this.toggle}
                 onLevel={this.level}
                 onCompletion={this.completion}
@@ -719,13 +715,11 @@
               <OverworldMap
                 horizontal={query.hmap}
                 model={model}
-                mode={mode}
                 onOverworldMark={this.overworld_mark}
-                onDungeon={mode.keysanity ? this.show_dungeon_map : _.noop} /> :
+                onDungeon={keysanity ? this.show_dungeon_map : _.noop} /> :
               <DungeonMap
                 horizontal={query.hmap}
                 model={model}
-                mode={mode}
                 dungeon={dungeon_map}
                 onDismiss={this.dismiss_dungeon_map}
                 onDoorMark={this.door_mark}
@@ -742,7 +736,6 @@
         }
 
         toggle = (name) => {
-            const items = this.state.model.items;
             this.setState({ model: update(this.state.model, { items: update.toggle(name) }) });
         }
 
@@ -751,67 +744,72 @@
             this.setState({ model: update(this.state.model, { items: { [name]: { $set: items.inc(name) } } }) });
         }
 
-        completion = (region, trait = { dungeon: false }) => {
-            const keysanity = this.state.mode.keysanity && trait.dungeon;
-            const _region = this.state.model[region];
-            const completed = _region.completed;
-            this.setState({ model: update(this.state.model, { [region]: {
-                completed: { $set: !completed },
-                locations: keysanity && { boss: { marked: { $set: !completed } } },
-                chests: keysanity && !_region.has_deviating_counts() && (x => x - (!completed ? 1 : -1))
-            } }) });
+        completion = (region_name, trait = { dungeon: false }) => {
+            const { world, mode } = this.state.model;
+            const keysanity = mode.keysanity && trait.dungeon;
+            const region = world[region_name];
+            const completed = region.completed;
+            this.setState({ model: update(this.state.model, { 
+                world: { [region_name]: {
+                    completed: { $set: !completed },
+                    locations: keysanity && { boss: { marked: { $set: !completed } } },
+                    chests: keysanity && !region.has_deviating_counts() && (x => x - (!completed ? 1 : -1))
+                } }
+            }) });
         }
 
-        prize = (region) => {
+        prize = (region_name) => {
             const prize_order = ['unknown', 'pendant-green', 'pendant', 'crystal', 'crystal-red'];
-            const prize = this.state.model[region].prize;
+            const prize = this.state.model.world[region_name].prize;
             const index = prize_order.indexOf(prize);
             const modulo = prize_order.length;
             const value = prize_order[(index + 1) % modulo];
-            this.setState({ model: update(this.state.model, { [region]: { prize: { $set: value } } }) });
+            this.setState({ model: update(this.state.model, { world: { [region_name]: { prize: { $set: value } } } }) });
         }
 
-        medallion = (region) => {
+        medallion = (region_name) => {
             const medallion_order = ['unknown', 'bombos', 'ether', 'quake'];
-            const medallion = this.state.model[region].medallion;
+            const medallion = this.state.model.world[region_name].medallion;
             const index = medallion_order.indexOf(medallion);
             const modulo = medallion_order.length;
             const value = medallion_order[(index + 1) % modulo];
-            this.setState({ model: update(this.state.model, { [region]: { medallion: { $set: value } } }) });
+            this.setState({ model: update(this.state.model, { world: { [region_name]: { medallion: { $set: value } } } }) });
         }
 
-        big_key = (region) => {
-            this.setState({ model: update(this.state.model, { [region]: update.toggle('big_key') }) });
+        big_key = (region_name) => {
+            this.setState({ model: update(this.state.model, { world: { [region_name]: update.toggle('big_key') } }) });
         }
 
-        key = (region) => {
-            const { keys, key_limit } = this.state.model[region];
+        key = (region_name) => {
+            const { keys, key_limit } = this.state.model.world[region_name];
             const value = counter(keys, 1, key_limit);
-            this.setState({ model: update(this.state.model, { [region]: { keys: { $set: value } } }) });
+            this.setState({ model: update(this.state.model, { world: { [region_name]: { keys: { $set: value } } } }) });
         }
 
-        chest = (region) => {
-            const { chests, chest_limit } = this.state.model[region];
+        chest = (region_name) => {
+            const { chests, chest_limit } = this.state.model.world[region_name];
             const value = counter(chests, -1, chest_limit);
-            this.setState({ model: update(this.state.model, { [region]: { chests: { $set: value } } }) });
+            this.setState({ model: update(this.state.model, { world: { [region_name]: { chests: { $set: value } } } }) });
         }
 
-        overworld_mark = (region, name) => {
-            this.setState({ model: update(this.state.model, { [region]: { locations: { [name]: update.toggle('marked') } } }) });
+        overworld_mark = (region_name, name) => {
+            this.setState({ model: update(this.state.model, { world: { [region_name]: { locations: { [name]: update.toggle('marked') } } } }) });
         }
 
-        door_mark = (region, name) => {
-            this.setState({ model: update(this.state.model, { [region]: { doors: { [name]: update.toggle('opened') } } }) });
+        door_mark = (region_name, name) => {
+            this.setState({ model: update(this.state.model, { world: { [region_name]: { doors: { [name]: update.toggle('opened') } } } }) });
         }
 
-        location_mark = (region, name) => {
-            const dungeon = this.state.model[region];
+        location_mark = (region_name, name) => {
+            const dungeon = this.state.model.world[region_name];
             const marked = dungeon.locations[name].marked;
-            this.setState({ model: update(this.state.model, { [region]: {
-                locations: { [name]: { marked: { $set: !marked } } },
-                completed: name === 'boss' && { $set: !marked },
-                chests: !dungeon.has_deviating_counts() && (x => x - (!marked ? 1 : -1))
-            } }) });
+            this.setState({ model: update(this.state.model, {
+                world: { [region_name]: {
+                    locations: { [name]: { marked: { $set: !marked } } },
+                    completed: name === 'boss' && { $set: !marked },
+                    chests: !dungeon.has_deviating_counts() && (x => x - (!marked ? 1 : -1))
+                } }
+            }) });
         }
     }
 
