@@ -745,8 +745,13 @@
         }
 
         level = (name) => {
+            const delta = 1;
             const items = this.state.model.items;
-            this.setState({ model: update(this.state.model, { items: { [name]: { $set: items.inc(name) } } }) });
+            const limit = items.limit[name];
+            const [max, min] = limit[0] ? limit : [limit, 0];
+            const modulo = max-min+1;
+            const value = (items[name]-min + modulo + delta) % modulo + min;
+            this.setState({ model: update(this.state.model, { items: { [name]: { $set: value } } }) });
         }
 
         completion = (region_name, trait = { dungeon: false }) => {
@@ -786,14 +791,18 @@
         }
 
         key = (region_name) => {
+            const delta = 1;
             const { keys, key_limit } = this.state.model.world[region_name];
-            const value = counter(keys, 1, key_limit);
+            const modulo = key_limit + 1;
+            const value = (keys + modulo + delta) % modulo;
             this.setState({ model: update(this.state.model, { world: { [region_name]: { keys: { $set: value } } } }) });
         }
 
         chest = (region_name) => {
+            const delta = -1;
             const { chests, chest_limit } = this.state.model.world[region_name];
-            const value = counter(chests, -1, chest_limit);
+            const modulo = chest_limit + 1;
+            const value = (chests + modulo + delta) % modulo;
             this.setState({ model: update(this.state.model, { world: { [region_name]: { chests: { $set: value } } } }) });
         }
 

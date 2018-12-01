@@ -22,23 +22,15 @@
             return medallion === 'unknown' && (this.bombos || this.ether || this.quake);
         },
 
-        inc: counters(1, {
-            tunic: { min: 1, max: 3 },
-            sword: { max: 4 },
-            shield: { max: 3 },
-            bottle: { max: 4 },
-            bow: { max: 3 },
-            boomerang: { max: 3 },
-            glove: { max: 2 }
-        })
-    };
-
-    function counters(delta, limits) {
-        return function(item) {
-            const max = limits[item].max;
-            const min = limits[item].min;
-            return counter(this[item], delta, max, min);
-        };
+        limit: {
+            tunic: [3, 1],
+            sword: 4,
+            shield: 3,
+            bottle: 4,
+            bow: 3,
+            boomerang: 3,
+            glove: 2
+        }
     };
 
     const items = {

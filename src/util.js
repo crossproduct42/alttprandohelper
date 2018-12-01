@@ -12,14 +12,6 @@
         }
     });
 
-    window.counter = function(value, delta, max, min) {
-        min = min || 0;
-        value += delta;
-        if (value > max) value = min;
-        if (value < min) value = max;
-        return value;
-    };
-
     // based on https://github.com/medialize/URI.js/blob/gh-pages/src/URI.js
     window.uri_query = _.memoize(function() {
         let q;
