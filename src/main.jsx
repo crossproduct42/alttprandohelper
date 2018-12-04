@@ -23,7 +23,8 @@
       <ActiveItem
         className={classNames(props.name, props.value && `${props.name}--active-${props.value}`)}
         active={props.value > 0}
-        onClick={() => props.onLevel(props.name)} />
+        onClick={() => props.onLevel({ raise: props.name })}
+        onContextMenu={(e) => { props.onLevel({ lower: props.name }); e.preventDefault(); }} />
 
     const SubSlot = styled.div`
       width: 32px;
@@ -68,17 +69,20 @@
         {props.medallion &&
         <SubSlot
           className={`medallion medallion--${props.dungeon.medallion}`}
-          onClick={() => props.onMedallion(props.name)} />}
+          onClick={() => props.onMedallion({ raise: props.name })}
+          onContextMenu={(e) => { props.onMedallion({ lower: props.name }); e.preventDefault(); }} />}
         {props.keysanity &&
         <BigKey name={props.name} source={props.dungeon} onToggle={props.onBigKey} />}
         <SubSlot
           className={`prize prize--${props.dungeon.prize}`}
-          onClick={() => props.onPrize(props.name)} />
+          onClick={() => props.onPrize({ raise: props.name })}
+          onContextMenu={(e) => { props.onPrize({ lower: props.name }); e.preventDefault(); }} />
       </StyledDungeon>;
 
     const Chests = (props) =>
       <Slot className={`chest-${props.dungeon.chests}`}
-        onClick={() => props.onLevel(props.name)} />;
+        onClick={() => props.onLevel({ lower: props.name })}
+        onContextMenu={(e) => { props.onLevel({ raise: props.name }); e.preventDefault(); }} />;
 
     const OutlinedText = styled.span`
       color: white;
@@ -104,7 +108,8 @@
 
     const KeysanityChest = (props) =>
       <TextSubSlot className={classNames('chest', { 'chest--empty': !props.source.chests })}
-        onClick={() => props.onLevel(props.name)}>
+        onClick={() => props.onLevel({ lower: props.name })}
+        onContextMenu={(e) => { props.onLevel({ raise: props.name }); e.preventDefault(); }}>
         <ChestText>{`${props.source.chests}`}</ChestText>
       </TextSubSlot>;
 
@@ -113,7 +118,8 @@
         return !key_limit ?
             <TextSubSlot className="key"><KeyText>{'\u2014'}</KeyText></TextSubSlot> :
             <TextSubSlot className="key"
-              onClick={() => props.onLevel(props.name)}>
+              onClick={() => props.onLevel({ raise: props.name })}
+              onContextMenu={(e) => { props.onLevel({ lower: props.name }); e.preventDefault(); }}>
               <KeyText>{`${keys}/${key_limit}`}</KeyText>
             </TextSubSlot>;
     };
@@ -152,7 +158,8 @@
       return <Sprite
         className={classNames(`tunic--active-${items.tunic}`, { 'tunic--bunny': !items.moonpearl })}
         keysanity={keysanity}
-        onClick={(e) => e.target === e.currentTarget && onLevel('tunic')}>
+        onClick={(e) => e.target === e.currentTarget && onLevel({ raise: 'tunic' })}
+        onContextMenu={(e) => { e.target === e.currentTarget && onLevel({ lower: 'tunic' }); e.preventDefault(); }}>
         <LeveledItem name="sword" value={items.sword} onLevel={onLevel} />
         <LeveledItem name="shield" value={items.shield} onLevel={onLevel} />
         <Item name="moonpearl" value={items.moonpearl} onToggle={onToggle} />
@@ -744,8 +751,9 @@
             this.setState({ model: update(this.state.model, { items: update.toggle(name) }) });
         }
 
-        level = (name) => {
-            const delta = 1;
+        level = ({ raise, lower }) => {
+            const name = raise || lower;
+            const delta = raise ? 1 : -1;
             const items = this.state.model.items;
             const limit = items.limit[name];
             const [max, min] = limit[0] ? limit : [limit, 0];
@@ -768,21 +776,25 @@
             }) });
         }
 
-        prize = (region_name) => {
+        prize = ({ raise, lower }) => {
+            const region_name = raise || lower;
+            const delta = raise ? 1 : -1;
             const prize_order = ['unknown', 'pendant-green', 'pendant', 'crystal', 'crystal-red'];
             const prize = this.state.model.world[region_name].prize;
             const index = prize_order.indexOf(prize);
             const modulo = prize_order.length;
-            const value = prize_order[(index + 1) % modulo];
+            const value = prize_order[(index + modulo + delta) % modulo];
             this.setState({ model: update(this.state.model, { world: { [region_name]: { prize: { $set: value } } } }) });
         }
 
-        medallion = (region_name) => {
+        medallion = ({ raise, lower }) => {
+            const region_name = raise || lower;
+            const delta = raise ? 1 : -1;
             const medallion_order = ['unknown', 'bombos', 'ether', 'quake'];
             const medallion = this.state.model.world[region_name].medallion;
             const index = medallion_order.indexOf(medallion);
             const modulo = medallion_order.length;
-            const value = medallion_order[(index + 1) % modulo];
+            const value = medallion_order[(index + modulo + delta) % modulo];
             this.setState({ model: update(this.state.model, { world: { [region_name]: { medallion: { $set: value } } } }) });
         }
 
@@ -790,16 +802,18 @@
             this.setState({ model: update(this.state.model, { world: { [region_name]: update.toggle('big_key') } }) });
         }
 
-        key = (region_name) => {
-            const delta = 1;
+        key = ({ raise, lower }) => {
+            const region_name = raise || lower;
+            const delta = raise ? 1 : -1;
             const { keys, key_limit } = this.state.model.world[region_name];
             const modulo = key_limit + 1;
             const value = (keys + modulo + delta) % modulo;
             this.setState({ model: update(this.state.model, { world: { [region_name]: { keys: { $set: value } } } }) });
         }
 
-        chest = (region_name) => {
-            const delta = -1;
+        chest = ({ raise, lower }) => {
+            const region_name = raise || lower;
+            const delta = raise ? 1 : -1;
             const { chests, chest_limit } = this.state.model.world[region_name];
             const modulo = chest_limit + 1;
             const value = (chests + modulo + delta) % modulo;
