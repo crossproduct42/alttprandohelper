@@ -54,12 +54,14 @@ http://vt.alttp.run/
   that IS NOT a Map, Compass, Key, or Big Key.
 - The square with Link contains info for Tunic, Sword, AND Shield.
 - Boss squares have sub-squares to remind you which prize a boss will give you:
-  Click to toggle from Unkown, Green pendant, Red/Blue, Crystal, and Crystal 5/6
+  Click to toggle from Unknown, Green pendant, Red/Blue, Crystal, and Crystal 5/6
 - Vitreous and Trinexx have medallion subsquares, as well!
 	- The Location Tracker WILL consider these icons when it determines
 	  availability for Misery Mire, Turtle Rock, AND Mimic Cave
 - Click on the bosses and chests to "check off" locations for the dungeons.
   CLICKING THE MAP WILL NOT UPDATE DUNGEON LOCATIONS!
+- Things that have multiple steps (items such as sword, gloves, as well as chests,
+  prizes, medallions) can be cycled the other direction with right clicks.
 
 -[--- Location Tracker ---]-
 
